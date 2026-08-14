@@ -1,0 +1,185 @@
+/* Friday Prints — brand layer */
+:root {
+  --fp-cream: #f7eddc;
+  --fp-pink: #f3a6bf;
+  --fp-coral: #eb403c;
+  --fp-yellow: #f2b91e;
+  --fp-ink: #11100e;
+  --fp-wine: #5b1722;
+}
+
+.fp-section { margin: 0; }
+
+.fp-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--fp-cream);
+  color: var(--fp-ink);
+  min-height: min(840px, calc(100svh - var(--header-group-height, 0px)));
+}
+
+.fp-hero__inner {
+  position: relative;
+  min-height: inherit;
+  padding: clamp(18px, 2.2vw, 34px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(300px, .82fr);
+  align-items: stretch;
+  isolation: isolate;
+}
+
+.fp-hero__copy {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100%;
+  padding-block: 6px clamp(18px, 3vw, 44px);
+}
+
+.fp-kicker {
+  font: 700 clamp(10px, .78vw, 13px)/1.1 var(--font-body--family);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.fp-hero__title {
+  margin: clamp(36px, 6vh, 76px) 0 0;
+  max-width: 8.4ch;
+  font-family: var(--font-heading--family);
+  font-size: clamp(86px, 11.5vw, 188px);
+  font-weight: 800;
+  line-height: .76;
+  letter-spacing: -.065em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+
+.fp-hero__bottom {
+  width: min(430px, 72%);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: flex-start;
+}
+
+.fp-hero__tagline {
+  margin: 0;
+  font: 700 clamp(15px, 1.25vw, 22px)/1.02 var(--font-body--family);
+  letter-spacing: -.025em;
+  max-width: 24ch;
+}
+
+.fp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  min-height: 44px;
+  padding: 11px 16px 10px;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--fp-ink);
+  font: 750 12px/1 var(--font-body--family);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.fp-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 3px 4px 0 var(--fp-ink);
+}
+
+.fp-button--pink { background: var(--fp-pink); }
+
+.fp-hero__art {
+  position: absolute;
+  z-index: 2;
+  inset: 0 0 0 39%;
+  pointer-events: none;
+}
+
+.fp-hero__gigi {
+  position: absolute;
+  right: clamp(-120px, -4vw, -24px);
+  bottom: clamp(-250px, -10vw, -100px);
+  width: clamp(470px, 48vw, 820px);
+  height: auto;
+  max-width: none;
+}
+
+.fp-hero__stamp {
+  position: absolute;
+  right: clamp(18px, 2.2vw, 34px);
+  top: clamp(18px, 2.2vw, 34px);
+  z-index: 4;
+  width: 68px;
+  height: 68px;
+  border: 1.5px solid var(--fp-ink);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font: 700 8px/1.05 var(--font-body--family);
+  letter-spacing: .03em;
+  transform: rotate(8deg);
+  background: var(--fp-pink);
+}
+
+@media (max-width: 749px) {
+  .fp-hero {
+    min-height: calc(100svh - var(--header-group-height, 0px));
+    max-height: 860px;
+  }
+  .fp-hero__inner { display: block; padding: 17px 16px 20px; }
+  .fp-hero__copy {
+    min-height: calc(100svh - var(--header-group-height, 0px) - 37px);
+    position: relative;
+  }
+  .fp-kicker { font-size: 9px; letter-spacing: .07em; }
+  .fp-hero__title {
+    margin-top: 34px;
+    max-width: 5.4ch;
+    font-size: clamp(68px, 23vw, 112px);
+    line-height: .79;
+    letter-spacing: -.07em;
+    position: relative;
+    z-index: 4;
+  }
+  .fp-hero__bottom {
+    width: 54%;
+    margin-top: auto;
+    margin-bottom: 12px;
+    gap: 13px;
+    position: relative;
+    z-index: 5;
+  }
+  .fp-hero__tagline { font-size: 12px; line-height: 1.04; }
+  .fp-button {
+    min-height: 38px;
+    padding: 9px 12px 8px;
+    font-size: 10px;
+    gap: 14px;
+  }
+  .fp-hero__art { inset: 0; }
+  .fp-hero__gigi {
+    width: clamp(330px, 100vw, 485px);
+    right: clamp(-105px, -20vw, -58px);
+    bottom: clamp(-145px, -17vw, -70px);
+  }
+  .fp-hero__stamp {
+    width: 55px;
+    height: 55px;
+    right: 14px;
+    top: 14px;
+    font-size: 6.5px;
+  }
+}
+
+@media (min-width: 750px) and (max-width: 1100px) {
+  .fp-hero__title { font-size: clamp(88px, 13vw, 145px); }
+  .fp-hero__gigi { width: clamp(490px, 56vw, 670px); right: -75px; }
+}
