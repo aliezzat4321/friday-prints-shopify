@@ -1,1 +1,0 @@
-# -friday-prints-shopify
