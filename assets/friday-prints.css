@@ -121,6 +121,15 @@
   .fp-hero__bottom { right: 24px; top: auto; bottom: 38px; width: 190px; }
 }
 
+@media (max-width: 850px) and (min-width: 750px) {
+  .fp-hero__bottom {
+    left: 24px;
+    right: auto;
+    bottom: 34px;
+    width: 180px;
+  }
+}
+
 @media (max-width: 749px) {
   .fp-hero__inner {
     min-height: clamp(570px, 150vw, 680px);
