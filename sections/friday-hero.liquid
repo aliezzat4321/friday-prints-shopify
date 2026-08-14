@@ -9,7 +9,7 @@
       {% if section.settings.hero_image != blank %}
         {{ section.settings.hero_image | image_url: width: 1200 | image_tag: class: 'fp-hero__gigi', loading: 'eager', fetchpriority: 'high' }}
       {% else %}
-        <img class="fp-hero__gigi" src="{{ 'friday-gigi-hero.png' | asset_url }}" alt="" width="617" height="1280" loading="eager" fetchpriority="high">
+        <img class="fp-hero__gigi" src="{{ 'friday-gigi-hero-v2.png' | asset_url }}" alt="" width="617" height="1280" loading="eager" fetchpriority="high">
       {% endif %}
     </div>
 
