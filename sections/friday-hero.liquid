@@ -1,34 +1,28 @@
 <section class="fp-hero" id="FPHero-{{ section.id }}">
   <div class="fp-hero__inner">
-    <div class="fp-hero__copy">
-      {% if section.settings.kicker != blank %}
-        <div class="fp-kicker">{{ section.settings.kicker }}</div>
-      {% endif %}
-
-      <h1 class="fp-hero__title">{{ section.settings.title }}</h1>
-
-      <div class="fp-hero__bottom">
-        {% if section.settings.tagline != blank %}
-          <p class="fp-hero__tagline">{{ section.settings.tagline }}</p>
-        {% endif %}
-        {% if section.settings.button_label != blank %}
-          <a class="fp-button fp-button--pink" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
-            {{ section.settings.button_label }}
-            <span aria-hidden="true">→</span>
-          </a>
-        {% endif %}
-      </div>
-    </div>
+    <h1 class="fp-hero__title" aria-label="{{ section.settings.title | escape }}">
+      <span class="fp-hero__title-line">FRIDAY</span>
+      <span class="fp-hero__title-line">PRINTS :)</span>
+    </h1>
 
     <div class="fp-hero__art" aria-hidden="true">
       {% if section.settings.hero_image != blank %}
-        {{ section.settings.hero_image | image_url: width: 1800 | image_tag: class: 'fp-hero__gigi', loading: 'eager', fetchpriority: 'high' }}
+        {{ section.settings.hero_image | image_url: width: 1200 | image_tag: class: 'fp-hero__gigi', loading: 'eager', fetchpriority: 'high' }}
       {% else %}
-        <img class="fp-hero__gigi" src="{{ 'friday-gigi-hero.png' | asset_url }}" alt="" width="617" height="1280" loading="eager" fetchpriority="high">
+        <img class="fp-hero__gigi" src="{{ 'friday-gigi-hero.png' | asset_url }}" alt="" width="420" height="871" loading="eager" fetchpriority="high">
       {% endif %}
     </div>
 
-    <div class="fp-hero__stamp" aria-hidden="true">CAIRO<br>→<br>EVERYWHERE</div>
+    <div class="fp-hero__bottom">
+      {% if section.settings.tagline != blank %}
+        <p class="fp-hero__tagline">{{ section.settings.tagline }}</p>
+      {% endif %}
+      {% if section.settings.button_label != blank %}
+        <a class="fp-button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+          <span>{{ section.settings.button_label }}</span><span aria-hidden="true">→</span>
+        </a>
+      {% endif %}
+    </div>
   </div>
 </section>
 
@@ -38,8 +32,7 @@
   "tag": "section",
   "class": "fp-section",
   "settings": [
-    { "type": "text", "id": "kicker", "label": "Kicker", "default": "FRIDAY PRINTS / CAIRO" },
-    { "type": "text", "id": "title", "label": "Title", "default": "FRIDAY PRINTS :)" },
+    { "type": "text", "id": "title", "label": "Accessible title", "default": "FRIDAY PRINTS :)" },
     { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "MADE FOR LONG WEEKENDS & LOUD LINES." },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "SHOP PRINTS" },
     { "type": "url", "id": "button_link", "label": "Button link" },
