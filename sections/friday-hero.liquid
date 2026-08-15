@@ -1,8 +1,53 @@
 <section class="fp-hero" id="FPHero-{{ section.id }}">
+  <div class="fp-ticker" aria-label="Friday Prints highlights">
+    <div class="fp-ticker__track">
+      {% for i in (1..2) %}
+        <div class="fp-ticker__set" {% if i == 2 %}aria-hidden="true"{% endif %}>
+          <span>MADE FOR LONG WEEKENDS &amp; LOUD LINES</span><span class="fp-ticker__star">✺</span>
+          <span>LIMITED EDITION PRINTS</span><span class="fp-ticker__star">✺</span>
+          <span>CAIRO BASED</span><span class="fp-ticker__star">✺</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <header class="fp-nav">
+    <a class="fp-nav__brand" href="{{ routes.root_url }}">FRIDAY PRINTS :)</a>
+
+    <nav class="fp-nav__desktop" aria-label="Friday Prints navigation">
+      <a href="{{ routes.all_products_collection_url }}">SHOP</a>
+      <a href="/pages/about">ABOUT</a>
+      <a href="/pages/info">INFO</a>
+      <a class="fp-nav__cart" href="{{ routes.cart_url }}">CART ({{ cart.item_count }})</a>
+    </nav>
+
+    <div class="fp-nav__mobile-actions">
+      <a class="fp-nav__bag" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.5h11l1 12h-13l1-12Z"/><path d="M9 8.5V6a3 3 0 0 1 6 0v2.5"/></svg>
+        <span>{{ cart.item_count }}</span>
+      </a>
+      <details class="fp-menu">
+        <summary aria-label="Open menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+        </summary>
+        <div class="fp-menu__panel">
+          <div class="fp-menu__top"><span>FRIDAY PRINTS :)</span><span>×</span></div>
+          <nav aria-label="Mobile navigation">
+            <a href="{{ routes.all_products_collection_url }}">SHOP</a>
+            <a href="/pages/about">ABOUT</a>
+            <a href="/pages/info">INFO</a>
+            <a href="/pages/contact">CONTACT</a>
+          </nav>
+          <div class="fp-menu__foot">CAIRO BASED · MADE FOR LONG WEEKENDS</div>
+        </div>
+      </details>
+    </div>
+  </header>
+
   <div class="fp-hero__inner">
     <h1 class="fp-hero__title" aria-label="{{ section.settings.title | escape }}">
-      <span class="fp-hero__title-line">FRIDAY</span>
-      <span class="fp-hero__title-line">PRINTS :)</span>
+      <span>FRIDAY</span>
+      <span>PRINTS :)</span>
     </h1>
 
     {% if section.settings.hero_image != blank %}
@@ -13,22 +58,30 @@
           | image_tag:
             class: 'fp-hero__gigi',
             widths: '360, 480, 640, 800, 1000, 1200, 1600',
-            sizes: '(max-width: 749px) 72vw, (max-width: 1100px) 48vw, 42vw',
+            sizes: '(max-width: 749px) 60vw, (max-width: 1100px) 38vw, 34vw',
             loading: 'eager',
             fetchpriority: 'high'
         }}
       </div>
     {% endif %}
 
-    <div class="fp-hero__bottom">
-      {% if section.settings.tagline != blank %}
-        <p class="fp-hero__tagline">{{ section.settings.tagline }}</p>
-      {% endif %}
-      {% if section.settings.button_label != blank %}
-        <a class="fp-button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
-          <span>{{ section.settings.button_label }}</span><span aria-hidden="true">→</span>
-        </a>
-      {% endif %}
+    <div class="fp-hero__meta" aria-label="About Friday Prints">
+      <span>CAIRO BASED</span>
+      <span>ART PRINTS</span>
+      <span>BY AMINA</span>
+    </div>
+
+    <a class="fp-where" href="/pages/about">
+      <span class="fp-where__dot" aria-hidden="true">✺</span>
+      <span>WHERE’S GIGI TODAY?</span>
+      <span aria-hidden="true">●</span>
+    </a>
+
+    <div class="fp-hero__cta">
+      <p>{{ section.settings.tagline }}</p>
+      <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+        <span>{{ section.settings.button_label }}</span><span aria-hidden="true">→</span>
+      </a>
     </div>
   </div>
 </section>
@@ -40,10 +93,10 @@
   "class": "fp-section",
   "settings": [
     { "type": "text", "id": "title", "label": "Accessible title", "default": "FRIDAY PRINTS :)" },
-    { "type": "image_picker", "id": "hero_image", "label": "GiGi transparent PNG" },
+    { "type": "image_picker", "id": "hero_image", "label": "GiGi hero cutout (transparent PNG)" },
     { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "MADE FOR LONG WEEKENDS & LOUD LINES." },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "SHOP PRINTS" },
-    { "type": "url", "id": "button_link", "label": "Button link" }
+    { "type": "text", "id": "button_label", "label": "Link label", "default": "SHOP PRINTS" },
+    { "type": "url", "id": "button_link", "label": "Link" }
   ],
   "presets": [ { "name": "Friday Prints hero" } ]
 }
