@@ -58,11 +58,12 @@
           | image_tag:
             class: 'fp-hero__gigi',
             widths: '360, 480, 640, 800, 1000, 1200, 1600',
-            sizes: '(max-width: 749px) 60vw, (max-width: 1100px) 38vw, 34vw',
+            sizes: '(max-width: 749px) 62vw, (max-width: 1100px) 36vw, 30vw',
             loading: 'eager',
             fetchpriority: 'high'
         }}
       </div>
+      <div class="fp-hero__spark" aria-hidden="true"><i></i><i></i><i></i></div>
     {% endif %}
 
     <div class="fp-hero__meta" aria-label="About Friday Prints">
@@ -72,9 +73,13 @@
     </div>
 
     <a class="fp-where" href="/pages/about">
-      <span class="fp-where__dot" aria-hidden="true">✺</span>
+      {% if section.settings.hero_image != blank %}
+        {{ section.settings.hero_image | image_url: width: 48 | image_tag: class: 'fp-where__gigi', loading: 'lazy', alt: '' }}
+      {% else %}
+        <span class="fp-where__dot" aria-hidden="true">✺</span>
+      {% endif %}
       <span>WHERE’S GIGI TODAY?</span>
-      <span aria-hidden="true">●</span>
+      <span class="fp-where__end" aria-hidden="true">●</span>
     </a>
 
     <div class="fp-hero__cta">
