@@ -9,9 +9,6 @@
 
 .fp-section { margin: 0; }
 
-/* The homepage hero owns its header so Pitch's demo header never competes with it. */
-body:has(.fp-hero) #header-group { display: none; }
-
 .fp-hero {
   position: relative;
   overflow: hidden;
@@ -22,7 +19,7 @@ body:has(.fp-hero) #header-group { display: none; }
 
 /* ---------- ticker ---------- */
 .fp-ticker {
-  height: 34px;
+  height: 32px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -63,8 +60,8 @@ body:has(.fp-hero) #header-group { display: none; }
   z-index: 20;
   left: 0;
   right: 0;
-  top: 34px;
-  height: 70px;
+  top: 32px;
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -124,8 +121,8 @@ body:has(.fp-hero) #header-group { display: none; }
 /* ---------- hero canvas ---------- */
 .fp-hero__inner {
   position: relative;
-  min-height: clamp(525px, 44vw, 655px);
-  padding: clamp(56px, 5vw, 78px) clamp(28px, 4.5vw, 70px) clamp(28px, 3vw, 46px);
+  min-height: clamp(570px, 46vw, 700px);
+  padding: clamp(48px, 4.3vw, 66px) clamp(28px, 4.5vw, 70px) clamp(28px, 3vw, 46px);
   isolation: isolate;
 }
 
@@ -133,14 +130,14 @@ body:has(.fp-hero) #header-group { display: none; }
   position: relative;
   z-index: 5;
   margin: 0;
-  width: 58vw;
-  font-family: var(--font-heading--family, Arial Black, Arial, sans-serif);
-  font-size: clamp(128px, 16.2vw, 246px);
+  width: 63vw;
+  font-family: "Arial Narrow", "Helvetica Neue Condensed Bold", var(--font-heading--family, Arial Black, Arial, sans-serif);
+  font-size: clamp(148px, 18.8vw, 286px);
   font-weight: 900;
-  line-height: .77;
-  letter-spacing: -.055em;
+  line-height: .735;
+  letter-spacing: -.06em;
   text-transform: uppercase;
-  transform: scaleX(.67);
+  transform: scaleX(.64);
   transform-origin: left top;
 }
 
@@ -158,28 +155,28 @@ body:has(.fp-hero) #header-group { display: none; }
 
 .fp-hero__gigi {
   position: absolute;
-  left: 49.5%;
-  bottom: -4%;
-  height: 101%;
+  left: 59%;
+  bottom: -5%;
+  height: 106%;
   width: auto;
   max-width: none;
   object-fit: contain;
   object-position: center bottom;
-  transform: translateX(-10%);
+  transform: translateX(-50%);
 }
 
 .fp-hero__cta {
   position: absolute;
   z-index: 7;
-  right: clamp(34px, 7vw, 106px);
-  top: 47%;
-  width: clamp(170px, 15vw, 225px);
+  right: clamp(34px, 5vw, 76px);
+  top: 49%;
+  width: clamp(180px, 15vw, 225px);
 }
 
 .fp-hero__cta p {
-  margin: 0 0 20px;
+  margin: 0 0 18px;
   max-width: 13ch;
-  font-size: clamp(17px, 1.65vw, 26px);
+  font-size: clamp(17px, 1.6vw, 25px);
   font-weight: 800;
   line-height: .98;
   letter-spacing: -.035em;
@@ -223,7 +220,7 @@ body:has(.fp-hero) #header-group { display: none; }
 .fp-where {
   position: absolute;
   z-index: 7;
-  left: 18.5%;
+  left: 19.5%;
   bottom: clamp(28px, 3vw, 46px);
   display: inline-flex;
   align-items: center;
@@ -271,10 +268,10 @@ body:has(.fp-hero) #header-group { display: none; }
 .fp-menu__foot { position: absolute; left: 18px; bottom: 22px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
 
 @media (max-width: 1100px) and (min-width: 750px) {
-  .fp-hero__inner { min-height: clamp(520px, 61vw, 620px); }
-  .fp-hero__title { width: 64vw; font-size: clamp(112px, 15.5vw, 168px); }
-  .fp-hero__gigi { left: 48%; height: 94%; bottom: -2%; }
-  .fp-hero__cta { right: 28px; top: 51%; width: 165px; }
+  .fp-hero__inner { min-height: clamp(540px, 61vw, 650px); }
+  .fp-hero__title { width: 66vw; font-size: clamp(118px, 17.2vw, 184px); }
+  .fp-hero__gigi { left: 58%; height: 99%; bottom: -4%; }
+  .fp-hero__cta { right: 26px; top: 51%; width: 165px; }
   .fp-hero__meta { left: 28px; }
   .fp-where { left: 21%; }
 }
@@ -286,7 +283,7 @@ body:has(.fp-hero) #header-group { display: none; }
 
   .fp-nav {
     top: 31px;
-    height: 64px;
+    height: 62px;
     justify-content: space-between;
     padding: 0 16px;
   }
@@ -308,43 +305,43 @@ body:has(.fp-hero) #header-group { display: none; }
   .fp-nav__bag span { position: absolute; right: 2px; top: 2px; font-size: 8px; font-weight: 800; }
 
   .fp-hero__inner {
-    min-height: clamp(590px, 157vw, 690px);
+    min-height: clamp(610px, 162vw, 710px);
     padding: 68px 16px 18px;
   }
 
   .fp-hero__title {
-    width: 118%;
-    font-size: clamp(78px, 23.5vw, 104px);
-    line-height: .79;
+    width: 121%;
+    font-size: clamp(82px, 24.5vw, 108px);
+    line-height: .77;
     letter-spacing: -.06em;
-    transform: scaleX(.72);
+    transform: scaleX(.70);
   }
 
   .fp-hero__gigi {
-    left: auto;
-    right: clamp(-86px, -18vw, -60px);
-    bottom: -1%;
-    height: 65%;
-    transform: none;
+    left: 69%;
+    right: auto;
+    bottom: -3%;
+    height: 63%;
+    transform: translateX(-50%);
   }
 
   .fp-hero__cta {
     left: 16px;
     right: auto;
     top: auto;
-    bottom: 84px;
-    width: 165px;
+    bottom: 88px;
+    width: 150px;
   }
 
   .fp-hero__cta p {
-    margin-bottom: 8px;
-    font-size: 14px;
+    margin-bottom: 7px;
+    font-size: 13px;
     line-height: 1;
   }
 
   .fp-hero__cta > a {
-    min-height: 36px;
-    font-size: 11px;
+    min-height: 34px;
+    font-size: 10.5px;
   }
 
   .fp-hero__meta { display: none; }
@@ -358,7 +355,7 @@ body:has(.fp-hero) #header-group { display: none; }
 }
 
 @media (max-width: 370px) {
-  .fp-hero__inner { min-height: 575px; }
-  .fp-hero__title { font-size: 23vw; }
-  .fp-hero__gigi { height: 62%; right: -72px; }
+  .fp-hero__inner { min-height: 590px; }
+  .fp-hero__title { font-size: 24vw; }
+  .fp-hero__gigi { height: 60%; left: 70%; }
 }
