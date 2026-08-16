@@ -6,7 +6,7 @@
       {% if section.settings.gigi_icon != blank or section.settings.location_text != blank or request.design_mode %}
         <div class="fp-footer__gigi-wrap">
           {% if section.settings.gigi_icon != blank %}
-            {{ section.settings.gigi_icon | image_url: width: 460 | image_tag: class: 'fp-footer__gigi', loading: 'lazy', widths: '100,160,240,340,460', sizes: '(max-width: 749px) var(--fp-footer-gigi-mobile), var(--fp-footer-gigi-desktop)', alt: section.settings.gigi_alt }}
+            {{ section.settings.gigi_icon | image_url: width: 460 | image_tag: class: 'fp-footer__gigi', loading: 'lazy', widths: '100,160,240,340,460', sizes: '(max-width: 749px) 90px, 130px', alt: section.settings.gigi_alt }}
           {% elsif request.design_mode %}
             <span class="fp-gigi-editor-placeholder">Add GiGi</span>
           {% endif %}
