@@ -1,108 +1,25 @@
-<section class="fp-hero" id="FPHero-{{ section.id }}">
-  <div class="fp-ticker" aria-label="Friday Prints highlights">
-    <div class="fp-ticker__track">
-      {% for i in (1..2) %}
-        <div class="fp-ticker__set" {% if i == 2 %}aria-hidden="true"{% endif %}>
-          <span>MADE FOR LONG WEEKENDS &amp; LOUD LINES</span><span class="fp-ticker__star">✺</span>
-          <span>LIMITED EDITION PRINTS</span><span class="fp-ticker__star">✺</span>
-          <span>CAIRO BASED</span><span class="fp-ticker__star">✺</span>
-        </div>
-      {% endfor %}
-    </div>
-  </div>
-
-  <header class="fp-nav">
-    <a class="fp-nav__brand" href="{{ routes.root_url }}">FRIDAY PRINTS :)</a>
-
-    <nav class="fp-nav__desktop" aria-label="Friday Prints navigation">
-      <a href="{{ routes.all_products_collection_url }}">SHOP</a>
-      <a href="/pages/about">ABOUT</a>
-      <a href="/pages/info">INFO</a>
-      <a class="fp-nav__cart" href="{{ routes.cart_url }}">CART ({{ cart.item_count }})</a>
-    </nav>
-
-    <div class="fp-nav__mobile-actions">
-      <a class="fp-nav__bag" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8.5h11l1 12h-13l1-12Z"/><path d="M9 8.5V6a3 3 0 0 1 6 0v2.5"/></svg>
-        <span>{{ cart.item_count }}</span>
-      </a>
-      <details class="fp-menu">
-        <summary aria-label="Open menu">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
-        </summary>
-        <div class="fp-menu__panel">
-          <div class="fp-menu__top"><span>FRIDAY PRINTS :)</span><span>×</span></div>
-          <nav aria-label="Mobile navigation">
-            <a href="{{ routes.all_products_collection_url }}">SHOP</a>
-            <a href="/pages/about">ABOUT</a>
-            <a href="/pages/info">INFO</a>
-            <a href="/pages/contact">CONTACT</a>
-          </nav>
-          <div class="fp-menu__foot">CAIRO BASED · MADE FOR LONG WEEKENDS</div>
-        </div>
-      </details>
-    </div>
-  </header>
-
-  <div class="fp-hero__inner">
-    <h1 class="fp-hero__title" aria-label="{{ section.settings.title | escape }}">
-      <span>FRIDAY</span>
-      <span>PRINTS :)</span>
-    </h1>
-
-    {% if section.settings.hero_image != blank %}
-      <div class="fp-hero__art" aria-hidden="true">
-        {{
-          section.settings.hero_image
-          | image_url: width: 1600
-          | image_tag:
-            class: 'fp-hero__gigi',
-            widths: '360, 480, 640, 800, 1000, 1200, 1600',
-            sizes: '(max-width: 749px) 62vw, (max-width: 1100px) 36vw, 30vw',
-            loading: 'eager',
-            fetchpriority: 'high'
-        }}
+<section class="fr-section fr-hero" id="FridayHero-{{ section.id }}">
+  <div class="fr-shell fr-hero__grid">
+    <div class="fr-hero__copy">
+      <p class="fr-kicker">{{ section.settings.kicker }}</p>
+      <h1>{{ section.settings.title_top }}<span>{{ section.settings.title_bottom }}</span></h1>
+      <p class="fr-hero__sub">{{ section.settings.subtitle }}</p>
+      <div class="fr-actions">
+        <a class="fr-btn fr-btn--solid" href="{{ section.settings.shop_link | default: routes.all_products_collection_url }}">{{ section.settings.shop_label }}</a>
+        <a class="fr-btn" href="{{ section.settings.collection_link | default: routes.collections_url }}">{{ section.settings.collection_label }}</a>
       </div>
-      <div class="fp-hero__spark" aria-hidden="true"><i></i><i></i><i></i></div>
-    {% endif %}
-
-    <div class="fp-hero__meta" aria-label="About Friday Prints">
-      <span>CAIRO BASED</span>
-      <span>ART PRINTS</span>
-      <span>BY AMINA</span>
     </div>
-
-    <a class="fp-where" href="/pages/about">
-      {% if section.settings.hero_image != blank %}
-        {{ section.settings.hero_image | image_url: width: 48 | image_tag: class: 'fp-where__gigi', loading: 'lazy', alt: '' }}
+    <div class="fr-hero__scene">
+      {% if section.settings.scene_image != blank %}
+        {{ section.settings.scene_image | image_url: width: 1200 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200', sizes: '(max-width: 749px) 100vw, 52vw' }}
       {% else %}
-        <span class="fp-where__dot" aria-hidden="true">✺</span>
+        <img src="{{ 'friday-reference-hero.svg' | asset_url }}" width="480" height="432" alt="Framed GiGi print with striped mug, floral vase and limited edition badge" loading="eager" fetchpriority="high">
       {% endif %}
-      <span>WHERE’S GIGI TODAY?</span>
-      <span class="fp-where__end" aria-hidden="true">●</span>
-    </a>
-
-    <div class="fp-hero__cta">
-      <p>{{ section.settings.tagline }}</p>
-      <a href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
-        <span>{{ section.settings.button_label }}</span><span aria-hidden="true">→</span>
-      </a>
+      <span class="fr-hero__star fr-hero__star--a">✦</span><span class="fr-hero__star fr-hero__star--b">✦</span><span class="fr-hero__star fr-hero__star--c">✦</span>
     </div>
   </div>
+  <div class="fr-scallop" aria-hidden="true"></div>
 </section>
-
 {% schema %}
-{
-  "name": "Friday Prints hero",
-  "tag": "section",
-  "class": "fp-section",
-  "settings": [
-    { "type": "text", "id": "title", "label": "Accessible title", "default": "FRIDAY PRINTS :)" },
-    { "type": "image_picker", "id": "hero_image", "label": "GiGi hero cutout (transparent PNG)" },
-    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "MADE FOR LONG WEEKENDS & LOUD LINES." },
-    { "type": "text", "id": "button_label", "label": "Link label", "default": "SHOP PRINTS" },
-    { "type": "url", "id": "button_link", "label": "Link" }
-  ],
-  "presets": [ { "name": "Friday Prints hero" } ]
-}
+{"name":"Friday hero","settings":[{"type":"text","id":"kicker","label":"Kicker","default":"welcome to"},{"type":"text","id":"title_top","label":"Title line 1","default":"GiGi’s"},{"type":"text","id":"title_bottom","label":"Title line 2","default":"journey"},{"type":"textarea","id":"subtitle","label":"Subtitle","default":"Art prints made for long weekends & loud lines."},{"type":"text","id":"shop_label","label":"Shop button","default":"shop prints"},{"type":"url","id":"shop_link","label":"Shop link"},{"type":"text","id":"collection_label","label":"Collection button","default":"explore the collection"},{"type":"url","id":"collection_link","label":"Collection link"},{"type":"image_picker","id":"scene_image","label":"Optional hero scene override"}],"presets":[{"name":"Friday hero"}]}
 {% endschema %}
