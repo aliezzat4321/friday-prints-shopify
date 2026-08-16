@@ -1,9 +1,39 @@
 <section class="fp-section fp-benefits" id="FridayBenefits-{{ section.id }}">
   <div class="fp-shell fp-benefits__grid">
-    <article class="fp-benefit"><div class="fp-benefit__icon">✹</div><h3>LIMITED EDITIONS</h3><p>Each print is part of a limited numbered run.</p></article>
-    <article class="fp-benefit"><div class="fp-benefit__icon">✌</div><h3>MADE TO ORDER</h3><p>Printed especially for you, with love and care.</p></article>
-    <article class="fp-benefit"><div class="fp-benefit__icon">♥</div><h3>MADE IN EGYPT</h3><p>Locally printed. Thoughtfully packaged.</p></article>
-    <article class="fp-benefit"><div class="fp-benefit__icon">▣</div><h3>MADE TO LAST</h3><p>Printed on premium matte paper with a removable mount.</p></article>
+    {% for block in section.blocks %}
+      <article class="fp-benefit" {{ block.shopify_attributes }}>
+        {% if block.settings.icon != blank %}<div class="fp-benefit__icon" aria-hidden="true">{{ block.settings.icon }}</div>{% endif %}
+        {% if block.settings.heading != blank %}<h3>{{ block.settings.heading }}</h3>{% endif %}
+        {% if block.settings.text != blank %}<p>{{ block.settings.text }}</p>{% endif %}
+      </article>
+    {% endfor %}
   </div>
 </section>
-{% schema %}{"name":"Friday benefits","settings":[],"presets":[{"name":"Friday benefits"}]}{% endschema %}
+{% schema %}
+{
+  "name": "Friday benefits",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon / symbol", "default": "✹" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "LIMITED EDITIONS" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Each print is part of a limited numbered run." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Friday benefits",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "✹", "heading": "LIMITED EDITIONS", "text": "Each print is part of a limited numbered run." } },
+        { "type": "benefit", "settings": { "icon": "✌", "heading": "MADE TO ORDER", "text": "Printed especially for you, with love and care." } },
+        { "type": "benefit", "settings": { "icon": "♥", "heading": "MADE IN EGYPT", "text": "Locally printed. Thoughtfully packaged." } },
+        { "type": "benefit", "settings": { "icon": "▣", "heading": "MADE TO LAST", "text": "Printed on premium matte paper with a removable mount." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
