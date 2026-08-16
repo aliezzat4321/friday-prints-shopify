@@ -1,20 +1,16 @@
 <section class="fr-section fr-story" id="FridayStory-{{ section.id }}">
-  <div class="fr-shell fr-story-board">
-    <div class="fr-story__gigi" aria-hidden="true"><img src="{{ 'friday-gigi-nav.png' | asset_url }}" alt="" width="151" height="223" loading="lazy"></div>
-    <div class="fr-story__copy">
-      <p class="fr-story__kicker">{{ section.settings.heading }}</p>
-      <h2>{{ section.settings.headline }}</h2>
+  <span class="fr-story__flower fr-story__flower--1">✿</span><span class="fr-story__flower fr-story__flower--2">✿</span><span class="fr-story__flower fr-story__flower--3">✦</span>
+  <div class="fr-shell fr-story__grid">
+    <div>
+      <h2 class="fr-script">{{ section.settings.heading }}</h2>
       <div class="fr-story__text">{{ section.settings.story }}</div>
-      <a class="fr-text-link" href="{{ section.settings.read_link | default: '/pages/about' }}">{{ section.settings.read_label }} <span aria-hidden="true">→</span></a>
     </div>
-    <div class="fr-story__benefits" aria-label="About our prints">
-      <article><div class="fr-story__benefit-icon">✿</div><h3>limited<br>editions</h3><p>Each print is part of a limited numbered run.</p></article>
-      <article><div class="fr-story__benefit-icon">✌</div><h3>made to<br>order</h3><p>Printed especially for you, with love and care.</p></article>
-      <article><div class="fr-story__benefit-icon">♥</div><h3>made in<br>egypt</h3><p>Locally printed. Thoughtfully packaged.</p></article>
-      <article><div class="fr-story__benefit-icon">▣</div><h3>made to<br>last</h3><p>Printed on premium matte paper with a removable mount.</p></article>
+    <div class="fr-story__mark">
+      <div class="fr-story__oval"><img src="{{ 'friday-gigi-nav.png' | asset_url }}" alt="GiGi" width="112" height="200" loading="lazy"></div>
+      <div class="fr-story__handle">{{ section.settings.handle }}</div>
     </div>
   </div>
 </section>
 {% schema %}
-{"name":"Friday story","settings":[{"type":"text","id":"heading","label":"Kicker","default":"the story"},{"type":"text","id":"headline","label":"Headline","default":"Every character has a story."},{"type":"richtext","id":"story","label":"Story","default":"<p>GiGi was created as a way to personify friends, their moods, quirks and adventures.</p><p>Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>These prints are small fragments of that world.</p>"},{"type":"text","id":"read_label","label":"Read more label","default":"read more about Amina"},{"type":"url","id":"read_link","label":"Read more link"}],"presets":[{"name":"Friday story"}]}
+{"name":"Friday story","settings":[{"type":"text","id":"heading","label":"Heading","default":"the story"},{"type":"richtext","id":"story","label":"Story","default":"<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>"},{"type":"text","id":"handle","label":"Instagram handle","default":"@fridayprints.art"}],"presets":[{"name":"Friday story"}]}
 {% endschema %}
