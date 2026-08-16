@@ -10,7 +10,7 @@
       <input type="email" name="contact[email]" placeholder="your email" aria-label="Email address" required>
       <button type="submit">join the newsletter →</button>
     {% endform %}
-    <div class="fp-newsletter__gigi-wrap">{% render 'friday-gigi-icon', icon_class: 'fp-newsletter__gigi', alt: '', width: 82, height: 120, loading: 'lazy' %}</div>
+    <div class="fp-newsletter__gigi-wrap"><img class="fp-newsletter__gigi" src="{{ 'friday-gigi-nav.png' | asset_url }}" alt="" width="82" height="120" loading="lazy"></div>
   </div>
 </section>
 {% schema %}{"name":"Friday newsletter","settings":[],"presets":[{"name":"Friday newsletter"}]}{% endschema %}
