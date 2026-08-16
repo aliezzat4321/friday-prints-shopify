@@ -1,41 +1,37 @@
 /* Friday Prints — production fixes from rendered QA */
 
-/* Section boundaries: straight, mature and deterministic. */
-.fp-scallop{display:none!important;height:0!important;min-height:0!important;background:none!important}
-.fp-scallop::before,.fp-scallop::after{content:none!important;display:none!important}
-.fp-collection::before,.fp-collection::after,.fp-story::before,.fp-story::after,.fp-benefits::before,.fp-benefits::after,.fp-services::before,.fp-services::after{content:none!important;display:none!important;background:none!important}
-.fp-hero{border-bottom:1px solid rgba(23,18,15,.12)!important}
+/* Clean section boundaries: no waves/scallops anywhere. */
+.fp-scallop,.fp-scallop::before,.fp-scallop::after,.fp-collection::before,.fp-collection::after,.fp-story::before,.fp-story::after,.fp-benefits::before,.fp-benefits::after,.fp-services::before,.fp-services::after{content:none!important;display:none!important;background:none!important;height:0!important;min-height:0!important}
+.fp-hero{border-bottom:1px solid rgba(23,18,15,.12)!important;background:#fbf1e4!important;overflow:visible!important}
 .fp-story,.fp-benefits,.fp-collection,.fp-services,.fp-newsletter,.fp-footer{border-top:0!important}
 
-/* Hero: make the flattened reference crop dissolve into one surface. */
-.fp-hero{background:#fceee3!important}
-.fp-hero__scene{background:#fceee3!important;overflow:hidden!important;isolation:isolate!important}
-.fp-hero__scene img{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;max-height:590px!important;object-fit:contain!important;object-position:right bottom!important;position:relative!important;z-index:1!important}
-/* Cover the accidental half-star fragments at the upper-left edge of the uploaded crop, without touching the mug at the bottom. */
-.fp-hero__scene::before{content:"";display:block;position:absolute;z-index:2;pointer-events:none;left:0;top:0;width:7%;height:68%;background:#fceee3}
+/* Hero artwork: the approved render must always be visible in full. */
+.fp-hero__scene{background:transparent!important;overflow:visible!important;display:flex!important;align-items:flex-end!important;justify-content:center!important;padding:0 12px!important}
+.fp-hero__scene::before,.fp-hero__scene::after{content:none!important;display:none!important}
+.fp-hero__scene img{display:block!important;width:auto!important;height:auto!important;max-width:100%!important;max-height:575px!important;object-fit:contain!important;object-position:center bottom!important;position:relative!important;z-index:1!important;margin:0 auto!important}
 
-/* Complete GiGi artwork — never crop the source graphic. */
+/* GiGi artwork: use the known-working theme asset and never crop it. */
 .fp-nav__actions>a[aria-label="Meet GiGi"]{display:grid!important;place-items:center!important;width:42px!important;height:48px!important;overflow:visible!important}
-.fp-nav__gigi{display:block!important;width:36px!important;height:44px!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:center!important;overflow:visible!important}
-.fp-story__oval{overflow:visible!important}
-.fp-story__gigi{display:block!important;width:auto!important;height:190px!important;max-width:132px!important;max-height:190px!important;object-fit:contain!important;object-position:center!important;margin:auto!important}
-.fp-newsletter__gigi-wrap{display:grid!important;place-items:center!important;overflow:visible!important}
-.fp-newsletter__gigi{display:block!important;width:auto!important;height:112px!important;max-width:82px!important;object-fit:contain!important;overflow:visible!important}
-.fp-footer__gigi{display:block!important;width:auto!important;height:104px!important;max-width:76px!important;object-fit:contain!important;overflow:visible!important}
+.fp-nav__gigi{display:block!important;width:34px!important;height:42px!important;object-fit:contain!important;object-position:center!important}
+.fp-story__oval{overflow:visible!important;display:grid!important;place-items:center!important}
+.fp-story__gigi{display:block!important;width:auto!important;height:170px!important;max-width:118px!important;max-height:170px!important;object-fit:contain!important;object-position:center!important;margin:auto!important}
+.fp-newsletter__gigi-wrap,.fp-footer__gigi-wrap{overflow:visible!important}
+.fp-newsletter__gigi{display:block!important;width:auto!important;height:105px!important;max-width:78px!important;object-fit:contain!important}
+.fp-footer__gigi{display:block!important;width:auto!important;height:100px!important;max-width:74px!important;object-fit:contain!important}
 
-/* Newsletter must read as a newsletter, not a mysterious postcard feature. */
+/* Newsletter clarity. */
 .fp-newsletter h2{font-size:clamp(38px,3.6vw,56px)!important;line-height:.86!important;letter-spacing:-.045em!important}
 .fp-newsletter__copy>p:last-child{max-width:48ch!important}
 .fp-newsletter__form button{font-size:10px!important;text-transform:lowercase!important}
 
 @media(max-width:749px){
-  .fp-hero__scene img{max-height:none!important}
-  .fp-hero__scene::before{width:5.5%;height:62%}
+  .fp-hero__scene{padding:0 8px!important}
+  .fp-hero__scene img{width:100%!important;max-height:none!important}
   .fp-nav__actions>a[aria-label="Meet GiGi"]{width:34px!important;height:39px!important}
-  .fp-nav__gigi{width:29px!important;height:35px!important}
-  .fp-story__gigi{height:132px!important;max-width:96px!important;max-height:132px!important}
-  .fp-newsletter__gigi{height:78px!important;max-width:58px!important}
-  .fp-footer__gigi{height:82px!important;max-width:60px!important}
+  .fp-nav__gigi{width:28px!important;height:34px!important}
+  .fp-story__gigi{height:126px!important;max-width:90px!important;max-height:126px!important}
+  .fp-newsletter__gigi{height:76px!important;max-width:56px!important}
+  .fp-footer__gigi{height:80px!important;max-width:58px!important}
   .fp-newsletter h2{font-size:34px!important}
   .fp-newsletter__copy>p:last-child{font-size:9px!important;line-height:1.45!important}
 }
