@@ -1,0 +1,110 @@
+/* Friday Prints — visual QA corrections after desktop/mobile review */
+
+/* Pitch/Horizon must never turn the custom Friday header into a sticky overlay. */
+.fp-site-header,
+.fp-site-header header,
+.fp-nav{
+  position:relative!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  left:auto!important;
+  inset:auto!important;
+  transform:none!important;
+}
+.fp-site-header{z-index:8!important;background:var(--fp-cream)}
+
+/* Keep every section below the header in normal document flow. */
+.fp-hero,.fp-story,.fp-benefits,.fp-collection,.fp-services{
+  position:relative;
+  isolation:isolate;
+  clear:both;
+}
+
+/* Desktop hero refinement — closer to the approved composition. */
+@media (min-width:951px){
+  .fp-hero__grid{min-height:590px;padding-top:6px;grid-template-columns:40% 60%;}
+  .fp-hero__copy{padding:42px 0 64px 12px;}
+  .fp-hero__kicker{margin-bottom:12px;font-size:15px;}
+  .fp-hero h1{font-size:clamp(76px,7vw,108px);line-height:.84;}
+  .fp-hero__sub{margin:30px 0 24px;font-size:16px;max-width:27ch;}
+  .fp-btn{min-height:48px;padding-inline:20px;font-size:12px;border-radius:7px;}
+  .fp-hero__scene{padding-left:18px;}
+  .fp-hero__scene img{width:min(100%,760px);max-height:555px;object-fit:contain;object-position:right bottom;}
+
+  /* Six complete products at desktop widths instead of 5 + a clipped card. */
+  .fp-collection__rail{gap:16px;padding-left:46px;padding-right:46px;}
+  .fp-product{flex:0 0 calc((100% - 80px)/6);min-width:0;max-width:none;}
+  .fp-product__media{border-width:3px;}
+  .fp-product h3{font-size:9.5px;}
+  .fp-product p{font-size:9px;}
+}
+
+/* Tablet: stop oversized cards from making the collection feel accidental. */
+@media (min-width:750px) and (max-width:950px){
+  .fp-collection__rail{gap:14px;padding-inline:38px;}
+  .fp-product{flex:0 0 calc((100% - 56px)/5);min-width:0;max-width:none;}
+  .fp-product h3{font-size:9px;}
+  .fp-product p{font-size:8.5px;}
+}
+
+@media (max-width:749px){
+  /* Header */
+  .fp-announcement{height:29px;font-size:7px;letter-spacing:.025em;}
+  .fp-nav{height:66px;padding-inline:18px;border-bottom:1px solid rgba(23,18,15,.08);}
+  .fp-logo{font-size:25px;line-height:.74;}
+  .fp-logo small{font-size:7.5px;margin-top:5px;}
+
+  /* Hero: deliberate mobile composition rather than desktop scaled down. */
+  .fp-hero__grid{padding-inline:18px!important;}
+  .fp-hero__copy{padding:30px 0 24px!important;}
+  .fp-hero__kicker{font-size:10px!important;margin:0 0 12px!important;line-height:1.1;}
+  .fp-hero h1{font-size:clamp(54px,16.5vw,67px)!important;line-height:.82!important;max-width:310px;letter-spacing:-.05em;}
+  .fp-hero__sub{font-size:10.5px!important;line-height:1.42!important;margin:22px 0 18px!important;max-width:25ch;}
+  .fp-hero__buttons{gap:8px!important;}
+  .fp-btn{min-height:40px!important;padding:0 12px!important;font-size:9px!important;border-radius:6px!important;}
+  .fp-hero__scene{padding:0 0 2px!important;width:100%;overflow:hidden;}
+  .fp-hero__scene img{width:100%!important;max-width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;object-position:center bottom!important;}
+  .fp-scallop{height:14px;}
+
+  /* Story: reduce dead vertical space while keeping the artwork as a feature. */
+  .fp-story__grid{padding:31px 20px 28px!important;}
+  .fp-story__title{font-size:29px!important;margin-bottom:17px!important;}
+  .fp-story__text{font-size:10px!important;line-height:1.48!important;}
+  .fp-story__text p{margin-bottom:10px!important;}
+  .fp-story__mark{margin-top:22px!important;}
+  .fp-story__oval{width:132px!important;height:164px!important;margin-bottom:12px!important;}
+  .fp-story__oval img{width:76px!important;max-height:132px!important;}
+  .fp-story__handle{font-size:9px!important;}
+  .fp-story__deco{font-size:16px!important;}
+
+  /* Benefit cards: 2x2, but compact and readable. */
+  .fp-benefit{min-height:118px!important;padding:15px 11px!important;}
+  .fp-benefit__icon{font-size:20px!important;margin-bottom:9px!important;}
+  .fp-benefit h3{font-size:8.5px!important;margin-bottom:7px!important;}
+  .fp-benefit p{font-size:8px!important;line-height:1.35!important;}
+
+  /* Collection: one-and-a-half cards visible signals swipe without creating huge cards. */
+  .fp-collection__inner{padding:26px 0 28px!important;}
+  .fp-collection__title{margin-bottom:17px!important;white-space:nowrap;}
+  .fp-collection__title h2{font-size:34px!important;}
+  .fp-collection__title:before,.fp-collection__title:after{font-size:20px!important;margin-inline:4px!important;}
+  .fp-collection__rail{gap:11px!important;padding:0 18px 10px!important;}
+  .fp-product{flex:0 0 46vw!important;max-width:180px!important;}
+  .fp-product__media{border-width:3px!important;padding:4px!important;}
+  .fp-product h3{font-size:8.3px!important;margin-top:7px!important;}
+  .fp-product p{font-size:7.6px!important;}
+  .fp-collection__cta{margin-top:8px!important;}
+  .fp-collection__cta a{min-height:34px!important;font-size:8px!important;padding-inline:15px!important;}
+
+  /* Service tiles should finish the page cleanly, not become another long block. */
+  .fp-service{min-height:98px!important;padding:14px 9px!important;}
+  .fp-service__icon{font-size:17px!important;margin-bottom:5px!important;}
+  .fp-service h3{font-size:7.5px!important;margin-bottom:5px!important;}
+  .fp-service p{font-size:7.2px!important;line-height:1.32!important;}
+}
+
+@media (max-width:390px){
+  .fp-hero h1{font-size:56px!important;}
+  .fp-product{flex-basis:48vw!important;}
+}
