@@ -1,4 +1,4 @@
-<section class="fp-section fp-newsletter" id="FridayNewsletter-{{ section.id }}" style="--fp-newsletter-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-newsletter-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;">
+<section class="fp-section fp-newsletter" id="FridayNewsletter-{{ section.id }}" style="--fp-newsletter-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-newsletter-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;--fp-newsletter-bg:{{ section.settings.background_color }};">
   <div class="fp-shell fp-newsletter__grid">
     <div class="fp-newsletter__copy">
       {% if section.settings.eyebrow != blank %}<p class="fp-newsletter__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
@@ -28,6 +28,7 @@
 {
   "name": "Friday newsletter",
   "settings": [
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#E9A5B2" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FROM CAIRO, OCCASIONALLY." },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Postcards from GiGi" },
     { "type": "textarea", "id": "text", "label": "Text", "default": "A small email newsletter with new prints, new drops & studio notes." },
