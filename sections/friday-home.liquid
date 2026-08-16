@@ -1,6 +1,10 @@
 {{ 'friday-home.css' | asset_url | stylesheet_tag }}
+<style>.page-wrapper:has(.fpw) > footer{display:none!important}</style>
 
-{% assign fp_collection = section.settings.collection | default: collections.all %}
+{% assign fp_collection = section.settings.collection %}
+{% if fp_collection == blank %}
+  {% assign fp_collection = collections['all'] %}
+{% endif %}
 {% assign fp_first_product = fp_collection.products.first %}
 
 <section class="fpw" id="FridayHome-{{ section.id }}">
