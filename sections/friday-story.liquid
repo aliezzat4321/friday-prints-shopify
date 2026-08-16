@@ -12,7 +12,7 @@
     <div class="fp-story__mark">
       <div class="fp-story__oval">
         {% if section.settings.gigi_icon != blank %}
-          {{ section.settings.gigi_icon | image_url: width: 700 | image_tag: class: 'fp-story__gigi', loading: 'lazy', widths: '160,240,360,480,600,700', sizes: '(max-width: 749px) var(--fp-story-gigi-mobile), var(--fp-story-gigi-desktop)', alt: section.settings.gigi_alt }}
+          {{ section.settings.gigi_icon | image_url: width: 700 | image_tag: class: 'fp-story__gigi', loading: 'lazy', widths: '160,240,360,480,600,700', sizes: '(max-width: 749px) 160px, 240px', alt: section.settings.gigi_alt }}
         {% elsif request.design_mode %}
           <span class="fp-story-editor-placeholder">{{ section.settings.empty_message }}</span>
         {% endif %}
@@ -31,7 +31,7 @@
     { "type": "header", "content": "GiGi artwork" },
     { "type": "image_picker", "id": "gigi_icon", "label": "GiGi image" },
     { "type": "text", "id": "gigi_alt", "label": "GiGi alt text", "default": "GiGi" },
-    { "type": "range", "id": "gigi_size_desktop", "label": "GiGi size — desktop", "min": 120, "max": 240, "step": 5, "unit": "px", "default": 205 },
+    { "type": "range", "id": "gigi_size_desktop", "label": "GiGi size — desktop", "min": 120, "max": 260, "step": 5, "unit": "px", "default": 220 },
     { "type": "range", "id": "gigi_size_mobile", "label": "GiGi size — mobile", "min": 80, "max": 160, "step": 5, "unit": "px", "default": 125 },
     { "type": "text", "id": "empty_message", "label": "Editor placeholder text", "default": "Select GiGi artwork" },
     { "type": "header", "content": "Decorations" },
