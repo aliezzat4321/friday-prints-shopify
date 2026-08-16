@@ -1,15 +1,6 @@
 name: Friday Prints Draft Browser QA
 
 on:
-  push:
-    branches: [friday-build]
-    paths:
-      - 'assets/**'
-      - 'sections/**'
-      - 'snippets/**'
-      - 'templates/**'
-      - 'layout/**'
-      - '.github/workflows/visual-qa-v2.yml'
   workflow_dispatch:
 
 permissions:
