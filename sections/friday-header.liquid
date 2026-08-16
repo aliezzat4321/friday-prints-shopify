@@ -14,27 +14,33 @@
     --fp-header-gigi-mobile: {{ section.settings.gigi_size_mobile }}px;
     --fp-logo-image-width: {{ section.settings.logo_image_width }}px;
   }
-  {% if request.design_mode %}
-    #FridayHeader-{{ section.id }} .fp-nav-wrap,
-    #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating,
-    #FridayHeader-{{ section.id }} .fp-nav-wrap.is-hidden {
-      position: relative !important;
-      inset: auto !important;
-      top: auto !important;
-      left: auto !important;
-      right: auto !important;
-      width: 100% !important;
-      transform: none !important;
-      box-shadow: none !important;
-      backdrop-filter: none !important;
-      -webkit-backdrop-filter: none !important;
-    }
-    #FridayHeader-{{ section.id }} .fp-nav-spacer {
-      display: none !important;
-      height: 0 !important;
-    }
-  {% endif %}
+
+  /* The editor must always keep the header in document flow. */
+  #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-wrap,
+  #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-wrap.is-floating,
+  #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-wrap.is-hidden,
+  #FridayHeader-{{ section.id }}.fp-site-header--editor .fp-nav-wrap,
+  #FridayHeader-{{ section.id }}.fp-site-header--editor .fp-nav-wrap.is-floating,
+  #FridayHeader-{{ section.id }}.fp-site-header--editor .fp-nav-wrap.is-hidden {
+    position: relative !important;
+    inset: auto !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-spacer,
+  #FridayHeader-{{ section.id }}.fp-site-header--editor .fp-nav-spacer {
+    display: none !important;
+    height: 0 !important;
+  }
 </style>
+
 <header class="fp-site-header{% if request.design_mode %} fp-site-header--editor{% endif %}" id="FridayHeader-{{ section.id }}">
   {% if section.settings.show_announcement and section.settings.announcement != blank %}
     <div class="fp-announcement">
@@ -102,7 +108,6 @@
   <div class="fp-nav-spacer" data-fp-nav-spacer aria-hidden="true"></div>
 </header>
 
-{% unless request.design_mode %}
 <script>
 (() => {
   const header = document.getElementById('FridayHeader-{{ section.id }}');
@@ -111,6 +116,15 @@
   const spacer = header.querySelector('[data-fp-nav-spacer]');
   const menu = header.querySelector('.fp-menu');
   if (!wrap || !spacer) return;
+
+  /* Shopify's browser runtime flag is the reliable editor check for GitHub-connected themes. */
+  const inThemeEditor = Boolean(window.Shopify && window.Shopify.designMode);
+  if (inThemeEditor) {
+    header.classList.add('fp-site-header--editor-runtime');
+    wrap.classList.remove('is-floating', 'is-hidden');
+    spacer.style.height = '0px';
+    return;
+  }
 
   let lastY = window.scrollY;
   let ticking = false;
@@ -142,7 +156,6 @@
   sync();
 })();
 </script>
-{% endunless %}
 
 {% schema %}
 {
