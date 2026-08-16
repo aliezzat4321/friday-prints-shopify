@@ -1,12 +1,37 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "friday_home": {
       "type": "friday-home",
       "settings": {
         "announcement": "LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT",
-        "collection": "all"
+        "instagram_url": "",
+        "hero_kicker": "welcome to",
+        "hero_title_line_1": "GiGi’s",
+        "hero_title_line_2": "journey",
+        "hero_subtitle": "Art prints made for long weekends & loud lines.",
+        "shop_label": "shop prints",
+        "shop_link": "",
+        "collection_label": "explore the collection",
+        "collection_link": "",
+        "hero_artwork": "shopify://shop_images/hero-seated-gigi.jpg",
+        "vase_image": "shopify://shop_images/vase-real.png",
+        "teabag_image": "shopify://shop_images/teabags-real.png",
+        "story_text": "<p>Friday Prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>These prints are small fragments of that world.</p>",
+        "collection": "all",
+        "collection_heading": "the collection"
       }
     }
   },
-  "order": ["friday_home"]
+  "order": [
+    "friday_home"
+  ]
 }
