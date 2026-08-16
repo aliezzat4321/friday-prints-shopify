@@ -1,1 +1,0 @@
-Friday Prints homepage v3 uses a single consolidated stylesheet (friday-home-v3.css). Binary hero artwork is stored separately as friday-hero-v3.jpg.
