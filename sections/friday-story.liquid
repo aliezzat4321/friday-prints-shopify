@@ -1,13 +1,13 @@
-<section class="fr-section fr-story" id="FridayStory-{{ section.id }}">
-  <span class="fr-story__flower fr-story__flower--1">✿</span><span class="fr-story__flower fr-story__flower--2">✿</span><span class="fr-story__flower fr-story__flower--3">✦</span>
-  <div class="fr-shell fr-story__grid">
-    <div>
-      <h2 class="fr-script">{{ section.settings.heading }}</h2>
-      <div class="fr-story__text">{{ section.settings.story }}</div>
+<section class="fp-section fp-story" id="FridayStory-{{ section.id }}">
+  <span class="fp-story__deco fp-story__deco--a" aria-hidden="true">✿</span><span class="fp-story__deco fp-story__deco--b" aria-hidden="true">✿</span><span class="fp-story__deco fp-story__deco--c" aria-hidden="true">✦</span>
+  <div class="fp-shell fp-story__grid">
+    <div class="fp-story__copy">
+      <h2 class="fp-story__title">{{ section.settings.heading }}</h2>
+      <div class="fp-story__text">{{ section.settings.story }}</div>
     </div>
-    <div class="fr-story__mark">
-      <div class="fr-story__oval"><img src="{{ 'friday-gigi-nav.png' | asset_url }}" alt="GiGi" width="112" height="200" loading="lazy"></div>
-      <div class="fr-story__handle">{{ section.settings.handle }}</div>
+    <div class="fp-story__mark">
+      <div class="fp-story__oval"><img src="{{ 'friday-gigi-nav.png' | asset_url }}" alt="GiGi" width="118" height="220" loading="lazy"></div>
+      <div class="fp-story__handle">{{ section.settings.handle }}</div>
     </div>
   </div>
 </section>
