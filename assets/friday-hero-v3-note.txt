@@ -1,1 +1,0 @@
-Hero v3 binary asset is being committed separately. This text file is not loaded by the theme.
