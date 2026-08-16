@@ -5,33 +5,128 @@
 .fp-hero{border-bottom:1px solid rgba(23,18,15,.12)!important;background:#fbf1e4!important;overflow:visible!important}
 .fp-story,.fp-benefits,.fp-collection,.fp-services,.fp-newsletter,.fp-footer{border-top:0!important}
 
-/* Hero artwork: the approved render must always be visible in full. */
-.fp-hero__scene{background:transparent!important;overflow:visible!important;display:flex!important;align-items:flex-end!important;justify-content:center!important;padding:0 12px!important}
-.fp-hero__scene::before,.fp-hero__scene::after{content:none!important;display:none!important}
-.fp-hero__scene img{display:block!important;width:auto!important;height:auto!important;max-width:100%!important;max-height:575px!important;object-fit:contain!important;object-position:center bottom!important;position:relative!important;z-index:1!important;margin:0 auto!important}
+/* Approved-reference scale pass: the previous implementation read too small. */
+.fp-shell{width:min(calc(100% - 68px),1500px)!important}
+.fp-announcement{height:40px!important;font-size:12.5px!important;letter-spacing:.065em!important}
+.fp-nav{height:122px!important;grid-template-columns:220px 1fr 170px!important}
+.fp-logo{font-size:50px!important;line-height:.72!important}
+.fp-logo small{font-size:14px!important;margin-top:8px!important}
+.fp-nav__links{font-size:15.5px!important;gap:44px!important}
+.fp-nav__actions{gap:15px!important}
+.fp-instagram svg{width:28px!important;height:28px!important}
+.fp-cart{width:38px!important;height:38px!important}
+.fp-cart svg{width:30px!important;height:30px!important}
 
-/* GiGi artwork: use the known-working theme asset and never crop it. */
-.fp-nav__actions>a[aria-label="Meet GiGi"]{display:grid!important;place-items:center!important;width:42px!important;height:48px!important;overflow:visible!important}
-.fp-nav__gigi{display:block!important;width:34px!important;height:42px!important;object-fit:contain!important;object-position:center!important}
-.fp-story__oval{overflow:visible!important;display:grid!important;place-items:center!important}
-.fp-story__gigi{display:block!important;width:auto!important;height:170px!important;max-width:118px!important;max-height:170px!important;object-fit:contain!important;object-position:center!important;margin:auto!important}
+.fp-hero__grid{grid-template-columns:40% 60%!important;min-height:675px!important;gap:16px!important;padding-top:22px!important}
+.fp-hero__copy{padding:24px 0 76px 18px!important}
+.fp-hero__kicker{font-size:20px!important;margin-bottom:15px!important}
+.fp-hero h1{font-size:clamp(88px,8.15vw,136px)!important;line-height:.80!important}
+.fp-hero__sub{font-size:20px!important;line-height:1.4!important;margin:36px 0 30px!important;max-width:29ch!important}
+.fp-btn{min-height:58px!important;padding:0 27px!important;font-size:15.5px!important}
+
+/* Hero artwork: the approved render must always be visible in full. */
+.fp-hero__scene{background:transparent!important;overflow:visible!important;display:flex!important;align-items:flex-end!important;justify-content:center!important;padding:0 6px!important}
+.fp-hero__scene::before,.fp-hero__scene::after{content:none!important;display:none!important}
+.fp-hero__scene img{display:block!important;width:auto!important;height:auto!important;max-width:100%!important;max-height:645px!important;object-fit:contain!important;object-position:center bottom!important;position:relative!important;z-index:1!important;margin:0 auto!important}
+
+/* Story + supporting content scale */
+.fp-story__grid{padding:72px 64px 68px!important;gap:84px!important}
+.fp-story__title{font-size:44px!important;margin-bottom:24px!important}
+.fp-story__text{font-size:16.5px!important;line-height:1.58!important}
+.fp-story__oval{width:240px!important;height:300px!important;overflow:visible!important;display:grid!important;place-items:center!important}
+.fp-story__gigi{display:block!important;width:auto!important;height:auto!important;max-width:160px!important;max-height:235px!important;object-fit:contain!important;object-position:center!important;margin:auto!important}
+.fp-story__handle{font-size:15px!important}
+
+.fp-benefit{min-height:185px!important;padding:30px 23px!important}
+.fp-benefit__icon{font-size:33px!important;margin-bottom:15px!important}
+.fp-benefit h3{font-size:14px!important;margin-bottom:10px!important}
+.fp-benefit p{font-size:13px!important;line-height:1.45!important}
+
+.fp-collection__inner{padding:42px 0 44px!important}
+.fp-collection__title{margin-bottom:28px!important}
+.fp-collection__title h2{font-size:clamp(50px,4.5vw,69px)!important}
+.fp-product{flex-basis:215px!important}
+.fp-product h3{font-size:12px!important;line-height:1.25!important}
+.fp-product p{font-size:11px!important}
+.fp-collection__cta a{min-height:42px!important;font-size:12px!important;padding-inline:23px!important}
+
+.fp-service{min-height:150px!important;padding:29px 27px!important}
+.fp-service__icon{font-size:27px!important}
+.fp-service h3{font-size:13px!important}
+.fp-service p{font-size:12px!important;line-height:1.42!important}
+
+/* GiGi is now selected from Shopify image pickers, never a brittle hard-coded binary. */
+.fp-gigi-link{display:grid!important;place-items:center!important;width:46px!important;height:52px!important;overflow:visible!important}
+.fp-nav__gigi{display:block!important;width:auto!important;height:auto!important;max-width:42px!important;max-height:48px!important;object-fit:contain!important;object-position:center!important}
+.fp-gigi-empty{display:grid;place-items:center;width:34px;height:34px;border:1px dashed rgba(23,18,15,.3);font:14px/1 "Courier New",monospace;color:rgba(23,18,15,.4)}
+.fp-gigi-empty--story{width:auto;height:auto;border:0;font-size:14px}
 .fp-newsletter__gigi-wrap,.fp-footer__gigi-wrap{overflow:visible!important}
-.fp-newsletter__gigi{display:block!important;width:auto!important;height:105px!important;max-width:78px!important;object-fit:contain!important}
-.fp-footer__gigi{display:block!important;width:auto!important;height:100px!important;max-width:74px!important;object-fit:contain!important}
+.fp-newsletter__gigi{display:block!important;width:auto!important;height:auto!important;max-width:90px!important;max-height:125px!important;object-fit:contain!important}
+.fp-footer__gigi{display:block!important;width:auto!important;height:auto!important;max-width:88px!important;max-height:125px!important;object-fit:contain!important}
 
 /* Newsletter clarity. */
-.fp-newsletter h2{font-size:clamp(38px,3.6vw,56px)!important;line-height:.86!important;letter-spacing:-.045em!important}
-.fp-newsletter__copy>p:last-child{max-width:48ch!important}
-.fp-newsletter__form button{font-size:10px!important;text-transform:lowercase!important}
+.fp-newsletter h2{font-size:clamp(42px,3.9vw,60px)!important;line-height:.86!important;letter-spacing:-.045em!important}
+.fp-newsletter__copy>p:last-child{max-width:48ch!important;font-size:13px!important;line-height:1.45!important}
+.fp-newsletter__form button{font-size:11px!important;text-transform:lowercase!important}
+
+@media(max-width:980px) and (min-width:750px){
+  .fp-shell{width:min(calc(100% - 42px),940px)!important}
+  .fp-nav{grid-template-columns:185px 1fr 145px!important}
+  .fp-nav__links{font-size:12px!important;gap:24px!important}
+  .fp-logo{font-size:43px!important}
+  .fp-hero h1{font-size:78px!important}
+  .fp-hero__sub{font-size:15px!important}
+  .fp-product{flex-basis:190px!important}
+}
 
 @media(max-width:749px){
-  .fp-hero__scene{padding:0 8px!important}
+  .fp-shell{width:100%!important;padding-inline:22px!important}
+  .fp-announcement{height:36px!important;font-size:8.5px!important;letter-spacing:.025em!important}
+  .fp-nav{height:76px!important;padding-inline:20px!important}
+  .fp-logo{font-size:32px!important}
+  .fp-logo small{font-size:9px!important;margin-top:5px!important}
+  .fp-gigi-link{width:36px!important;height:42px!important}
+  .fp-nav__gigi{max-width:31px!important;max-height:37px!important}
+  .fp-cart{width:34px!important;height:34px!important}
+  .fp-cart svg{width:26px!important;height:26px!important}
+
+  .fp-hero__grid{display:block!important;min-height:0!important;padding:0!important}
+  .fp-hero__copy{padding:40px 4px 30px!important}
+  .fp-hero__kicker{font-size:14px!important;margin-bottom:11px!important}
+  .fp-hero h1{font-size:clamp(66px,20.5vw,84px)!important;line-height:.77!important;max-width:350px!important}
+  .fp-hero__sub{font-size:13.5px!important;line-height:1.42!important;margin:27px 0 22px!important;max-width:27ch!important}
+  .fp-hero__buttons{gap:11px!important}
+  .fp-btn{min-height:48px!important;padding:0 16px!important;font-size:11.5px!important}
+  .fp-hero__scene{padding:0 4px!important}
   .fp-hero__scene img{width:100%!important;max-height:none!important}
-  .fp-nav__actions>a[aria-label="Meet GiGi"]{width:34px!important;height:39px!important}
-  .fp-nav__gigi{width:28px!important;height:34px!important}
-  .fp-story__gigi{height:126px!important;max-width:90px!important;max-height:126px!important}
-  .fp-newsletter__gigi{height:76px!important;max-width:56px!important}
-  .fp-footer__gigi{height:80px!important;max-width:58px!important}
-  .fp-newsletter h2{font-size:34px!important}
-  .fp-newsletter__copy>p:last-child{font-size:9px!important;line-height:1.45!important}
+
+  .fp-story__grid{display:block!important;padding:44px 22px 42px!important}
+  .fp-story__title{font-size:36px!important;margin-bottom:20px!important}
+  .fp-story__text{font-size:12.5px!important;line-height:1.58!important}
+  .fp-story__mark{margin-top:34px!important}
+  .fp-story__oval{width:172px!important;height:216px!important}
+  .fp-story__gigi{max-width:112px!important;max-height:168px!important}
+  .fp-story__handle{font-size:11px!important}
+
+  .fp-benefit{min-height:145px!important;padding:20px 14px!important}
+  .fp-benefit__icon{font-size:25px!important}
+  .fp-benefit h3{font-size:10px!important}
+  .fp-benefit p{font-size:9.5px!important;line-height:1.45!important}
+
+  .fp-collection__inner{padding:34px 0 36px!important}
+  .fp-collection__title h2{font-size:43px!important}
+  .fp-product{flex:0 0 60vw!important;max-width:235px!important}
+  .fp-product h3{font-size:10px!important}
+  .fp-product p{font-size:9px!important}
+  .fp-collection__cta a{font-size:10px!important;min-height:39px!important}
+
+  .fp-service{min-height:120px!important;padding:20px 12px!important}
+  .fp-service__icon{font-size:21px!important}
+  .fp-service h3{font-size:9.5px!important}
+  .fp-service p{font-size:9px!important;line-height:1.4!important}
+
+  .fp-newsletter__gigi{max-width:62px!important;max-height:88px!important}
+  .fp-footer__gigi{max-width:66px!important;max-height:92px!important}
+  .fp-newsletter h2{font-size:36px!important}
+  .fp-newsletter__copy>p:last-child{font-size:10px!important;line-height:1.45!important}
 }
