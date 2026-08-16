@@ -1,6 +1,7 @@
 {{ 'friday-home-v5.css' | asset_url | stylesheet_tag }}
 {{ 'friday-home-qa.css' | asset_url | stylesheet_tag }}
 {{ 'friday-home-final.css' | asset_url | stylesheet_tag }}
+{{ 'friday-production-fixes.css' | asset_url | stylesheet_tag }}
 <header class="fp-site-header" id="FridayHeader-{{ section.id }}">
   <div class="fp-announcement">✦ {{ section.settings.announcement }} ✦</div>
   <div class="fp-nav-wrap" data-fp-nav-wrap>
@@ -16,7 +17,7 @@
       </nav>
       <div class="fp-nav__actions">
         <a class="fp-instagram" href="{{ section.settings.instagram_url | default: '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
-        <a href="/pages/about" aria-label="Meet GiGi"><img class="fp-nav__gigi" src="{{ 'friday-gigi-nav.png' | asset_url }}" width="30" height="38" alt="" loading="eager"></a>
+        <a href="/pages/about" aria-label="Meet GiGi">{% render 'friday-gigi-icon', icon_class: 'fp-nav__gigi', alt: '', width: 36, height: 44, loading: 'eager' %}</a>
         <a class="fp-cart" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8h11l1 12h-13l1-12Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><b>{{ cart.item_count }}</b></a>
         <details class="fp-menu"><summary aria-label="Open menu"><i></i><i></i></summary><nav class="fp-mobile-menu"><a href="{{ routes.root_url }}">home</a><a href="{{ routes.collections_url }}">collections</a><a href="/pages/about">about</a><a href="/pages/info">info</a><a href="/pages/faq">faq</a><a href="/pages/contact">contact</a></nav></details>
       </div>
