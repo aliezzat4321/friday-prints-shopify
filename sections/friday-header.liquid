@@ -15,7 +15,7 @@
     --fp-logo-image-width: {{ section.settings.logo_image_width }}px;
   }
 
-  /* The editor must always keep the header in document flow. */
+  /* The editor must always keep the header in normal document flow. */
   #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-wrap,
   #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-wrap.is-floating,
   #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-wrap.is-hidden,
@@ -38,6 +38,27 @@
   #FridayHeader-{{ section.id }}.fp-site-header--editor .fp-nav-spacer {
     display: none !important;
     height: 0 !important;
+  }
+
+  /* Defensive sizing for editor/customer-controlled logo + GiGi assets. */
+  @media (max-width: 900px) {
+    #FridayHeader-{{ section.id }} .fp-nav {
+      height: auto !important;
+      min-height: 82px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+  @media (max-width: 749px) {
+    #FridayHeader-{{ section.id }} .fp-nav {
+      min-height: 74px;
+      padding-top: 9px;
+      padding-bottom: 9px;
+    }
+    #FridayHeader-{{ section.id }} .fp-logo,
+    #FridayHeader-{{ section.id }} .fp-logo__image {
+      align-self: center;
+    }
   }
 </style>
 
@@ -117,8 +138,17 @@
   const menu = header.querySelector('.fp-menu');
   if (!wrap || !spacer) return;
 
-  /* Shopify's browser runtime flag is the reliable editor check for GitHub-connected themes. */
-  const inThemeEditor = Boolean(window.Shopify && window.Shopify.designMode);
+  /* Robust theme-editor detection: Shopify runtime + editor class + admin iframe referrer. */
+  const shopifyRuntimeEditor = Boolean(window.Shopify && window.Shopify.designMode);
+  const editorClass = document.documentElement.classList.contains('shopify-design-mode') || document.body.classList.contains('shopify-design-mode');
+  let embeddedFromAdmin = false;
+  try {
+    embeddedFromAdmin = window.self !== window.top && /admin\.shopify\.com/i.test(document.referrer || '');
+  } catch (e) {
+    embeddedFromAdmin = true;
+  }
+  const inThemeEditor = shopifyRuntimeEditor || editorClass || embeddedFromAdmin;
+
   if (inThemeEditor) {
     header.classList.add('fp-site-header--editor-runtime');
     wrap.classList.remove('is-floating', 'is-hidden');
