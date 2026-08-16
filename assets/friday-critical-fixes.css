@@ -1,0 +1,109 @@
+/* Friday Prints — critical visual corrections after rendered review */
+
+/* 1. Mature section transitions: no scallops / repeating waves. */
+.fp-scallop,
+.fr-scallop,
+.fp-section-divider,
+.fr-section-divider{display:none!important;height:0!important;min-height:0!important;overflow:hidden!important}
+.fp-collection::before,
+.fr-collection::before,
+.fp-hero::after,
+.fr-hero::after,
+.fp-story::before,
+.fr-story::before,
+.fp-benefits::before,
+.fr-benefits::before,
+.fp-services::before,
+.fr-services::before{content:none!important;display:none!important;background:none!important}
+.fp-hero,.fr-hero{border-bottom:1px solid rgba(23,18,15,.14)!important}
+.fp-story,.fr-story,.fp-benefits,.fr-benefits,.fp-collection,.fr-collection,.fp-services,.fr-services{border-top:0!important}
+
+/* 2. The uploaded reference crop must visually dissolve into the hero rather than read as a cut rectangle. */
+.fp-hero__scene{position:relative!important;overflow:hidden!important;isolation:isolate;background:var(--fp-cream,#fbf1e4)!important}
+.fp-hero__scene img{
+  position:relative!important;
+  z-index:1!important;
+  max-width:none!important;
+  width:106%!important;
+  height:auto!important;
+  margin-left:-3%!important;
+  object-fit:contain!important;
+  object-position:right bottom!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.48) 5%,#000 13%,#000 100%)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.48) 5%,#000 13%,#000 100%)!important;
+}
+/* Hide the clipped decorative fragments on the crop's upper-left edge without covering the mug below. */
+.fp-hero__scene::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:2!important;
+  pointer-events:none!important;
+  left:0!important;
+  top:0!important;
+  width:14%!important;
+  height:63%!important;
+  background:linear-gradient(90deg,var(--fp-cream,#fbf1e4) 0%,var(--fp-cream,#fbf1e4) 72%,rgba(251,241,228,0) 100%)!important;
+}
+
+/* 3. GiGi mark: the source artwork needs breathing room everywhere it appears. */
+.fp-nav__actions>a[aria-label="Meet GiGi"]{width:42px!important;height:48px!important;display:grid!important;place-items:center!important;overflow:visible!important}
+.fp-nav__gigi{
+  width:36px!important;
+  height:42px!important;
+  max-width:36px!important;
+  max-height:42px!important;
+  padding:6px 5px 8px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  box-sizing:border-box!important;
+  transform:scale(.9)!important;
+  transform-origin:center!important;
+  overflow:visible!important;
+}
+.fp-story__oval,.fr-story__oval{overflow:visible!important}
+.fp-story__oval img,.fr-story__oval img{
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:14px 12px 22px!important;
+  box-sizing:border-box!important;
+  transform:scale(.86)!important;
+  transform-origin:center!important;
+}
+.fr-footer__brand-wrap img,.fp-footer__brand-wrap img,.fr-footer img[alt=""],.fp-footer img[alt=""]{
+  object-fit:contain!important;
+  object-position:center!important;
+  padding:10px 8px 18px!important;
+  box-sizing:border-box!important;
+  overflow:visible!important;
+}
+
+/* 4. Make the playful 'postcards' idea unmistakably an email newsletter. */
+.fr-newsletter h2,.fp-newsletter h2{font-size:0!important;line-height:1!important;letter-spacing:0!important}
+.fr-newsletter h2::before,.fp-newsletter h2::before{
+  content:"Postcards from GiGi";
+  display:block;
+  margin:0 0 10px;
+  font:500 clamp(30px,3vw,44px)/.92 Georgia,"Times New Roman",serif;
+  letter-spacing:-.045em;
+  color:inherit;
+}
+.fr-newsletter h2::after,.fp-newsletter h2::after{
+  content:"A small email newsletter with new prints, new drops & studio notes.";
+  display:block;
+  max-width:38ch;
+  font:500 10px/1.5 "Courier New",Courier,monospace;
+  letter-spacing:.01em;
+  color:inherit;
+}
+.fr-newsletter button,.fp-newsletter button{font-size:0!important}
+.fr-newsletter button::after,.fp-newsletter button::after{content:"join the newsletter →";font:600 9px/1 "Courier New",Courier,monospace;text-transform:lowercase}
+
+@media(max-width:749px){
+  .fp-hero__scene img{width:108%!important;margin-left:-4%!important;-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 4%,#000 12%,#000 100%)!important;mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 4%,#000 12%,#000 100%)!important}
+  .fp-hero__scene::before{width:17%!important;height:57%!important}
+  .fp-nav__actions>a[aria-label="Meet GiGi"]{width:34px!important;height:38px!important}
+  .fp-nav__gigi{width:30px!important;height:34px!important;padding:5px 4px 7px!important}
+  .fr-newsletter h2::before,.fp-newsletter h2::before{font-size:31px;margin-bottom:8px}
+  .fr-newsletter h2::after,.fp-newsletter h2::after{font-size:8.5px;max-width:33ch}
+}
