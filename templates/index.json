@@ -27,7 +27,7 @@
         "shop_link": "shopify://collections/all",
         "collection_label": "explore the collection",
         "collection_link": "shopify://collections/all",
-        "hero_scene": "shopify://shop_images/friday-prints-approved-hero-scene.jpg"
+        "hero_scene": "shopify://shop_images/CC35FB34-5C22-4C2F-BBF7-2ECAF5F99DF7.png"
       }
     },
     "friday_story": {
@@ -38,14 +38,32 @@
         "handle": "@fridayprints.art"
       }
     },
-    "friday_benefits": {"type":"friday-benefits","settings":{}},
+    "friday_benefits": {
+      "type": "friday-benefits",
+      "settings": {}
+    },
     "friday_collection": {
       "type": "friday-collection",
-      "settings": {"heading":"the collection","collection":"all","button_label":"view all prints"}
+      "settings": {
+        "heading": "the collection",
+        "collection": "all",
+        "button_label": "view all prints"
+      }
     },
-    "friday_services": {"type":"friday-services","settings":{}},
-    "friday_newsletter": {"type":"friday-newsletter","settings":{}},
-    "friday_footer": {"type":"friday-footer","settings":{"instagram_url":""}}
+    "friday_services": {
+      "type": "friday-services",
+      "settings": {}
+    },
+    "friday_newsletter": {
+      "type": "friday-newsletter",
+      "settings": {}
+    },
+    "friday_footer": {
+      "type": "friday-footer",
+      "settings": {
+        "instagram_url": ""
+      }
+    }
   },
   "order": [
     "friday_header",
