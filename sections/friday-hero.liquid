@@ -8,11 +8,11 @@
         <a class="fr-btn fr-btn--solid" href="{{ section.settings.shop_link | default: routes.all_products_collection_url }}">{{ section.settings.shop_label }} <span aria-hidden="true">→</span></a>
         <a class="fr-btn" href="{{ section.settings.collection_link | default: routes.collections_url }}">{{ section.settings.collection_label }}</a>
       </div>
-      <div class="fr-hero__stamp" aria-hidden="true"><span>made for long weekends</span><span>& loud lines</span></div>
+      <div class="fr-hero__stamp" aria-hidden="true"><span>made for long weekends</span><b>✳</b><span>& loud lines</span></div>
     </div>
     <div class="fr-hero__scene">
       {% if section.settings.scene_image != blank %}
-        {{ section.settings.scene_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200,1400', sizes: '(max-width: 749px) 100vw, 66vw', alt: 'Friday Prints GiGi art display' }}
+        {{ section.settings.scene_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200,1400', sizes: '(max-width: 749px) 100vw, 70vw', alt: 'Friday Prints GiGi art display' }}
       {% else %}
         <img src="{{ 'friday-hero-scene.webp' | asset_url }}" width="654" height="490" alt="Framed GiGi print with striped mug, Amina’s floral vase and tea tag" loading="eager" fetchpriority="high">
       {% endif %}
