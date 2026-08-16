@@ -9,37 +9,6 @@
  */
 {
   "sections": {
-    "friday_header": {
-      "type": "friday-header",
-      "settings": {
-        "show_announcement": true,
-        "announcement": "LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT",
-        "announcement_symbol": "✦",
-        "logo_text": "friday",
-        "logo_subtext": "prints.art",
-        "logo_alt": "Friday Prints home",
-        "nav_1_label": "home",
-        "nav_1_url": "/",
-        "nav_2_label": "collections",
-        "nav_2_url": "/collections",
-        "nav_3_label": "about",
-        "nav_3_url": "/pages/about",
-        "nav_4_label": "info",
-        "nav_4_url": "/pages/info",
-        "nav_5_label": "faq",
-        "nav_5_url": "/pages/faq",
-        "nav_6_label": "contact",
-        "nav_6_url": "/pages/contact",
-        "show_instagram": true,
-        "instagram_url": "",
-        "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png",
-        "gigi_link": "/pages/about",
-        "gigi_alt": "Meet GiGi",
-        "gigi_size_desktop": 42,
-        "gigi_size_mobile": 31,
-        "show_cart": true
-      }
-    },
     "friday_hero": {
       "type": "friday-hero",
       "settings": {
@@ -181,7 +150,6 @@
     }
   },
   "order": [
-    "friday_header",
     "friday_hero",
     "friday_story",
     "friday_benefits",
