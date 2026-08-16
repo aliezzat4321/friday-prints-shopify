@@ -91,6 +91,13 @@
   const menu = header.querySelector('.fp-menu');
   if (!wrap || !spacer) return;
 
+  const isThemeEditor = window.self !== window.top || Boolean(window.Shopify && window.Shopify.designMode);
+  if (isThemeEditor) {
+    wrap.classList.remove('is-floating', 'is-hidden');
+    spacer.style.height = '0px';
+    return;
+  }
+
   let lastY = window.scrollY;
   let ticking = false;
   const sync = () => {
