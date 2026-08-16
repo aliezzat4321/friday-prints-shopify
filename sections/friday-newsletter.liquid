@@ -17,7 +17,7 @@
 
     {% if section.settings.gigi_icon != blank %}
       <div class="fp-newsletter__gigi-wrap">
-        {{ section.settings.gigi_icon | image_url: width: 420 | image_tag: class: 'fp-newsletter__gigi', loading: 'lazy', widths: '100,160,240,320,420', sizes: '(max-width: 749px) var(--fp-newsletter-gigi-mobile), var(--fp-newsletter-gigi-desktop)', alt: section.settings.gigi_alt }}
+        {{ section.settings.gigi_icon | image_url: width: 420 | image_tag: class: 'fp-newsletter__gigi', loading: 'lazy', widths: '100,160,240,320,420', sizes: '(max-width: 749px) 90px, 130px', alt: section.settings.gigi_alt }}
       </div>
     {% elsif request.design_mode %}
       <div class="fp-newsletter__gigi-wrap"><span class="fp-gigi-editor-placeholder">Add GiGi</span></div>
