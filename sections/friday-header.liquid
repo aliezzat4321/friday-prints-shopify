@@ -14,55 +14,8 @@
     --fp-header-gigi-mobile: {{ section.settings.gigi_size_mobile }}px;
     --fp-logo-image-width: {{ section.settings.logo_image_width }}px;
   }
-
-  /* The editor must always keep the header in normal document flow. */
-  #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-wrap,
-  #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-wrap.is-floating,
-  #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-wrap.is-hidden,
-  #FridayHeader-{{ section.id }}.fp-site-header--editor .fp-nav-wrap,
-  #FridayHeader-{{ section.id }}.fp-site-header--editor .fp-nav-wrap.is-floating,
-  #FridayHeader-{{ section.id }}.fp-site-header--editor .fp-nav-wrap.is-hidden {
-    position: relative !important;
-    inset: auto !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    left: auto !important;
-    width: 100% !important;
-    transform: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-  }
-  #FridayHeader-{{ section.id }}.fp-site-header--editor-runtime .fp-nav-spacer,
-  #FridayHeader-{{ section.id }}.fp-site-header--editor .fp-nav-spacer {
-    display: none !important;
-    height: 0 !important;
-  }
-
-  /* Defensive sizing for editor/customer-controlled logo + GiGi assets. */
-  @media (max-width: 900px) {
-    #FridayHeader-{{ section.id }} .fp-nav {
-      height: auto !important;
-      min-height: 82px;
-      padding-top: 10px;
-      padding-bottom: 10px;
-    }
-  }
-  @media (max-width: 749px) {
-    #FridayHeader-{{ section.id }} .fp-nav {
-      min-height: 74px;
-      padding-top: 9px;
-      padding-bottom: 9px;
-    }
-    #FridayHeader-{{ section.id }} .fp-logo,
-    #FridayHeader-{{ section.id }} .fp-logo__image {
-      align-self: center;
-    }
-  }
 </style>
-
-<header class="fp-site-header{% if request.design_mode %} fp-site-header--editor{% endif %}" id="FridayHeader-{{ section.id }}">
+<header class="fp-site-header" id="FridayHeader-{{ section.id }}">
   {% if section.settings.show_announcement and section.settings.announcement != blank %}
     <div class="fp-announcement">
       {% if section.settings.announcement_symbol != blank %}<span aria-hidden="true">{{ section.settings.announcement_symbol }}</span>{% endif %}
@@ -137,24 +90,6 @@
   const spacer = header.querySelector('[data-fp-nav-spacer]');
   const menu = header.querySelector('.fp-menu');
   if (!wrap || !spacer) return;
-
-  /* Robust theme-editor detection: Shopify runtime + editor class + admin iframe referrer. */
-  const shopifyRuntimeEditor = Boolean(window.Shopify && window.Shopify.designMode);
-  const editorClass = document.documentElement.classList.contains('shopify-design-mode') || document.body.classList.contains('shopify-design-mode');
-  let embeddedFromAdmin = false;
-  try {
-    embeddedFromAdmin = window.self !== window.top && /admin\.shopify\.com/i.test(document.referrer || '');
-  } catch (e) {
-    embeddedFromAdmin = true;
-  }
-  const inThemeEditor = shopifyRuntimeEditor || editorClass || embeddedFromAdmin;
-
-  if (inThemeEditor) {
-    header.classList.add('fp-site-header--editor-runtime');
-    wrap.classList.remove('is-floating', 'is-hidden');
-    spacer.style.height = '0px';
-    return;
-  }
 
   let lastY = window.scrollY;
   let ticking = false;
