@@ -11,114 +11,50 @@
   "type": "header",
   "name": "t:names.header",
   "sections": {
-    "header_announcements_kcHY6p": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_MHUQgy": {
-          "type": "_announcement",
-          "name": "t:names.announcement",
-          "settings": {
-            "text": "FRIDAY PRINTS — CAIRO → EVERYWHERE",
-            "link": "shopify://collections/all",
-            "font": "var(--font-body--family)",
-            "font_size": "0.75rem",
-            "weight": "700",
-            "letter_spacing": "loose",
-            "case": "uppercase"
-          },
-          "blocks": {}
-        },
-        "announcement_UNyCWD": {
-          "type": "_announcement",
-          "name": "t:names.announcement",
-          "settings": {
-            "text": "MADE FOR LONG WEEKENDS & LOUD LINES.",
-            "link": "shopify://collections/all",
-            "font": "var(--font-body--family)",
-            "font_size": "0.75rem",
-            "weight": "700",
-            "letter_spacing": "loose",
-            "case": "uppercase"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "announcement_MHUQgy",
-        "announcement_UNyCWD"
-      ],
+    "friday_header": {
+      "type": "friday-header",
       "settings": {
-        "speed": 5,
-        "section_width": "full-width",
-        "background_color": "{{ settings.color_palette.color1 }}",
-        "divider_width": 0,
-        "padding-block-start": 10,
-        "padding-block-end": 10
-      }
-    },
-    "header_section": {
-      "type": "header",
-      "blocks": {
-        "header-logo": {
-          "type": "_header-logo",
-          "static": true,
-          "settings": {
-            "hide_logo_on_home_page": true,
-            "padding-block-start": 0,
-            "padding-block-end": 0
-          },
-          "blocks": {}
-        },
-        "header-menu": {
-          "type": "_header-menu",
-          "static": true,
-          "settings": {
-            "menu": "main-menu",
-            "type_font_primary_size": "1rem",
-            "menu_font_style": "inverse",
-            "type_font_primary_link": "body",
-            "type_case_primary_link": "none",
-            "menu_style": "featured_collections",
-            "featured_products_aspect_ratio": "4 / 5",
-            "featured_collections_aspect_ratio": "16 / 9",
-            "image_border_radius": 0,
-            "navigation_bar": false,
-            "drawer_accordion": false,
-            "drawer_accordion_expand_first": false,
-            "drawer_dividers": false
-          },
-          "blocks": {}
-        }
-      },
-      "settings": {
-        "logo_position": "center",
-        "menu_position": "left",
-        "menu_row": "top",
-        "show_search": true,
-        "search_position": "right",
-        "search_row": "top",
-        "show_country": false,
-        "country_selector_style": false,
-        "show_language": false,
-        "localization_font": "heading",
-        "localization_font_size": "0.875rem",
-        "localization_position": "right",
-        "localization_row": "top",
-        "section_width": "full-width",
-        "section_height": "standard",
-        "enable_sticky_header": "always",
-        "divider_width": 0,
-        "divider_size": "page-width",
-        "border_width": 0,
-        "background_color_top": "{{ settings.color_palette.background }}",
-        "enable_transparent_header_home": false,
-        "enable_transparent_header_product": false,
-        "enable_transparent_header_collection": false
+        "show_announcement": true,
+        "announcement": "LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT",
+        "announcement_symbol": "✦",
+        "logo_image_width": 170,
+        "logo_text": "friday",
+        "logo_subtext": "prints.art",
+        "logo_alt": "Friday Prints home",
+        "navigation_label": "Main navigation",
+        "mobile_navigation_label": "Mobile navigation",
+        "menu_open_label": "Open menu",
+        "nav_1_label": "home",
+        "nav_1_url": "/",
+        "nav_2_label": "collections",
+        "nav_2_url": "/collections",
+        "nav_3_label": "about",
+        "nav_3_url": "/pages/about",
+        "nav_4_label": "info",
+        "nav_4_url": "/pages/info",
+        "nav_5_label": "faq",
+        "nav_5_url": "/pages/faq",
+        "nav_6_label": "contact",
+        "nav_6_url": "/pages/contact",
+        "show_instagram": true,
+        "instagram_url": "",
+        "instagram_label": "Instagram",
+        "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png",
+        "gigi_link": "/pages/about",
+        "gigi_alt": "Meet GiGi",
+        "gigi_size_desktop": 42,
+        "gigi_size_mobile": 31,
+        "show_cart": true,
+        "cart_label": "Cart",
+        "color_cream": "#FBF1E4",
+        "color_pink": "#F2BDC5",
+        "color_newsletter": "#E9A5B2",
+        "color_red": "#E53F36",
+        "color_yellow": "#F3CF78",
+        "color_green": "#2F8869",
+        "color_ink": "#17120F"
       }
     }
   },
-  "order": [
-    "header_announcements_kcHY6p",
-    "header_section"
-  ]
+  "order": ["friday_header"]
 }
