@@ -63,7 +63,7 @@
         "handle": "@fridayprints.art",
         "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png",
         "gigi_alt": "GiGi",
-        "gigi_size_desktop": 205,
+        "gigi_size_desktop": 220,
         "gigi_size_mobile": 125,
         "show_decorations": true,
         "deco_left": "✿",
@@ -86,6 +86,7 @@
       "type": "friday-collection",
       "settings": {
         "heading": "the collection",
+        "title_decoration": "≈",
         "collection": "all",
         "product_limit": 7,
         "show_prices": true,
