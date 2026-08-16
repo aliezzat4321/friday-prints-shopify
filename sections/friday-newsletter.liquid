@@ -10,7 +10,11 @@
       <input type="email" name="contact[email]" placeholder="your email" aria-label="Email address" required>
       <button type="submit">join the newsletter →</button>
     {% endform %}
-    <div class="fp-newsletter__gigi-wrap"><img class="fp-newsletter__gigi" src="{{ 'friday-gigi-nav.png' | asset_url }}" alt="" width="82" height="120" loading="lazy"></div>
+    <div class="fp-newsletter__gigi-wrap">
+      {% if section.settings.gigi_icon != blank %}
+        {{ section.settings.gigi_icon | image_url: width: 320 | image_tag: class: 'fp-newsletter__gigi', loading: 'lazy', widths: '100,160,240,320', sizes: '90px', alt: 'GiGi' }}
+      {% endif %}
+    </div>
   </div>
 </section>
-{% schema %}{"name":"Friday newsletter","settings":[],"presets":[{"name":"Friday newsletter"}]}{% endschema %}
+{% schema %}{"name":"Friday newsletter","settings":[{"type":"image_picker","id":"gigi_icon","label":"GiGi icon","info":"Select the GiGi artwork used beside the newsletter signup."}],"presets":[{"name":"Friday newsletter"}]}{% endschema %}
