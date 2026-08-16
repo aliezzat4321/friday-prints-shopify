@@ -1,20 +1,81 @@
-<footer class="fp-footer" id="FridayFooter-{{ section.id }}">
+<footer class="fp-footer" id="FridayFooter-{{ section.id }}" style="--fp-footer-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-footer-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;">
   <div class="fp-shell fp-footer__grid">
     <div class="fp-footer__brand-block">
-      <div class="fp-footer__brand">friday<br>prints :)</div>
-      <p>made for long weekends &amp; loud lines.</p>
-      <div class="fp-footer__gigi-wrap">
-        {% if section.settings.gigi_icon != blank %}
-          {{ section.settings.gigi_icon | image_url: width: 340 | image_tag: class: 'fp-footer__gigi', loading: 'lazy', widths: '100,160,240,340', sizes: '90px', alt: 'GiGi' }}
-        {% endif %}
-        <span>CAIRO → EVERYWHERE</span>
-      </div>
+      {% if section.settings.brand_text != blank %}<div class="fp-footer__brand">{{ section.settings.brand_text }}</div>{% endif %}
+      {% if section.settings.tagline != blank %}<p>{{ section.settings.tagline }}</p>{% endif %}
+      {% if section.settings.gigi_icon != blank or section.settings.location_text != blank or request.design_mode %}
+        <div class="fp-footer__gigi-wrap">
+          {% if section.settings.gigi_icon != blank %}
+            {{ section.settings.gigi_icon | image_url: width: 460 | image_tag: class: 'fp-footer__gigi', loading: 'lazy', widths: '100,160,240,340,460', sizes: '(max-width: 749px) var(--fp-footer-gigi-mobile), var(--fp-footer-gigi-desktop)', alt: section.settings.gigi_alt }}
+          {% elsif request.design_mode %}
+            <span class="fp-gigi-editor-placeholder">Add GiGi</span>
+          {% endif %}
+          {% if section.settings.location_text != blank %}<span>{{ section.settings.location_text }}</span>{% endif %}
+        </div>
+      {% endif %}
     </div>
-    <nav class="fp-footer__col" aria-label="Shop"><strong>SHOP</strong><a href="{{ routes.all_products_collection_url }}">all prints</a><a href="{{ routes.collections_url }}">collections</a><a href="{{ routes.all_products_collection_url }}?sort_by=created-descending">new drops</a></nav>
-    <nav class="fp-footer__col" aria-label="Information"><strong>INFO</strong><a href="/pages/about">our story</a><a href="/pages/info">print details</a><a href="/pages/info">shipping &amp; returns</a><a href="/pages/faq">faq</a></nav>
-    <nav class="fp-footer__col" aria-label="Follow"><strong>FOLLOW GiGi</strong>{% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}">instagram</a>{% else %}<span>instagram</span>{% endif %}<span>tiktok</span><span>pinterest</span></nav>
-    <nav class="fp-footer__col" aria-label="Help"><strong>HELP</strong><a href="/pages/contact">contact</a><a href="{{ routes.cart_url }}">your cart</a><a href="/pages/info">care guide</a></nav>
+
+    {% for block in section.blocks %}
+      <nav class="fp-footer__col" aria-label="{{ block.settings.heading | escape }}" {{ block.shopify_attributes }}>
+        {% if block.settings.heading != blank %}<strong>{{ block.settings.heading }}</strong>{% endif %}
+        {% if block.settings.link_1_label != blank %}{% if block.settings.link_1_url != blank %}<a href="{{ block.settings.link_1_url }}">{{ block.settings.link_1_label }}</a>{% else %}<span>{{ block.settings.link_1_label }}</span>{% endif %}{% endif %}
+        {% if block.settings.link_2_label != blank %}{% if block.settings.link_2_url != blank %}<a href="{{ block.settings.link_2_url }}">{{ block.settings.link_2_label }}</a>{% else %}<span>{{ block.settings.link_2_label }}</span>{% endif %}{% endif %}
+        {% if block.settings.link_3_label != blank %}{% if block.settings.link_3_url != blank %}<a href="{{ block.settings.link_3_url }}">{{ block.settings.link_3_label }}</a>{% else %}<span>{{ block.settings.link_3_label }}</span>{% endif %}{% endif %}
+        {% if block.settings.link_4_label != blank %}{% if block.settings.link_4_url != blank %}<a href="{{ block.settings.link_4_url }}">{{ block.settings.link_4_label }}</a>{% else %}<span>{{ block.settings.link_4_label }}</span>{% endif %}{% endif %}
+      </nav>
+    {% endfor %}
   </div>
-  <div class="fp-footer__bottom"><span>© {{ 'now' | date: '%Y' }} FRIDAY PRINTS</span><span>MADE IN CAIRO</span><span>WITH ♥ &amp; LOUD LINES</span></div>
+
+  <div class="fp-footer__bottom">
+    <span>© {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name }}</span>
+    <span>{{ section.settings.bottom_center }}</span>
+    <span>{{ section.settings.bottom_right }}</span>
+  </div>
 </footer>
-{% schema %}{"name":"Friday footer","settings":[{"type":"url","id":"instagram_url","label":"Instagram URL"},{"type":"image_picker","id":"gigi_icon","label":"GiGi icon","info":"Select the GiGi artwork used in the footer."}],"presets":[{"name":"Friday footer"}]}{% endschema %}
+{% schema %}
+{
+  "name": "Friday footer",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "textarea", "id": "brand_text", "label": "Brand text", "default": "friday\nprints :)" },
+    { "type": "textarea", "id": "tagline", "label": "Tagline", "default": "made for long weekends & loud lines." },
+    { "type": "text", "id": "location_text", "label": "GiGi caption / location", "default": "CAIRO → EVERYWHERE" },
+    { "type": "image_picker", "id": "gigi_icon", "label": "GiGi image" },
+    { "type": "text", "id": "gigi_alt", "label": "GiGi alt text", "default": "GiGi" },
+    { "type": "range", "id": "gigi_size_desktop", "label": "GiGi size — desktop", "min": 50, "max": 130, "step": 5, "unit": "px", "default": 90 },
+    { "type": "range", "id": "gigi_size_mobile", "label": "GiGi size — mobile", "min": 40, "max": 90, "step": 5, "unit": "px", "default": 65 },
+    { "type": "header", "content": "Bottom bar" },
+    { "type": "text", "id": "copyright_name", "label": "Copyright name", "default": "FRIDAY PRINTS" },
+    { "type": "text", "id": "bottom_center", "label": "Center text", "default": "MADE IN CAIRO" },
+    { "type": "text", "id": "bottom_right", "label": "Right text", "default": "WITH ♥ & LOUD LINES" }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Footer column",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "SHOP" },
+        { "type": "text", "id": "link_1_label", "label": "Link 1 label" },
+        { "type": "url", "id": "link_1_url", "label": "Link 1 URL" },
+        { "type": "text", "id": "link_2_label", "label": "Link 2 label" },
+        { "type": "url", "id": "link_2_url", "label": "Link 2 URL" },
+        { "type": "text", "id": "link_3_label", "label": "Link 3 label" },
+        { "type": "url", "id": "link_3_url", "label": "Link 3 URL" },
+        { "type": "text", "id": "link_4_label", "label": "Link 4 label" },
+        { "type": "url", "id": "link_4_url", "label": "Link 4 URL" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Friday footer",
+      "blocks": [
+        { "type": "column", "settings": { "heading": "SHOP", "link_1_label": "all prints", "link_2_label": "collections", "link_3_label": "new drops" } },
+        { "type": "column", "settings": { "heading": "INFO", "link_1_label": "our story", "link_2_label": "print details", "link_3_label": "shipping & returns", "link_4_label": "faq" } },
+        { "type": "column", "settings": { "heading": "FOLLOW GiGi", "link_1_label": "instagram", "link_2_label": "tiktok", "link_3_label": "pinterest" } },
+        { "type": "column", "settings": { "heading": "HELP", "link_1_label": "contact", "link_2_label": "your cart", "link_3_label": "care guide" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
