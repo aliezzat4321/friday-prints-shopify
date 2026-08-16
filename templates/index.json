@@ -21,7 +21,8 @@
         "collection_label": "explore the collection",
         "collection_link": "shopify://collections/all",
         "hero_scene": "shopify://shop_images/CC35FB34-5C22-4C2F-BBF7-2ECAF5F99DF7.png",
-        "hero_alt": "Friday Prints hero artwork"
+        "hero_alt": "Friday Prints hero artwork",
+        "empty_message": "Select the hero artwork in this section."
       }
     },
     "friday_story": {
@@ -34,6 +35,7 @@
         "gigi_alt": "GiGi",
         "gigi_size_desktop": 220,
         "gigi_size_mobile": 125,
+        "empty_message": "Select GiGi artwork",
         "show_decorations": true,
         "deco_left": "✿",
         "deco_right": "✿",
@@ -43,12 +45,45 @@
     "friday_benefits": {
       "type": "friday-benefits",
       "blocks": {
-        "benefit_1": { "type": "benefit", "settings": { "icon": "✹", "heading": "LIMITED EDITIONS", "text": "Each print is part of a limited numbered run." } },
-        "benefit_2": { "type": "benefit", "settings": { "icon": "✌", "heading": "MADE TO ORDER", "text": "Printed especially for you, with love and care." } },
-        "benefit_3": { "type": "benefit", "settings": { "icon": "♥", "heading": "MADE IN EGYPT", "text": "Locally printed. Thoughtfully packaged." } },
-        "benefit_4": { "type": "benefit", "settings": { "icon": "▣", "heading": "MADE TO LAST", "text": "Printed on premium matte paper with a removable mount." } }
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "✹",
+            "heading": "LIMITED EDITIONS",
+            "text": "Each print is part of a limited numbered run."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "✌",
+            "heading": "MADE TO ORDER",
+            "text": "Printed especially for you, with love and care."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "♥",
+            "heading": "MADE IN EGYPT",
+            "text": "Locally printed. Thoughtfully packaged."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "▣",
+            "heading": "MADE TO LAST",
+            "text": "Printed on premium matte paper with a removable mount."
+          }
+        }
       },
-      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"],
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
+      ],
       "settings": {}
     },
     "friday_collection": {
@@ -60,18 +95,54 @@
         "product_limit": 7,
         "show_prices": true,
         "button_label": "view all prints",
-        "button_link": ""
+        "button_link": "",
+        "previous_label": "Previous prints",
+        "next_label": "Next prints",
+        "empty_message": "Choose a collection in this section."
       }
     },
     "friday_services": {
       "type": "friday-services",
       "blocks": {
-        "service_1": { "type": "service", "settings": { "icon": "🚚", "heading": "DELIVERY ACROSS EGYPT", "text": "Standard delivery across Egypt." } },
-        "service_2": { "type": "service", "settings": { "icon": "🎁", "heading": "PERFECT FOR GIFTING", "text": "Wrap happiness. It suits every wall." } },
-        "service_3": { "type": "service", "settings": { "icon": "✉", "heading": "YOU'VE GOT MAIL", "text": "Carefully packed prints, on their way to you." } },
-        "service_4": { "type": "service", "settings": { "icon": "●", "heading": "HERE TO HELP", "text": "Questions? Just send us a message." } }
+        "service_1": {
+          "type": "service",
+          "settings": {
+            "icon": "🚚",
+            "heading": "DELIVERY ACROSS EGYPT",
+            "text": "Standard delivery across Egypt."
+          }
+        },
+        "service_2": {
+          "type": "service",
+          "settings": {
+            "icon": "🎁",
+            "heading": "PERFECT FOR GIFTING",
+            "text": "Wrap happiness. It suits every wall."
+          }
+        },
+        "service_3": {
+          "type": "service",
+          "settings": {
+            "icon": "✉",
+            "heading": "YOU'VE GOT MAIL",
+            "text": "Carefully packed prints, on their way to you."
+          }
+        },
+        "service_4": {
+          "type": "service",
+          "settings": {
+            "icon": "●",
+            "heading": "HERE TO HELP",
+            "text": "Questions? Just send us a message."
+          }
+        }
       },
-      "block_order": ["service_1", "service_2", "service_3", "service_4"],
+      "block_order": [
+        "service_1",
+        "service_2",
+        "service_3",
+        "service_4"
+      ],
       "settings": {}
     },
     "friday_newsletter": {
@@ -84,7 +155,6 @@
         "email_label": "Email address",
         "button_label": "join the newsletter →",
         "success_message": "You’re on the list. See you Friday.",
-        "gigi_icon": "",
         "gigi_alt": "GiGi",
         "gigi_size_desktop": 90,
         "gigi_size_mobile": 60
@@ -97,46 +167,67 @@
           "type": "column",
           "settings": {
             "heading": "SHOP",
-            "link_1_label": "all prints", "link_1_url": "/collections/all",
-            "link_2_label": "collections", "link_2_url": "/collections",
-            "link_3_label": "new drops", "link_3_url": "/collections/all?sort_by=created-descending",
-            "link_4_label": "", "link_4_url": ""
+            "link_1_label": "all prints",
+            "link_1_url": "/collections/all",
+            "link_2_label": "collections",
+            "link_2_url": "/collections",
+            "link_3_label": "new drops",
+            "link_3_url": "/collections/all?sort_by=created-descending",
+            "link_4_label": "",
+            "link_4_url": ""
           }
         },
         "footer_info": {
           "type": "column",
           "settings": {
             "heading": "INFO",
-            "link_1_label": "our story", "link_1_url": "/pages/about",
-            "link_2_label": "print details", "link_2_url": "/pages/info",
-            "link_3_label": "shipping & returns", "link_3_url": "/pages/info",
-            "link_4_label": "faq", "link_4_url": "/pages/faq"
+            "link_1_label": "our story",
+            "link_1_url": "/pages/about",
+            "link_2_label": "print details",
+            "link_2_url": "/pages/info",
+            "link_3_label": "shipping & returns",
+            "link_3_url": "/pages/info",
+            "link_4_label": "faq",
+            "link_4_url": "/pages/faq"
           }
         },
         "footer_follow": {
           "type": "column",
           "settings": {
             "heading": "FOLLOW GiGi",
-            "link_1_label": "instagram", "link_1_url": "",
-            "link_2_label": "tiktok", "link_2_url": "",
-            "link_3_label": "pinterest", "link_3_url": "",
-            "link_4_label": "", "link_4_url": ""
+            "link_1_label": "instagram",
+            "link_1_url": "",
+            "link_2_label": "tiktok",
+            "link_2_url": "",
+            "link_3_label": "pinterest",
+            "link_3_url": "",
+            "link_4_label": "",
+            "link_4_url": ""
           }
         },
         "footer_help": {
           "type": "column",
           "settings": {
             "heading": "HELP",
-            "link_1_label": "contact", "link_1_url": "/pages/contact",
-            "link_2_label": "your cart", "link_2_url": "/cart",
-            "link_3_label": "care guide", "link_3_url": "/pages/info",
-            "link_4_label": "", "link_4_url": ""
+            "link_1_label": "contact",
+            "link_1_url": "/pages/contact",
+            "link_2_label": "your cart",
+            "link_2_url": "/cart",
+            "link_3_label": "care guide",
+            "link_3_url": "/pages/info",
+            "link_4_label": "",
+            "link_4_url": ""
           }
         }
       },
-      "block_order": ["footer_shop", "footer_info", "footer_follow", "footer_help"],
+      "block_order": [
+        "footer_shop",
+        "footer_info",
+        "footer_follow",
+        "footer_help"
+      ],
       "settings": {
-        "brand_text": "friday\nprints :)",
+        "brand_text": "friday\nprints",
         "tagline": "made for long weekends & loud lines.",
         "location_text": "CAIRO → EVERYWHERE",
         "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png",
