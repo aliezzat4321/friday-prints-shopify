@@ -1,5 +1,10 @@
-<section class="fp-section fp-hero{% if section.settings.height_mode == 'viewport' %} fp-hero--viewport{% endif %}" id="FridayHero-{{ section.id }}">
+<section class="fp-section fp-hero{% if section.settings.height_mode == 'viewport' %} fp-hero--viewport{% endif %}" id="FridayHero-{{ section.id }}" style="--fp-hero-title-desktop:{{ section.settings.title_size_desktop }}px;--fp-hero-title-mobile:{{ section.settings.title_size_mobile }}px;--fp-hero-kicker-desktop:{{ section.settings.kicker_size_desktop }}px;--fp-hero-kicker-mobile:{{ section.settings.kicker_size_mobile }}px;--fp-hero-sub-desktop:{{ section.settings.subtitle_size_desktop }}px;--fp-hero-sub-mobile:{{ section.settings.subtitle_size_mobile }}px;--fp-hero-button-desktop:{{ section.settings.button_size_desktop }}px;--fp-hero-button-mobile:{{ section.settings.button_size_mobile }}px;">
   <style>
+    #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:var(--fp-hero-kicker-desktop);margin-bottom:13px}
+    #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(74px,6.6vw,var(--fp-hero-title-desktop));line-height:.82}
+    #FridayHero-{{ section.id }} .fp-hero__sub{font-size:var(--fp-hero-sub-desktop);line-height:1.42;margin:30px 0 26px;max-width:30ch}
+    #FridayHero-{{ section.id }} .fp-btn{font-size:var(--fp-hero-button-desktop);min-height:54px;padding-inline:24px}
+    #FridayHero-{{ section.id }} .fp-hero__copy{padding-bottom:54px}
     {% if section.settings.height_mode == 'viewport' %}
       #FridayHero-{{ section.id }} .fp-hero__grid {
         min-height: calc(100vh - 162px);
@@ -24,6 +29,19 @@
         }
       }
     {% endif %}
+    @media (max-width:1100px) and (min-width:750px){
+      #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(68px,7.2vw,84px)}
+      #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:15px}
+      #FridayHero-{{ section.id }} .fp-hero__sub{font-size:15px}
+      #FridayHero-{{ section.id }} .fp-btn{font-size:12px;min-height:48px}
+    }
+    @media (max-width:749px){
+      #FridayHero-{{ section.id }} .fp-hero__copy{padding:34px 0 27px}
+      #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:var(--fp-hero-kicker-mobile);margin-bottom:10px}
+      #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(58px,18vw,var(--fp-hero-title-mobile));line-height:.79;max-width:360px}
+      #FridayHero-{{ section.id }} .fp-hero__sub{font-size:var(--fp-hero-sub-mobile);line-height:1.45;margin:24px 0 21px;max-width:29ch}
+      #FridayHero-{{ section.id }} .fp-btn{font-size:var(--fp-hero-button-mobile);min-height:48px;padding-inline:14px}
+    }
   </style>
   <div class="fp-shell fp-hero__grid">
     <div class="fp-hero__copy">
@@ -56,6 +74,16 @@
       { "value": "viewport", "label": "Fill first screen" },
       { "value": "content", "label": "Fit content" }
     ] },
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "title_size_desktop", "label": "Title size — desktop", "min": 90, "max": 126, "step": 2, "unit": "px", "default": 108 },
+    { "type": "range", "id": "title_size_mobile", "label": "Title size — mobile", "min": 60, "max": 82, "step": 2, "unit": "px", "default": 72 },
+    { "type": "range", "id": "kicker_size_desktop", "label": "Kicker size — desktop", "min": 14, "max": 20, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "kicker_size_mobile", "label": "Kicker size — mobile", "min": 11, "max": 15, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "subtitle_size_desktop", "label": "Subtitle size — desktop", "min": 15, "max": 21, "step": 1, "unit": "px", "default": 17 },
+    { "type": "range", "id": "subtitle_size_mobile", "label": "Subtitle size — mobile", "min": 11, "max": 15, "step": 1, "unit": "px", "default": 13 },
+    { "type": "range", "id": "button_size_desktop", "label": "Button text — desktop", "min": 12, "max": 17, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "button_size_mobile", "label": "Button text — mobile", "min": 9, "max": 13, "step": 1, "unit": "px", "default": 10 },
+    { "type": "header", "content": "Content" },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "welcome to" },
     { "type": "text", "id": "title_top", "label": "Title line 1", "default": "GiGi’s" },
     { "type": "text", "id": "title_bottom", "label": "Title line 2", "default": "journey" },
