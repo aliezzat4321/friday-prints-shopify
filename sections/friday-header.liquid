@@ -1,69 +1,181 @@
-{{ 'friday-home-v5.css' | asset_url | stylesheet_tag }}
-{{ 'friday-home-qa.css' | asset_url | stylesheet_tag }}
-{{ 'friday-home-final.css' | asset_url | stylesheet_tag }}
-{{ 'friday-production-fixes.css' | asset_url | stylesheet_tag }}
+{{ 'friday-production.css' | asset_url | stylesheet_tag }}
+<style>
+  :root {
+    --fp-cream: {{ section.settings.color_cream }};
+    --fp-pink: {{ section.settings.color_pink }};
+    --fp-red: {{ section.settings.color_red }};
+    --fp-yellow: {{ section.settings.color_yellow }};
+    --fp-green: {{ section.settings.color_green }};
+    --fp-ink: {{ section.settings.color_ink }};
+    --fp-newsletter: {{ section.settings.color_newsletter }};
+  }
+  #FridayHeader-{{ section.id }} {
+    --fp-header-gigi-desktop: {{ section.settings.gigi_size_desktop }}px;
+    --fp-header-gigi-mobile: {{ section.settings.gigi_size_mobile }}px;
+    --fp-logo-image-width: {{ section.settings.logo_image_width }}px;
+  }
+</style>
 <header class="fp-site-header" id="FridayHeader-{{ section.id }}">
-  <div class="fp-announcement">✦ {{ section.settings.announcement }} ✦</div>
+  {% if section.settings.show_announcement and section.settings.announcement != blank %}
+    <div class="fp-announcement">
+      {% if section.settings.announcement_symbol != blank %}<span aria-hidden="true">{{ section.settings.announcement_symbol }}</span>{% endif %}
+      <span>{{ section.settings.announcement }}</span>
+      {% if section.settings.announcement_symbol != blank %}<span aria-hidden="true">{{ section.settings.announcement_symbol }}</span>{% endif %}
+    </div>
+  {% endif %}
+
   <div class="fp-nav-wrap" data-fp-nav-wrap>
     <div class="fp-shell fp-nav">
-      <a class="fp-logo" href="{{ routes.root_url }}" aria-label="Friday Prints home"><span>friday</span><small>prints.art</small></a>
-      <nav class="fp-nav__links" aria-label="Main navigation">
-        <a href="{{ routes.root_url }}">home</a>
-        <a href="{{ routes.collections_url }}">collections</a>
-        <a href="/pages/about">about</a>
-        <a href="/pages/info">info</a>
-        <a href="/pages/faq">faq</a>
-        <a href="/pages/contact">contact</a>
+      <a class="fp-logo" href="{{ routes.root_url }}" aria-label="{{ section.settings.logo_alt | escape }}">
+        {% if section.settings.logo_image != blank %}
+          {{ section.settings.logo_image | image_url: width: 700 | image_tag: class: 'fp-logo__image', loading: 'eager', widths: '160,240,360,500,700', sizes: 'var(--fp-logo-image-width)', alt: section.settings.logo_alt }}
+        {% else %}
+          <span>{{ section.settings.logo_text }}</span>
+          {% if section.settings.logo_subtext != blank %}<small>{{ section.settings.logo_subtext }}</small>{% endif %}
+        {% endif %}
+      </a>
+
+      <nav class="fp-nav__links" aria-label="{{ section.settings.navigation_label | escape }}">
+        {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}"{% if request.path == section.settings.nav_1_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_1_label }}</a>{% endif %}
+        {% if section.settings.nav_2_label != blank and section.settings.nav_2_url != blank %}<a href="{{ section.settings.nav_2_url }}"{% if request.path == section.settings.nav_2_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_2_label }}</a>{% endif %}
+        {% if section.settings.nav_3_label != blank and section.settings.nav_3_url != blank %}<a href="{{ section.settings.nav_3_url }}"{% if request.path == section.settings.nav_3_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_3_label }}</a>{% endif %}
+        {% if section.settings.nav_4_label != blank and section.settings.nav_4_url != blank %}<a href="{{ section.settings.nav_4_url }}"{% if request.path == section.settings.nav_4_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_4_label }}</a>{% endif %}
+        {% if section.settings.nav_5_label != blank and section.settings.nav_5_url != blank %}<a href="{{ section.settings.nav_5_url }}"{% if request.path == section.settings.nav_5_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_5_label }}</a>{% endif %}
+        {% if section.settings.nav_6_label != blank and section.settings.nav_6_url != blank %}<a href="{{ section.settings.nav_6_url }}"{% if request.path == section.settings.nav_6_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_6_label }}</a>{% endif %}
       </nav>
+
       <div class="fp-nav__actions">
-        <a class="fp-instagram" href="{{ section.settings.instagram_url | default: '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
-        <a class="fp-gigi-link" href="/pages/about" aria-label="Meet GiGi">
-          {% if section.settings.gigi_icon != blank %}
-            {{ section.settings.gigi_icon | image_url: width: 180 | image_tag: class: 'fp-nav__gigi', loading: 'eager', widths: '50,80,120,180', sizes: '44px', alt: 'GiGi' }}
-          {% else %}
-            <span class="fp-gigi-empty" aria-hidden="true">✦</span>
-          {% endif %}
-        </a>
-        <a class="fp-cart" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8h11l1 12h-13l1-12Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><b>{{ cart.item_count }}</b></a>
-        <details class="fp-menu"><summary aria-label="Open menu"><i></i><i></i></summary><nav class="fp-mobile-menu"><a href="{{ routes.root_url }}">home</a><a href="{{ routes.collections_url }}">collections</a><a href="/pages/about">about</a><a href="/pages/info">info</a><a href="/pages/faq">faq</a><a href="/pages/contact">contact</a></nav></details>
+        {% if section.settings.show_instagram and section.settings.instagram_url != blank %}
+          <a class="fp-instagram" href="{{ section.settings.instagram_url }}" aria-label="{{ section.settings.instagram_label | escape }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg>
+          </a>
+        {% endif %}
+
+        {% if section.settings.gigi_icon != blank %}
+          {% if section.settings.gigi_link != blank %}<a class="fp-gigi-link" href="{{ section.settings.gigi_link }}" aria-label="{{ section.settings.gigi_alt | escape }}">{% else %}<span class="fp-gigi-link">{% endif %}
+            {{ section.settings.gigi_icon | image_url: width: 240 | image_tag: class: 'fp-nav__gigi', loading: 'eager', widths: '60,90,120,180,240', sizes: '(max-width: 749px) var(--fp-header-gigi-mobile), var(--fp-header-gigi-desktop)', alt: section.settings.gigi_alt }}
+          {% if section.settings.gigi_link != blank %}</a>{% else %}</span>{% endif %}
+        {% elsif request.design_mode %}
+          <span class="fp-gigi-editor-placeholder">Add GiGi</span>
+        {% endif %}
+
+        {% if section.settings.show_cart %}
+          <a class="fp-cart" href="{{ routes.cart_url }}" aria-label="{{ section.settings.cart_label | escape }}, {{ cart.item_count }} items">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8h11l1 12h-13l1-12Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><b>{{ cart.item_count }}</b>
+          </a>
+        {% endif %}
+
+        <details class="fp-menu">
+          <summary aria-label="{{ section.settings.menu_open_label | escape }}"><i></i><i></i></summary>
+          <nav class="fp-mobile-menu" aria-label="{{ section.settings.mobile_navigation_label | escape }}">
+            {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}">{{ section.settings.nav_1_label }}</a>{% endif %}
+            {% if section.settings.nav_2_label != blank and section.settings.nav_2_url != blank %}<a href="{{ section.settings.nav_2_url }}">{{ section.settings.nav_2_label }}</a>{% endif %}
+            {% if section.settings.nav_3_label != blank and section.settings.nav_3_url != blank %}<a href="{{ section.settings.nav_3_url }}">{{ section.settings.nav_3_label }}</a>{% endif %}
+            {% if section.settings.nav_4_label != blank and section.settings.nav_4_url != blank %}<a href="{{ section.settings.nav_4_url }}">{{ section.settings.nav_4_label }}</a>{% endif %}
+            {% if section.settings.nav_5_label != blank and section.settings.nav_5_url != blank %}<a href="{{ section.settings.nav_5_url }}">{{ section.settings.nav_5_label }}</a>{% endif %}
+            {% if section.settings.nav_6_label != blank and section.settings.nav_6_url != blank %}<a href="{{ section.settings.nav_6_url }}">{{ section.settings.nav_6_label }}</a>{% endif %}
+          </nav>
+        </details>
       </div>
     </div>
   </div>
   <div class="fp-nav-spacer" data-fp-nav-spacer aria-hidden="true"></div>
 </header>
+
 <script>
-(()=>{
-  const header=document.getElementById('FridayHeader-{{ section.id }}');
-  if(!header)return;
-  const wrap=header.querySelector('[data-fp-nav-wrap]');
-  const spacer=header.querySelector('[data-fp-nav-spacer]');
-  const menu=header.querySelector('.fp-menu');
-  if(!wrap||!spacer)return;
-  let lastY=window.scrollY;
-  let ticking=false;
-  const sync=()=>{
-    const y=window.scrollY;
-    const floating=y>110;
-    wrap.classList.toggle('is-floating',floating);
-    spacer.classList.toggle('is-active',floating);
-    if(floating){
-      spacer.style.height=wrap.offsetHeight+'px';
-      const menuOpen=menu&&menu.open;
-      if(menuOpen||y<lastY-4){wrap.classList.remove('is-hidden');}
-      else if(y>lastY+5&&y>160){wrap.classList.add('is-hidden');}
-    }else{
+(() => {
+  const header = document.getElementById('FridayHeader-{{ section.id }}');
+  if (!header) return;
+  const wrap = header.querySelector('[data-fp-nav-wrap]');
+  const spacer = header.querySelector('[data-fp-nav-spacer]');
+  const menu = header.querySelector('.fp-menu');
+  if (!wrap || !spacer) return;
+
+  let lastY = window.scrollY;
+  let ticking = false;
+  const sync = () => {
+    const y = window.scrollY;
+    const floating = y > 110;
+    wrap.classList.toggle('is-floating', floating);
+    if (floating) {
+      spacer.style.height = wrap.offsetHeight + 'px';
+      const menuOpen = menu && menu.open;
+      if (menuOpen || y < lastY - 4) wrap.classList.remove('is-hidden');
+      else if (y > lastY + 5 && y > 160) wrap.classList.add('is-hidden');
+    } else {
       wrap.classList.remove('is-hidden');
-      spacer.style.height='0px';
+      spacer.style.height = '0px';
     }
-    lastY=y;
-    ticking=false;
+    lastY = y;
+    ticking = false;
   };
-  window.addEventListener('scroll',()=>{if(!ticking){requestAnimationFrame(sync);ticking=true;}},{passive:true});
-  window.addEventListener('resize',sync,{passive:true});
-  if(menu)menu.addEventListener('toggle',()=>{if(menu.open)wrap.classList.remove('is-hidden');});
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(sync);
+      ticking = true;
+    }
+  }, { passive: true });
+  window.addEventListener('resize', sync, { passive: true });
+  if (menu) menu.addEventListener('toggle', () => { if (menu.open) wrap.classList.remove('is-hidden'); });
   sync();
 })();
 </script>
+
 {% schema %}
-{"name":"Friday header","settings":[{"type":"text","id":"announcement","label":"Announcement","default":"LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT"},{"type":"url","id":"instagram_url","label":"Instagram URL"},{"type":"image_picker","id":"gigi_icon","label":"GiGi icon","info":"Upload/select the original GiGi artwork used in the navigation."}],"presets":[{"name":"Friday header"}]}
+{
+  "name": "Friday header",
+  "settings": [
+    { "type": "header", "content": "Announcement" },
+    { "type": "checkbox", "id": "show_announcement", "label": "Show announcement", "default": true },
+    { "type": "text", "id": "announcement", "label": "Announcement text", "default": "LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT" },
+    { "type": "text", "id": "announcement_symbol", "label": "Announcement symbol", "default": "✦" },
+
+    { "type": "header", "content": "Logo" },
+    { "type": "image_picker", "id": "logo_image", "label": "Logo image (optional)" },
+    { "type": "range", "id": "logo_image_width", "label": "Logo image width", "min": 80, "max": 260, "step": 5, "unit": "px", "default": 170 },
+    { "type": "text", "id": "logo_text", "label": "Text logo line 1", "default": "friday" },
+    { "type": "text", "id": "logo_subtext", "label": "Text logo line 2", "default": "prints.art" },
+    { "type": "text", "id": "logo_alt", "label": "Logo accessibility label", "default": "Friday Prints home" },
+
+    { "type": "header", "content": "Navigation" },
+    { "type": "text", "id": "navigation_label", "label": "Desktop navigation accessibility label", "default": "Main navigation" },
+    { "type": "text", "id": "mobile_navigation_label", "label": "Mobile navigation accessibility label", "default": "Mobile navigation" },
+    { "type": "text", "id": "menu_open_label", "label": "Menu button accessibility label", "default": "Open menu" },
+    { "type": "text", "id": "nav_1_label", "label": "Link 1 label", "default": "home" },
+    { "type": "url", "id": "nav_1_url", "label": "Link 1 URL" },
+    { "type": "text", "id": "nav_2_label", "label": "Link 2 label", "default": "collections" },
+    { "type": "url", "id": "nav_2_url", "label": "Link 2 URL" },
+    { "type": "text", "id": "nav_3_label", "label": "Link 3 label", "default": "about" },
+    { "type": "url", "id": "nav_3_url", "label": "Link 3 URL" },
+    { "type": "text", "id": "nav_4_label", "label": "Link 4 label", "default": "info" },
+    { "type": "url", "id": "nav_4_url", "label": "Link 4 URL" },
+    { "type": "text", "id": "nav_5_label", "label": "Link 5 label", "default": "faq" },
+    { "type": "url", "id": "nav_5_url", "label": "Link 5 URL" },
+    { "type": "text", "id": "nav_6_label", "label": "Link 6 label", "default": "contact" },
+    { "type": "url", "id": "nav_6_url", "label": "Link 6 URL" },
+
+    { "type": "header", "content": "Header icons" },
+    { "type": "checkbox", "id": "show_instagram", "label": "Show Instagram", "default": true },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "text", "id": "instagram_label", "label": "Instagram accessibility label", "default": "Instagram" },
+    { "type": "image_picker", "id": "gigi_icon", "label": "GiGi image" },
+    { "type": "url", "id": "gigi_link", "label": "GiGi link" },
+    { "type": "text", "id": "gigi_alt", "label": "GiGi alt text", "default": "Meet GiGi" },
+    { "type": "range", "id": "gigi_size_desktop", "label": "GiGi size — desktop", "min": 24, "max": 64, "step": 1, "unit": "px", "default": 42 },
+    { "type": "range", "id": "gigi_size_mobile", "label": "GiGi size — mobile", "min": 20, "max": 48, "step": 1, "unit": "px", "default": 31 },
+    { "type": "checkbox", "id": "show_cart", "label": "Show cart", "default": true },
+    { "type": "text", "id": "cart_label", "label": "Cart accessibility label", "default": "Cart" },
+
+    { "type": "header", "content": "Friday Prints palette" },
+    { "type": "color", "id": "color_cream", "label": "Cream", "default": "#FBF1E4" },
+    { "type": "color", "id": "color_pink", "label": "Pink", "default": "#F2BDC5" },
+    { "type": "color", "id": "color_newsletter", "label": "Newsletter pink", "default": "#E9A5B2" },
+    { "type": "color", "id": "color_red", "label": "Coral red", "default": "#E53F36" },
+    { "type": "color", "id": "color_yellow", "label": "Mustard", "default": "#F3CF78" },
+    { "type": "color", "id": "color_green", "label": "Green accent", "default": "#2F8869" },
+    { "type": "color", "id": "color_ink", "label": "Ink", "default": "#17120F" }
+  ],
+  "presets": [{ "name": "Friday header" }]
+}
 {% endschema %}
