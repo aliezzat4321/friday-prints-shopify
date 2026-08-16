@@ -1,0 +1,101 @@
+/* Friday Prints — senior UI/UX refinement pass */
+
+/* Reveal-on-scroll navigation: normal at the top, hidden while scrolling down, visible with a solid background when scrolling up. */
+.fp-nav-wrap{position:relative;z-index:90;background:var(--fp-cream);transition:transform .24s ease,box-shadow .24s ease,background-color .24s ease;border-bottom:1px solid transparent}
+.fp-nav-wrap.is-floating{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;background:rgba(251,241,228,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 9px 28px rgba(34,20,14,.12);border-bottom-color:rgba(23,18,15,.10)}
+.fp-nav-wrap.is-hidden{transform:translateY(-110%)}
+.fp-nav-spacer{height:0;pointer-events:none}
+
+/* Reliable scallop: one controlled transition only. */
+.fp-scallop{height:18px!important;position:relative!important;background-color:var(--fp-pink)!important;background-image:radial-gradient(circle at 9px 0,var(--fp-cream) 8.5px,transparent 9px)!important;background-size:18px 18px!important;background-repeat:repeat-x!important}
+.fp-scallop:before{display:none!important}
+.fp-collection:before{display:none!important}
+
+/* Give typography and commerce content enough presence on desktop. */
+@media(min-width:951px){
+  .fp-story__title{font-size:42px!important}
+  .fp-story__text{font-size:16px!important;line-height:1.6!important}
+  .fp-story__handle{font-size:14px!important}
+  .fp-benefit{min-height:184px!important;padding:30px 24px!important}
+  .fp-benefit h3{font-size:14px!important}
+  .fp-benefit p{font-size:13px!important;line-height:1.48!important}
+  .fp-benefit__icon{font-size:31px!important}
+  .fp-collection__rail{gap:16px!important;padding-inline:46px!important}
+  .fp-product{flex:0 0 calc((100% - 64px)/5)!important;max-width:none!important}
+  .fp-product h3{font-size:11px!important;line-height:1.25!important}
+  .fp-product p{font-size:10.5px!important}
+  .fp-service{min-height:146px!important;padding:27px 22px!important}
+  .fp-service h3{font-size:13px!important}
+  .fp-service p{font-size:11.5px!important;line-height:1.45!important}
+}
+
+/* Newsletter — a deliberate final brand moment rather than an afterthought. */
+.fp-newsletter{background:#e9a5b2;color:var(--fp-ink);border-top:1px solid rgba(23,18,15,.12)}
+.fp-newsletter__grid{min-height:220px;display:grid;grid-template-columns:1fr 1.35fr 110px;gap:38px;align-items:center;padding:42px 46px}
+.fp-newsletter__eyebrow{margin:0 0 10px;font:700 9px/1 "Courier New",monospace;letter-spacing:.09em}
+.fp-newsletter h2{margin:0 0 12px;font:700 clamp(38px,3.6vw,56px)/.84 Georgia,"Times New Roman",serif;letter-spacing:-.045em}
+.fp-newsletter__copy>p:last-child{margin:0;font:12px/1.45 "Courier New",monospace}
+.fp-newsletter__form{display:flex;min-height:52px}
+.fp-newsletter__form input{flex:1;min-width:0;border:1px solid var(--fp-ink);border-right:0;background:#fff9f1;padding:0 16px;color:var(--fp-ink);font:12px "Courier New",monospace;border-radius:0}
+.fp-newsletter__form button{border:1px solid var(--fp-ink);background:var(--fp-ink);color:#fff;padding:0 22px;font:700 10px/1 "Courier New",monospace;letter-spacing:.04em;white-space:nowrap;cursor:pointer}
+.fp-newsletter__gigi{display:block;width:82px;height:120px;object-fit:contain;justify-self:end}
+
+/* Footer — large identity, useful commerce links, and a crisp black sign-off. */
+.fp-footer{width:100%;background:var(--fp-cream);color:var(--fp-ink);box-sizing:border-box;border-top:1px solid rgba(23,18,15,.14)}
+.fp-footer *{box-sizing:border-box}
+.fp-footer__grid{display:grid;grid-template-columns:1.7fr repeat(4,1fr);gap:42px;padding:54px 46px 48px}
+.fp-footer__brand{font:700 clamp(48px,5.5vw,82px)/.72 "Courier New",monospace;letter-spacing:-.085em;text-transform:lowercase}
+.fp-footer__brand-block>p{max-width:25ch;margin:22px 0 0;font:700 11px/1.5 "Courier New",monospace;text-transform:uppercase}
+.fp-footer__gigi-wrap{display:flex;align-items:flex-end;gap:14px;margin-top:30px}
+.fp-footer__gigi-wrap img{width:66px;height:96px;object-fit:contain}
+.fp-footer__gigi-wrap span{padding-bottom:11px;font:700 8px/1.3 "Courier New",monospace;letter-spacing:.08em;transform:rotate(-4deg)}
+.fp-footer__col{display:flex;flex-direction:column;gap:11px;padding-top:7px}
+.fp-footer__col strong{margin-bottom:7px;font:700 10px/1 "Courier New",monospace;letter-spacing:.06em}
+.fp-footer__col a,.fp-footer__col span{color:inherit;text-decoration:none;font:11px/1.35 "Courier New",monospace}
+.fp-footer__col a:hover{text-decoration:underline;text-underline-offset:4px}
+.fp-footer__bottom{min-height:42px;background:#17120f;color:#fff;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:0 46px;font:700 8px/1 "Courier New",monospace;letter-spacing:.06em}
+.fp-footer__bottom span:nth-child(2){text-align:center}.fp-footer__bottom span:last-child{text-align:right}
+
+@media(max-width:950px){
+  .fp-newsletter__grid{grid-template-columns:1fr 1.2fr 80px;gap:24px;padding-inline:28px}
+  .fp-footer__grid{grid-template-columns:1.3fr repeat(2,1fr);row-gap:36px;padding-inline:28px}
+  .fp-footer__brand-block{grid-row:span 2}
+}
+
+@media(max-width:749px){
+  .fp-nav-wrap.is-floating .fp-nav{height:62px!important}
+  .fp-nav-wrap.is-floating .fp-logo{font-size:23px!important}
+  .fp-nav-wrap.is-floating .fp-logo small{font-size:7px!important}
+
+  .fp-scallop{height:14px!important;background-image:radial-gradient(circle at 7px 0,var(--fp-cream) 6.5px,transparent 7px)!important;background-size:14px 14px!important}
+
+  /* Readability: no more micro type. */
+  .fp-story__text{font-size:11px!important;line-height:1.5!important}
+  .fp-benefit h3{font-size:9.5px!important}
+  .fp-benefit p{font-size:9px!important;line-height:1.4!important}
+  .fp-product h3{font-size:9.4px!important;line-height:1.25!important}
+  .fp-product p{font-size:8.6px!important}
+  .fp-service h3{font-size:8.5px!important}
+  .fp-service p{font-size:8px!important;line-height:1.36!important}
+
+  .fp-newsletter__grid{display:grid;grid-template-columns:1fr 64px;gap:16px;padding:30px 20px;min-height:0}
+  .fp-newsletter__copy{grid-column:1/2}
+  .fp-newsletter__eyebrow{font-size:7.5px}
+  .fp-newsletter h2{font-size:34px;margin-bottom:9px}
+  .fp-newsletter__copy>p:last-child{font-size:9px}
+  .fp-newsletter__gigi{grid-column:2;grid-row:1;width:56px;height:82px;align-self:end}
+  .fp-newsletter__form{grid-column:1/-1;min-height:44px;margin-top:2px}
+  .fp-newsletter__form input{font-size:9px;padding-inline:11px}
+  .fp-newsletter__form button{font-size:8px;padding-inline:13px}
+
+  .fp-footer__grid{grid-template-columns:1fr 1fr;gap:0;padding:34px 20px 24px}
+  .fp-footer__brand-block{grid-column:1/-1;grid-row:auto;border-bottom:1px solid var(--fp-line);padding-bottom:26px;margin-bottom:4px}
+  .fp-footer__brand{font-size:52px}
+  .fp-footer__brand-block>p{font-size:8.5px;margin-top:16px}
+  .fp-footer__gigi-wrap{margin-top:18px;justify-content:space-between}.fp-footer__gigi-wrap img{width:54px;height:80px}.fp-footer__gigi-wrap span{font-size:7px}
+  .fp-footer__col{min-height:128px;padding:20px 12px 16px 0;border-bottom:1px solid var(--fp-line)}
+  .fp-footer__col:nth-of-type(even){border-right:1px solid var(--fp-line)}
+  .fp-footer__col:nth-of-type(odd){padding-left:14px}
+  .fp-footer__col strong{font-size:8px}.fp-footer__col a,.fp-footer__col span{font-size:8.5px}
+  .fp-footer__bottom{min-height:64px;grid-template-columns:1fr 1fr;padding:11px 20px;font-size:6.5px;row-gap:7px}.fp-footer__bottom span:nth-child(2){text-align:right}.fp-footer__bottom span:last-child{grid-column:1/-1;text-align:center}
+}
