@@ -3,7 +3,12 @@
     <div class="fp-footer__brand-block">
       <div class="fp-footer__brand">friday<br>prints :)</div>
       <p>made for long weekends &amp; loud lines.</p>
-      <div class="fp-footer__gigi-wrap"><img class="fp-footer__gigi" src="{{ 'friday-gigi-nav.png' | asset_url }}" alt="" width="86" height="126" loading="lazy"><span>CAIRO → EVERYWHERE</span></div>
+      <div class="fp-footer__gigi-wrap">
+        {% if section.settings.gigi_icon != blank %}
+          {{ section.settings.gigi_icon | image_url: width: 340 | image_tag: class: 'fp-footer__gigi', loading: 'lazy', widths: '100,160,240,340', sizes: '90px', alt: 'GiGi' }}
+        {% endif %}
+        <span>CAIRO → EVERYWHERE</span>
+      </div>
     </div>
     <nav class="fp-footer__col" aria-label="Shop"><strong>SHOP</strong><a href="{{ routes.all_products_collection_url }}">all prints</a><a href="{{ routes.collections_url }}">collections</a><a href="{{ routes.all_products_collection_url }}?sort_by=created-descending">new drops</a></nav>
     <nav class="fp-footer__col" aria-label="Information"><strong>INFO</strong><a href="/pages/about">our story</a><a href="/pages/info">print details</a><a href="/pages/info">shipping &amp; returns</a><a href="/pages/faq">faq</a></nav>
@@ -12,4 +17,4 @@
   </div>
   <div class="fp-footer__bottom"><span>© {{ 'now' | date: '%Y' }} FRIDAY PRINTS</span><span>MADE IN CAIRO</span><span>WITH ♥ &amp; LOUD LINES</span></div>
 </footer>
-{% schema %}{"name":"Friday footer","settings":[{"type":"url","id":"instagram_url","label":"Instagram URL"}],"presets":[{"name":"Friday footer"}]}{% endschema %}
+{% schema %}{"name":"Friday footer","settings":[{"type":"url","id":"instagram_url","label":"Instagram URL"},{"type":"image_picker","id":"gigi_icon","label":"GiGi icon","info":"Select the GiGi artwork used in the footer."}],"presets":[{"name":"Friday footer"}]}{% endschema %}
