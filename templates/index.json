@@ -2,12 +2,11 @@
   "sections": {
     "friday_header": {"type":"friday-header","settings":{"announcement":"LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT"}},
     "friday_hero": {"type":"friday-hero","settings":{"kicker":"welcome to","title_top":"GiGi’s","title_bottom":"journey","subtitle":"Art prints made for long weekends & loud lines.","shop_label":"shop prints","shop_link":"shopify://collections/all","collection_label":"explore the collection","collection_link":"shopify://collections/all"}},
-    "friday_story": {"type":"friday-story","settings":{"heading":"the story","story":"<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>","handle":"@fridayprints.art"}},
-    "friday_benefits": {"type":"friday-benefits","settings":{}},
-    "friday_collection": {"type":"friday-collection","settings":{"heading":"the collection","collection":"all","button_label":"view all prints"}},
-    "friday_services": {"type":"friday-services","settings":{}},
+    "friday_story": {"type":"friday-story","settings":{"heading":"the story","headline":"Every character has a story.","story":"<p>GiGi was created as a way to personify friends, their moods, quirks and adventures.</p><p>Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>These prints are small fragments of that world.</p>","read_label":"read more about Amina"}},
+    "friday_collection": {"type":"friday-collection","settings":{"kicker":"the collection","heading":"Explore GiGi’s worlds.","collection":"all","button_label":"view all prints"}},
+    "friday_services": {"type":"friday-services","settings":{"kicker":"why our prints","heading":"Made with care. Meant to be kept."}},
     "friday_newsletter": {"type":"friday-newsletter","settings":{}},
     "friday_footer": {"type":"friday-footer","settings":{"instagram_url":""}}
   },
-  "order": ["friday_header","friday_hero","friday_story","friday_benefits","friday_collection","friday_services","friday_newsletter","friday_footer"]
+  "order": ["friday_header","friday_hero","friday_story","friday_collection","friday_services","friday_newsletter","friday_footer"]
 }
