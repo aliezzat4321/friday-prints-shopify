@@ -1,28 +1,24 @@
-{% assign fr_collection = section.settings.collection %}{% if fr_collection == blank %}{% assign fr_collection = collections['all'] %}{% endif %}
-{% assign fr_count = fr_collection.products_count | at_most: 6 %}
-<section class="fr-section fr-collection fr-collection--count-{{ fr_count }}" id="FridayCollection-{{ section.id }}">
-  <div class="fr-shell fr-collection__inner">
-    <p class="fr-collection__eyebrow">03 — CURATED PRINTS</p>
-    <div class="fr-collection__title"><h2>{{ section.settings.heading }}</h2></div>
-    <button class="fr-arrow fr-arrow--prev" type="button" aria-label="Previous prints" data-fr-prev>‹</button>
-    <div class="fr-collection__rail" data-fr-rail data-count="{{ fr_count }}">
-      {% if fr_collection != blank and fr_collection.products_count > 0 %}
-        {% for product in fr_collection.products limit: 6 %}
-          <a class="fr-product" href="{{ product.url }}">
-            <div class="fr-product__media">{% if product.featured_image %}{{ product.featured_image | image_url: width: 700 | image_tag: loading:'lazy', widths:'220,360,480,600,700', sizes:'(max-width:749px) 63vw, 220px' }}{% else %}{{ 'product-1' | placeholder_svg_tag }}{% endif %}</div>
+{% assign fp_collection = section.settings.collection %}{% if fp_collection == blank %}{% assign fp_collection = collections['all'] %}{% endif %}
+<section class="fp-section fp-collection" id="FridayCollection-{{ section.id }}">
+  <div class="fp-shell fp-collection__inner">
+    <div class="fp-collection__title"><h2>{{ section.settings.heading }}</h2></div>
+    <button class="fp-arrow fp-arrow--prev" type="button" aria-label="Previous prints" data-fp-prev>‹</button>
+    <div class="fp-collection__rail" data-fp-rail>
+      {% if fp_collection != blank and fp_collection.products_count > 0 %}
+        {% for product in fp_collection.products limit: 7 %}
+          <a class="fp-product" href="{{ product.url }}">
+            <div class="fp-product__media">{% if product.featured_image %}{{ product.featured_image | image_url: width: 700 | image_tag: loading:'lazy', widths:'220,360,480,600,700', sizes:'(max-width:749px) 54vw, 190px' }}{% else %}{{ 'product-1' | placeholder_svg_tag }}{% endif %}</div>
             <h3>{{ product.title }}</h3><p>{{ product.price | money }}</p>
           </a>
         {% endfor %}
       {% else %}
-        {% assign names = "pink mood|the collector|GiGi does Tokyo" | split: "|" %}
-        {% for name in names %}<div class="fr-product"><div class="fr-product__media">{{ 'product-1' | placeholder_svg_tag }}</div><h3>{{ name }}</h3><p>coming soon</p></div>{% endfor %}
+        {% assign names = "the collector|sunday’s best|daydreamer|tea for one|keep moving|confidence|wild at heart" | split: "|" %}
+        {% for name in names %}<div class="fp-product"><div class="fp-product__media">{{ 'product-1' | placeholder_svg_tag }}</div><h3>{{ name }}</h3><p>add product</p></div>{% endfor %}
       {% endif %}
     </div>
-    <button class="fr-arrow fr-arrow--next" type="button" aria-label="Next prints" data-fr-next>›</button>
-    <div class="fr-collection__button"><a class="fr-btn" href="{{ fr_collection.url | default: routes.all_products_collection_url }}">{{ section.settings.button_label }} →</a></div>
+    <button class="fp-arrow fp-arrow--next" type="button" aria-label="Next prints" data-fp-next>›</button>
+    <div class="fp-collection__cta"><a href="{{ fp_collection.url | default: routes.all_products_collection_url }}">{{ section.settings.button_label }}</a></div>
   </div>
 </section>
-<script>(()=>{const r=document.getElementById('FridayCollection-{{ section.id }}');if(!r)return;const rail=r.querySelector('[data-fr-rail]');r.querySelector('[data-fr-prev]')?.addEventListener('click',()=>rail.scrollBy({left:-rail.clientWidth*.72,behavior:'smooth'}));r.querySelector('[data-fr-next]')?.addEventListener('click',()=>rail.scrollBy({left:rail.clientWidth*.72,behavior:'smooth'}));})();</script>
-{% schema %}
-{"name":"Friday collection","settings":[{"type":"text","id":"heading","label":"Heading","default":"A collection of worlds."},{"type":"collection","id":"collection","label":"Collection"},{"type":"text","id":"button_label","label":"Button label","default":"explore all prints"}],"presets":[{"name":"Friday collection"}]}
-{% endschema %}
+<script>(()=>{const r=document.getElementById('FridayCollection-{{ section.id }}');if(!r)return;const rail=r.querySelector('[data-fp-rail]');r.querySelector('[data-fp-prev]')?.addEventListener('click',()=>rail.scrollBy({left:-rail.clientWidth*.72,behavior:'smooth'}));r.querySelector('[data-fp-next]')?.addEventListener('click',()=>rail.scrollBy({left:rail.clientWidth*.72,behavior:'smooth'}));})();</script>
+{% schema %}{"name":"Friday collection","settings":[{"type":"text","id":"heading","label":"Heading","default":"the collection"},{"type":"collection","id":"collection","label":"Collection"},{"type":"text","id":"button_label","label":"Button label","default":"view all prints"}],"presets":[{"name":"Friday collection"}]}{% endschema %}
