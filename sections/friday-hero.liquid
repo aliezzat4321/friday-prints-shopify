@@ -1,3 +1,54 @@
+<style>
+  /* Shopify theme-editor guard: keep the nav in normal flow while editing. */
+  html.shopify-design-mode .fp-nav-wrap,
+  body.shopify-design-mode .fp-nav-wrap,
+  .shopify-design-mode .fp-nav-wrap {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    transform: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  html.shopify-design-mode .fp-nav-spacer,
+  body.shopify-design-mode .fp-nav-spacer,
+  .shopify-design-mode .fp-nav-spacer {
+    display: none !important;
+    height: 0 !important;
+  }
+
+  /* The approved reference has a deliberate pause between navigation and hero copy. */
+  #FridayHero-{{ section.id }} .fp-hero__grid {
+    padding-top: clamp(64px, 5.5vw, 94px);
+  }
+
+  @media (min-width: 901px) {
+    #FridayHero-{{ section.id }} .fp-hero__buttons {
+      flex-wrap: nowrap;
+    }
+  }
+
+  @media (max-width: 900px) {
+    #FridayHero-{{ section.id }} .fp-hero__grid {
+      padding-top: 44px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    #FridayHero-{{ section.id }} .fp-hero__grid {
+      padding-top: 36px;
+    }
+    #FridayHero-{{ section.id }} .fp-hero__copy {
+      padding-top: 0;
+    }
+  }
+</style>
+
 <section class="fp-section fp-hero" id="FridayHero-{{ section.id }}">
   <div class="fp-shell fp-hero__grid">
     <div class="fp-hero__copy">
