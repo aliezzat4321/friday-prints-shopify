@@ -1,4 +1,9 @@
 {{ 'friday-reference.css' | asset_url | stylesheet_tag }}
+<style>
+body:has(.fr-site-header) .content-for-layout{padding:0!important;margin:0!important;max-width:none!important;width:100%!important}
+body:has(.fr-site-header) #MainContent>.shopify-section{margin:0!important;padding:0!important;max-width:none!important;width:100%!important}
+body:has(.fr-site-header) .page-wrapper{max-width:none!important;width:100%!important}
+</style>
 <header class="fr-site-header" id="FridayHeader-{{ section.id }}">
   <div class="fr-announcement">✦ {{ section.settings.announcement }} ✦</div>
   <div class="fr-shell fr-nav">
