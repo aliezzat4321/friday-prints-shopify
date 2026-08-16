@@ -38,22 +38,14 @@
         "handle": "@fridayprints.art"
       }
     },
-    "friday_benefits": {
-      "type": "friday-benefits",
-      "settings": {}
-    },
+    "friday_benefits": {"type":"friday-benefits","settings":{}},
     "friday_collection": {
       "type": "friday-collection",
-      "settings": {
-        "heading": "the collection",
-        "collection": "all",
-        "button_label": "view all prints"
-      }
+      "settings": {"heading":"the collection","collection":"all","button_label":"view all prints"}
     },
-    "friday_services": {
-      "type": "friday-services",
-      "settings": {}
-    }
+    "friday_services": {"type":"friday-services","settings":{}},
+    "friday_newsletter": {"type":"friday-newsletter","settings":{}},
+    "friday_footer": {"type":"friday-footer","settings":{"instagram_url":""}}
   },
   "order": [
     "friday_header",
@@ -61,6 +53,8 @@
     "friday_story",
     "friday_benefits",
     "friday_collection",
-    "friday_services"
+    "friday_services",
+    "friday_newsletter",
+    "friday_footer"
   ]
 }
