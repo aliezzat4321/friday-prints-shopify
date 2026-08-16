@@ -1,4 +1,23 @@
-<section class="fp-section fp-story" id="FridayStory-{{ section.id }}" style="--fp-story-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-story-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;">
+<section class="fp-section fp-story" id="FridayStory-{{ section.id }}" style="--fp-story-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-story-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;--fp-story-heading-desktop:{{ section.settings.heading_size_desktop }}px;--fp-story-heading-mobile:{{ section.settings.heading_size_mobile }}px;--fp-story-body-desktop:{{ section.settings.body_size_desktop }}px;--fp-story-body-mobile:{{ section.settings.body_size_mobile }}px;--fp-story-copy-width:{{ section.settings.copy_width }}px;">
+  <style>
+    #FridayStory-{{ section.id }} .fp-story__grid{gap:72px;padding:64px 56px 60px}
+    #FridayStory-{{ section.id }} .fp-story__copy{max-width:var(--fp-story-copy-width)}
+    #FridayStory-{{ section.id }} .fp-story__title{font-size:var(--fp-story-heading-desktop);margin-bottom:22px}
+    #FridayStory-{{ section.id }} .fp-story__text{font-size:var(--fp-story-body-desktop);line-height:1.55}
+    #FridayStory-{{ section.id }} .fp-story__text p{margin-bottom:13px}
+    @media(max-width:1100px) and (min-width:750px){
+      #FridayStory-{{ section.id }} .fp-story__grid{gap:44px;padding:52px 30px}
+      #FridayStory-{{ section.id }} .fp-story__title{font-size:38px}
+      #FridayStory-{{ section.id }} .fp-story__text{font-size:15px}
+    }
+    @media(max-width:749px){
+      #FridayStory-{{ section.id }} .fp-story__grid{padding:42px 22px 40px}
+      #FridayStory-{{ section.id }} .fp-story__copy{max-width:none}
+      #FridayStory-{{ section.id }} .fp-story__title{font-size:var(--fp-story-heading-mobile);margin-bottom:18px}
+      #FridayStory-{{ section.id }} .fp-story__text{font-size:var(--fp-story-body-mobile);line-height:1.56}
+      #FridayStory-{{ section.id }} .fp-story__text p{margin-bottom:12px}
+    }
+  </style>
   {% if section.settings.show_decorations %}
     {% if section.settings.deco_left != blank %}<span class="fp-story__deco fp-story__deco--a" aria-hidden="true">{{ section.settings.deco_left }}</span>{% endif %}
     {% if section.settings.deco_right != blank %}<span class="fp-story__deco fp-story__deco--b" aria-hidden="true">{{ section.settings.deco_right }}</span>{% endif %}
@@ -25,6 +44,13 @@
 {
   "name": "Friday story",
   "settings": [
+    { "type": "header", "content": "Typography" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size — desktop", "min": 34, "max": 50, "step": 1, "unit": "px", "default": 42 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size — mobile", "min": 30, "max": 42, "step": 1, "unit": "px", "default": 36 },
+    { "type": "range", "id": "body_size_desktop", "label": "Body size — desktop", "min": 14, "max": 19, "step": 1, "unit": "px", "default": 16 },
+    { "type": "range", "id": "body_size_mobile", "label": "Body size — mobile", "min": 12, "max": 16, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "copy_width", "label": "Text column width — desktop", "min": 560, "max": 760, "step": 20, "unit": "px", "default": 640 },
+    { "type": "header", "content": "Content" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "the story" },
     { "type": "richtext", "id": "story", "label": "Story", "default": "<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>" },
     { "type": "text", "id": "handle", "label": "Handle / caption", "default": "@fridayprints.art" },
