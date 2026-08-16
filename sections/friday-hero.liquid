@@ -1,23 +1,45 @@
 <section class="fp-section fp-hero" id="FridayHero-{{ section.id }}">
   <div class="fp-shell fp-hero__grid">
     <div class="fp-hero__copy">
-      <p class="fp-hero__kicker">{{ section.settings.kicker }}</p>
-      <h1>{{ section.settings.title_top }}<span>{{ section.settings.title_bottom }}</span></h1>
-      <p class="fp-hero__sub">{{ section.settings.subtitle }}</p>
-      <div class="fp-hero__buttons">
-        <a class="fp-btn fp-btn--solid" href="{{ section.settings.shop_link | default: routes.all_products_collection_url }}">{{ section.settings.shop_label }}</a>
-        <a class="fp-btn" href="{{ section.settings.collection_link | default: routes.collections_url }}">{{ section.settings.collection_label }}</a>
-      </div>
+      {% if section.settings.kicker != blank %}<p class="fp-hero__kicker">{{ section.settings.kicker }}</p>{% endif %}
+      {% if section.settings.title_top != blank or section.settings.title_bottom != blank %}
+        <h1>{{ section.settings.title_top }}{% if section.settings.title_bottom != blank %}<span>{{ section.settings.title_bottom }}</span>{% endif %}</h1>
+      {% endif %}
+      {% if section.settings.subtitle != blank %}<p class="fp-hero__sub">{{ section.settings.subtitle }}</p>{% endif %}
+      {% if section.settings.shop_label != blank or section.settings.collection_label != blank %}
+        <div class="fp-hero__buttons">
+          {% if section.settings.shop_label != blank and section.settings.shop_link != blank %}<a class="fp-btn fp-btn--solid" href="{{ section.settings.shop_link }}">{{ section.settings.shop_label }}</a>{% endif %}
+          {% if section.settings.collection_label != blank and section.settings.collection_link != blank %}<a class="fp-btn" href="{{ section.settings.collection_link }}">{{ section.settings.collection_label }}</a>{% endif %}
+        </div>
+      {% endif %}
     </div>
     <div class="fp-hero__scene">
       {% if section.settings.hero_scene != blank %}
-        {{ section.settings.hero_scene | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200,1400', sizes: '(max-width: 749px) 100vw, 59vw', alt: 'Friday Prints hero artwork' }}
-      {% else %}
-        <div class="fp-hero__placeholder">Select “Approved hero scene” in this section.</div>
+        {{ section.settings.hero_scene | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200,1500,1800', sizes: '(max-width: 749px) 100vw, 60vw', alt: section.settings.hero_alt }}
+      {% elsif request.design_mode %}
+        <div class="fp-hero__placeholder">{{ section.settings.empty_message }}</div>
       {% endif %}
     </div>
   </div>
 </section>
 {% schema %}
-{"name":"Friday hero","settings":[{"type":"text","id":"kicker","label":"Kicker","default":"welcome to"},{"type":"text","id":"title_top","label":"Title line 1","default":"GiGi’s"},{"type":"text","id":"title_bottom","label":"Title line 2","default":"journey"},{"type":"textarea","id":"subtitle","label":"Subtitle","default":"Art prints made for long weekends & loud lines."},{"type":"text","id":"shop_label","label":"Shop button","default":"shop prints"},{"type":"url","id":"shop_link","label":"Shop link"},{"type":"text","id":"collection_label","label":"Collection button","default":"explore the collection"},{"type":"url","id":"collection_link","label":"Collection link"},{"type":"image_picker","id":"hero_scene","label":"Approved hero scene"}],"presets":[{"name":"Friday hero"}]}
+{
+  "name": "Friday hero",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "welcome to" },
+    { "type": "text", "id": "title_top", "label": "Title line 1", "default": "GiGi’s" },
+    { "type": "text", "id": "title_bottom", "label": "Title line 2", "default": "journey" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Art prints made for long weekends & loud lines." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "shop_label", "label": "Primary button label", "default": "shop prints" },
+    { "type": "url", "id": "shop_link", "label": "Primary button link" },
+    { "type": "text", "id": "collection_label", "label": "Secondary button label", "default": "explore the collection" },
+    { "type": "url", "id": "collection_link", "label": "Secondary button link" },
+    { "type": "header", "content": "Artwork" },
+    { "type": "image_picker", "id": "hero_scene", "label": "Hero artwork" },
+    { "type": "text", "id": "hero_alt", "label": "Hero artwork alt text", "default": "Friday Prints hero artwork" },
+    { "type": "text", "id": "empty_message", "label": "Editor placeholder text", "default": "Select the hero artwork in this section." }
+  ],
+  "presets": [{ "name": "Friday hero" }]
+}
 {% endschema %}
