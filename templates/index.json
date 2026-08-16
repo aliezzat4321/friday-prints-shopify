@@ -13,6 +13,14 @@
       "type": "friday-hero",
       "settings": {
         "height_mode": "viewport",
+        "title_size_desktop": 102,
+        "title_size_mobile": 72,
+        "kicker_size_desktop": 16,
+        "kicker_size_mobile": 13,
+        "subtitle_size_desktop": 17,
+        "subtitle_size_mobile": 13,
+        "button_size_desktop": 14,
+        "button_size_mobile": 10,
         "kicker": "welcome to",
         "title_top": "GiGi’s",
         "title_bottom": "journey",
@@ -29,6 +37,11 @@
     "friday_story": {
       "type": "friday-story",
       "settings": {
+        "heading_size_desktop": 42,
+        "heading_size_mobile": 36,
+        "body_size_desktop": 16,
+        "body_size_mobile": 14,
+        "copy_width": 640,
         "heading": "the story",
         "story": "<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>",
         "handle": "@fridayprints.art",
@@ -84,6 +97,10 @@
       "type": "friday-newsletter",
       "settings": {
         "background_color": "#e9a5b2",
+        "heading_size_desktop": 52,
+        "heading_size_mobile": 36,
+        "body_size_desktop": 14,
+        "body_size_mobile": 12,
         "eyebrow": "FROM CAIRO, OCCASIONALLY.",
         "heading": "Postcards from GiGi",
         "text": "A small email newsletter with new prints, new drops & studio notes.",
@@ -141,9 +158,23 @@
             "link_4_label": "",
             "link_4_url": ""
           }
+        },
+        "footer_legal": {
+          "type": "column",
+          "settings": {
+            "heading": "LEGAL",
+            "link_1_label": "shipping policy",
+            "link_1_url": "/policies/shipping-policy",
+            "link_2_label": "privacy policy",
+            "link_2_url": "/policies/privacy-policy",
+            "link_3_label": "",
+            "link_3_url": "",
+            "link_4_label": "",
+            "link_4_url": ""
+          }
         }
       },
-      "block_order": ["footer_shop", "footer_about", "footer_info"],
+      "block_order": ["footer_shop", "footer_about", "footer_info", "footer_legal"],
       "settings": {
         "brand_text": "friday\nprints",
         "tagline": "made for long weekends & loud lines.",
@@ -152,6 +183,13 @@
         "gigi_alt": "GiGi",
         "gigi_size_desktop": 90,
         "gigi_size_mobile": 65,
+        "show_instagram": true,
+        "instagram_url": "https://www.instagram.com/fridayprints.art/",
+        "instagram_label": "instagram",
+        "heading_size_desktop": 13,
+        "heading_size_mobile": 12,
+        "link_size_desktop": 16,
+        "link_size_mobile": 13,
         "copyright_name": "FRIDAY PRINTS",
         "bottom_center": "MADE IN CAIRO",
         "bottom_right": "WITH ♥ & LOUD LINES"
