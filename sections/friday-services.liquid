@@ -1,4 +1,4 @@
-<section class="fp-section fp-services" id="FridayServices-{{ section.id }}">
+<section class="fp-section fp-services" id="FridayServices-{{ section.id }}" style="--fp-services-bg: {{ section.settings.background_color }};">
   <div class="fp-shell fp-services__grid">
     {% for block in section.blocks %}
       <article class="fp-service" {{ block.shopify_attributes }}>
@@ -14,6 +14,9 @@
 {% schema %}
 {
   "name": "Friday services",
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#FBF1E4" }
+  ],
   "max_blocks": 4,
   "blocks": [
     {
