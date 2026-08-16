@@ -1,20 +1,24 @@
-<section class="fr-section fr-hero" id="FridayHero-{{ section.id }}">
-  <div class="fr-shell fr-hero__grid">
-    <div class="fr-hero__copy">
-      <p class="fr-kicker"><b>01</b> — MEET GiGi</p>
-      <h1>{{ section.settings.title_top }}<span>{{ section.settings.title_bottom }}<i>.</i></span></h1>
-      <p class="fr-hero__sub">{{ section.settings.subtitle }}</p>
-      <a class="fr-hero__link" href="{{ section.settings.shop_link | default: routes.all_products_collection_url }}">{{ section.settings.shop_label }} <span aria-hidden="true">→</span></a>
-      <div class="fr-hero__scroll" aria-hidden="true">scroll</div>
+<section class="fp-section fp-hero" id="FridayHero-{{ section.id }}">
+  <div class="fp-shell fp-hero__grid">
+    <div class="fp-hero__copy">
+      <p class="fp-hero__kicker">{{ section.settings.kicker }}</p>
+      <h1>{{ section.settings.title_top }}<span>{{ section.settings.title_bottom }}</span></h1>
+      <p class="fp-hero__sub">{{ section.settings.subtitle }}</p>
+      <div class="fp-hero__buttons">
+        <a class="fp-btn fp-btn--solid" href="{{ section.settings.shop_link | default: routes.all_products_collection_url }}">{{ section.settings.shop_label }}</a>
+        <a class="fp-btn" href="{{ section.settings.collection_link | default: routes.collections_url }}">{{ section.settings.collection_label }}</a>
+      </div>
     </div>
-    <div class="fr-hero__scene" aria-label="Meet GiGi">
-      <div class="fr-hero__panel" aria-hidden="true"></div>
-      <img class="fr-hero__art" src="{{ 'friday-gigi-hero.png' | asset_url }}" width="520" height="520" alt="GiGi" loading="eager" fetchpriority="high" onerror="this.onerror=null;this.src='{{ 'friday-gigi-nav.png' | asset_url }}';this.classList.add('fr-hero__art--fallback');">
-      <div class="fr-hero__note" aria-hidden="true">GiGi x</div>
+    <div class="fp-hero__scene">
+      {% if section.settings.hero_scene != blank %}
+        {{ section.settings.hero_scene | image_url: width: 1200 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200', sizes: '(max-width: 749px) 100vw, 59vw', alt: 'Friday Prints hero artwork' }}
+      {% else %}
+        <div class="fp-hero__placeholder">Select “Approved hero scene” in this section.<br>The page will not reserve a giant empty image box.</div>
+      {% endif %}
     </div>
-    <div class="fr-hero__numbers" aria-hidden="true"><b>01</b><span>02</span><span>03</span><span>04</span><span>05</span><span>06</span></div>
   </div>
+  <div class="fp-scallop" aria-hidden="true"></div>
 </section>
 {% schema %}
-{"name":"Friday hero","settings":[{"type":"text","id":"title_top","label":"Title line 1","default":"GiGi’s"},{"type":"text","id":"title_bottom","label":"Title line 2","default":"journey"},{"type":"textarea","id":"subtitle","label":"Subtitle","default":"Art prints made for long weekends & loud lines."},{"type":"text","id":"shop_label","label":"Shop link","default":"explore prints"},{"type":"url","id":"shop_link","label":"Shop URL"}],"presets":[{"name":"Friday hero"}]}
+{"name":"Friday hero","settings":[{"type":"text","id":"kicker","label":"Kicker","default":"welcome to"},{"type":"text","id":"title_top","label":"Title line 1","default":"GiGi’s"},{"type":"text","id":"title_bottom","label":"Title line 2","default":"journey"},{"type":"textarea","id":"subtitle","label":"Subtitle","default":"Art prints made for long weekends & loud lines."},{"type":"text","id":"shop_label","label":"Shop button","default":"shop prints"},{"type":"url","id":"shop_link","label":"Shop link"},{"type":"text","id":"collection_label","label":"Collection button","default":"explore the collection"},{"type":"url","id":"collection_link","label":"Collection link"},{"type":"image_picker","id":"hero_scene","label":"Approved hero scene"}],"presets":[{"name":"Friday hero"}]}
 {% endschema %}
