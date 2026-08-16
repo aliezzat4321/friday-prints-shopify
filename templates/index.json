@@ -13,7 +13,8 @@
       "type": "friday-header",
       "settings": {
         "announcement": "LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT",
-        "instagram_url": ""
+        "instagram_url": "",
+        "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png"
       }
     },
     "friday_hero": {
@@ -35,7 +36,8 @@
       "settings": {
         "heading": "the story",
         "story": "<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>",
-        "handle": "@fridayprints.art"
+        "handle": "@fridayprints.art",
+        "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png"
       }
     },
     "friday_benefits": {
@@ -61,7 +63,8 @@
     "friday_footer": {
       "type": "friday-footer",
       "settings": {
-        "instagram_url": ""
+        "instagram_url": "",
+        "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png"
       }
     }
   },
