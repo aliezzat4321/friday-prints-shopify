@@ -28,7 +28,7 @@
     <div class="fp-shell fp-nav">
       <a class="fp-logo" href="{{ routes.root_url }}" aria-label="{{ section.settings.logo_alt | escape }}">
         {% if section.settings.logo_image != blank %}
-          {{ section.settings.logo_image | image_url: width: 700 | image_tag: class: 'fp-logo__image', loading: 'eager', widths: '160,240,360,500,700', sizes: 'var(--fp-logo-image-width)', alt: section.settings.logo_alt }}
+          {{ section.settings.logo_image | image_url: width: 700 | image_tag: class: 'fp-logo__image', loading: 'eager', widths: '160,240,360,500,700', sizes: '(max-width: 749px) 150px, 220px', alt: section.settings.logo_alt }}
         {% else %}
           <span>{{ section.settings.logo_text }}</span>
           {% if section.settings.logo_subtext != blank %}<small>{{ section.settings.logo_subtext }}</small>{% endif %}
@@ -53,7 +53,7 @@
 
         {% if section.settings.gigi_icon != blank %}
           {% if section.settings.gigi_link != blank %}<a class="fp-gigi-link" href="{{ section.settings.gigi_link }}" aria-label="{{ section.settings.gigi_alt | escape }}">{% else %}<span class="fp-gigi-link">{% endif %}
-            {{ section.settings.gigi_icon | image_url: width: 240 | image_tag: class: 'fp-nav__gigi', loading: 'eager', widths: '60,90,120,180,240', sizes: '(max-width: 749px) var(--fp-header-gigi-mobile), var(--fp-header-gigi-desktop)', alt: section.settings.gigi_alt }}
+            {{ section.settings.gigi_icon | image_url: width: 240 | image_tag: class: 'fp-nav__gigi', loading: 'eager', widths: '60,90,120,180,240', sizes: '(max-width: 900px) 48px, 64px', alt: section.settings.gigi_alt }}
           {% if section.settings.gigi_link != blank %}</a>{% else %}</span>{% endif %}
         {% elsif request.design_mode %}
           <span class="fp-gigi-editor-placeholder">Add GiGi</span>
