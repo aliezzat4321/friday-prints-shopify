@@ -12,9 +12,9 @@
     </div>
     <div class="fr-hero__scene">
       {% if section.settings.scene_image != blank %}
-        {{ section.settings.scene_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200,1400', sizes: '(max-width: 749px) 100vw, 66vw', alt: 'Friday Prints GiGi art display' }}
+        {{ section.settings.scene_image | image_url: width: 1400 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200,1400', sizes: '(max-width: 749px) 100vw, 58vw', alt: 'Friday Prints GiGi art display' }}
       {% else %}
-        <img src="{{ 'friday-reference-hero.svg' | asset_url }}" width="480" height="432" alt="Framed GiGi print with striped mug, floral vase and limited edition badge" loading="eager" fetchpriority="high">
+        <img src="{{ 'friday-hero-scene.webp' | asset_url }}" width="600" height="540" alt="Framed seated GiGi print with striped mug, floral vase and limited edition badge" loading="eager" fetchpriority="high">
       {% endif %}
     </div>
   </div>
