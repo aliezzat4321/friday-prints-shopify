@@ -1,2 +1,16 @@
-<section class="fr-section fr-newsletter" id="FridayNewsletter-{{ section.id }}"><div class="fr-shell fr-newsletter__grid"><h2>new drops,<br>stories &amp; places<br>GiGi’s been.</h2>{% form 'customer' %}<input type="hidden" name="contact[tags]" value="newsletter"><input type="email" name="contact[email]" placeholder="your email" aria-label="Email address" required><button type="submit">join the journey →</button>{% endform %}</div></section>
+<section class="fp-section fp-newsletter" id="FridayNewsletter-{{ section.id }}">
+  <div class="fp-shell fp-newsletter__grid">
+    <div class="fp-newsletter__copy">
+      <p class="fp-newsletter__eyebrow">FROM CAIRO, OCCASIONALLY.</p>
+      <h2>GiGi sends<br>postcards :)</h2>
+      <p>New drops, stories &amp; places she’s been.</p>
+    </div>
+    {% form 'customer', class: 'fp-newsletter__form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email" name="contact[email]" placeholder="your email" aria-label="Email address" required>
+      <button type="submit">JOIN GiGi →</button>
+    {% endform %}
+    <img class="fp-newsletter__gigi" src="{{ 'friday-gigi-nav.png' | asset_url }}" width="82" height="120" alt="" loading="lazy">
+  </div>
+</section>
 {% schema %}{"name":"Friday newsletter","settings":[],"presets":[{"name":"Friday newsletter"}]}{% endschema %}
