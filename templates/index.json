@@ -143,11 +143,14 @@
         "service_3",
         "service_4"
       ],
-      "settings": {}
+      "settings": {
+        "background_color": "#fbf1e4"
+      }
     },
     "friday_newsletter": {
       "type": "friday-newsletter",
       "settings": {
+        "background_color": "#e9a5b2",
         "eyebrow": "FROM CAIRO, OCCASIONALLY.",
         "heading": "Postcards from GiGi",
         "text": "A small email newsletter with new prints, new drops & studio notes.",
@@ -155,6 +158,7 @@
         "email_label": "Email address",
         "button_label": "join the newsletter →",
         "success_message": "You’re on the list. See you Friday.",
+        "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png",
         "gigi_alt": "GiGi",
         "gigi_size_desktop": 90,
         "gigi_size_mobile": 60
