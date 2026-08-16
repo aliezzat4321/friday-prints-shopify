@@ -1,0 +1,16 @@
+<section class="fr-section fr-story" id="FridayStory-{{ section.id }}">
+  <span class="fr-story__flower fr-story__flower--1">✿</span><span class="fr-story__flower fr-story__flower--2">✿</span><span class="fr-story__flower fr-story__flower--3">✦</span>
+  <div class="fr-shell fr-story__grid">
+    <div>
+      <h2 class="fr-script">{{ section.settings.heading }}</h2>
+      <div class="fr-story__text">{{ section.settings.story }}</div>
+    </div>
+    <div class="fr-story__mark">
+      <div class="fr-story__oval"><img src="{{ 'friday-gigi-icon.svg' | asset_url }}" alt="GiGi" width="116" height="205" loading="lazy"></div>
+      <div class="fr-story__handle">{{ section.settings.handle }}</div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{"name":"Friday story","settings":[{"type":"text","id":"heading","label":"Heading","default":"the story"},{"type":"richtext","id":"story","label":"Story","default":"<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>"},{"type":"text","id":"handle","label":"Instagram handle","default":"@fridayprints.art"}],"presets":[{"name":"Friday story"}]}
+{% endschema %}
