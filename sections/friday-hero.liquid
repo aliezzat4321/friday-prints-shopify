@@ -1,4 +1,30 @@
-<section class="fp-section fp-hero" id="FridayHero-{{ section.id }}">
+<section class="fp-section fp-hero{% if section.settings.height_mode == 'viewport' %} fp-hero--viewport{% endif %}" id="FridayHero-{{ section.id }}">
+  <style>
+    {% if section.settings.height_mode == 'viewport' %}
+      #FridayHero-{{ section.id }} .fp-hero__grid {
+        min-height: calc(100vh - 162px);
+        min-height: calc(100svh - 162px);
+      }
+      @media (max-width: 1100px) and (min-width: 901px) {
+        #FridayHero-{{ section.id }} .fp-hero__grid {
+          min-height: calc(100vh - 144px);
+          min-height: calc(100svh - 144px);
+        }
+      }
+      @media (max-width: 900px) and (min-width: 750px) {
+        #FridayHero-{{ section.id }} .fp-hero__grid {
+          min-height: calc(100vh - 122px);
+          min-height: calc(100svh - 122px);
+        }
+      }
+      @media (max-width: 749px) {
+        #FridayHero-{{ section.id }} .fp-hero__grid {
+          min-height: calc(100vh - 108px);
+          min-height: calc(100svh - 108px);
+        }
+      }
+    {% endif %}
+  </style>
   <div class="fp-shell fp-hero__grid">
     <div class="fp-hero__copy">
       {% if section.settings.kicker != blank %}<p class="fp-hero__kicker">{{ section.settings.kicker }}</p>{% endif %}
@@ -26,6 +52,10 @@
 {
   "name": "Friday hero",
   "settings": [
+    { "type": "select", "id": "height_mode", "label": "Hero height", "default": "viewport", "options": [
+      { "value": "viewport", "label": "Fill first screen" },
+      { "value": "content", "label": "Fit content" }
+    ] },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "welcome to" },
     { "type": "text", "id": "title_top", "label": "Title line 1", "default": "GiGi’s" },
     { "type": "text", "id": "title_bottom", "label": "Title line 2", "default": "journey" },
