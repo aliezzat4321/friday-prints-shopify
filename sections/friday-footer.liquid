@@ -1,2 +1,15 @@
-<footer class="fr-footer" id="FridayFooter-{{ section.id }}"><div class="fr-shell fr-footer__grid"><div class="fr-footer__brand-wrap"><div class="fr-footer__brand">friday<br>prints.art</div><img src="{{ 'friday-gigi-nav.png' | asset_url }}" width="54" height="80" alt="" loading="lazy"></div><div class="fr-footer__col"><strong>shop prints</strong><a href="{{ routes.all_products_collection_url }}">new arrivals</a><a href="{{ routes.all_products_collection_url }}">best sellers</a><a href="{{ routes.all_products_collection_url }}">all prints</a></div><div class="fr-footer__col"><strong>collections</strong><a href="{{ routes.collections_url }}">tokyo</a><a href="{{ routes.collections_url }}">the characters</a><a href="{{ routes.collections_url }}">daydreamers</a></div><div class="fr-footer__col"><strong>info</strong><a href="/pages/info">shipping &amp; returns</a><a href="/pages/faq">care &amp; faq</a><a href="/pages/info">print details</a></div><div class="fr-footer__col"><strong>about</strong><a href="/pages/about">our story</a><a href="/pages/contact">contact</a>{% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}">instagram</a>{% endif %}</div></div></footer>
+<footer class="fp-footer" id="FridayFooter-{{ section.id }}">
+  <div class="fp-shell fp-footer__grid">
+    <div class="fp-footer__brand-block">
+      <div class="fp-footer__brand">friday<br>prints :)</div>
+      <p>made for long weekends &amp; loud lines.</p>
+      <div class="fp-footer__gigi-wrap"><img src="{{ 'friday-gigi-nav.png' | asset_url }}" width="86" height="126" alt="" loading="lazy"><span>CAIRO → EVERYWHERE</span></div>
+    </div>
+    <nav class="fp-footer__col" aria-label="Shop"><strong>SHOP</strong><a href="{{ routes.all_products_collection_url }}">all prints</a><a href="{{ routes.collections_url }}">collections</a><a href="{{ routes.all_products_collection_url }}?sort_by=created-descending">new drops</a></nav>
+    <nav class="fp-footer__col" aria-label="Information"><strong>INFO</strong><a href="/pages/about">our story</a><a href="/pages/info">print details</a><a href="/pages/info">shipping &amp; returns</a><a href="/pages/faq">faq</a></nav>
+    <nav class="fp-footer__col" aria-label="Follow"><strong>FOLLOW GiGi</strong>{% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}">instagram</a>{% else %}<span>instagram</span>{% endif %}<span>tiktok</span><span>pinterest</span></nav>
+    <nav class="fp-footer__col" aria-label="Help"><strong>HELP</strong><a href="/pages/contact">contact</a><a href="{{ routes.cart_url }}">your cart</a><a href="/pages/info">care guide</a></nav>
+  </div>
+  <div class="fp-footer__bottom"><span>© {{ 'now' | date: '%Y' }} FRIDAY PRINTS</span><span>MADE IN CAIRO</span><span>WITH ♥ &amp; LOUD LINES</span></div>
+</footer>
 {% schema %}{"name":"Friday footer","settings":[{"type":"url","id":"instagram_url","label":"Instagram URL"}],"presets":[{"name":"Friday footer"}]}{% endschema %}
