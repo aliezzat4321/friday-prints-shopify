@@ -1,24 +1,7 @@
-<section class="fr-section fr-print-detail" id="FridayPrintDetail-{{ section.id }}">
-  <div class="fr-shell fr-print-detail__grid">
-    <div class="fr-print-detail__visual">
-      {% if section.settings.detail_image != blank %}
-        {{ section.settings.detail_image | image_url: width: 1200 | image_tag: loading:'lazy', widths:'480,720,960,1200', sizes:'(max-width:749px) 100vw, 42vw', alt:'Friday Prints paper and edition detail' }}
-      {% else %}
-        <div class="fr-print-detail__paper" aria-hidden="true"><div class="fr-print-detail__art"></div><span>18 / 100</span><em>Amina</em></div>
-      {% endif %}
-    </div>
-    <div class="fr-print-detail__copy">
-      <p class="fr-print-detail__kicker">{{ section.settings.kicker }}</p>
-      <h2>{{ section.settings.heading }}</h2>
-      <div class="fr-print-detail__facts">
-        <article><h3>museum quality</h3><p>Printed on 230gsm matte archival paper.</p></article>
-        <article><h3>archival inks</h3><p>Vibrant colours designed to last.</p></article>
-        <article><h3>signed &amp; numbered</h3><p>Individually signed and numbered by Amina.</p></article>
-        <article><h3>ready to frame</h3><p>Comes with a removable mount that fits standard frames.</p></article>
-      </div>
-    </div>
-  </div>
-</section>
-{% schema %}
-{"name":"Friday print details","settings":[{"type":"text","id":"kicker","label":"Kicker","default":"why our prints"},{"type":"text","id":"heading","label":"Heading","default":"Made with care. Meant to be kept."},{"type":"image_picker","id":"detail_image","label":"Optional print detail photograph"}],"presets":[{"name":"Friday print details"}]}
-{% endschema %}
+<section class="fr-section fr-services" id="FridayServices-{{ section.id }}"><div class="fr-shell fr-services__grid">
+<article class="fr-service"><span class="fr-service__icon">🚚</span><div><h3>DELIVERY ACROSS EGYPT</h3><p>Standard delivery across Egypt.</p></div></article>
+<article class="fr-service"><span class="fr-service__icon">🎁</span><div><h3>PERFECT FOR GIFTING</h3><p>Wrap happiness. It suits every wall.</p></div></article>
+<article class="fr-service"><span class="fr-service__icon">✉</span><div><h3>YOU'VE GOT MAIL</h3><p>Carefully packed prints, on their way to you.</p></div></article>
+<article class="fr-service"><span class="fr-service__icon">●</span><div><h3>HERE TO HELP</h3><p>Questions? Just send us a message.</p></div></article>
+</div></section>
+{% schema %}{"name":"Friday services","settings":[],"presets":[{"name":"Friday services"}]}{% endschema %}
