@@ -1,11 +1,4 @@
-{{ 'friday-reference.css' | asset_url | stylesheet_tag }}
-{{ 'friday-v2.css' | asset_url | stylesheet_tag }}
-{{ 'friday-sections-v2.css' | asset_url | stylesheet_tag }}
-<style>
-body:has(.fr-site-header) .content-for-layout{padding:0!important;margin:0!important;max-width:none!important;width:100%!important}
-body:has(.fr-site-header) #MainContent>.shopify-section{margin:0!important;padding:0!important;max-width:none!important;width:100%!important}
-body:has(.fr-site-header) .page-wrapper{max-width:none!important;width:100%!important}
-</style>
+{{ 'friday-home-v3.css' | asset_url | stylesheet_tag }}
 <header class="fr-site-header" id="FridayHeader-{{ section.id }}">
   <div class="fr-announcement">✦ {{ section.settings.announcement }} ✦</div>
   <div class="fr-shell fr-nav">
@@ -19,7 +12,7 @@ body:has(.fr-site-header) .page-wrapper{max-width:none!important;width:100%!impo
       <a href="/pages/contact">contact</a>
     </nav>
     <div class="fr-nav__actions">
-      <a href="/pages/about" aria-label="Meet GiGi"><img class="fr-nav__gigi" src="{{ 'friday-gigi-nav.png' | asset_url }}" width="38" height="52" alt="" loading="eager"></a>
+      <a href="/pages/about" aria-label="Meet GiGi"><img class="fr-nav__gigi" src="{{ 'friday-gigi-nav.png' | asset_url }}" width="34" height="42" alt="" loading="eager"></a>
       <a class="fr-cart" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8h11l1 12h-13l1-12Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><b>{{ cart.item_count }}</b></a>
       <details class="fr-menu"><summary aria-label="Open menu"><i></i><i></i></summary><nav class="fr-mobile-menu"><a href="{{ routes.all_products_collection_url }}">shop prints</a><a href="{{ routes.collections_url }}">collections</a><a href="/pages/about">about</a><a href="/pages/info">info</a><a href="/pages/faq">faq</a><a href="/pages/contact">contact</a></nav></details>
     </div>
