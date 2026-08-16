@@ -6,11 +6,17 @@
       <div class="fp-story__text">{{ section.settings.story }}</div>
     </div>
     <div class="fp-story__mark">
-      <div class="fp-story__oval"><img class="fp-story__gigi" src="{{ 'friday-gigi-nav.png' | asset_url }}" alt="GiGi" width="118" height="220" loading="lazy"></div>
+      <div class="fp-story__oval">
+        {% if section.settings.gigi_icon != blank %}
+          {{ section.settings.gigi_icon | image_url: width: 420 | image_tag: class: 'fp-story__gigi', loading: 'lazy', widths: '120,180,260,360,420', sizes: '(max-width: 749px) 110px, 160px', alt: 'GiGi' }}
+        {% else %}
+          <span class="fp-gigi-empty fp-gigi-empty--story" aria-hidden="true">GiGi</span>
+        {% endif %}
+      </div>
       <div class="fp-story__handle">{{ section.settings.handle }}</div>
     </div>
   </div>
 </section>
 {% schema %}
-{"name":"Friday story","settings":[{"type":"text","id":"heading","label":"Heading","default":"the story"},{"type":"richtext","id":"story","label":"Story","default":"<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>"},{"type":"text","id":"handle","label":"Instagram handle","default":"@fridayprints.art"}],"presets":[{"name":"Friday story"}]}
+{"name":"Friday story","settings":[{"type":"text","id":"heading","label":"Heading","default":"the story"},{"type":"richtext","id":"story","label":"Story","default":"<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>"},{"type":"text","id":"handle","label":"Instagram handle","default":"@fridayprints.art"},{"type":"image_picker","id":"gigi_icon","label":"GiGi icon","info":"Select the original GiGi artwork for the story oval."}],"presets":[{"name":"Friday story"}]}
 {% endschema %}
