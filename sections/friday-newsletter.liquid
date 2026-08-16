@@ -6,11 +6,14 @@
       {% if section.settings.text != blank %}<p>{{ section.settings.text }}</p>{% endif %}
     </div>
 
-    {% form 'customer', class: 'fp-newsletter__form' %}
-      <input type="hidden" name="contact[tags]" value="newsletter">
-      <input type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder | escape }}" aria-label="{{ section.settings.email_label | escape }}" required>
-      <button type="submit">{{ section.settings.button_label }}</button>
-    {% endform %}
+    <div class="fp-newsletter__form-wrap">
+      {% form 'customer', class: 'fp-newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder | escape }}" aria-label="{{ section.settings.email_label | escape }}" required>
+        <button type="submit">{{ section.settings.button_label }}</button>
+        {% if form.posted_successfully? %}<p class="fp-newsletter__feedback">{{ section.settings.success_message }}</p>{% elsif form.errors %}<div class="fp-newsletter__feedback">{{ form.errors | default_errors }}</div>{% endif %}
+      {% endform %}
+    </div>
 
     {% if section.settings.gigi_icon != blank %}
       <div class="fp-newsletter__gigi-wrap">
@@ -19,8 +22,6 @@
     {% elsif request.design_mode %}
       <div class="fp-newsletter__gigi-wrap"><span class="fp-gigi-editor-placeholder">Add GiGi</span></div>
     {% endif %}
-
-    {% if form.posted_successfully? %}<p class="fp-newsletter__feedback">{{ section.settings.success_message }}</p>{% elsif form.errors %}<div class="fp-newsletter__feedback">{{ form.errors | default_errors }}</div>{% endif %}
   </div>
 </section>
 {% schema %}
