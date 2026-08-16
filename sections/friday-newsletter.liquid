@@ -1,20 +1,45 @@
-<section class="fp-section fp-newsletter" id="FridayNewsletter-{{ section.id }}">
+<section class="fp-section fp-newsletter" id="FridayNewsletter-{{ section.id }}" style="--fp-newsletter-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-newsletter-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;">
   <div class="fp-shell fp-newsletter__grid">
     <div class="fp-newsletter__copy">
-      <p class="fp-newsletter__eyebrow">FROM CAIRO, OCCASIONALLY.</p>
-      <h2>Postcards from GiGi</h2>
-      <p>A small email newsletter with new prints, new drops &amp; studio notes.</p>
+      {% if section.settings.eyebrow != blank %}<p class="fp-newsletter__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2>{{ section.settings.heading }}</h2>{% endif %}
+      {% if section.settings.text != blank %}<p>{{ section.settings.text }}</p>{% endif %}
     </div>
+
     {% form 'customer', class: 'fp-newsletter__form' %}
       <input type="hidden" name="contact[tags]" value="newsletter">
-      <input type="email" name="contact[email]" placeholder="your email" aria-label="Email address" required>
-      <button type="submit">join the newsletter →</button>
+      <input type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder | escape }}" aria-label="{{ section.settings.email_label | escape }}" required>
+      <button type="submit">{{ section.settings.button_label }}</button>
     {% endform %}
-    <div class="fp-newsletter__gigi-wrap">
-      {% if section.settings.gigi_icon != blank %}
-        {{ section.settings.gigi_icon | image_url: width: 320 | image_tag: class: 'fp-newsletter__gigi', loading: 'lazy', widths: '100,160,240,320', sizes: '90px', alt: 'GiGi' }}
-      {% endif %}
-    </div>
+
+    {% if section.settings.gigi_icon != blank %}
+      <div class="fp-newsletter__gigi-wrap">
+        {{ section.settings.gigi_icon | image_url: width: 420 | image_tag: class: 'fp-newsletter__gigi', loading: 'lazy', widths: '100,160,240,320,420', sizes: '(max-width: 749px) var(--fp-newsletter-gigi-mobile), var(--fp-newsletter-gigi-desktop)', alt: section.settings.gigi_alt }}
+      </div>
+    {% elsif request.design_mode %}
+      <div class="fp-newsletter__gigi-wrap"><span class="fp-gigi-editor-placeholder">Add GiGi</span></div>
+    {% endif %}
+
+    {% if form.posted_successfully? %}<p class="fp-newsletter__feedback">{{ section.settings.success_message }}</p>{% elsif form.errors %}<div class="fp-newsletter__feedback">{{ form.errors | default_errors }}</div>{% endif %}
   </div>
 </section>
-{% schema %}{"name":"Friday newsletter","settings":[{"type":"image_picker","id":"gigi_icon","label":"GiGi icon","info":"Select the GiGi artwork used beside the newsletter signup."}],"presets":[{"name":"Friday newsletter"}]}{% endschema %}
+{% schema %}
+{
+  "name": "Friday newsletter",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FROM CAIRO, OCCASIONALLY." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Postcards from GiGi" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "A small email newsletter with new prints, new drops & studio notes." },
+    { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "your email" },
+    { "type": "text", "id": "email_label", "label": "Email accessibility label", "default": "Email address" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "join the newsletter →" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "You’re on the list. See you Friday." },
+    { "type": "header", "content": "GiGi artwork" },
+    { "type": "image_picker", "id": "gigi_icon", "label": "GiGi image" },
+    { "type": "text", "id": "gigi_alt", "label": "GiGi alt text", "default": "GiGi" },
+    { "type": "range", "id": "gigi_size_desktop", "label": "GiGi size — desktop", "min": 50, "max": 130, "step": 5, "unit": "px", "default": 90 },
+    { "type": "range", "id": "gigi_size_mobile", "label": "GiGi size — mobile", "min": 40, "max": 90, "step": 5, "unit": "px", "default": 60 }
+  ],
+  "presets": [{ "name": "Friday newsletter" }]
+}
+{% endschema %}
