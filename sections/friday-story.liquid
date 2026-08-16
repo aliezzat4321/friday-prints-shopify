@@ -6,7 +6,7 @@
       <div class="fp-story__text">{{ section.settings.story }}</div>
     </div>
     <div class="fp-story__mark">
-      <div class="fp-story__oval"><img src="{{ 'friday-gigi-nav.png' | asset_url }}" alt="GiGi" width="118" height="220" loading="lazy"></div>
+      <div class="fp-story__oval">{% render 'friday-gigi-icon', icon_class: 'fp-story__gigi', alt: 'GiGi', width: 118, height: 220, loading: 'lazy' %}</div>
       <div class="fp-story__handle">{{ section.settings.handle }}</div>
     </div>
   </div>
