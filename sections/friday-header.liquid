@@ -17,7 +17,13 @@
       </nav>
       <div class="fp-nav__actions">
         <a class="fp-instagram" href="{{ section.settings.instagram_url | default: '#' }}" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
-        <a href="/pages/about" aria-label="Meet GiGi">{% render 'friday-gigi-icon', icon_class: 'fp-nav__gigi', alt: '', width: 36, height: 44, loading: 'eager' %}</a>
+        <a class="fp-gigi-link" href="/pages/about" aria-label="Meet GiGi">
+          {% if section.settings.gigi_icon != blank %}
+            {{ section.settings.gigi_icon | image_url: width: 180 | image_tag: class: 'fp-nav__gigi', loading: 'eager', widths: '50,80,120,180', sizes: '44px', alt: 'GiGi' }}
+          {% else %}
+            <span class="fp-gigi-empty" aria-hidden="true">✦</span>
+          {% endif %}
+        </a>
         <a class="fp-cart" href="{{ routes.cart_url }}" aria-label="Cart, {{ cart.item_count }} items"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8h11l1 12h-13l1-12Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><b>{{ cart.item_count }}</b></a>
         <details class="fp-menu"><summary aria-label="Open menu"><i></i><i></i></summary><nav class="fp-mobile-menu"><a href="{{ routes.root_url }}">home</a><a href="{{ routes.collections_url }}">collections</a><a href="/pages/about">about</a><a href="/pages/info">info</a><a href="/pages/faq">faq</a><a href="/pages/contact">contact</a></nav></details>
       </div>
@@ -59,5 +65,5 @@
 })();
 </script>
 {% schema %}
-{"name":"Friday header","settings":[{"type":"text","id":"announcement","label":"Announcement","default":"LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT"},{"type":"url","id":"instagram_url","label":"Instagram URL"}],"presets":[{"name":"Friday header"}]}
+{"name":"Friday header","settings":[{"type":"text","id":"announcement","label":"Announcement","default":"LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT"},{"type":"url","id":"instagram_url","label":"Instagram URL"},{"type":"image_picker","id":"gigi_icon","label":"GiGi icon","info":"Upload/select the original GiGi artwork used in the navigation."}],"presets":[{"name":"Friday header"}]}
 {% endschema %}
