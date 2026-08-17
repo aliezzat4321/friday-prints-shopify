@@ -1,4 +1,4 @@
-<section class="fp-section fp-benefits" id="FridayBenefits-{{ section.id }}">
+<section class="fp-section fp-benefits" id="FridayBenefits-{{ section.id }}" style="background:{{ section.settings.background_color }};">
   <div class="fp-shell fp-benefits__grid">
     {% for block in section.blocks %}
       <article class="fp-benefit" {{ block.shopify_attributes }}>
@@ -13,6 +13,10 @@
 {
   "name": "Friday benefits",
   "max_blocks": 4,
+  "settings": [
+    { "type": "header", "content": "Design-safe styling" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FBF1E4" }
+  ],
   "blocks": [
     {
       "type": "benefit",
