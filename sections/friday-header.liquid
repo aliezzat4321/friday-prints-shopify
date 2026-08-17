@@ -57,9 +57,7 @@
     #FridayHeader-{{ section.id }} .fp-menu>summary i:first-child{top:13px}
     #FridayHeader-{{ section.id }} .fp-menu>summary i:last-child{top:22px}
     #FridayHeader-{{ section.id }} .fp-menu[open]>summary{
-      position:fixed!important;
-      top:18px!important;
-      right:18px!important;
+      position:relative!important;
       z-index:1004!important;
     }
     #FridayHeader-{{ section.id }} .fp-menu[open]>summary i:first-child{top:18px;transform:rotate(45deg)}
@@ -99,23 +97,9 @@
       min-height:76px;
       display:flex;
       align-items:flex-start;
-      justify-content:space-between;
-      padding:2px 54px 18px 0;
+      justify-content:flex-end;
+      padding:5px 54px 18px 0;
       border-bottom:1px solid var(--fp-ink);
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__brand{
-      display:flex;
-      flex-direction:column;
-      color:var(--fp-ink);
-      font:700 34px/.72 "Courier New",Courier,monospace;
-      letter-spacing:-.07em;
-      text-transform:lowercase;
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__brand small{
-      margin-top:8px;
-      font-size:10px;
-      line-height:1;
-      letter-spacing:-.01em;
     }
     #FridayHeader-{{ section.id }} .fp-mobile-menu__index{
       padding-top:5px;
@@ -158,35 +142,21 @@
     #FridayHeader-{{ section.id }} .fp-mobile-menu__links>a:last-child{border-bottom:0!important}
     #FridayHeader-{{ section.id }} .fp-mobile-menu__links>a:active{color:var(--fp-red)!important}
     #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:18px;
-      align-items:end;
-      padding-top:17px;
+      display:block;
+      padding-top:14px;
       border-top:1px solid var(--fp-ink);
     }
     #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom p{
-      max-width:25ch;
       margin:0;
-      font:700 9px/1.45 "Courier New",monospace;
-      letter-spacing:.025em;
+      font:700 9px/1.35 "Courier New",monospace;
+      letter-spacing:.035em;
       text-transform:uppercase;
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom a{
-      padding:0!important;
-      border:0!important;
-      color:var(--fp-ink)!important;
-      font:700 10px/1.2 "Courier New",monospace!important;
-      text-decoration:underline!important;
-      text-underline-offset:4px;
-      white-space:nowrap;
     }
   }
   @media (max-width: 360px){
     #FridayHeader-{{ section.id }} .fp-mobile-menu{padding:16px 18px 20px!important}
     #FridayHeader-{{ section.id }} .fp-mobile-menu__links>a{font-size:30px!important;padding:10px 0!important}
     #FridayHeader-{{ section.id }} .fp-mobile-menu__top{min-height:64px}
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__brand{font-size:30px}
   }
   @media (prefers-reduced-motion:reduce){
     #FridayHeader-{{ section.id }} .fp-mobile-menu,
@@ -259,7 +229,6 @@
           <summary aria-label="{{ section.settings.menu_open_label | escape }}"><i></i><i></i></summary>
           <nav class="fp-mobile-menu" aria-label="{{ section.settings.mobile_navigation_label | escape }}">
             <div class="fp-mobile-menu__top">
-              <span class="fp-mobile-menu__brand">friday<small>prints.art</small></span>
               <span class="fp-mobile-menu__index">menu / 01</span>
             </div>
             <div class="fp-mobile-menu__links">
@@ -276,8 +245,7 @@
               {% if section.settings.show_search %}<a href="{{ routes.search_url }}">{{ section.settings.search_label }}</a>{% endif %}
             </div>
             <div class="fp-mobile-menu__bottom">
-              <p>limited-edition art prints,<br>made to order in Egypt.</p>
-              {% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">@fridayprints.art ↗</a>{% endif %}
+              <p>limited-edition prints · made to order in Egypt</p>
             </div>
           </nav>
         </details>
