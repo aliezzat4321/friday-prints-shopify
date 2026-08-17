@@ -1,0 +1,181 @@
+{% liquid
+  assign fp_handle = page.handle | downcase
+  assign all_prints = collections['all']
+%}
+
+<section class="fp-content-page fp-content-page--{{ fp_handle }}" id="FridayPage-{{ section.id }}">
+  <style>
+    #FridayPage-{{ section.id }}{background:var(--fp-cream);color:var(--fp-ink)}
+    #FridayPage-{{ section.id }} *{box-sizing:border-box}
+    #FridayPage-{{ section.id }} .fp-page-hero{position:relative;overflow:hidden;padding:70px 46px 48px;border-bottom:1px solid var(--fp-line)}
+    #FridayPage-{{ section.id }} .fp-page-eyebrow{margin:0 0 14px;color:var(--fp-red);font:700 11px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
+    #FridayPage-{{ section.id }} .fp-page-title{max-width:12ch;margin:0;font:700 clamp(76px,9vw,136px)/.8 Georgia,"Times New Roman",serif;letter-spacing:-.06em;text-transform:lowercase;text-wrap:balance}
+    #FridayPage-{{ section.id }} .fp-page-intro{max-width:58ch;margin:28px 0 0;font:14px/1.62 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-page-intro p{margin:0}
+    #FridayPage-{{ section.id }} .fp-page-shell{padding:0 46px}
+
+    /* World of GiGi */
+    #FridayPage-{{ section.id }}.fp-content-page--about .fp-page-hero{min-height:480px;background:var(--fp-pink);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr);gap:50px;align-items:center}
+    #FridayPage-{{ section.id }} .fp-world__gigi{justify-self:center;align-self:end;width:min(100%,300px);height:360px;display:grid;place-items:end center;position:relative}
+    #FridayPage-{{ section.id }} .fp-world__gigi:before{content:"";position:absolute;width:280px;height:330px;border:2px solid rgba(255,255,255,.72);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%) rotate(8deg)}
+    #FridayPage-{{ section.id }} .fp-world__gigi img{position:relative;z-index:1;display:block;max-width:220px;max-height:310px;width:auto;height:auto;object-fit:contain}
+    #FridayPage-{{ section.id }} .fp-world__story{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;padding:72px 46px;background:var(--fp-cream);border-bottom:1px solid var(--fp-line)}
+    #FridayPage-{{ section.id }} .fp-world__story h2{margin:0;color:var(--fp-red);font:italic 44px/1 Georgia,"Times New Roman",serif;letter-spacing:-.025em}
+    #FridayPage-{{ section.id }} .fp-world__copy{max-width:660px;font:16px/1.7 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-world__copy p{margin:0 0 18px}
+    #FridayPage-{{ section.id }} .fp-world__copy p:last-child{margin-bottom:0}
+    #FridayPage-{{ section.id }} .fp-world__ticker{overflow:hidden;border-bottom:1px solid var(--fp-ink);background:var(--fp-yellow);white-space:nowrap}
+    #FridayPage-{{ section.id }} .fp-world__ticker-track{display:inline-flex;gap:38px;min-width:max-content;padding:16px 0;font:700 11px/1 "Courier New",monospace;letter-spacing:.07em;text-transform:uppercase;animation:fpTicker 24s linear infinite}
+    #FridayPage-{{ section.id }} .fp-world__ticker-track span:after{content:"✦";margin-left:38px;color:var(--fp-red)}
+    @keyframes fpTicker{to{transform:translateX(-50%)}}
+    #FridayPage-{{ section.id }} .fp-world__gallery-head{display:flex;align-items:end;justify-content:space-between;gap:30px;padding:58px 46px 28px;background:var(--fp-red);color:#fff}
+    #FridayPage-{{ section.id }} .fp-world__gallery-head h2{margin:0;font:700 clamp(48px,5vw,72px)/.88 Georgia,"Times New Roman",serif;letter-spacing:-.045em;text-transform:lowercase}
+    #FridayPage-{{ section.id }} .fp-world__gallery-head a{color:#fff;text-underline-offset:4px;font:700 11px/1 "Courier New",monospace;text-transform:lowercase}
+    #FridayPage-{{ section.id }} .fp-world__gallery{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:95px;gap:12px;padding:0 46px 62px;background:var(--fp-red)}
+    #FridayPage-{{ section.id }} .fp-world-card{display:block;overflow:hidden;background:var(--fp-cream);border:1px solid rgba(255,255,255,.7)}
+    #FridayPage-{{ section.id }} .fp-world-card img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .35s ease}
+    #FridayPage-{{ section.id }} .fp-world-card:hover img{transform:scale(1.018)}
+    #FridayPage-{{ section.id }} .fp-world-card:nth-child(1){grid-column:1/5;grid-row:span 5}
+    #FridayPage-{{ section.id }} .fp-world-card:nth-child(2){grid-column:5/9;grid-row:span 4}
+    #FridayPage-{{ section.id }} .fp-world-card:nth-child(3){grid-column:9/13;grid-row:span 6}
+    #FridayPage-{{ section.id }} .fp-world-card:nth-child(4){grid-column:5/9;grid-row:span 5}
+    #FridayPage-{{ section.id }} .fp-world-card:nth-child(5){grid-column:1/5;grid-row:span 4}
+
+    /* Print guide */
+    #FridayPage-{{ section.id }}.fp-content-page--info .fp-page-hero{background:var(--fp-yellow)}
+    #FridayPage-{{ section.id }} .fp-guide__edition{display:grid;grid-template-columns:1.15fr repeat(3,1fr);border-bottom:1px solid var(--fp-ink)}
+    #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:210px;padding:34px 28px;border-right:1px solid var(--fp-ink);display:flex;flex-direction:column;justify-content:space-between}
+    #FridayPage-{{ section.id }} .fp-guide__edition>div:last-child{border-right:0}
+    #FridayPage-{{ section.id }} .fp-guide__edition h2{margin:0;font:italic 34px/1 Georgia,"Times New Roman",serif;color:var(--fp-red)}
+    #FridayPage-{{ section.id }} .fp-guide__edition strong{display:block;font:700 52px/.9 Georgia,"Times New Roman",serif;letter-spacing:-.04em}
+    #FridayPage-{{ section.id }} .fp-guide__edition span{font:10px/1.4 "Courier New",monospace;text-transform:uppercase;letter-spacing:.055em}
+    #FridayPage-{{ section.id }} .fp-guide__cards{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--fp-ink)}
+    #FridayPage-{{ section.id }} .fp-guide-card{min-height:330px;padding:42px 34px;border-right:1px solid var(--fp-ink);position:relative;overflow:hidden}
+    #FridayPage-{{ section.id }} .fp-guide-card:last-child{border-right:0}
+    #FridayPage-{{ section.id }} .fp-guide-card:nth-child(1){background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-guide-card:nth-child(2){background:var(--fp-pink)}
+    #FridayPage-{{ section.id }} .fp-guide-card:nth-child(3){background:color-mix(in srgb,var(--fp-green) 88%,#fff);color:#fff}
+    #FridayPage-{{ section.id }} .fp-guide-card__num{position:absolute;right:22px;top:17px;font:700 62px/.8 Georgia,serif;opacity:.14}
+    #FridayPage-{{ section.id }} .fp-guide-card h3{margin:0 0 24px;font:700 27px/.95 Georgia,"Times New Roman",serif;letter-spacing:-.035em;text-transform:lowercase}
+    #FridayPage-{{ section.id }} .fp-guide-card p{max-width:37ch;margin:0 0 13px;font:12px/1.62 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-guide__care{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;padding:65px 46px 70px;background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-guide__care h2{margin:0;font:italic 42px/1 Georgia,"Times New Roman",serif;color:var(--fp-red)}
+    #FridayPage-{{ section.id }} .fp-guide__care-copy{display:grid;grid-template-columns:1fr 1fr;gap:24px 42px}
+    #FridayPage-{{ section.id }} .fp-guide__care-copy div{padding-top:13px;border-top:1px solid var(--fp-ink)}
+    #FridayPage-{{ section.id }} .fp-guide__care-copy strong{display:block;margin-bottom:8px;font:700 10px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.06em}
+    #FridayPage-{{ section.id }} .fp-guide__care-copy p{margin:0;font:11px/1.55 "Courier New",monospace}
+
+    /* FAQ */
+    #FridayPage-{{ section.id }}.fp-content-page--faq .fp-page-hero{background:var(--fp-green);color:#fff}
+    #FridayPage-{{ section.id }}.fp-content-page--faq .fp-page-eyebrow{color:var(--fp-yellow)}
+    #FridayPage-{{ section.id }} .fp-faq{display:grid;grid-template-columns:.6fr 1.4fr;gap:70px;padding:68px 46px 80px;background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-faq__aside{position:sticky;top:28px;align-self:start}
+    #FridayPage-{{ section.id }} .fp-faq__aside strong{display:block;margin-bottom:12px;color:var(--fp-red);font:italic 34px/1 Georgia,"Times New Roman",serif}
+    #FridayPage-{{ section.id }} .fp-faq__aside p{max-width:28ch;margin:0;font:11px/1.55 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-faq__aside a{color:inherit;text-underline-offset:3px}
+    #FridayPage-{{ section.id }} .fp-faq__list{border-top:1px solid var(--fp-ink)}
+    #FridayPage-{{ section.id }} .fp-faq details{border-bottom:1px solid var(--fp-ink)}
+    #FridayPage-{{ section.id }} .fp-faq summary{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px;cursor:pointer;list-style:none;font:700 14px/1.35 "Courier New",monospace;text-transform:lowercase}
+    #FridayPage-{{ section.id }} .fp-faq summary::-webkit-details-marker{display:none}
+    #FridayPage-{{ section.id }} .fp-faq summary:after{content:"+";flex:0 0 auto;color:var(--fp-red);font:400 24px/1 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-faq details[open] summary:after{content:"−"}
+    #FridayPage-{{ section.id }} .fp-faq__answer{max-width:68ch;padding:0 48px 24px 0;font:12px/1.65 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-faq__answer p{margin:0 0 10px}
+
+    /* Generic page safety net */
+    #FridayPage-{{ section.id }} .fp-generic-page{padding:70px 46px 90px;background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-generic-page h1{max-width:12ch;margin:0 0 38px;font:700 clamp(62px,7vw,100px)/.82 Georgia,"Times New Roman",serif;letter-spacing:-.055em;text-transform:lowercase}
+    #FridayPage-{{ section.id }} .fp-generic-page__content{max-width:760px;font:14px/1.7 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-generic-page__content a{color:inherit;text-underline-offset:3px}
+
+    @media(max-width:1000px){
+      #FridayPage-{{ section.id }} .fp-world__story,#FridayPage-{{ section.id }} .fp-guide__care,#FridayPage-{{ section.id }} .fp-faq{gap:40px;padding-inline:30px}
+      #FridayPage-{{ section.id }} .fp-page-hero,#FridayPage-{{ section.id }} .fp-world__gallery-head{padding-inline:30px}
+      #FridayPage-{{ section.id }} .fp-world__gallery{padding-inline:30px}
+      #FridayPage-{{ section.id }} .fp-guide__edition{grid-template-columns:1fr 1fr}
+      #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2){border-bottom:1px solid var(--fp-ink)}
+      #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(1){border-bottom:1px solid var(--fp-ink)}
+      #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2n){border-right:0}
+    }
+    @media(max-width:749px){
+      #FridayPage-{{ section.id }} .fp-page-hero{padding:46px 20px 34px}
+      #FridayPage-{{ section.id }} .fp-page-title{font-size:64px}
+      #FridayPage-{{ section.id }} .fp-page-intro{font-size:12px;margin-top:20px}
+      #FridayPage-{{ section.id }}.fp-content-page--about .fp-page-hero{min-height:0;grid-template-columns:1fr;padding-bottom:0;gap:10px}
+      #FridayPage-{{ section.id }} .fp-world__gigi{height:235px;width:220px;justify-self:end;margin-right:-14px}
+      #FridayPage-{{ section.id }} .fp-world__gigi:before{width:185px;height:218px}
+      #FridayPage-{{ section.id }} .fp-world__gigi img{max-width:140px;max-height:200px}
+      #FridayPage-{{ section.id }} .fp-world__story{grid-template-columns:1fr;gap:20px;padding:43px 20px 48px}
+      #FridayPage-{{ section.id }} .fp-world__story h2{font-size:34px}
+      #FridayPage-{{ section.id }} .fp-world__copy{font-size:12px;line-height:1.65}
+      #FridayPage-{{ section.id }} .fp-world__ticker-track{font-size:9px;padding:13px 0}
+      #FridayPage-{{ section.id }} .fp-world__gallery-head{padding:40px 20px 22px}
+      #FridayPage-{{ section.id }} .fp-world__gallery-head h2{font-size:44px}
+      #FridayPage-{{ section.id }} .fp-world__gallery{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:8px;padding:0 12px 38px}
+      #FridayPage-{{ section.id }} .fp-world-card:nth-child(n){grid-column:auto;grid-row:auto;aspect-ratio:.707}
+      #FridayPage-{{ section.id }} .fp-guide__edition{grid-template-columns:1fr 1fr}
+      #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:160px;padding:24px 20px}
+      #FridayPage-{{ section.id }} .fp-guide__edition h2{font-size:27px}
+      #FridayPage-{{ section.id }} .fp-guide__edition strong{font-size:40px}
+      #FridayPage-{{ section.id }} .fp-guide__edition span{font-size:8px}
+      #FridayPage-{{ section.id }} .fp-guide__cards{grid-template-columns:1fr}
+      #FridayPage-{{ section.id }} .fp-guide-card{min-height:0;padding:36px 20px 42px;border-right:0;border-bottom:1px solid var(--fp-ink)}
+      #FridayPage-{{ section.id }} .fp-guide-card:last-child{border-bottom:0}
+      #FridayPage-{{ section.id }} .fp-guide__care{grid-template-columns:1fr;gap:28px;padding:45px 20px 52px}
+      #FridayPage-{{ section.id }} .fp-guide__care h2{font-size:34px}
+      #FridayPage-{{ section.id }} .fp-guide__care-copy{grid-template-columns:1fr;gap:18px}
+      #FridayPage-{{ section.id }} .fp-faq{grid-template-columns:1fr;gap:33px;padding:45px 20px 60px}
+      #FridayPage-{{ section.id }} .fp-faq__aside{position:relative;top:auto}
+      #FridayPage-{{ section.id }} .fp-faq summary{min-height:64px;font-size:12px}
+      #FridayPage-{{ section.id }} .fp-faq__answer{padding-right:22px;font-size:11px}
+      #FridayPage-{{ section.id }} .fp-generic-page{padding:46px 20px 70px}
+      #FridayPage-{{ section.id }} .fp-generic-page h1{font-size:58px}
+      #FridayPage-{{ section.id }} .fp-generic-page__content{font-size:12px}
+    }
+    @media(prefers-reduced-motion:reduce){#FridayPage-{{ section.id }} .fp-world__ticker-track{animation:none}#FridayPage-{{ section.id }} .fp-world-card img{transition:none}#FridayPage-{{ section.id }} .fp-world-card:hover img{transform:none}}
+  </style>
+
+  {% case fp_handle %}
+    {% when 'about' %}
+      <div class="fp-page-hero">
+        <div><p class="fp-page-eyebrow">MEET THE GIRL WITH THE LONG NECK</p><h1 class="fp-page-title">world of GiGi</h1><div class="fp-page-intro"><p>One character, many moods, a growing collection of imagined places and unexpected company.</p></div></div>
+        <div class="fp-world__gigi" aria-hidden="true">{% assign gigi_image = images['F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png'] %}{% if gigi_image %}{{ gigi_image | image_url: width: 600 | image_tag: loading: 'eager', widths: '180,280,420,600', sizes: '(max-width:749px) 140px, 220px', alt: '' }}{% endif %}</div>
+      </div>
+      <div class="fp-world__ticker" aria-hidden="true"><div class="fp-world__ticker-track"><span>moods</span><span>quirks</span><span>adventures</span><span>new friends</span><span>imagined worlds</span><span>loud lines</span><span>moods</span><span>quirks</span><span>adventures</span><span>new friends</span><span>imagined worlds</span><span>loud lines</span></div></div>
+      <div class="fp-world__story"><h2>how GiGi got here</h2><div class="fp-world__copy"><p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p></div></div>
+      {% if all_prints != blank and all_prints.products_count > 0 %}<div class="fp-world__gallery-head"><h2>fragments from the world</h2><a href="{{ all_prints.url }}">shop all prints →</a></div><div class="fp-world__gallery">{% for product in all_prints.products limit: 5 %}{% if product.featured_image %}<a class="fp-world-card" href="{{ product.url }}">{{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '300,500,700,1000', sizes: '(max-width:749px) 50vw, 33vw', alt: product.featured_image.alt | default: product.title }}</a>{% endif %}{% endfor %}</div>{% endif %}
+
+    {% when 'info' %}
+      <div class="fp-page-hero"><p class="fp-page-eyebrow">EVERYTHING BEFORE IT HITS THE WALL</p><h1 class="fp-page-title">print guide</h1><div class="fp-page-intro"><p>What your Friday Print is made of, how the editions work, and how to keep it looking good.</p></div></div>
+      <div class="fp-guide__edition"><div><h2>limited, always.</h2><span>every Friday Print is part of a numbered edition</span></div><div><strong>100</strong><span>A3 editions per design</span></div><div><strong>150</strong><span>A4 editions per design</span></div><div><strong>250</strong><span>postcard editions per design</span></div></div>
+      <div class="fp-guide__cards"><article class="fp-guide-card"><span class="fp-guide-card__num">01</span><h3>premium matte paper</h3><p>Chosen for its rich colours and soft finish.</p><p>Matte paper can be sensitive, so it likes a little care before framing.</p></article><article class="fp-guide-card"><span class="fp-guide-card__num">02</span><h3>removable mount</h3><p>Each print comes with a cardboard mount that holds it securely and helps protect it.</p><p>Keep it on for a clean, classic look or remove it to frame the work your own way.</p></article><article class="fp-guide-card"><span class="fp-guide-card__num">03</span><h3>tinted border</h3><p>There is a tinted coloured border around the artwork.</p><p>Remove the mount and the border is revealed, adding a subtle framed look.</p></article></div>
+      <div class="fp-guide__care"><h2>handle with care</h2><div class="fp-guide__care-copy"><div><strong>edition number</strong><p>You’ll find the edition number for your piece on the back of the print.</p></div><div><strong>use the edges</strong><p>Small white edges are left on the sides so you can handle the print without touching the printed surface.</p></div><div><strong>avoid scratches</strong><p>Handle from the edges and keep the matte surface away from rough surfaces.</p></div><div><strong>delivery</strong><p>Delivery typically takes 3–5 working days once your print has been produced and is ready to ship.</p></div></div></div>
+
+    {% when 'faq' %}
+      <div class="fp-page-hero"><p class="fp-page-eyebrow">QUESTIONS, ANSWERED</p><h1 class="fp-page-title">FAQ</h1><div class="fp-page-intro"><p>The useful stuff: editions, paper, mounts, delivery, returns and looking after your print.</p></div></div>
+      <div class="fp-faq"><aside class="fp-faq__aside"><strong>still wondering?</strong><p>Email <a href="mailto:Eldemirdsh@gmail.com">Eldemirdsh@gmail.com</a> or message <a href="https://www.instagram.com/fridayprints.art/" target="_blank" rel="noopener">@fridayprints.art</a>.</p></aside><div class="fp-faq__list">
+        <details open><summary>what makes a Friday Print limited edition?</summary><div class="fp-faq__answer"><p>Every Friday Print belongs to a limited numbered edition. The edition number for your piece is printed on the back.</p></div></details>
+        <details><summary>how many editions are made?</summary><div class="fp-faq__answer"><p>A3 prints are limited to 100 editions per design, A4 prints to 150 editions per design, and postcards to 250 editions per design.</p></div></details>
+        <details><summary>what paper are the prints made on?</summary><div class="fp-faq__answer"><p>Premium matte paper, chosen for its rich colours and soft finish.</p></div></details>
+        <details><summary>what is the removable mount?</summary><div class="fp-faq__answer"><p>A cardboard mount comes with the print to hold and protect it. Keep it on for a clean look, or remove it to reveal the tinted border and frame the work your own way.</p></div></details>
+        <details><summary>where is the edition number?</summary><div class="fp-faq__answer"><p>On the back of the print.</p></div></details>
+        <details><summary>how should I handle my print?</summary><div class="fp-faq__answer"><p>Handle it by the edges and keep the matte surface away from rough surfaces to avoid scratches. The small white side edges are there to help you hold it without touching the printed surface.</p></div></details>
+        <details><summary>how long does delivery take?</summary><div class="fp-faq__answer"><p>Our current estimate is 3–5 working days once your print has been produced and is ready to ship.</p></div></details>
+        <details><summary>can I return or exchange a print?</summary><div class="fp-faq__answer"><p>Because prints are made to order, print sales are final and cannot be returned or exchanged.</p></div></details>
+        <details><summary>what if my order arrives damaged?</summary><div class="fp-faq__answer"><p>Please email Eldemirdsh@gmail.com or message @fridayprints.art and we’ll help.</p></div></details>
+      </div></div>
+
+    {% else %}
+      <div class="fp-generic-page"><h1>{{ page.title }}</h1>{% if page.content != blank %}<div class="fp-generic-page__content rte">{{ page.content }}</div>{% endif %}</div>
+  {% endcase %}
+</section>
+
+{% schema %}
+{
+  "name": "Friday page system",
+  "settings": [
+    { "type": "paragraph", "content": "Automatically art-directs page handles about, info and faq. Other pages use their normal Shopify title and content." }
+  ],
+  "presets": [{ "name": "Friday page system" }]
+}
+{% endschema %}
