@@ -1,7 +1,8 @@
 /* Friday Prints — product-page finishing layer.
-   1) Bridge the custom PDP to Shopify's native cart drawer.
-   2) Pull the exact edition count from Amina's existing product description
-      when a product is a standalone A3/A4 item rather than a size variant. */
+   1) Restore Pitch's native AJAX product-form submit path for the custom PDP.
+   2) Bridge successful cart updates to Shopify's native cart drawer.
+   3) Pull the exact edition count from Amina's existing product description
+      when a print is a standalone A3/A4 product rather than a size variant. */
 
 (() => {
   const ARM_TIMEOUT = 6000;
@@ -36,7 +37,7 @@
 
     const observer = new MutationObserver((mutations) => {
       const meaningful = mutations.some((mutation) =>
-        mutation.type === 'childList' || mutation.type === 'characterData'
+        mutation.type === 'childList' || mutation.type === 'characterData' || mutation.type === 'attributes'
       );
       if (meaningful) finish();
     });
@@ -45,6 +46,7 @@
       subtree: true,
       childList: true,
       characterData: true,
+      attributes: true,
     });
 
     const timeout = setTimeout(() => {
@@ -55,8 +57,23 @@
 
   syncEditionFromProductCopy();
 
+  /* The custom Liquid form intentionally keeps Shopify's native
+     product-form-component. Pitch normally wires this method through an
+     `on:submit` attribute; bind the same public handler here so the form
+     stays AJAX-based instead of navigating to /cart. */
+  document.addEventListener('submit', (event) => {
+    const form = event.target.closest?.('.fp-pdp__form');
+    if (!form) return;
+
+    const component = form.closest('product-form-component');
+    if (!component || typeof component.handleSubmit !== 'function') return;
+
+    event.stopImmediatePropagation();
+    component.handleSubmit(event);
+  }, true);
+
   document.addEventListener('click', (event) => {
-    const button = event.target.closest('.fp-pdp [ref="addToCartButton"]');
+    const button = event.target.closest?.('.fp-pdp [ref="addToCartButton"]');
     if (!button) return;
     armDrawerOpen(button);
   }, true);
