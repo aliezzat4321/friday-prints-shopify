@@ -11,7 +11,94 @@
   "sections": {
     "friday_page": {
       "type": "friday-page",
-      "settings": {}
+      "blocks": {
+        "faq_limited": {
+          "type": "faq_item",
+          "settings": {
+            "question": "what makes a Friday Print limited edition?",
+            "answer": "<p>Every Friday Print belongs to a limited numbered edition. The edition number for your piece is printed on the back.</p>",
+            "open_by_default": true
+          }
+        },
+        "faq_editions": {
+          "type": "faq_item",
+          "settings": {
+            "question": "how many editions are made?",
+            "answer": "<p>A3 prints are limited to 100 editions per design, A4 prints to 150 editions per design, and postcards to 250 editions per design.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_paper": {
+          "type": "faq_item",
+          "settings": {
+            "question": "what paper are the prints made on?",
+            "answer": "<p>Premium matte paper, chosen for its rich colours and soft finish.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_mount": {
+          "type": "faq_item",
+          "settings": {
+            "question": "what is the removable mount?",
+            "answer": "<p>A cardboard mount comes with the print to hold and protect it. Keep it on for a clean look, or remove it to reveal the tinted border and frame the work your own way.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_number": {
+          "type": "faq_item",
+          "settings": {
+            "question": "where is the edition number?",
+            "answer": "<p>On the back of the print.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_handle": {
+          "type": "faq_item",
+          "settings": {
+            "question": "how should I handle my print?",
+            "answer": "<p>Handle it by the edges and keep the matte surface away from rough surfaces to avoid scratches. The small white side edges are there to help you hold it without touching the printed surface.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_delivery": {
+          "type": "faq_item",
+          "settings": {
+            "question": "how long does delivery take?",
+            "answer": "<p>Our current estimate is 3–5 working days once your print has been produced and is ready to ship.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_returns": {
+          "type": "faq_item",
+          "settings": {
+            "question": "can I return or exchange a print?",
+            "answer": "<p>Because prints are made to order, print sales are final and cannot be returned or exchanged, except where applicable law provides otherwise.</p>",
+            "open_by_default": false
+          }
+        },
+        "faq_damage": {
+          "type": "faq_item",
+          "settings": {
+            "question": "what if my order arrives damaged?",
+            "answer": "<p>Please email Eldemirdsh@gmail.com or message @fridayprints.art and we’ll help.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": [
+        "faq_limited",
+        "faq_editions",
+        "faq_paper",
+        "faq_mount",
+        "faq_number",
+        "faq_handle",
+        "faq_delivery",
+        "faq_returns",
+        "faq_damage"
+      ],
+      "settings": {
+        "instagram_url": "https://www.instagram.com/fridayprints.art/"
+      }
     }
   },
   "order": ["friday_page"]
