@@ -1,0 +1,24 @@
+<section class="fp-404" id="Friday404-{{ section.id }}">
+  <style>
+    #Friday404-{{ section.id }}{min-height:72vh;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);align-items:center;gap:40px;padding:56px 46px 70px;background:var(--fp-yellow);color:var(--fp-ink);overflow:hidden}
+    #Friday404-{{ section.id }} *{box-sizing:border-box}
+    #Friday404-{{ section.id }} .fp-404__code{margin:0;color:var(--fp-red);font:700 clamp(120px,19vw,300px)/.66 Georgia,"Times New Roman",serif;letter-spacing:-.09em}
+    #Friday404-{{ section.id }} h1{max-width:9ch;margin:34px 0 16px;font:700 clamp(42px,4.4vw,68px)/.9 Georgia,"Times New Roman",serif;letter-spacing:-.045em;text-transform:lowercase}
+    #Friday404-{{ section.id }} p{max-width:42ch;margin:0 0 27px;font:13px/1.55 "Courier New",monospace}
+    #Friday404-{{ section.id }} .fp-404__actions{display:flex;gap:10px;flex-wrap:wrap}
+    #Friday404-{{ section.id }} .fp-404__actions a{min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:0 19px;border:1px solid var(--fp-ink);color:inherit;text-decoration:none;font:700 11px/1 "Courier New",monospace;text-transform:lowercase}
+    #Friday404-{{ section.id }} .fp-404__actions a:first-child{background:var(--fp-ink);color:#fff}
+    #Friday404-{{ section.id }} .fp-404__mark{position:relative;min-height:420px;display:grid;place-items:center}
+    #Friday404-{{ section.id }} .fp-404__oval{position:absolute;width:310px;height:390px;border:2px solid var(--fp-red);border-radius:50%;transform:rotate(11deg)}
+    #Friday404-{{ section.id }} .fp-404__gigi{position:relative;z-index:1;display:block;max-width:220px;max-height:340px;width:auto;height:auto;filter:grayscale(1) contrast(1.1)}
+    #Friday404-{{ section.id }} .fp-404__scribble{position:absolute;color:var(--fp-red);font:700 25px/1 "Courier New",monospace}
+    #Friday404-{{ section.id }} .fp-404__scribble--a{left:0;top:13%;transform:rotate(-13deg)}
+    #Friday404-{{ section.id }} .fp-404__scribble--b{right:2%;bottom:13%;transform:rotate(9deg)}
+    @media(max-width:749px){#Friday404-{{ section.id }}{min-height:0;grid-template-columns:1fr;padding:42px 20px 50px;gap:8px}#Friday404-{{ section.id }} .fp-404__code{font-size:135px}#Friday404-{{ section.id }} h1{font-size:44px;margin-top:26px}#Friday404-{{ section.id }} p{font-size:11px}#Friday404-{{ section.id }} .fp-404__mark{min-height:260px;justify-self:end;width:220px}#Friday404-{{ section.id }} .fp-404__oval{width:180px;height:230px}#Friday404-{{ section.id }} .fp-404__gigi{max-width:130px;max-height:210px}#Friday404-{{ section.id }} .fp-404__actions a{font-size:9px;min-height:44px}}
+  </style>
+  <div class="fp-404__copy"><div class="fp-404__code">404</div><h1>{{ section.settings.heading }}</h1><p>{{ section.settings.text }}</p><div class="fp-404__actions"><a href="{{ routes.all_products_collection_url }}">{{ section.settings.shop_label }}</a><a href="{{ routes.search_url }}">{{ section.settings.search_label }}</a></div></div>
+  <div class="fp-404__mark" aria-hidden="true"><div class="fp-404__oval"></div>{% assign gigi_image = images['F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png'] %}{% if gigi_image %}{{ gigi_image | image_url: width: 600 | image_tag: class: 'fp-404__gigi', loading: 'eager', widths: '160,240,360,600', sizes: '(max-width:749px) 130px, 220px', alt: '' }}{% endif %}<span class="fp-404__scribble fp-404__scribble--a">where did she go?</span><span class="fp-404__scribble fp-404__scribble--b">✦ ✦ ✦</span></div>
+</section>
+{% schema %}
+{"name":"Friday 404","settings":[{"type":"text","id":"heading","label":"Heading","default":"GiGi wandered off."},{"type":"textarea","id":"text","label":"Text","default":"This page isn’t part of the story. Try the prints instead, or search for what you were looking for."},{"type":"text","id":"shop_label","label":"Shop button","default":"shop all prints"},{"type":"text","id":"search_label","label":"Search button","default":"search"}],"presets":[{"name":"Friday 404"}]}
+{% endschema %}
