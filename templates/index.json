@@ -84,9 +84,12 @@
       "settings": {
         "heading": "friday at home",
         "text": "Printed to live with you.",
+        "cta_label": "",
+        "cta_link": "",
         "background_color": "#f3cf78",
-        "heading_size_desktop": 64,
-        "heading_size_mobile": 46
+        "section_height_desktop": 340,
+        "heading_size_desktop": 40,
+        "heading_size_mobile": 32
       }
     },
     "friday_benefits": {
