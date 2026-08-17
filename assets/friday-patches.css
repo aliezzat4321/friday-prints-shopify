@@ -10,6 +10,10 @@
 }
 .fp-pdp .fp-pdp__add:disabled .add-to-cart__added{display:none!important}
 
+/* Product descriptions already carry Amina's supplied print/care information. Avoid repeating
+   that same information in a second generic accordion below the description. */
+.fp-pdp .fp-pdp__accordions .fp-pdp__accordion:first-child{display:none}
+
 /* Shopify-hosted policy pages: keep legal content native, remove the generic-store visual drop. */
 body:has(.fp-site-header) .shopify-policy__container{
   width:min(calc(100% - 92px),1180px);
