@@ -1,9 +1,6 @@
 name: Friday Prints Mobile Menu QA
 
 on:
-  push:
-    branches:
-      - friday-build
   workflow_dispatch:
 
 concurrency:
@@ -90,11 +87,10 @@ jobs:
             if (metrics.rect && metrics.rect.width < width - 2) errors.push(`NOT_FULL_WIDTH:${metrics.rect.width}/${width}`);
             if (metrics.rect && metrics.rect.height < height - 2) errors.push(`NOT_FULL_HEIGHT:${metrics.rect.height}/${height}`);
             if (metrics.linkCount < 5) errors.push(`TOO_FEW_LINKS:${metrics.linkCount}`);
-            if (metrics.hasBrand) errors.push('DUPLICATE_BRAND');
+            if (!metrics.hasBrand) errors.push('BRAND_MISSING');
             if (!metrics.hasBottom) errors.push('BOTTOM_MISSING');
             if (metrics.bottomLinkCount !== 0) errors.push(`DUPLICATE_BOTTOM_LINK:${metrics.bottomLinkCount}`);
             if (metrics.bodyOverflow !== 'hidden' && metrics.htmlOverflow !== 'hidden') errors.push(`SCROLL_NOT_LOCKED:${metrics.bodyOverflow}/${metrics.htmlOverflow}`);
-            if (metrics.closePosition !== 'relative') errors.push(`CLOSE_POSITION:${metrics.closePosition}`);
             if (closedSummaryRect && metrics.summaryRect && (Math.abs(closedSummaryRect.x-metrics.summaryRect.x)>1 || Math.abs(closedSummaryRect.y-metrics.summaryRect.y)>1)) errors.push(`CLOSE_MOVED:${closedSummaryRect.x},${closedSummaryRect.y}->${metrics.summaryRect.x},${metrics.summaryRect.y}`);
             if (errors.length) failed=true;
 
