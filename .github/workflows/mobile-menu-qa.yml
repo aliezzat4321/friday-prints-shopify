@@ -50,6 +50,7 @@ jobs:
 
             const summary = page.locator('.fp-menu > summary').first();
             if (!(await summary.count())) throw new Error('Menu summary missing');
+            const closedSummaryRect = await summary.boundingBox();
             await summary.click();
             await page.waitForTimeout(500);
 
@@ -58,6 +59,8 @@ jobs:
               const details=document.querySelector('.fp-menu');
               const rect=menu?.getBoundingClientRect();
               const cs=menu ? getComputedStyle(menu) : null;
+              const summary=document.querySelector('.fp-menu > summary');
+              const sr=summary?.getBoundingClientRect();
               return {
                 open:!!details?.open,
                 rect:rect ? {x:rect.x,y:rect.y,width:rect.width,height:rect.height} : null,
@@ -70,7 +73,9 @@ jobs:
                 linkCount:menu?.querySelectorAll('.fp-mobile-menu__links > a').length || 0,
                 hasBrand:!!menu?.querySelector('.fp-mobile-menu__brand'),
                 hasBottom:!!menu?.querySelector('.fp-mobile-menu__bottom'),
-                closeFixed:getComputedStyle(document.querySelector('.fp-menu > summary')).position
+                bottomLinkCount:menu?.querySelectorAll('.fp-mobile-menu__bottom a').length || 0,
+                summaryRect:sr ? {x:sr.x,y:sr.y,width:sr.width,height:sr.height} : null,
+                closePosition:summary ? getComputedStyle(summary).position : null
               };
             });
 
@@ -85,14 +90,16 @@ jobs:
             if (metrics.rect && metrics.rect.width < width - 2) errors.push(`NOT_FULL_WIDTH:${metrics.rect.width}/${width}`);
             if (metrics.rect && metrics.rect.height < height - 2) errors.push(`NOT_FULL_HEIGHT:${metrics.rect.height}/${height}`);
             if (metrics.linkCount < 5) errors.push(`TOO_FEW_LINKS:${metrics.linkCount}`);
-            if (!metrics.hasBrand) errors.push('BRAND_MISSING');
+            if (metrics.hasBrand) errors.push('DUPLICATE_BRAND');
             if (!metrics.hasBottom) errors.push('BOTTOM_MISSING');
+            if (metrics.bottomLinkCount !== 0) errors.push(`DUPLICATE_BOTTOM_LINK:${metrics.bottomLinkCount}`);
             if (metrics.bodyOverflow !== 'hidden' && metrics.htmlOverflow !== 'hidden') errors.push(`SCROLL_NOT_LOCKED:${metrics.bodyOverflow}/${metrics.htmlOverflow}`);
-            if (metrics.closeFixed !== 'fixed') errors.push(`CLOSE_NOT_FIXED:${metrics.closeFixed}`);
+            if (metrics.closePosition !== 'relative') errors.push(`CLOSE_POSITION:${metrics.closePosition}`);
+            if (closedSummaryRect && metrics.summaryRect && (Math.abs(closedSummaryRect.x-metrics.summaryRect.x)>1 || Math.abs(closedSummaryRect.y-metrics.summaryRect.y)>1)) errors.push(`CLOSE_MOVED:${closedSummaryRect.x},${closedSummaryRect.y}->${metrics.summaryRect.x},${metrics.summaryRect.y}`);
             if (errors.length) failed=true;
 
             await page.screenshot({path:`mobile-menu-qa/${name}-open.png`,fullPage:false});
-            results.push({name,width,height,metrics,errors});
+            results.push({name,width,height,closedSummaryRect,metrics,errors});
             await context.close();
           }
           await browser.close();
