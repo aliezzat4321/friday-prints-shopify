@@ -1,6 +1,8 @@
 {% liquid
   assign fp_handle = page.handle | downcase
   assign all_prints = collections['all']
+  assign fallback_gigi = images['F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png']
+  assign gigi_image = section.settings.about_gigi | default: fallback_gigi
 %}
 
 <section class="fp-content-page fp-content-page--{{ fp_handle }}" id="FridayPage-{{ section.id }}">
@@ -12,9 +14,7 @@
     #FridayPage-{{ section.id }} .fp-page-title{max-width:12ch;margin:0;font:700 clamp(76px,9vw,136px)/.8 Georgia,"Times New Roman",serif;letter-spacing:-.06em;text-transform:lowercase;text-wrap:balance}
     #FridayPage-{{ section.id }} .fp-page-intro{max-width:58ch;margin:28px 0 0;font:14px/1.62 "Courier New",monospace}
     #FridayPage-{{ section.id }} .fp-page-intro p{margin:0}
-    #FridayPage-{{ section.id }} .fp-page-shell{padding:0 46px}
 
-    /* World of GiGi */
     #FridayPage-{{ section.id }}.fp-content-page--about .fp-page-hero{min-height:480px;background:var(--fp-pink);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr);gap:50px;align-items:center}
     #FridayPage-{{ section.id }} .fp-world__gigi{justify-self:center;align-self:end;width:min(100%,300px);height:360px;display:grid;place-items:end center;position:relative}
     #FridayPage-{{ section.id }} .fp-world__gigi:before{content:"";position:absolute;width:280px;height:330px;border:2px solid rgba(255,255,255,.72);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%) rotate(8deg)}
@@ -41,7 +41,6 @@
     #FridayPage-{{ section.id }} .fp-world-card:nth-child(4){grid-column:5/9;grid-row:span 5}
     #FridayPage-{{ section.id }} .fp-world-card:nth-child(5){grid-column:1/5;grid-row:span 4}
 
-    /* Print guide */
     #FridayPage-{{ section.id }}.fp-content-page--info .fp-page-hero{background:var(--fp-yellow)}
     #FridayPage-{{ section.id }} .fp-guide__edition{display:grid;grid-template-columns:1.15fr repeat(3,1fr);border-bottom:1px solid var(--fp-ink)}
     #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:210px;padding:34px 28px;border-right:1px solid var(--fp-ink);display:flex;flex-direction:column;justify-content:space-between}
@@ -57,7 +56,8 @@
     #FridayPage-{{ section.id }} .fp-guide-card:nth-child(3){background:color-mix(in srgb,var(--fp-green) 88%,#fff);color:#fff}
     #FridayPage-{{ section.id }} .fp-guide-card__num{position:absolute;right:22px;top:17px;font:700 62px/.8 Georgia,serif;opacity:.14}
     #FridayPage-{{ section.id }} .fp-guide-card h3{margin:0 0 24px;font:700 27px/.95 Georgia,"Times New Roman",serif;letter-spacing:-.035em;text-transform:lowercase}
-    #FridayPage-{{ section.id }} .fp-guide-card p{max-width:37ch;margin:0 0 13px;font:12px/1.62 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-guide-card .rte{max-width:37ch;font:12px/1.62 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-guide-card .rte p{margin:0 0 13px}
     #FridayPage-{{ section.id }} .fp-guide__care{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;padding:65px 46px 70px;background:var(--fp-cream)}
     #FridayPage-{{ section.id }} .fp-guide__care h2{margin:0;font:italic 42px/1 Georgia,"Times New Roman",serif;color:var(--fp-red)}
     #FridayPage-{{ section.id }} .fp-guide__care-copy{display:grid;grid-template-columns:1fr 1fr;gap:24px 42px}
@@ -65,7 +65,6 @@
     #FridayPage-{{ section.id }} .fp-guide__care-copy strong{display:block;margin-bottom:8px;font:700 10px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.06em}
     #FridayPage-{{ section.id }} .fp-guide__care-copy p{margin:0;font:11px/1.55 "Courier New",monospace}
 
-    /* FAQ */
     #FridayPage-{{ section.id }}.fp-content-page--faq .fp-page-hero{background:var(--fp-green);color:#fff}
     #FridayPage-{{ section.id }}.fp-content-page--faq .fp-page-eyebrow{color:var(--fp-yellow)}
     #FridayPage-{{ section.id }} .fp-faq{display:grid;grid-template-columns:.6fr 1.4fr;gap:70px;padding:68px 46px 80px;background:var(--fp-cream)}
@@ -82,7 +81,6 @@
     #FridayPage-{{ section.id }} .fp-faq__answer{max-width:68ch;padding:0 48px 24px 0;font:12px/1.65 "Courier New",monospace}
     #FridayPage-{{ section.id }} .fp-faq__answer p{margin:0 0 10px}
 
-    /* Generic page safety net */
     #FridayPage-{{ section.id }} .fp-generic-page{padding:70px 46px 90px;background:var(--fp-cream)}
     #FridayPage-{{ section.id }} .fp-generic-page h1{max-width:12ch;margin:0 0 38px;font:700 clamp(62px,7vw,100px)/.82 Georgia,"Times New Roman",serif;letter-spacing:-.055em;text-transform:lowercase}
     #FridayPage-{{ section.id }} .fp-generic-page__content{max-width:760px;font:14px/1.7 "Courier New",monospace}
@@ -93,8 +91,7 @@
       #FridayPage-{{ section.id }} .fp-page-hero,#FridayPage-{{ section.id }} .fp-world__gallery-head{padding-inline:30px}
       #FridayPage-{{ section.id }} .fp-world__gallery{padding-inline:30px}
       #FridayPage-{{ section.id }} .fp-guide__edition{grid-template-columns:1fr 1fr}
-      #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2){border-bottom:1px solid var(--fp-ink)}
-      #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(1){border-bottom:1px solid var(--fp-ink)}
+      #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(1),#FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2){border-bottom:1px solid var(--fp-ink)}
       #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2n){border-right:0}
     }
     @media(max-width:749px){
@@ -138,32 +135,69 @@
   {% case fp_handle %}
     {% when 'about' %}
       <div class="fp-page-hero">
-        <div><p class="fp-page-eyebrow">MEET THE GIRL WITH THE LONG NECK</p><h1 class="fp-page-title">world of GiGi</h1><div class="fp-page-intro"><p>One character, many moods, a growing collection of imagined places and unexpected company.</p></div></div>
-        <div class="fp-world__gigi" aria-hidden="true">{% assign gigi_image = images['F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png'] %}{% if gigi_image %}{{ gigi_image | image_url: width: 600 | image_tag: loading: 'eager', widths: '180,280,420,600', sizes: '(max-width:749px) 140px, 220px', alt: '' }}{% endif %}</div>
+        <div>
+          {% if section.settings.about_eyebrow != blank %}<p class="fp-page-eyebrow">{{ section.settings.about_eyebrow }}</p>{% endif %}
+          <h1 class="fp-page-title">{{ section.settings.about_title }}</h1>
+          {% if section.settings.about_intro != blank %}<div class="fp-page-intro"><p>{{ section.settings.about_intro }}</p></div>{% endif %}
+        </div>
+        <div class="fp-world__gigi" aria-hidden="true">{% if gigi_image %}{{ gigi_image | image_url: width: 600 | image_tag: loading: 'eager', widths: '180,280,420,600', sizes: '(max-width:749px) 140px, 220px', alt: '' }}{% endif %}</div>
       </div>
-      <div class="fp-world__ticker" aria-hidden="true"><div class="fp-world__ticker-track"><span>moods</span><span>quirks</span><span>adventures</span><span>new friends</span><span>imagined worlds</span><span>loud lines</span><span>moods</span><span>quirks</span><span>adventures</span><span>new friends</span><span>imagined worlds</span><span>loud lines</span></div></div>
-      <div class="fp-world__story"><h2>how GiGi got here</h2><div class="fp-world__copy"><p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p></div></div>
-      {% if all_prints != blank and all_prints.products_count > 0 %}<div class="fp-world__gallery-head"><h2>fragments from the world</h2><a href="{{ all_prints.url }}">shop all prints →</a></div><div class="fp-world__gallery">{% for product in all_prints.products limit: 5 %}{% if product.featured_image %}<a class="fp-world-card" href="{{ product.url }}">{{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '300,500,700,1000', sizes: '(max-width:749px) 50vw, 33vw', alt: product.featured_image.alt | default: product.title }}</a>{% endif %}{% endfor %}</div>{% endif %}
+      {% if section.settings.about_ticker != blank %}
+        {% assign ticker_items = section.settings.about_ticker | split: ',' %}
+        <div class="fp-world__ticker" aria-hidden="true"><div class="fp-world__ticker-track">{% for repeat in (1..2) %}{% for item in ticker_items %}<span>{{ item | strip }}</span>{% endfor %}{% endfor %}</div></div>
+      {% endif %}
+      <div class="fp-world__story">
+        <h2>{{ section.settings.about_story_title }}</h2>
+        <div class="fp-world__copy rte">{{ section.settings.about_story }}</div>
+      </div>
+      {% if all_prints != blank and all_prints.products_count > 0 %}
+        <div class="fp-world__gallery-head"><h2>{{ section.settings.about_gallery_title }}</h2><a href="{{ all_prints.url }}">{{ section.settings.about_gallery_cta }}</a></div>
+        <div class="fp-world__gallery">{% for product in all_prints.products limit: 5 %}{% if product.featured_image %}<a class="fp-world-card" href="{{ product.url }}">{{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '300,500,700,1000', sizes: '(max-width:749px) 50vw, 33vw', alt: product.featured_image.alt | default: product.title }}</a>{% endif %}{% endfor %}</div>
+      {% endif %}
 
     {% when 'info' %}
-      <div class="fp-page-hero"><p class="fp-page-eyebrow">EVERYTHING BEFORE IT HITS THE WALL</p><h1 class="fp-page-title">print guide</h1><div class="fp-page-intro"><p>What your Friday Print is made of, how the editions work, and how to keep it looking good.</p></div></div>
-      <div class="fp-guide__edition"><div><h2>limited, always.</h2><span>every Friday Print is part of a numbered edition</span></div><div><strong>100</strong><span>A3 editions per design</span></div><div><strong>150</strong><span>A4 editions per design</span></div><div><strong>250</strong><span>postcard editions per design</span></div></div>
-      <div class="fp-guide__cards"><article class="fp-guide-card"><span class="fp-guide-card__num">01</span><h3>premium matte paper</h3><p>Chosen for its rich colours and soft finish.</p><p>Matte paper can be sensitive, so it likes a little care before framing.</p></article><article class="fp-guide-card"><span class="fp-guide-card__num">02</span><h3>removable mount</h3><p>Each print comes with a cardboard mount that holds it securely and helps protect it.</p><p>Keep it on for a clean, classic look or remove it to frame the work your own way.</p></article><article class="fp-guide-card"><span class="fp-guide-card__num">03</span><h3>tinted border</h3><p>There is a tinted coloured border around the artwork.</p><p>Remove the mount and the border is revealed, adding a subtle framed look.</p></article></div>
-      <div class="fp-guide__care"><h2>handle with care</h2><div class="fp-guide__care-copy"><div><strong>edition number</strong><p>You’ll find the edition number for your piece on the back of the print.</p></div><div><strong>use the edges</strong><p>Small white edges are left on the sides so you can handle the print without touching the printed surface.</p></div><div><strong>avoid scratches</strong><p>Handle from the edges and keep the matte surface away from rough surfaces.</p></div><div><strong>delivery</strong><p>Delivery typically takes 3–5 working days once your print has been produced and is ready to ship.</p></div></div></div>
+      <div class="fp-page-hero">
+        {% if section.settings.info_eyebrow != blank %}<p class="fp-page-eyebrow">{{ section.settings.info_eyebrow }}</p>{% endif %}
+        <h1 class="fp-page-title">{{ section.settings.info_title }}</h1>
+        {% if section.settings.info_intro != blank %}<div class="fp-page-intro"><p>{{ section.settings.info_intro }}</p></div>{% endif %}
+      </div>
+      <div class="fp-guide__edition">
+        <div><h2>{{ section.settings.info_limited_title }}</h2><span>{{ section.settings.info_limited_note }}</span></div>
+        <div><strong>{{ section.settings.info_a3_number }}</strong><span>{{ section.settings.info_a3_label }}</span></div>
+        <div><strong>{{ section.settings.info_a4_number }}</strong><span>{{ section.settings.info_a4_label }}</span></div>
+        <div><strong>{{ section.settings.info_postcard_number }}</strong><span>{{ section.settings.info_postcard_label }}</span></div>
+      </div>
+      <div class="fp-guide__cards">
+        <article class="fp-guide-card"><span class="fp-guide-card__num">01</span><h3>{{ section.settings.guide_card_1_title }}</h3><div class="rte">{{ section.settings.guide_card_1_body }}</div></article>
+        <article class="fp-guide-card"><span class="fp-guide-card__num">02</span><h3>{{ section.settings.guide_card_2_title }}</h3><div class="rte">{{ section.settings.guide_card_2_body }}</div></article>
+        <article class="fp-guide-card"><span class="fp-guide-card__num">03</span><h3>{{ section.settings.guide_card_3_title }}</h3><div class="rte">{{ section.settings.guide_card_3_body }}</div></article>
+      </div>
+      <div class="fp-guide__care">
+        <h2>{{ section.settings.guide_care_title }}</h2>
+        <div class="fp-guide__care-copy">
+          <div><strong>{{ section.settings.care_1_title }}</strong><p>{{ section.settings.care_1_body }}</p></div>
+          <div><strong>{{ section.settings.care_2_title }}</strong><p>{{ section.settings.care_2_body }}</p></div>
+          <div><strong>{{ section.settings.care_3_title }}</strong><p>{{ section.settings.care_3_body }}</p></div>
+          <div><strong>{{ section.settings.care_4_title }}</strong><p>{{ section.settings.care_4_body }}</p></div>
+        </div>
+      </div>
 
     {% when 'faq' %}
-      <div class="fp-page-hero"><p class="fp-page-eyebrow">QUESTIONS, ANSWERED</p><h1 class="fp-page-title">FAQ</h1><div class="fp-page-intro"><p>The useful stuff: editions, paper, mounts, delivery, returns and looking after your print.</p></div></div>
-      <div class="fp-faq"><aside class="fp-faq__aside"><strong>still wondering?</strong><p>Email <a href="mailto:Eldemirdsh@gmail.com">Eldemirdsh@gmail.com</a> or message <a href="https://www.instagram.com/fridayprints.art/" target="_blank" rel="noopener">@fridayprints.art</a>.</p></aside><div class="fp-faq__list">
-        <details open><summary>what makes a Friday Print limited edition?</summary><div class="fp-faq__answer"><p>Every Friday Print belongs to a limited numbered edition. The edition number for your piece is printed on the back.</p></div></details>
-        <details><summary>how many editions are made?</summary><div class="fp-faq__answer"><p>A3 prints are limited to 100 editions per design, A4 prints to 150 editions per design, and postcards to 250 editions per design.</p></div></details>
-        <details><summary>what paper are the prints made on?</summary><div class="fp-faq__answer"><p>Premium matte paper, chosen for its rich colours and soft finish.</p></div></details>
-        <details><summary>what is the removable mount?</summary><div class="fp-faq__answer"><p>A cardboard mount comes with the print to hold and protect it. Keep it on for a clean look, or remove it to reveal the tinted border and frame the work your own way.</p></div></details>
-        <details><summary>where is the edition number?</summary><div class="fp-faq__answer"><p>On the back of the print.</p></div></details>
-        <details><summary>how should I handle my print?</summary><div class="fp-faq__answer"><p>Handle it by the edges and keep the matte surface away from rough surfaces to avoid scratches. The small white side edges are there to help you hold it without touching the printed surface.</p></div></details>
-        <details><summary>how long does delivery take?</summary><div class="fp-faq__answer"><p>Our current estimate is 3–5 working days once your print has been produced and is ready to ship.</p></div></details>
-        <details><summary>can I return or exchange a print?</summary><div class="fp-faq__answer"><p>Because prints are made to order, print sales are final and cannot be returned or exchanged.</p></div></details>
-        <details><summary>what if my order arrives damaged?</summary><div class="fp-faq__answer"><p>Please email Eldemirdsh@gmail.com or message @fridayprints.art and we’ll help.</p></div></details>
-      </div></div>
+      <div class="fp-page-hero">
+        {% if section.settings.faq_eyebrow != blank %}<p class="fp-page-eyebrow">{{ section.settings.faq_eyebrow }}</p>{% endif %}
+        <h1 class="fp-page-title">{{ section.settings.faq_title }}</h1>
+        {% if section.settings.faq_intro != blank %}<div class="fp-page-intro"><p>{{ section.settings.faq_intro }}</p></div>{% endif %}
+      </div>
+      <div class="fp-faq">
+        <aside class="fp-faq__aside"><strong>{{ section.settings.faq_aside_title }}</strong><p>Email <a href="mailto:{{ section.settings.support_email | escape }}">{{ section.settings.support_email }}</a>{% if section.settings.instagram_url != blank %} or message <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">{{ section.settings.instagram_label }}</a>{% endif %}.</p></aside>
+        <div class="fp-faq__list">
+          {% for block in section.blocks %}
+            {% if block.type == 'faq_item' %}
+              <details {{ block.shopify_attributes }}{% if block.settings.open_by_default %} open{% endif %}><summary>{{ block.settings.question }}</summary><div class="fp-faq__answer rte">{{ block.settings.answer }}</div></details>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
 
     {% else %}
       <div class="fp-generic-page"><h1>{{ page.title }}</h1>{% if page.content != blank %}<div class="fp-generic-page__content rte">{{ page.content }}</div>{% endif %}</div>
@@ -174,8 +208,68 @@
 {
   "name": "Friday page system",
   "settings": [
-    { "type": "paragraph", "content": "Automatically art-directs page handles about, info and faq. Other pages use their normal Shopify title and content." }
+    { "type": "paragraph", "content": "Controls World of GiGi, Print Guide and FAQ. Other page handles use normal Shopify page content." },
+
+    { "type": "header", "content": "World of GiGi" },
+    { "type": "text", "id": "about_eyebrow", "label": "Eyebrow", "default": "MEET THE GIRL WITH THE LONG NECK" },
+    { "type": "text", "id": "about_title", "label": "Title", "default": "world of GiGi" },
+    { "type": "textarea", "id": "about_intro", "label": "Intro", "default": "One character, many moods, a growing collection of imagined places and unexpected company." },
+    { "type": "image_picker", "id": "about_gigi", "label": "GiGi image" },
+    { "type": "text", "id": "about_ticker", "label": "Ticker words", "info": "Separate items with commas.", "default": "moods, quirks, adventures, new friends, imagined worlds, loud lines" },
+    { "type": "text", "id": "about_story_title", "label": "Story heading", "default": "how GiGi got here" },
+    { "type": "richtext", "id": "about_story", "label": "Story", "default": "<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>" },
+    { "type": "text", "id": "about_gallery_title", "label": "Gallery heading", "default": "fragments from the world" },
+    { "type": "text", "id": "about_gallery_cta", "label": "Gallery link label", "default": "shop all prints →" },
+
+    { "type": "header", "content": "Print Guide" },
+    { "type": "text", "id": "info_eyebrow", "label": "Eyebrow", "default": "EVERYTHING BEFORE IT HITS THE WALL" },
+    { "type": "text", "id": "info_title", "label": "Title", "default": "print guide" },
+    { "type": "textarea", "id": "info_intro", "label": "Intro", "default": "What your Friday Print is made of, how the editions work, and how to keep it looking good." },
+    { "type": "text", "id": "info_limited_title", "label": "Edition heading", "default": "limited, always." },
+    { "type": "text", "id": "info_limited_note", "label": "Edition note", "default": "every Friday Print is part of a numbered edition" },
+    { "type": "text", "id": "info_a3_number", "label": "A3 edition number", "default": "100" },
+    { "type": "text", "id": "info_a3_label", "label": "A3 label", "default": "A3 editions per design" },
+    { "type": "text", "id": "info_a4_number", "label": "A4 edition number", "default": "150" },
+    { "type": "text", "id": "info_a4_label", "label": "A4 label", "default": "A4 editions per design" },
+    { "type": "text", "id": "info_postcard_number", "label": "Postcard edition number", "default": "250" },
+    { "type": "text", "id": "info_postcard_label", "label": "Postcard label", "default": "postcard editions per design" },
+    { "type": "text", "id": "guide_card_1_title", "label": "Card 1 heading", "default": "premium matte paper" },
+    { "type": "richtext", "id": "guide_card_1_body", "label": "Card 1 text", "default": "<p>Chosen for its rich colours and soft finish.</p><p>Matte paper can be sensitive, so it likes a little care before framing.</p>" },
+    { "type": "text", "id": "guide_card_2_title", "label": "Card 2 heading", "default": "removable mount" },
+    { "type": "richtext", "id": "guide_card_2_body", "label": "Card 2 text", "default": "<p>Each print comes with a cardboard mount that holds it securely and helps protect it.</p><p>Keep it on for a clean, classic look or remove it to frame the work your own way.</p>" },
+    { "type": "text", "id": "guide_card_3_title", "label": "Card 3 heading", "default": "tinted border" },
+    { "type": "richtext", "id": "guide_card_3_body", "label": "Card 3 text", "default": "<p>There is a tinted coloured border around the artwork.</p><p>Remove the mount and the border is revealed, adding a subtle framed look.</p>" },
+    { "type": "text", "id": "guide_care_title", "label": "Care heading", "default": "handle with care" },
+    { "type": "text", "id": "care_1_title", "label": "Care 1 heading", "default": "edition number" },
+    { "type": "textarea", "id": "care_1_body", "label": "Care 1 text", "default": "You’ll find the edition number for your piece on the back of the print." },
+    { "type": "text", "id": "care_2_title", "label": "Care 2 heading", "default": "use the edges" },
+    { "type": "textarea", "id": "care_2_body", "label": "Care 2 text", "default": "Small white edges are left on the sides so you can handle the print without touching the printed surface." },
+    { "type": "text", "id": "care_3_title", "label": "Care 3 heading", "default": "avoid scratches" },
+    { "type": "textarea", "id": "care_3_body", "label": "Care 3 text", "default": "Handle from the edges and keep the matte surface away from rough surfaces." },
+    { "type": "text", "id": "care_4_title", "label": "Care 4 heading", "default": "delivery" },
+    { "type": "textarea", "id": "care_4_body", "label": "Care 4 text", "default": "Delivery typically takes 3–5 working days once your print has been produced and is ready to ship." },
+
+    { "type": "header", "content": "FAQ" },
+    { "type": "text", "id": "faq_eyebrow", "label": "Eyebrow", "default": "QUESTIONS, ANSWERED" },
+    { "type": "text", "id": "faq_title", "label": "Title", "default": "FAQ" },
+    { "type": "textarea", "id": "faq_intro", "label": "Intro", "default": "The useful stuff: editions, paper, mounts, delivery, returns and looking after your print." },
+    { "type": "text", "id": "faq_aside_title", "label": "Support heading", "default": "still wondering?" },
+    { "type": "text", "id": "support_email", "label": "Support email", "default": "Eldemirdsh@gmail.com" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "text", "id": "instagram_label", "label": "Instagram label", "default": "@fridayprints.art" }
   ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ item",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "question" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer goes here.</p>" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }
+      ]
+    }
+  ],
+  "max_blocks": 12,
   "presets": [{ "name": "Friday page system" }]
 }
 {% endschema %}
