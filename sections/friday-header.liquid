@@ -64,8 +64,13 @@
       height:var(--fp-menu-button-height)!important;
       z-index:1004!important;
     }
-    #FridayHeader-{{ section.id }}:has(.fp-menu[open]) .fp-logo{
-      visibility:hidden!important;
+    #FridayHeader-{{ section.id }}.fp-menu-is-open .fp-logo{
+      position:fixed!important;
+      left:var(--fp-menu-logo-left)!important;
+      top:var(--fp-menu-logo-top)!important;
+      width:var(--fp-menu-logo-width)!important;
+      height:var(--fp-menu-logo-height)!important;
+      z-index:1004!important;
     }
     #FridayHeader-{{ section.id }} .fp-menu[open]>summary i:first-child{top:18px;transform:rotate(45deg)}
     #FridayHeader-{{ section.id }} .fp-menu[open]>summary i:last-child{top:18px;transform:rotate(-45deg)}
@@ -99,34 +104,14 @@
       transition:opacity .18s ease,visibility 0s;
     }
     #FridayHeader-{{ section.id }} .fp-mobile-menu{
-      padding-top:108px!important;
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__brand{
-      position:absolute;
-      top:24px;
-      left:22px;
-      display:flex;
-      flex-direction:column;
-      width:max-content;
-      color:var(--fp-ink)!important;
-      text-decoration:none!important;
-      font:700 46px/.72 "Courier New",Courier,monospace;
-      letter-spacing:-.075em;
-      text-transform:lowercase;
-      z-index:1;
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__brand small{
-      margin-top:8px;
-      font-size:10px;
-      line-height:1;
-      letter-spacing:-.01em;
+      padding-top:112px!important;
     }
     #FridayHeader-{{ section.id }} .fp-mobile-menu__links{
       display:flex;
       flex:0 0 auto;
       flex-direction:column;
       justify-content:flex-start;
-      padding:52px 0 18px;
+      padding:24px 0 18px;
       counter-reset:fpMenuLink;
     }
     #FridayHeader-{{ section.id }} .fp-mobile-menu__links>a{
@@ -144,7 +129,7 @@
       border-bottom:1px solid color-mix(in srgb,var(--fp-ink) 18%,transparent)!important;
       font:700 clamp(31px,9.6vw,48px)/.92 Georgia,"Times New Roman",serif!important;
       letter-spacing:-.045em!important;
-      text-transform:lowercase!important;
+      text-transform:none!important;
     }
     #FridayHeader-{{ section.id }} .fp-mobile-menu__links>a:before{
       content:"0" counter(fpMenuLink);
@@ -169,8 +154,7 @@
   }
   @media (max-width: 360px){
     #FridayHeader-{{ section.id }} .fp-mobile-menu{padding:102px 18px 20px!important}
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__brand{top:20px;left:18px;font-size:40px}
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__links{padding-top:42px}
+    #FridayHeader-{{ section.id }} .fp-mobile-menu__links{padding-top:20px}
     #FridayHeader-{{ section.id }} .fp-mobile-menu__links>a{font-size:30px!important;padding:10px 0!important}
   }
   @media (prefers-reduced-motion:reduce){
@@ -201,7 +185,7 @@
       <nav class="fp-nav__links" aria-label="{{ section.settings.navigation_label | escape }}">
         {% if section.settings.main_menu != blank %}
           {% for link in section.settings.main_menu.links %}
-            <a href="{{ link.url }}"{% if link.current %} class="is-active" aria-current="page"{% endif %}>{{ link.title }}</a>
+            <a href="{{ link.url }}"{% if link.current %} class="is-active" aria-current="page"{% endif %}>{{ link.title | replace: 'world of gigi', 'World of GiGi' }}</a>
           {% endfor %}
         {% else %}
           {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}"{% if request.path == section.settings.nav_1_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_1_label }}</a>{% endif %}
@@ -243,13 +227,9 @@
         <details class="fp-menu">
           <summary aria-label="{{ section.settings.menu_open_label | escape }}"><i></i><i></i></summary>
           <nav class="fp-mobile-menu" aria-label="{{ section.settings.mobile_navigation_label | escape }}">
-            <a class="fp-mobile-menu__brand" href="{{ routes.root_url }}" aria-label="{{ section.settings.logo_alt | escape }}">
-              <span>{{ section.settings.logo_text }}</span>
-              {% if section.settings.logo_subtext != blank %}<small>{{ section.settings.logo_subtext }}</small>{% endif %}
-            </a>
             <div class="fp-mobile-menu__links">
               {% if section.settings.main_menu != blank %}
-                {% for link in section.settings.main_menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+                {% for link in section.settings.main_menu.links %}<a href="{{ link.url }}">{{ link.title | replace: 'world of gigi', 'World of GiGi' }}</a>{% endfor %}
               {% else %}
                 {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}">{{ section.settings.nav_1_label }}</a>{% endif %}
                 {% if section.settings.nav_2_label != blank and section.settings.nav_2_url != blank %}<a href="{{ section.settings.nav_2_url }}">{{ section.settings.nav_2_label }}</a>{% endif %}
@@ -260,9 +240,11 @@
               {% endif %}
               {% if section.settings.show_search %}<a href="{{ routes.search_url }}">{{ section.settings.search_label }}</a>{% endif %}
             </div>
-            <div class="fp-mobile-menu__bottom">
-              <p>limited-edition prints · made to order in Egypt</p>
-            </div>
+            {% if section.settings.mobile_menu_note != blank %}
+              <div class="fp-mobile-menu__bottom">
+                <p>{{ section.settings.mobile_menu_note }}</p>
+              </div>
+            {% endif %}
           </nav>
         </details>
       </div>
@@ -277,23 +259,32 @@
     const menu = root.querySelector('.fp-menu');
     if (!menu) return;
     const summary = menu.querySelector('summary');
-    const pinMenuButton = () => {
+    const logo = root.querySelector('.fp-logo');
+    const pinMenuChrome = () => {
       if (!summary || menu.open) return;
       const rect = summary.getBoundingClientRect();
       root.style.setProperty('--fp-menu-button-left', `${rect.left}px`);
       root.style.setProperty('--fp-menu-button-top', `${rect.top}px`);
       root.style.setProperty('--fp-menu-button-width', `${rect.width}px`);
       root.style.setProperty('--fp-menu-button-height', `${rect.height}px`);
+      if (logo) {
+        const logoRect = logo.getBoundingClientRect();
+        root.style.setProperty('--fp-menu-logo-left', `${logoRect.left}px`);
+        root.style.setProperty('--fp-menu-logo-top', `${logoRect.top}px`);
+        root.style.setProperty('--fp-menu-logo-width', `${logoRect.width}px`);
+        root.style.setProperty('--fp-menu-logo-height', `${logoRect.height}px`);
+      }
     };
-    summary?.addEventListener('pointerdown', pinMenuButton);
+    summary?.addEventListener('pointerdown', pinMenuChrome);
     summary?.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') pinMenuButton();
+      if (event.key === 'Enter' || event.key === ' ') pinMenuChrome();
     });
-    window.addEventListener('resize', pinMenuButton, { passive: true });
-    pinMenuButton();
+    window.addEventListener('resize', pinMenuChrome, { passive: true });
+    pinMenuChrome();
     const sync = () => {
       document.documentElement.classList.toggle('fp-mobile-menu-open', menu.open);
       document.body.classList.toggle('fp-mobile-menu-open', menu.open);
+      root.classList.toggle('fp-menu-is-open', menu.open);
       if (summary) summary.setAttribute('aria-label', menu.open ? 'Close menu' : {{ section.settings.menu_open_label | json }});
     };
     menu.addEventListener('toggle', sync);
@@ -325,6 +316,7 @@
     { "type": "text", "id": "navigation_label", "label": "Desktop navigation accessibility label", "default": "Main navigation" },
     { "type": "text", "id": "mobile_navigation_label", "label": "Mobile navigation accessibility label", "default": "Mobile navigation" },
     { "type": "text", "id": "menu_open_label", "label": "Menu button accessibility label", "default": "Open menu" },
+    { "type": "text", "id": "mobile_menu_note", "label": "Mobile menu footer note", "default": "LIMITED-EDITION PRINTS · MADE TO ORDER IN EGYPT" },
     { "type": "text", "id": "nav_1_label", "label": "Fallback link 1 label", "default": "shop all" },
     { "type": "url", "id": "nav_1_url", "label": "Fallback link 1 URL" },
     { "type": "text", "id": "nav_2_label", "label": "Fallback link 2 label", "default": "world of GiGi" },
