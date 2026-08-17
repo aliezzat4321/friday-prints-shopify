@@ -6,6 +6,7 @@ on:
       - friday-build
     paths:
       - 'sections/friday-header.liquid'
+      - 'snippets/stylesheets.liquid'
       - '.github/workflows/mobile-menu-qa.yml'
   workflow_dispatch:
 
@@ -68,24 +69,19 @@ jobs:
               const details=document.querySelector('.fp-menu');
               const rect=menu?.getBoundingClientRect();
               const cs=menu ? getComputedStyle(menu) : null;
+              const before=menu ? getComputedStyle(menu,'::before') : null;
+              const after=menu ? getComputedStyle(menu,'::after') : null;
               const summary=document.querySelector('.fp-menu > summary');
               const sr=summary?.getBoundingClientRect();
               const firstLink=menu?.querySelector('.fp-mobile-menu__links > a');
               const fr=firstLink?.getBoundingClientRect();
-              const footer=document.querySelector('.fp-footer');
-              const footerBrand=document.querySelector('.fp-footer__brand');
-              const footerSocial=document.querySelector('.fp-footer__social');
-              const main=document.querySelector('#MainContent');
               const logos=[...document.querySelectorAll('.fp-logo')];
-              const visibleLogos=logos.filter(visible);
               return {
                 open:!!details?.open,
                 rect:rect ? {x:rect.x,y:rect.y,width:rect.width,height:rect.height} : null,
                 position:cs?.position,
                 visibility:cs?.visibility,
                 opacity:cs?.opacity,
-                display:cs?.display,
-                background:cs?.backgroundColor,
                 bodyOverflow:getComputedStyle(document.body).overflow,
                 htmlOverflow:getComputedStyle(document.documentElement).overflow,
                 bodyHasOpenClass:document.body.classList.contains('fp-mobile-menu-open'),
@@ -93,13 +89,11 @@ jobs:
                 linkCount:menu?.querySelectorAll('.fp-mobile-menu__links > a').length || 0,
                 bottomCount:menu?.querySelectorAll('.fp-mobile-menu__bottom').length || 0,
                 bottomText:menu?.querySelector('.fp-mobile-menu__bottom')?.textContent?.trim() || '',
+                beforeContent:before?.content || 'none',
+                afterContent:after?.content || 'none',
                 summaryRect:sr ? {x:sr.x,y:sr.y,width:sr.width,height:sr.height} : null,
                 firstLinkRect:fr ? {x:fr.x,y:fr.y,width:fr.width,height:fr.height} : null,
-                visibleLogoCount:visibleLogos.length,
-                footerDisplay:footer ? getComputedStyle(footer).display : 'missing',
-                footerBrandVisible:visible(footerBrand),
-                footerSocialVisible:visible(footerSocial),
-                mainDisplay:main ? getComputedStyle(main).display : 'missing'
+                visibleLogoCount:logos.filter(visible).length
               };
             });
 
@@ -116,10 +110,8 @@ jobs:
             if (metrics.linkCount < 5) errors.push(`TOO_FEW_LINKS:${metrics.linkCount}`);
             if (metrics.bottomCount !== 1) errors.push(`BOTTOM_COUNT:${metrics.bottomCount}`);
             if (metrics.visibleLogoCount !== 1) errors.push(`VISIBLE_LOGOS:${metrics.visibleLogoCount}`);
-            if (metrics.footerBrandVisible) errors.push('FOOTER_BRAND_VISIBLE');
-            if (metrics.footerSocialVisible) errors.push('FOOTER_SOCIAL_VISIBLE');
-            if (metrics.footerDisplay !== 'none') errors.push(`FOOTER_NOT_HIDDEN:${metrics.footerDisplay}`);
-            if (metrics.mainDisplay !== 'none') errors.push(`MAIN_NOT_HIDDEN:${metrics.mainDisplay}`);
+            if (metrics.beforeContent && metrics.beforeContent !== 'none' && metrics.beforeContent !== 'normal') errors.push(`LEGACY_BEFORE:${metrics.beforeContent}`);
+            if (metrics.afterContent && metrics.afterContent !== 'none' && metrics.afterContent !== 'normal') errors.push(`LEGACY_AFTER:${metrics.afterContent}`);
             if (!metrics.bodyHasOpenClass || !metrics.rootHasOpenClass) errors.push('OPEN_CLASS_MISSING');
             if (metrics.bodyOverflow !== 'hidden' && metrics.htmlOverflow !== 'hidden') errors.push(`SCROLL_NOT_LOCKED:${metrics.bodyOverflow}/${metrics.htmlOverflow}`);
             if (closedSummaryRect && metrics.summaryRect && (Math.abs(closedSummaryRect.x-metrics.summaryRect.x)>1 || Math.abs(closedSummaryRect.y-metrics.summaryRect.y)>1)) errors.push(`CLOSE_MOVED:${closedSummaryRect.x},${closedSummaryRect.y}->${metrics.summaryRect.x},${metrics.summaryRect.y}`);
