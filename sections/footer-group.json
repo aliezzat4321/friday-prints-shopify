@@ -20,8 +20,8 @@
             "heading": "SHOP",
             "link_1_label": "shop all prints",
             "link_1_url": "/collections/all",
-            "link_2_label": "",
-            "link_2_url": "",
+            "link_2_label": "search",
+            "link_2_url": "/search",
             "link_3_label": "",
             "link_3_url": "",
             "link_4_label": "",
@@ -31,13 +31,13 @@
         "footer_explore": {
           "type": "column",
           "settings": {
-            "heading": "EXPLORE",
+            "heading": "FRIDAY",
             "link_1_label": "world of GiGi",
             "link_1_url": "/pages/about",
-            "link_2_label": "",
-            "link_2_url": "",
-            "link_3_label": "",
-            "link_3_url": "",
+            "link_2_label": "print guide",
+            "link_2_url": "/pages/info",
+            "link_3_label": "faq",
+            "link_3_url": "/pages/faq",
             "link_4_label": "",
             "link_4_url": ""
           }
@@ -46,12 +46,12 @@
           "type": "column",
           "settings": {
             "heading": "HELP",
-            "link_1_label": "print guide",
-            "link_1_url": "/pages/info",
-            "link_2_label": "faq",
-            "link_2_url": "/pages/faq",
-            "link_3_label": "shipping",
-            "link_3_url": "/policies/shipping-policy",
+            "link_1_label": "shipping",
+            "link_1_url": "/policies/shipping-policy",
+            "link_2_label": "questions",
+            "link_2_url": "mailto:Eldemirdsh@gmail.com",
+            "link_3_label": "",
+            "link_3_url": "",
             "link_4_label": "",
             "link_4_url": ""
           }
@@ -62,10 +62,10 @@
             "heading": "LEGAL",
             "link_1_label": "privacy",
             "link_1_url": "/policies/privacy-policy",
-            "link_2_label": "",
-            "link_2_url": "",
-            "link_3_label": "",
-            "link_3_url": "",
+            "link_2_label": "returns & refunds",
+            "link_2_url": "/policies/refund-policy",
+            "link_3_label": "terms",
+            "link_3_url": "/policies/terms-of-service",
             "link_4_label": "",
             "link_4_url": ""
           }
