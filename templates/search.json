@@ -6,230 +6,26 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
-    "search": {
-      "type": "search-header",
-      "blocks": {
-        "heading": {
-          "type": "_heading",
-          "static": true,
-          "settings": {
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "text": "",
-            "read_only": true,
-            "alignment": "left",
-            "show_alignment": true,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "search": {
-          "type": "_search-input",
-          "static": true,
-          "settings": {
-            "width": "custom",
-            "custom_width": 50
-          },
-          "blocks": {}
-        }
-      },
+    "friday_search": {
+      "type": "friday-search",
       "settings": {
-        "alignment": "flex-start",
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 40,
-        "padding-block-end": 0
-      }
-    },
-    "main": {
-      "type": "search-results",
-      "blocks": {
-        "filters": {
-          "type": "filters",
-          "static": true,
-          "settings": {
-            "enable_filtering": true,
-            "filter_style": "horizontal",
-            "filter_width": "centered",
-            "text_label_case": "default",
-            "show_swatch_label": false,
-            "show_filter_label": false,
-            "enable_sorting": true,
-            "enable_grid_density": true,
-            "padding-block-start": 8,
-            "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0,
-            "facets_margin_bottom": 8,
-            "facets_margin_right": 20
-          },
-          "blocks": {}
-        },
-        "product-card": {
-          "type": "_product-card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 12,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "card-gallery": {
-              "type": "_product-card-gallery",
-              "settings": {
-                "image_ratio": "portrait",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "group_9mpa4z": {
-              "type": "_product-card-group",
-              "settings": {
-                "content_direction": "column",
-                "vertical_on_mobile": true,
-                "horizontal_alignment": "flex-start",
-                "vertical_alignment": "center",
-                "align_baseline": false,
-                "horizontal_alignment_flex_direction_column": "flex-start",
-                "vertical_alignment_flex_direction_column": "center",
-                "gap": 4,
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "custom_height": 100,
-                "background_media": "none",
-                "video_position": "cover",
-                "background_image_position": "cover",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "toggle_overlay": false,
-                "overlay_color": "#00000026",
-                "overlay_style": "solid",
-                "gradient_direction": "to top",
-                "open_in_new_tab": false,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {
-                "text_xxQHbn": {
-                  "type": "text",
-                  "name": "t:names.title",
-                  "settings": {
-                    "text": "<h4>{{ closest.product.title }}</h4>",
-                    "width": "fit-content",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "type_preset": "h5",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "background": false,
-                    "background_color": "#00000026",
-                    "corner_radius": 0,
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "price_HEyg6L": {
-                  "type": "price",
-                  "settings": {
-                    "show_sale_price_first": true,
-                    "show_installments": false,
-                    "show_tax_info": false,
-                    "type_preset": "paragraph",
-                    "width": "100%",
-                    "alignment": "left",
-                    "font": "var(--font-body--family)",
-                    "font_size": "1rem",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  },
-                  "blocks": {}
-                },
-                "swatches_EVAarg": {
-                  "type": "swatches",
-                  "settings": {
-                    "product_swatches_alignment": "flex-start",
-                    "product_swatches_alignment_mobile": "flex-start",
-                    "hide_padding": false,
-                    "product_swatches_padding_top": 4,
-                    "product_swatches_padding_bottom": 0,
-                    "product_swatches_padding_left": 0,
-                    "product_swatches_padding_right": 0
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "text_xxQHbn",
-                "price_HEyg6L",
-                "swatches_EVAarg"
-              ]
-            }
-          },
-          "block_order": [
-            "card-gallery",
-            "group_9mpa4z"
-          ]
-        }
-      },
-      "settings": {
-        "layout_type": "grid",
-        "product_card_size": "medium",
-        "mobile_product_card_size": "small",
-        "product_grid_width": "centered",
-        "full_width_on_mobile": true,
-        "columns_gap_horizontal": 16,
-        "columns_gap_vertical": 24,
-        "padding-inline-start": 0,
-        "padding-inline-end": 0,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 40,
-        "padding-block-end": 40
+        "eyebrow": "LOOKING FOR SOMETHING?",
+        "heading": "find a print",
+        "placeholder": "type a title, mood, anything...",
+        "input_label": "Search Friday Prints",
+        "submit_label": "Search",
+        "start_heading": "go on, have a look.",
+        "start_text": "Search by print title or whatever you remember from GiGi’s world.",
+        "no_results_heading": "nothing here yet.",
+        "no_results_text": "Try another word, or head back to Shop All and browse the whole wall.",
+        "results_per_page": 20,
+        "background_color": "#FBF1E4",
+        "accent_color": "#E53F36"
       }
     }
   },
-  "order": [
-    "search",
-    "main"
-  ]
+  "order": ["friday_search"]
 }
