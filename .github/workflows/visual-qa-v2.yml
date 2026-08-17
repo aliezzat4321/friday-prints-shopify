@@ -24,10 +24,10 @@ jobs:
           npm install playwright@1.55.0 >/dev/null 2>&1
           npx playwright install --with-deps chromium >/dev/null 2>&1
       - name: Allow Shopify preview sync
-        run: sleep 20
+        run: sleep 45
       - name: Render and audit connected Shopify draft
         env:
-          STORE_URL: https://wy9z7gjpgosgm5mi-108268650782.shopifypreview.com
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
         run: |
           cat > qa.mjs <<'EOF'
           import { chromium } from 'playwright';
@@ -48,6 +48,7 @@ jobs:
             ['hero', '.fp-hero'],
             ['prints', '.fp-collection'],
             ['story', '.fp-story'],
+            ['at-home', '.fp-at-home'],
             ['facts', '.fp-benefits'],
             ['newsletter', '.fp-newsletter'],
             ['footer', '.fp-footer']
@@ -68,8 +69,6 @@ jobs:
             await page.evaluate(async () => { if (document.fonts?.ready) await document.fonts.ready; });
             await page.waitForTimeout(1000);
 
-            // Scroll each major section into view. This both validates real navigation through the page
-            // and gives Shopify lazy-loaded images a chance to resolve before image-health checks.
             for (const [label, selector] of sections) {
               const locator = page.locator(selector).first();
               if (await locator.count()) {
@@ -90,43 +89,39 @@ jobs:
                 const y = r.top + window.scrollY;
                 return { x:+r.x.toFixed(1), y:+y.toFixed(1), width:+r.width.toFixed(1), height:+r.height.toFixed(1), bottom:+(y+r.height).toFixed(1) };
               };
+              const bg = s => {
+                const e = qs(s);
+                return e ? getComputedStyle(e).backgroundColor : null;
+              };
               const brokenImages = [...document.images]
                 .filter(i => i.complete && i.naturalWidth === 0)
                 .map(i => ({ src: i.currentSrc || i.src, alt: i.alt }));
-              const pendingLazyImages = [...document.images]
-                .filter(i => !i.complete && i.loading === 'lazy')
-                .map(i => ({ src: i.currentSrc || i.src, alt: i.alt }));
               const navLabels = [...document.querySelectorAll('.fp-nav__links a')].map(a => a.textContent.trim());
-              const candidates = [document.documentElement, document.body, document.querySelector('.page-wrapper'), document.querySelector('#MainContent')].filter(Boolean);
-              const scrollContainers = candidates.map(e => {
-                const cs = getComputedStyle(e);
-                return {
-                  tag: e.tagName,
-                  id: e.id || '',
-                  className: typeof e.className === 'string' ? e.className : '',
-                  overflowY: cs.overflowY,
-                  clientHeight: e.clientHeight,
-                  scrollHeight: e.scrollHeight
-                };
-              });
               return {
                 title: document.title,
-                bodyText: document.body.innerText.slice(0, 1600),
+                bodyText: document.body.innerText.slice(0, 1800),
                 scrollWidth: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
                 clientWidth: document.documentElement.clientWidth,
-                documentScrollHeight: document.documentElement.scrollHeight,
-                bodyScrollHeight: document.body.scrollHeight,
-                scrollContainers,
                 brokenImages,
-                pendingLazyImages,
                 header: docRect('.fp-site-header'),
                 hero: docRect('.fp-hero'),
                 collection: docRect('.fp-collection'),
                 story: docRect('.fp-story'),
+                atHome: docRect('.fp-at-home'),
                 benefits: docRect('.fp-benefits'),
                 newsletter: docRect('.fp-newsletter'),
                 footer: docRect('.fp-footer'),
+                backgrounds: {
+                  hero:bg('.fp-hero'),
+                  collection:bg('.fp-collection'),
+                  story:bg('.fp-story'),
+                  atHome:bg('.fp-at-home'),
+                  benefits:bg('.fp-benefits'),
+                  newsletter:bg('.fp-newsletter'),
+                  footer:bg('.fp-footer')
+                },
                 productCount: document.querySelectorAll('.fp-product').length,
+                atHomeSceneCount: document.querySelectorAll('.fp-at-home__scene').length,
                 navLabels,
                 searchHref: qs('.fp-search')?.getAttribute('href') || null,
                 cartHref: qs('.fp-cart')?.getAttribute('href') || null,
@@ -146,12 +141,17 @@ jobs:
             if (!metrics.hero) errors.push('HERO_MISSING');
             if (!metrics.collection) errors.push('PRINT_RAIL_MISSING');
             if (!metrics.story) errors.push('GIGI_STORY_MISSING');
+            if (!metrics.atHome) errors.push('FRIDAY_AT_HOME_MISSING');
+            if (!metrics.benefits) errors.push('PRINT_FACTS_MISSING');
             if (!metrics.newsletter) errors.push('NEWSLETTER_MISSING');
             if (!metrics.footer) errors.push('FRIDAY_FOOTER_MISSING');
             if (metrics.productCount < 3) errors.push(`TOO_FEW_PRODUCTS:${metrics.productCount}`);
+            if (metrics.atHomeSceneCount !== 3) errors.push(`AT_HOME_SCENES:${metrics.atHomeSceneCount}`);
             if (!metrics.searchHref) errors.push('SEARCH_LINK_MISSING');
             if (!metrics.cartHref) errors.push('CART_LINK_MISSING');
             if (metrics.collection && metrics.story && metrics.collection.y > metrics.story.y) errors.push('PRINTS_NOT_BEFORE_STORY');
+            if (metrics.story && metrics.atHome && metrics.story.y > metrics.atHome.y) errors.push('STORY_NOT_BEFORE_AT_HOME');
+            if (metrics.atHome && metrics.benefits && metrics.atHome.y > metrics.benefits.y) errors.push('AT_HOME_NOT_BEFORE_FACTS');
             if (isMobile && metrics.mobileMenuLinks < 4) errors.push(`MOBILE_MENU_TOO_SHORT:${metrics.mobileMenuLinks}`);
             if (isMobile && metrics.hero && metrics.hero.height > 900) errors.push(`MOBILE_HERO_TOO_TALL:${metrics.hero.height}`);
 
@@ -166,7 +166,7 @@ jobs:
           await browser.close();
           fs.writeFileSync('visual-qa-v2/report.json', JSON.stringify(report, null, 2));
           console.log(JSON.stringify(report, null, 2));
-          if (failed) process.exitCode = 1;
+          if (failed) process.exitCode=1;
           EOF
           node qa.mjs
       - name: Upload screenshots and report
