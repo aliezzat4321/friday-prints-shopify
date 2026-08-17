@@ -91,9 +91,7 @@
         {{ content_for_layout }}
       </main>
 
-      {% unless template.name == 'index' %}
-        <footer>{% sections 'footer-group' %}</footer>
-      {% endunless %}
+      <div id="footer-group">{% sections 'footer-group' %}</div>
     </div>
 
     {% render 'cart-drawer', render_wrapper: true %}
