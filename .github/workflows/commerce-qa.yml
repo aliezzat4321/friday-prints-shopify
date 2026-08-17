@@ -1,0 +1,150 @@
+name: Friday Prints Commerce QA
+
+on:
+  push:
+    branches:
+      - friday-build
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  commerce-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Allow Shopify preview sync
+        run: sleep 25
+      - name: Test Shop, PDP and cart drawer
+        env:
+          STORE_URL: https://wy9z7gjpgosgm5mi-108268650782.shopifypreview.com
+        run: |
+          cat > commerce-qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('commerce-qa', { recursive: true });
+
+          const browser = await chromium.launch({ headless: true });
+          const results = [];
+          let failed = false;
+
+          for (const [name, width, height] of [['desktop',1440,1000],['mobile',390,844]]) {
+            const context = await browser.newContext({ viewport:{width,height}, deviceScaleFactor:1 });
+            const page = await context.newPage();
+            const consoleErrors = [];
+            page.on('console', m => { if (m.type() === 'error') consoleErrors.push(m.text()); });
+
+            await page.goto(`${process.env.STORE_URL}/collections/all`, { waitUntil:'domcontentloaded', timeout:60000 });
+            await page.waitForLoadState('networkidle', { timeout:30000 }).catch(() => {});
+            await page.waitForTimeout(1200);
+
+            const shopMetrics = await page.evaluate(() => ({
+              hasFridayShop: !!document.querySelector('.fp-shop'),
+              cards: document.querySelectorAll('.fp-shop-card').length,
+              heading: document.querySelector('.fp-shop h1')?.textContent?.trim() || '',
+              overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2
+            }));
+            const firstHref = await page.locator('.fp-shop-card').first().getAttribute('href').catch(() => null);
+            await page.screenshot({ path:`commerce-qa/${name}-shop.png`, fullPage:name==='mobile' });
+
+            const errors = [];
+            if (!shopMetrics.hasFridayShop) errors.push('FRIDAY_SHOP_MISSING');
+            if (shopMetrics.cards < 3) errors.push(`TOO_FEW_SHOP_CARDS:${shopMetrics.cards}`);
+            if (shopMetrics.overflow) errors.push('SHOP_HORIZONTAL_OVERFLOW');
+            if (!firstHref) errors.push('NO_PRODUCT_LINK');
+
+            let pdpMetrics = null;
+            let variantTest = null;
+            let cartTest = null;
+
+            if (firstHref) {
+              await page.goto(new URL(firstHref, process.env.STORE_URL).href, { waitUntil:'domcontentloaded', timeout:60000 });
+              await page.waitForLoadState('networkidle', { timeout:30000 }).catch(() => {});
+              await page.waitForTimeout(1200);
+
+              pdpMetrics = await page.evaluate(() => ({
+                hasPdp: !!document.querySelector('.fp-pdp'),
+                title: document.querySelector('.fp-pdp__title')?.textContent?.trim() || '',
+                price: document.querySelector('[data-fp-price]')?.textContent?.trim() || '',
+                edition: document.querySelector('[data-fp-edition]')?.textContent?.trim() || '',
+                mediaCount: document.querySelectorAll('.fp-pdp__media').length,
+                variantCount: document.querySelectorAll('[data-fp-variant]').length,
+                hiddenId: document.querySelector('.fp-pdp input[name="id"]')?.value || '',
+                addDisabled: document.querySelector('.fp-pdp [ref="addToCartButton"]')?.disabled ?? null,
+                overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth + 2
+              }));
+
+              if (!pdpMetrics.hasPdp) errors.push('FRIDAY_PDP_MISSING');
+              if (!pdpMetrics.title) errors.push('PDP_TITLE_MISSING');
+              if (!pdpMetrics.price) errors.push('PDP_PRICE_MISSING');
+              if (pdpMetrics.mediaCount < 1) errors.push('PDP_MEDIA_MISSING');
+              if (pdpMetrics.overflow) errors.push('PDP_HORIZONTAL_OVERFLOW');
+
+              await page.screenshot({ path:`commerce-qa/${name}-pdp.png`, fullPage:name==='mobile' });
+
+              const variants = page.locator('[data-fp-variant]');
+              const variantCount = await variants.count();
+              if (variantCount > 1) {
+                const beforeId = await page.locator('.fp-pdp input[name="id"]').inputValue();
+                await variants.nth(1).check({ force:true });
+                await page.waitForTimeout(250);
+                const afterId = await page.locator('.fp-pdp input[name="id"]').inputValue();
+                const selectedText = await page.locator('[data-fp-selected]').textContent().catch(() => '');
+                const editionText = await page.locator('[data-fp-edition]').textContent().catch(() => '');
+                variantTest = { beforeId, afterId, selectedText:selectedText?.trim(), editionText:editionText?.trim() };
+                if (beforeId === afterId) errors.push('VARIANT_ID_DID_NOT_CHANGE');
+                if (!selectedText?.trim()) errors.push('VARIANT_SELECTED_TEXT_MISSING');
+              }
+
+              // Use an available variant before cart test.
+              const availableVariant = page.locator('[data-fp-variant][data-available="true"]').first();
+              if (await availableVariant.count()) {
+                await availableVariant.check({ force:true });
+                await page.waitForTimeout(200);
+              }
+
+              const addButton = page.locator('.fp-pdp [ref="addToCartButton"]');
+              if (await addButton.count() && !(await addButton.isDisabled())) {
+                const beforeCart = await page.evaluate(() => fetch('/cart.js').then(r => r.json()).then(c => c.item_count));
+                await addButton.click();
+                await page.waitForTimeout(1800);
+                const afterCart = await page.evaluate(() => fetch('/cart.js').then(r => r.json()).then(c => c.item_count));
+                const drawer = page.locator('#cart-drawer dialog');
+                const drawerOpen = await drawer.evaluate(el => el.open).catch(() => false);
+                cartTest = { beforeCart, afterCart, drawerOpen };
+                if (afterCart <= beforeCart) errors.push(`CART_DID_NOT_INCREMENT:${beforeCart}->${afterCart}`);
+                if (!drawerOpen) errors.push('CART_DRAWER_DID_NOT_OPEN');
+                await page.screenshot({ path:`commerce-qa/${name}-cart-drawer.png`, fullPage:false });
+              } else {
+                cartTest = { skipped:'No available product variant' };
+              }
+            }
+
+            if (errors.length) failed = true;
+            results.push({ name, shopMetrics, productUrl:firstHref, pdpMetrics, variantTest, cartTest, consoleErrors, errors });
+            await context.close();
+          }
+
+          await browser.close();
+          fs.writeFileSync('commerce-qa/report.json', JSON.stringify(results, null, 2));
+          console.log(JSON.stringify(results, null, 2));
+          if (failed) process.exitCode = 1;
+          EOF
+          node commerce-qa.mjs
+      - name: Upload commerce screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: friday-prints-commerce-qa
+          path: commerce-qa/
+          retention-days: 7
