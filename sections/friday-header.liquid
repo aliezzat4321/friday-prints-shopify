@@ -31,7 +31,13 @@
     html.fp-mobile-menu-open,
     body.fp-mobile-menu-open{overflow:hidden!important;overscroll-behavior:none}
     body.fp-mobile-menu-open #MainContent,
-    body.fp-mobile-menu-open .fp-footer{visibility:hidden!important}
+    body.fp-mobile-menu-open .fp-footer,
+    body.fp-mobile-menu-open .shopify-section-group-footer-group,
+    body:has(#FridayHeader-{{ section.id }} .fp-menu[open]) #MainContent,
+    body:has(#FridayHeader-{{ section.id }} .fp-menu[open]) .fp-footer,
+    body:has(#FridayHeader-{{ section.id }} .fp-menu[open]) .shopify-section-group-footer-group{
+      display:none!important;
+    }
     #FridayHeader-{{ section.id }}.fp-menu-is-open{
       z-index:2147483000!important;
       isolation:isolate!important;
