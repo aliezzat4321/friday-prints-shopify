@@ -1,0 +1,130 @@
+name: Friday Prints Final Storefront QA
+
+on:
+  push:
+    branches:
+      - friday-build
+  workflow_dispatch:
+
+concurrency:
+  group: friday-final-storefront-qa
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  final-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Allow Shopify preview sync
+        run: sleep 30
+      - name: Audit launch routes
+        env:
+          STORE_URL: https://wy9z7gjpgosgm5mi-108268650782.shopifypreview.com
+        run: |
+          cat > final-qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('final-storefront-qa', { recursive:true });
+
+          const routes = [
+            ['home','/','.fp-hero'],
+            ['shop','/collections/all','.fp-shop'],
+            ['world','/pages/about','.fp-content-page--about'],
+            ['guide','/pages/info','.fp-content-page--info'],
+            ['faq','/pages/faq','.fp-content-page--faq'],
+            ['search','/search','.fp-search-page'],
+            ['cart','/cart','.cart-page'],
+            ['shipping','/policies/shipping-policy','.shopify-policy__container'],
+            ['privacy','/policies/privacy-policy','.shopify-policy__container'],
+            ['404','/gigi-definitely-is-not-here-404','.fp-404']
+          ];
+          const viewports = [['desktop',1440,900],['mobile',390,844]];
+          const browser = await chromium.launch({headless:true});
+          const report=[];
+          let failed=false;
+
+          for (const [device,width,height] of viewports) {
+            const context = await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
+            for (const [name,path,selector] of routes) {
+              const page = await context.newPage();
+              const consoleErrors=[];
+              page.on('console',m=>{ if(m.type()==='error') consoleErrors.push(m.text()); });
+              let response=null;
+              let navigationError=null;
+              try {
+                response=await page.goto(new URL(path,process.env.STORE_URL).href,{waitUntil:'domcontentloaded',timeout:60000});
+                await page.waitForLoadState('networkidle',{timeout:25000}).catch(()=>{});
+                await page.evaluate(async()=>{ if(document.fonts?.ready) await document.fonts.ready; });
+                await page.waitForTimeout(900);
+                await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight)).catch(()=>{});
+                await page.waitForTimeout(500);
+              } catch (error) { navigationError=String(error); }
+
+              const metrics=await page.evaluate((expectedSelector)=>{
+                const broken=[...document.images].filter(i=>i.complete&&i.naturalWidth===0).map(i=>({src:i.currentSrc||i.src,alt:i.alt}));
+                const text=document.body.innerText;
+                return {
+                  expectedPresent:!!document.querySelector(expectedSelector),
+                  headerPresent:!!document.querySelector('.fp-site-header'),
+                  footerPresent:!!document.querySelector('.fp-footer'),
+                  scrollWidth:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth),
+                  clientWidth:document.documentElement.clientWidth,
+                  brokenImages:broken,
+                  stockFooterLeak:/Skincare|Makeup|skincare tips/i.test(text),
+                  title:document.title,
+                  bodySample:text.slice(0,700)
+                };
+              },selector).catch(()=>({expectedPresent:false,headerPresent:false,footerPresent:false,brokenImages:[],stockFooterLeak:false,scrollWidth:0,clientWidth:0,title:'',bodySample:''}));
+
+              const errors=[];
+              const status=response?.status()??null;
+              const expected404=name==='404';
+              if(navigationError) errors.push('NAVIGATION_ERROR');
+              if(expected404){ if(status!==404 && status!==200) errors.push(`UNEXPECTED_404_STATUS:${status}`); }
+              else if(status && status>=400) errors.push(`HTTP_${status}`);
+              if(!metrics.expectedPresent) errors.push('EXPECTED_FRIDAY_SURFACE_MISSING');
+              if(!metrics.headerPresent) errors.push('FRIDAY_HEADER_MISSING');
+              if(!metrics.footerPresent) errors.push('FRIDAY_FOOTER_MISSING');
+              if(metrics.scrollWidth>metrics.clientWidth+2) errors.push(`HORIZONTAL_OVERFLOW:${metrics.scrollWidth}-${metrics.clientWidth}`);
+              if(metrics.brokenImages.length) errors.push(`BROKEN_IMAGES:${metrics.brokenImages.length}`);
+              if(metrics.stockFooterLeak) errors.push('STOCK_FOOTER_CONTENT_LEAK');
+
+              await page.evaluate(()=>window.scrollTo(0,0)).catch(()=>{});
+              await page.waitForTimeout(150);
+              await page.screenshot({path:`final-storefront-qa/${device}-${name}-top.png`,fullPage:false}).catch(()=>{});
+              await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight)).catch(()=>{});
+              await page.waitForTimeout(150);
+              await page.screenshot({path:`final-storefront-qa/${device}-${name}-bottom.png`,fullPage:false}).catch(()=>{});
+
+              if(errors.length) failed=true;
+              report.push({device,name,path,status,url:page.url(),metrics,consoleErrors,errors,navigationError});
+              await page.close();
+            }
+            await context.close();
+          }
+
+          await browser.close();
+          fs.writeFileSync('final-storefront-qa/report.json',JSON.stringify(report,null,2));
+          console.log(JSON.stringify(report,null,2));
+          if(failed) process.exitCode=1;
+          EOF
+          node final-qa.mjs
+      - name: Upload final storefront QA
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: friday-prints-final-storefront-qa
+          path: final-storefront-qa/
+          retention-days: 7
