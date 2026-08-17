@@ -27,11 +27,26 @@
         "subtitle": "Art prints made for long weekends & loud lines.",
         "shop_label": "shop prints",
         "shop_link": "shopify://collections/all",
-        "collection_label": "explore the collection",
-        "collection_link": "shopify://collections/all",
+        "collection_label": "meet GiGi",
+        "collection_link": "/pages/about",
         "hero_scene": "shopify://shop_images/CC35FB34-5C22-4C2F-BBF7-2ECAF5F99DF7.png",
         "hero_alt": "Friday Prints hero artwork",
         "empty_message": "Select the hero artwork in this section."
+      }
+    },
+    "friday_collection": {
+      "type": "friday-collection",
+      "settings": {
+        "heading": "the prints",
+        "title_decoration": "≈",
+        "collection": "all",
+        "product_limit": 7,
+        "show_prices": true,
+        "button_label": "shop all prints",
+        "button_link": "",
+        "previous_label": "Previous prints",
+        "next_label": "Next prints",
+        "empty_message": "Choose a collection in this section."
       }
     },
     "friday_story": {
@@ -42,8 +57,8 @@
         "body_size_desktop": 16,
         "body_size_mobile": 14,
         "copy_width": 640,
-        "heading": "the story",
-        "story": "<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>",
+        "heading": "meet GiGi",
+        "story": "<p>GiGi began as a way to personify friends — their moods, quirks and adventures.</p><p>Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>These prints are fragments of that world.</p>",
         "handle": "@fridayprints.art",
         "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png",
         "gigi_alt": "GiGi",
@@ -59,39 +74,13 @@
     "friday_benefits": {
       "type": "friday-benefits",
       "blocks": {
-        "benefit_1": {"type": "benefit", "settings": {"icon": "✹", "heading": "LIMITED EDITIONS", "text": "Each print is part of a limited numbered run."}},
-        "benefit_2": {"type": "benefit", "settings": {"icon": "✌", "heading": "MADE TO ORDER", "text": "Printed especially for you, with love and care."}},
-        "benefit_3": {"type": "benefit", "settings": {"icon": "♥", "heading": "MADE IN EGYPT", "text": "Locally printed. Thoughtfully packaged."}},
-        "benefit_4": {"type": "benefit", "settings": {"icon": "▣", "heading": "MADE TO LAST", "text": "Printed on premium matte paper with a removable mount."}}
+        "benefit_1": {"type": "benefit", "settings": {"icon": "✹", "heading": "NUMBERED EDITIONS", "text": "Every Friday print belongs to a limited numbered edition."}},
+        "benefit_2": {"type": "benefit", "settings": {"icon": "100", "heading": "A3 / 100", "text": "A3 prints are limited to 100 editions per design."}},
+        "benefit_3": {"type": "benefit", "settings": {"icon": "150", "heading": "A4 / 150", "text": "A4 prints are limited to 150 editions per design."}},
+        "benefit_4": {"type": "benefit", "settings": {"icon": "▣", "heading": "PREMIUM MATTE", "text": "Rich colour, a soft finish and a removable mount."}}
       },
       "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"],
       "settings": {}
-    },
-    "friday_collection": {
-      "type": "friday-collection",
-      "settings": {
-        "heading": "the collection",
-        "title_decoration": "≈",
-        "collection": "all",
-        "product_limit": 7,
-        "show_prices": true,
-        "button_label": "view all prints",
-        "button_link": "",
-        "previous_label": "Previous prints",
-        "next_label": "Next prints",
-        "empty_message": "Choose a collection in this section."
-      }
-    },
-    "friday_services": {
-      "type": "friday-services",
-      "blocks": {
-        "service_1": {"type": "service", "settings": {"icon": "🚚", "heading": "DELIVERY ACROSS EGYPT", "text": "Standard delivery across Egypt."}},
-        "service_2": {"type": "service", "settings": {"icon": "🎁", "heading": "PERFECT FOR GIFTING", "text": "Wrap happiness. It suits every wall."}},
-        "service_3": {"type": "service", "settings": {"icon": "✉", "heading": "YOU'VE GOT MAIL", "text": "Carefully packed prints, on their way to you."}},
-        "service_4": {"type": "service", "settings": {"icon": "●", "heading": "HERE TO HELP", "text": "Questions? Just send us a message."}}
-      },
-      "block_order": ["service_1", "service_2", "service_3", "service_4"],
-      "settings": {"background_color": "#fbf1e4"}
     },
     "friday_newsletter": {
       "type": "friday-newsletter",
@@ -113,88 +102,7 @@
         "gigi_size_desktop": 90,
         "gigi_size_mobile": 60
       }
-    },
-    "friday_footer": {
-      "type": "friday-footer",
-      "blocks": {
-        "footer_shop": {
-          "type": "column",
-          "settings": {
-            "heading": "SHOP",
-            "link_1_label": "shop prints",
-            "link_1_url": "/collections/all",
-            "link_2_label": "",
-            "link_2_url": "",
-            "link_3_label": "",
-            "link_3_url": "",
-            "link_4_label": "",
-            "link_4_url": ""
-          }
-        },
-        "footer_about": {
-          "type": "column",
-          "settings": {
-            "heading": "ABOUT",
-            "link_1_label": "our story",
-            "link_1_url": "/pages/about",
-            "link_2_label": "",
-            "link_2_url": "",
-            "link_3_label": "",
-            "link_3_url": "",
-            "link_4_label": "",
-            "link_4_url": ""
-          }
-        },
-        "footer_info": {
-          "type": "column",
-          "settings": {
-            "heading": "INFO",
-            "link_1_label": "print info",
-            "link_1_url": "/pages/info",
-            "link_2_label": "faq",
-            "link_2_url": "/pages/faq",
-            "link_3_label": "contact",
-            "link_3_url": "/pages/contact",
-            "link_4_label": "",
-            "link_4_url": ""
-          }
-        },
-        "footer_legal": {
-          "type": "column",
-          "settings": {
-            "heading": "LEGAL",
-            "link_1_label": "shipping policy",
-            "link_1_url": "/policies/shipping-policy",
-            "link_2_label": "privacy policy",
-            "link_2_url": "/policies/privacy-policy",
-            "link_3_label": "",
-            "link_3_url": "",
-            "link_4_label": "",
-            "link_4_url": ""
-          }
-        }
-      },
-      "block_order": ["footer_shop", "footer_about", "footer_info", "footer_legal"],
-      "settings": {
-        "brand_text": "friday\nprints",
-        "tagline": "made for long weekends & loud lines.",
-        "location_text": "CAIRO → EVERYWHERE",
-        "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png",
-        "gigi_alt": "GiGi",
-        "gigi_size_desktop": 90,
-        "gigi_size_mobile": 65,
-        "show_instagram": true,
-        "instagram_url": "https://www.instagram.com/fridayprints.art/",
-        "instagram_label": "instagram",
-        "heading_size_desktop": 13,
-        "heading_size_mobile": 12,
-        "link_size_desktop": 16,
-        "link_size_mobile": 13,
-        "copyright_name": "FRIDAY PRINTS",
-        "bottom_center": "MADE IN CAIRO",
-        "bottom_right": "WITH ♥ & LOUD LINES"
-      }
     }
   },
-  "order": ["friday_hero", "friday_story", "friday_benefits", "friday_collection", "friday_services", "friday_newsletter", "friday_footer"]
+  "order": ["friday_hero", "friday_collection", "friday_story", "friday_benefits", "friday_newsletter"]
 }
