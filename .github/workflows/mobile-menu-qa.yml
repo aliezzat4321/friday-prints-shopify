@@ -28,7 +28,7 @@ jobs:
           npm install playwright@1.55.0 >/dev/null 2>&1
           npx playwright install --with-deps chromium >/dev/null 2>&1
       - name: Allow Shopify preview sync
-        run: sleep 30
+        run: sleep 75
       - name: Open and audit mobile menu
         env:
           STORE_URL: https://wy9z7gjpgosgm5mi-108268650782.shopifypreview.com
