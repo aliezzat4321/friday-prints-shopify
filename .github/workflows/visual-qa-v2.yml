@@ -43,6 +43,15 @@ jobs:
             ['mobile-390', 390, 844],
             ['mobile-320', 320, 700]
           ];
+          const sections = [
+            ['header', '.fp-site-header'],
+            ['hero', '.fp-hero'],
+            ['prints', '.fp-collection'],
+            ['story', '.fp-story'],
+            ['facts', '.fp-benefits'],
+            ['newsletter', '.fp-newsletter'],
+            ['footer', '.fp-footer']
+          ];
           const report = [];
           let failed = false;
 
@@ -57,36 +66,66 @@ jobs:
             const resp = await page.goto(process.env.STORE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
             await page.waitForLoadState('networkidle', { timeout: 30000 }).catch(() => {});
             await page.evaluate(async () => { if (document.fonts?.ready) await document.fonts.ready; });
-            await page.waitForTimeout(1500);
+            await page.waitForTimeout(1000);
+
+            // Scroll each major section into view. This both validates real navigation through the page
+            // and gives Shopify lazy-loaded images a chance to resolve before image-health checks.
+            for (const [label, selector] of sections) {
+              const locator = page.locator(selector).first();
+              if (await locator.count()) {
+                await locator.scrollIntoViewIfNeeded().catch(() => {});
+                await page.waitForTimeout(250);
+                await locator.screenshot({ path: `visual-qa-v2/${name}-${label}.png` }).catch(() => {});
+              }
+            }
+            await page.locator('.fp-site-header').first().scrollIntoViewIfNeeded().catch(() => {});
+            await page.waitForTimeout(500);
 
             const metrics = await page.evaluate(() => {
               const qs = s => document.querySelector(s);
-              const rect = s => {
+              const docRect = s => {
                 const e = qs(s);
                 if (!e) return null;
                 const r = e.getBoundingClientRect();
-                return { x:+r.x.toFixed(1), y:+r.y.toFixed(1), width:+r.width.toFixed(1), height:+r.height.toFixed(1), bottom:+r.bottom.toFixed(1) };
+                const y = r.top + window.scrollY;
+                return { x:+r.x.toFixed(1), y:+y.toFixed(1), width:+r.width.toFixed(1), height:+r.height.toFixed(1), bottom:+(y+r.height).toFixed(1) };
               };
               const brokenImages = [...document.images]
-                .filter(i => !i.complete || i.naturalWidth === 0)
+                .filter(i => i.complete && i.naturalWidth === 0)
+                .map(i => ({ src: i.currentSrc || i.src, alt: i.alt }));
+              const pendingLazyImages = [...document.images]
+                .filter(i => !i.complete && i.loading === 'lazy')
                 .map(i => ({ src: i.currentSrc || i.src, alt: i.alt }));
               const navLabels = [...document.querySelectorAll('.fp-nav__links a')].map(a => a.textContent.trim());
+              const candidates = [document.documentElement, document.body, document.querySelector('.page-wrapper'), document.querySelector('#MainContent')].filter(Boolean);
+              const scrollContainers = candidates.map(e => {
+                const cs = getComputedStyle(e);
+                return {
+                  tag: e.tagName,
+                  id: e.id || '',
+                  className: typeof e.className === 'string' ? e.className : '',
+                  overflowY: cs.overflowY,
+                  clientHeight: e.clientHeight,
+                  scrollHeight: e.scrollHeight
+                };
+              });
               return {
                 title: document.title,
                 bodyText: document.body.innerText.slice(0, 1600),
-                scrollWidth: document.documentElement.scrollWidth,
+                scrollWidth: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
                 clientWidth: document.documentElement.clientWidth,
-                scrollHeight: document.documentElement.scrollHeight,
+                documentScrollHeight: document.documentElement.scrollHeight,
+                bodyScrollHeight: document.body.scrollHeight,
+                scrollContainers,
                 brokenImages,
-                header: rect('.fp-site-header'),
-                hero: rect('.fp-hero'),
-                heroCopy: rect('.fp-hero__copy'),
-                heroScene: rect('.fp-hero__scene'),
-                collection: rect('.fp-collection'),
-                story: rect('.fp-story'),
-                benefits: rect('.fp-benefits'),
-                newsletter: rect('.fp-newsletter'),
-                footer: rect('.fp-footer'),
+                pendingLazyImages,
+                header: docRect('.fp-site-header'),
+                hero: docRect('.fp-hero'),
+                collection: docRect('.fp-collection'),
+                story: docRect('.fp-story'),
+                benefits: docRect('.fp-benefits'),
+                newsletter: docRect('.fp-newsletter'),
+                footer: docRect('.fp-footer'),
                 productCount: document.querySelectorAll('.fp-product').length,
                 navLabels,
                 searchHref: qs('.fp-search')?.getAttribute('href') || null,
@@ -117,8 +156,8 @@ jobs:
             if (isMobile && metrics.hero && metrics.hero.height > 900) errors.push(`MOBILE_HERO_TOO_TALL:${metrics.hero.height}`);
 
             if (errors.length) failed = true;
-            await page.screenshot({ path: `visual-qa-v2/${name}-full.png`, fullPage: true });
             await page.screenshot({ path: `visual-qa-v2/${name}-viewport.png`, fullPage: false });
+            if (width < 900) await page.screenshot({ path: `visual-qa-v2/${name}-full.png`, fullPage: true });
             fs.writeFileSync(`visual-qa-v2/${name}.html`, await page.content());
             report.push({ name, width, height, httpStatus: resp?.status() ?? null, url: page.url(), metrics, consoleErrors, requestFailures, errors });
             await ctx.close();
