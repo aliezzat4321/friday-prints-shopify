@@ -1,0 +1,110 @@
+name: Friday Prints Mobile Menu QA
+
+on:
+  push:
+    branches:
+      - friday-build
+  workflow_dispatch:
+
+concurrency:
+  group: friday-mobile-menu-qa
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  mobile-menu-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Allow Shopify preview sync
+        run: sleep 30
+      - name: Open and audit mobile menu
+        env:
+          STORE_URL: https://wy9z7gjpgosgm5mi-108268650782.shopifypreview.com
+        run: |
+          cat > mobile-menu-qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('mobile-menu-qa', { recursive:true });
+          const browser = await chromium.launch({headless:true});
+          const results=[];
+          let failed=false;
+
+          for (const [name,width,height] of [['mobile-390',390,844],['mobile-320',320,700],['tablet-820',820,1180]]) {
+            const context = await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
+            const page = await context.newPage();
+            await page.goto(process.env.STORE_URL,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:25000}).catch(()=>{});
+            await page.waitForTimeout(800);
+
+            const summary = page.locator('.fp-menu > summary').first();
+            if (!(await summary.count())) throw new Error('Menu summary missing');
+            await summary.click();
+            await page.waitForTimeout(500);
+
+            const metrics = await page.evaluate(() => {
+              const menu=document.querySelector('.fp-mobile-menu');
+              const details=document.querySelector('.fp-menu');
+              const rect=menu?.getBoundingClientRect();
+              const cs=menu ? getComputedStyle(menu) : null;
+              return {
+                open:!!details?.open,
+                rect:rect ? {x:rect.x,y:rect.y,width:rect.width,height:rect.height} : null,
+                position:cs?.position,
+                visibility:cs?.visibility,
+                opacity:cs?.opacity,
+                display:cs?.display,
+                bodyOverflow:getComputedStyle(document.body).overflow,
+                htmlOverflow:getComputedStyle(document.documentElement).overflow,
+                linkCount:menu?.querySelectorAll('.fp-mobile-menu__links > a').length || 0,
+                hasBrand:!!menu?.querySelector('.fp-mobile-menu__brand'),
+                hasBottom:!!menu?.querySelector('.fp-mobile-menu__bottom'),
+                closeFixed:getComputedStyle(document.querySelector('.fp-menu > summary')).position
+              };
+            });
+
+            const errors=[];
+            if (!metrics.open) errors.push('MENU_NOT_OPEN');
+            if (!metrics.rect) errors.push('MENU_MISSING');
+            if (metrics.position !== 'fixed') errors.push(`NOT_FIXED:${metrics.position}`);
+            if (metrics.visibility !== 'visible') errors.push(`NOT_VISIBLE:${metrics.visibility}`);
+            if (Number(metrics.opacity) < .95) errors.push(`LOW_OPACITY:${metrics.opacity}`);
+            if (metrics.rect && Math.abs(metrics.rect.x) > 2) errors.push(`X_OFFSET:${metrics.rect.x}`);
+            if (metrics.rect && Math.abs(metrics.rect.y) > 2) errors.push(`Y_OFFSET:${metrics.rect.y}`);
+            if (metrics.rect && metrics.rect.width < width - 2) errors.push(`NOT_FULL_WIDTH:${metrics.rect.width}/${width}`);
+            if (metrics.rect && metrics.rect.height < height - 2) errors.push(`NOT_FULL_HEIGHT:${metrics.rect.height}/${height}`);
+            if (metrics.linkCount < 5) errors.push(`TOO_FEW_LINKS:${metrics.linkCount}`);
+            if (!metrics.hasBrand) errors.push('BRAND_MISSING');
+            if (!metrics.hasBottom) errors.push('BOTTOM_MISSING');
+            if (metrics.bodyOverflow !== 'hidden' && metrics.htmlOverflow !== 'hidden') errors.push(`SCROLL_NOT_LOCKED:${metrics.bodyOverflow}/${metrics.htmlOverflow}`);
+            if (metrics.closeFixed !== 'fixed') errors.push(`CLOSE_NOT_FIXED:${metrics.closeFixed}`);
+            if (errors.length) failed=true;
+
+            await page.screenshot({path:`mobile-menu-qa/${name}-open.png`,fullPage:false});
+            results.push({name,width,height,metrics,errors});
+            await context.close();
+          }
+          await browser.close();
+          fs.writeFileSync('mobile-menu-qa/report.json',JSON.stringify(results,null,2));
+          console.log(JSON.stringify(results,null,2));
+          if (failed) process.exitCode=1;
+          EOF
+          node mobile-menu-qa.mjs
+      - name: Upload mobile menu screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: friday-mobile-menu-open-state
+          path: mobile-menu-qa/
+          retention-days: 7
