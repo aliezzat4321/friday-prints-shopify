@@ -13,15 +13,21 @@
   assign seo_title = page_title | default: shop.name
   assign seo_description = page_description | default: shop.description
 
+  if request.page_type == 'collection' and collection.handle == 'all'
+    assign seo_title = 'Shop All Prints'
+    if seo_description == blank
+      assign seo_description = 'Shop limited-edition Friday Prints, made to order in Egypt.'
+    endif
+  elsif request.page_type == 'cart'
+    assign seo_title = 'Your Cart'
+  elsif request.page_type == 'search'
+    assign seo_title = 'Search Prints'
+  endif
+
   case request.path
     when '/'
       if seo_description == blank
         assign seo_description = 'Limited-edition art prints, made to order in Egypt. Meet GiGi and shop Friday Prints.'
-      endif
-    when '/collections/all'
-      assign seo_title = 'Shop All Prints'
-      if seo_description == blank
-        assign seo_description = 'Shop limited-edition Friday Prints, made to order in Egypt.'
       endif
     when '/pages/about'
       assign seo_title = 'World of GiGi'
