@@ -1,0 +1,230 @@
+/* Friday Prints — global commerce surfaces
+   Native Shopify mechanics, Friday art-direction. */
+
+body:has(.fp-site-header){background:var(--fp-cream);color:var(--fp-ink)}
+body:has(.fp-site-header) button,
+body:has(.fp-site-header) input,
+body:has(.fp-site-header) select,
+body:has(.fp-site-header) textarea{font-family:"Courier New",Courier,monospace}
+
+/* ---------------- Cart drawer ---------------- */
+body:has(.fp-site-header) #cart-drawer .theme-drawer__dialog{
+  width:min(500px,100vw);
+  max-width:100vw;
+  background:var(--fp-cream);
+  color:var(--fp-ink);
+  border:0;
+  border-left:1px solid var(--fp-ink);
+  border-radius:0;
+  box-shadow:none;
+}
+body:has(.fp-site-header) #cart-drawer .theme-drawer__header{
+  min-height:92px;
+  padding:25px 28px 18px;
+  border-bottom:1px solid var(--fp-ink);
+  background:var(--fp-cream);
+}
+body:has(.fp-site-header) #cart-drawer .theme-drawer__title{
+  margin:0;
+  font:700 42px/.88 Georgia,"Times New Roman",serif;
+  letter-spacing:-.045em;
+  text-transform:lowercase;
+}
+body:has(.fp-site-header) #cart-drawer .theme-drawer__badge{
+  font:700 9px/1 "Courier New",monospace;
+}
+body:has(.fp-site-header) #cart-drawer .theme-drawer__close-button{
+  border:1px solid var(--fp-ink);
+  border-radius:50%;
+  width:36px;
+  height:36px;
+  padding:9px;
+  background:transparent;
+  color:var(--fp-ink);
+}
+body:has(.fp-site-header) #cart-drawer .cart-drawer__content,
+body:has(.fp-site-header) #cart-drawer .cart-drawer__items,
+body:has(.fp-site-header) #cart-drawer .cart-drawer__summary{
+  background:var(--fp-cream);
+}
+body:has(.fp-site-header) #cart-drawer .cart-drawer__items{padding:24px 28px 12px}
+body:has(.fp-site-header) #cart-drawer .cart-items__table-row{
+  border-bottom:1px solid color-mix(in srgb,var(--fp-ink) 22%,transparent)!important;
+  padding-bottom:24px!important;
+  margin-bottom:24px!important;
+}
+body:has(.fp-site-header) #cart-drawer .cart-items__media-container{
+  width:88px;
+  background:transparent;
+}
+body:has(.fp-site-header) #cart-drawer .cart-items__media-image{
+  border:0!important;
+  border-radius:0!important;
+  object-fit:contain!important;
+}
+body:has(.fp-site-header) #cart-drawer .cart-items__title{
+  color:var(--fp-ink);
+  font:700 12px/1.35 "Courier New",monospace;
+  text-transform:lowercase;
+  text-decoration:none;
+}
+body:has(.fp-site-header) #cart-drawer .cart-items__variants,
+body:has(.fp-site-header) #cart-drawer .cart-items__unit-price-wrapper,
+body:has(.fp-site-header) #cart-drawer .cart-items__price{
+  font:10px/1.35 "Courier New",monospace;
+}
+body:has(.fp-site-header) #cart-drawer quantity-selector-component{
+  --quantity-selector-width:92px;
+}
+body:has(.fp-site-header) #cart-drawer .cart-items__remove{
+  border:0!important;
+  background:transparent!important;
+  color:var(--fp-ink)!important;
+}
+body:has(.fp-site-header) #cart-drawer .cart-drawer__summary{
+  padding:30px 28px 28px;
+  border-top:1px solid var(--fp-ink);
+  mask-image:none;
+}
+body:has(.fp-site-header) #cart-drawer .cart-totals{gap:16px}
+body:has(.fp-site-header) #cart-drawer .cart-totals__total-label{
+  font:700 10px/1 "Courier New",monospace;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+body:has(.fp-site-header) #cart-drawer .cart-totals__total-value{
+  font:700 22px/1 "Courier New",monospace;
+}
+body:has(.fp-site-header) #cart-drawer .cart-totals__tax-note{font:9px/1.45 "Courier New",monospace}
+body:has(.fp-site-header) #cart-drawer .cart__checkout-button{
+  min-height:56px!important;
+  height:auto!important;
+  border:1px solid var(--fp-red)!important;
+  border-radius:0!important;
+  background:var(--fp-red)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+  font:700 12px/1 "Courier New",monospace!important;
+  text-transform:lowercase;
+}
+body:has(.fp-site-header) #cart-drawer .cart-items__wrapper--drawer-empty{
+  min-height:55vh;
+  display:grid;
+  place-items:center;
+  padding:36px 28px;
+}
+body:has(.fp-site-header) #cart-drawer .cart-items__empty-button{
+  border:1px solid var(--fp-ink)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--fp-ink)!important;
+  box-shadow:none!important;
+  font:700 11px/1 "Courier New",monospace!important;
+  text-transform:lowercase;
+}
+
+/* ---------------- Cart page ---------------- */
+body:has(.fp-site-header) main[data-template*="cart"]{
+  background:var(--fp-cream);
+  color:var(--fp-ink);
+}
+body:has(.fp-site-header) main[data-template*="cart"] .section--page-width{
+  --page-width:1500px;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-page{
+  padding:58px 46px 82px;
+  gap:0 58px;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-title{padding:0!important}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-title h1{
+  margin:0;
+  font:700 clamp(68px,7vw,112px)/.82 Georgia,"Times New Roman",serif;
+  letter-spacing:-.055em;
+  text-transform:lowercase;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-title .cart-bubble{
+  align-self:flex-start;
+  margin-top:4px;
+  font-family:"Courier New",monospace;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-page__title + .cart-page__items{margin-top:38px}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-items__table-row{
+  border-bottom:1px solid color-mix(in srgb,var(--fp-ink) 22%,transparent)!important;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-items__media-container{background:transparent}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-items__media-image{
+  border:0!important;
+  border-radius:0!important;
+  object-fit:contain!important;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-items__title{
+  color:var(--fp-ink);
+  font:700 14px/1.4 "Courier New",monospace;
+  text-transform:lowercase;
+  text-decoration:none;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-items__variants,
+body:has(.fp-site-header) main[data-template*="cart"] .cart-items__unit-price-wrapper,
+body:has(.fp-site-header) main[data-template*="cart"] .cart-items__price{
+  font-family:"Courier New",monospace;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-page__summary{
+  align-self:start;
+  height:auto;
+  position:sticky;
+  top:24px;
+  background:var(--fp-pink);
+  border:1px solid var(--fp-ink);
+  padding:30px!important;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-totals__total-label{
+  font:700 10px/1 "Courier New",monospace;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-totals__total-value{
+  font:700 25px/1 "Courier New",monospace;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-totals__tax-note{font:9px/1.45 "Courier New",monospace}
+body:has(.fp-site-header) main[data-template*="cart"] .cart__checkout-button{
+  min-height:58px!important;
+  height:auto!important;
+  border:1px solid var(--fp-red)!important;
+  border-radius:0!important;
+  background:var(--fp-red)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+  font:700 13px/1 "Courier New",monospace!important;
+  text-transform:lowercase;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-page--empty{
+  min-height:60vh;
+  padding-block:70px;
+}
+body:has(.fp-site-header) main[data-template*="cart"] .cart-page--empty .cart-items__empty-button{
+  border:1px solid var(--fp-ink)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:var(--fp-ink)!important;
+  box-shadow:none!important;
+  font:700 11px/1 "Courier New",monospace!important;
+}
+
+@media(max-width:900px){
+  body:has(.fp-site-header) main[data-template*="cart"] .cart-page{padding:44px 28px 68px;gap:0 30px}
+  body:has(.fp-site-header) main[data-template*="cart"] .cart-page__summary{padding:24px!important}
+}
+
+@media(max-width:749px){
+  body:has(.fp-site-header) #cart-drawer .theme-drawer__dialog{width:100vw;border-left:0}
+  body:has(.fp-site-header) #cart-drawer .theme-drawer__header{min-height:76px;padding:20px}
+  body:has(.fp-site-header) #cart-drawer .theme-drawer__title{font-size:36px}
+  body:has(.fp-site-header) #cart-drawer .cart-drawer__items{padding:20px}
+  body:has(.fp-site-header) #cart-drawer .cart-drawer__summary{padding:24px 20px 20px}
+  body:has(.fp-site-header) #cart-drawer .cart-items__media-container{width:72px}
+
+  body:has(.fp-site-header) main[data-template*="cart"] .cart-page{padding:38px 20px 58px}
+  body:has(.fp-site-header) main[data-template*="cart"] .cart-title h1{font-size:62px}
+  body:has(.fp-site-header) main[data-template*="cart"] .cart-page__title + .cart-page__items{margin-top:28px}
+  body:has(.fp-site-header) main[data-template*="cart"] .cart-page__summary{position:relative;top:auto;margin-top:32px;padding:24px!important}
+}
