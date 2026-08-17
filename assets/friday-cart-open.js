@@ -22,7 +22,6 @@
     const drawer = document.querySelector('theme-drawer#cart-drawer');
     if (!drawer) return;
 
-    const target = drawer.querySelector('cart-items-component') || drawer;
     let settled = false;
 
     const finish = () => {
@@ -42,7 +41,7 @@
       if (meaningful) finish();
     });
 
-    observer.observe(target, {
+    observer.observe(drawer, {
       subtree: true,
       childList: true,
       characterData: true,
