@@ -6,39 +6,33 @@ s = header_path.read_text()
 replacements = [
     (
 '''    #FridayHeader-{{ section.id }} .fp-menu[open]>summary{
-      position:fixed!important;
-      top:18px!important;
-      right:18px!important;
+      position:relative!important;
       z-index:1004!important;
     }''',
 '''    #FridayHeader-{{ section.id }} .fp-menu[open]>summary{
-      position:relative!important;
+      position:fixed!important;
+      left:var(--fp-menu-button-left)!important;
+      top:var(--fp-menu-button-top)!important;
+      width:var(--fp-menu-button-width)!important;
+      height:var(--fp-menu-button-height)!important;
+      z-index:1004!important;
+    }
+    #FridayHeader-{{ section.id }}:has(.fp-menu[open]) .fp-logo{
+      position:relative;
       z-index:1004!important;
     }'''
     ),
     (
-'''    #FridayHeader-{{ section.id }} .fp-mobile-menu__top{
-      min-height:76px;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      padding:2px 54px 18px 0;
-      border-bottom:1px solid var(--fp-ink);
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__brand{
-      display:flex;
-      flex-direction:column;
-      color:var(--fp-ink);
-      font:700 34px/.72 "Courier New",Courier,monospace;
-      letter-spacing:-.07em;
-      text-transform:lowercase;
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__brand small{
-      margin-top:8px;
-      font-size:10px;
-      line-height:1;
-      letter-spacing:-.01em;
-    }''',
+'''      transform:translateY(-10px);
+      transition:opacity .24s ease,transform .3s cubic-bezier(.2,.7,.2,1),visibility 0s linear .3s;''',
+'''      transition:opacity .18s ease,visibility 0s linear .18s;'''
+    ),
+    (
+'''      transform:none;
+      transition:opacity .24s ease,transform .3s cubic-bezier(.2,.7,.2,1),visibility 0s;''',
+'''      transition:opacity .18s ease,visibility 0s;'''
+    ),
+    (
 '''    #FridayHeader-{{ section.id }} .fp-mobile-menu__top{
       min-height:76px;
       display:flex;
@@ -46,111 +40,67 @@ replacements = [
       justify-content:flex-end;
       padding:5px 54px 18px 0;
       border-bottom:1px solid var(--fp-ink);
+    }
+    #FridayHeader-{{ section.id }} .fp-mobile-menu__index{
+      padding-top:5px;
+      color:var(--fp-red);
+      font:700 9px/1 "Courier New",monospace;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }''',
+'''    #FridayHeader-{{ section.id }} .fp-mobile-menu{
+      padding-top:112px!important;
     }'''
     ),
     (
-'''    #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:18px;
-      align-items:end;
-      padding-top:17px;
-      border-top:1px solid var(--fp-ink);
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom p{
-      max-width:25ch;
-      margin:0;
-      font:700 9px/1.45 "Courier New",monospace;
-      letter-spacing:.025em;
-      text-transform:uppercase;
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom a{
-      padding:0!important;
-      border:0!important;
-      color:var(--fp-ink)!important;
-      font:700 10px/1.2 "Courier New",monospace!important;
-      text-decoration:underline!important;
-      text-underline-offset:4px;
-      white-space:nowrap;
-    }''',
-'''    #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom{
-      display:block;
-      padding-top:14px;
-      border-top:1px solid var(--fp-ink);
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom p{
-      margin:0;
-      font:700 9px/1.35 "Courier New",monospace;
-      letter-spacing:.035em;
-      text-transform:uppercase;
-    }'''
+'''      border-top:1px solid var(--fp-ink);''',
+'''      border-top:1px solid color-mix(in srgb,var(--fp-ink) 16%,transparent);'''
     ),
     (
 '''    #FridayHeader-{{ section.id }} .fp-mobile-menu__top{min-height:64px}
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__brand{font-size:30px}''',
-'''    #FridayHeader-{{ section.id }} .fp-mobile-menu__top{min-height:64px}'''
+''',
+''''''
     ),
     (
 '''            <div class="fp-mobile-menu__top">
-              <span class="fp-mobile-menu__brand">friday<small>prints.art</small></span>
               <span class="fp-mobile-menu__index">menu / 01</span>
-            </div>''',
-'''            <div class="fp-mobile-menu__top">
-              <span class="fp-mobile-menu__index">menu / 01</span>
-            </div>'''
+            </div>
+''',
+''''''
     ),
     (
-'''            <div class="fp-mobile-menu__bottom">
-              <p>limited-edition art prints,<br>made to order in Egypt.</p>
-              {% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">@fridayprints.art ↗</a>{% endif %}
-            </div>''',
-'''            <div class="fp-mobile-menu__bottom">
-              <p>limited-edition prints · made to order in Egypt</p>
-            </div>'''
+'''    const menu = root.querySelector('.fp-menu');
+    if (!menu) return;
+    const sync = () => {''',
+'''    const menu = root.querySelector('.fp-menu');
+    if (!menu) return;
+    const summary = menu.querySelector('summary');
+    const pinMenuButton = () => {
+      if (!summary || menu.open) return;
+      const rect = summary.getBoundingClientRect();
+      root.style.setProperty('--fp-menu-button-left', `${rect.left}px`);
+      root.style.setProperty('--fp-menu-button-top', `${rect.top}px`);
+      root.style.setProperty('--fp-menu-button-width', `${rect.width}px`);
+      root.style.setProperty('--fp-menu-button-height', `${rect.height}px`);
+    };
+    summary?.addEventListener('pointerdown', pinMenuButton);
+    summary?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') pinMenuButton();
+    });
+    window.addEventListener('resize', pinMenuButton, { passive: true });
+    pinMenuButton();
+    const sync = () => {'''
+    ),
+    (
+'''      const summary = menu.querySelector('summary');
+      if (summary) summary.setAttribute('aria-label', menu.open ? 'Close menu' : {{ section.settings.menu_open_label | json }});''',
+'''      if (summary) summary.setAttribute('aria-label', menu.open ? 'Close menu' : {{ section.settings.menu_open_label | json }});'''
     ),
 ]
 
 for old, new in replacements:
     if old not in s:
-        raise SystemExit('Expected header block not found; refusing partial edit: ' + old[:120])
+        raise SystemExit('Expected header block not found; refusing partial edit: ' + old[:160])
     s = s.replace(old, new, 1)
-header_path.write_text(s)
 
-qa_path = Path('.github/workflows/mobile-menu-qa.yml')
-q = qa_path.read_text()
-q_replacements = [
-    (
-'''            await summary.click();
-            await page.waitForTimeout(500);''',
-'''            const closedSummaryRect = await summary.boundingBox();
-            await summary.click();
-            await page.waitForTimeout(500);'''
-    ),
-    (
-'''                hasBrand:!!menu?.querySelector('.fp-mobile-menu__brand'),
-                hasBottom:!!menu?.querySelector('.fp-mobile-menu__bottom'),
-                closeFixed:getComputedStyle(document.querySelector('.fp-menu > summary')).position''',
-'''                hasBrand:!!menu?.querySelector('.fp-mobile-menu__brand'),
-                hasBottom:!!menu?.querySelector('.fp-mobile-menu__bottom'),
-                bottomLinkCount:menu?.querySelectorAll('.fp-mobile-menu__bottom a').length || 0,
-                summaryRect:(() => { const r=document.querySelector('.fp-menu > summary')?.getBoundingClientRect(); return r ? {x:r.x,y:r.y,width:r.width,height:r.height} : null; })(),
-                closePosition:getComputedStyle(document.querySelector('.fp-menu > summary')).position'''
-    ),
-    (
-'''            if (!metrics.hasBrand) errors.push('BRAND_MISSING');
-            if (!metrics.hasBottom) errors.push('BOTTOM_MISSING');
-            if (metrics.bodyOverflow !== 'hidden' && metrics.htmlOverflow !== 'hidden') errors.push(`SCROLL_NOT_LOCKED:${metrics.bodyOverflow}/${metrics.htmlOverflow}`);
-            if (metrics.closeFixed !== 'fixed') errors.push(`CLOSE_NOT_FIXED:${metrics.closeFixed}`);''',
-'''            if (metrics.hasBrand) errors.push('DUPLICATE_BRAND');
-            if (!metrics.hasBottom) errors.push('BOTTOM_MISSING');
-            if (metrics.bottomLinkCount !== 0) errors.push(`DUPLICATE_BOTTOM_LINK:${metrics.bottomLinkCount}`);
-            if (metrics.bodyOverflow !== 'hidden' && metrics.htmlOverflow !== 'hidden') errors.push(`SCROLL_NOT_LOCKED:${metrics.bodyOverflow}/${metrics.htmlOverflow}`);
-            if (metrics.closePosition !== 'relative') errors.push(`CLOSE_POSITION:${metrics.closePosition}`);
-            if (closedSummaryRect && metrics.summaryRect && (Math.abs(closedSummaryRect.x-metrics.summaryRect.x)>1 || Math.abs(closedSummaryRect.y-metrics.summaryRect.y)>1)) errors.push(`CLOSE_MOVED:${closedSummaryRect.x},${closedSummaryRect.y}->${metrics.summaryRect.x},${metrics.summaryRect.y}`);'''
-    ),
-]
-for old, new in q_replacements:
-    if old not in q:
-        raise SystemExit('Expected QA block not found; refusing partial edit: ' + old[:120])
-    q = q.replace(old, new, 1)
-qa_path.write_text(q)
+header_path.write_text(s)
