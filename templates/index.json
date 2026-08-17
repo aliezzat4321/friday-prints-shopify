@@ -44,6 +44,7 @@
         "show_prices": true,
         "button_label": "shop all prints",
         "button_link": "",
+        "background_color": "#f2bdc5",
         "previous_label": "Previous prints",
         "next_label": "Next prints",
         "empty_message": "Choose a collection in this section."
@@ -60,6 +61,7 @@
         "heading": "meet GiGi",
         "story": "<p>GiGi began as a way to personify friends — their moods, quirks and adventures.</p><p>Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>These prints are fragments of that world.</p>",
         "handle": "@fridayprints.art",
+        "background_color": "#fbf1e4",
         "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png",
         "gigi_alt": "GiGi",
         "gigi_size_desktop": 220,
@@ -71,6 +73,22 @@
         "deco_top": "✦"
       }
     },
+    "friday_at_home": {
+      "type": "friday-at-home",
+      "blocks": {
+        "scene_1": {"type": "scene", "settings": {"alt": "Friday Prints at home"}},
+        "scene_2": {"type": "scene", "settings": {"alt": "Friday Prints at home"}},
+        "scene_3": {"type": "scene", "settings": {"alt": "Friday Prints at home"}}
+      },
+      "block_order": ["scene_1", "scene_2", "scene_3"],
+      "settings": {
+        "heading": "friday at home",
+        "text": "Printed to live with you.",
+        "background_color": "#f3cf78",
+        "heading_size_desktop": 64,
+        "heading_size_mobile": 46
+      }
+    },
     "friday_benefits": {
       "type": "friday-benefits",
       "blocks": {
@@ -80,7 +98,9 @@
         "benefit_4": {"type": "benefit", "settings": {"icon": "▣", "heading": "PREMIUM MATTE", "text": "Rich colour, a soft finish and a removable mount."}}
       },
       "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"],
-      "settings": {}
+      "settings": {
+        "background_color": "#fbf1e4"
+      }
     },
     "friday_newsletter": {
       "type": "friday-newsletter",
@@ -104,5 +124,5 @@
       }
     }
   },
-  "order": ["friday_hero", "friday_collection", "friday_story", "friday_benefits", "friday_newsletter"]
+  "order": ["friday_hero", "friday_collection", "friday_story", "friday_at_home", "friday_benefits", "friday_newsletter"]
 }
