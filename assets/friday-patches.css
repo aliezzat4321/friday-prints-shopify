@@ -1,0 +1,59 @@
+/* Friday Prints — launch hardening patches */
+
+/* Custom PDP uses native Shopify add-to-cart state. Make disabled variants read correctly
+   even though the native button component owns the inner success markup. */
+.fp-pdp .fp-pdp__add:disabled{font-size:0!important}
+.fp-pdp .fp-pdp__add:disabled:before{
+  content:'sold out';
+  font:700 13px/1 "Courier New",Courier,monospace;
+  text-transform:lowercase;
+}
+.fp-pdp .fp-pdp__add:disabled .add-to-cart__added{display:none!important}
+
+/* Shopify-hosted policy pages: keep legal content native, remove the generic-store visual drop. */
+body:has(.fp-site-header) .shopify-policy__container{
+  width:min(calc(100% - 92px),1180px);
+  max-width:none;
+  margin:0 auto;
+  padding:70px 0 96px;
+  color:var(--fp-ink);
+}
+body:has(.fp-site-header) .shopify-policy__title{text-align:left}
+body:has(.fp-site-header) .shopify-policy__title h1{
+  max-width:12ch;
+  margin:0 0 46px;
+  font:700 clamp(68px,7.4vw,112px)/.82 Georgia,"Times New Roman",serif;
+  letter-spacing:-.055em;
+  text-transform:lowercase;
+}
+body:has(.fp-site-header) .shopify-policy__body{
+  max-width:820px;
+  font:13px/1.72 "Courier New",Courier,monospace;
+}
+body:has(.fp-site-header) .shopify-policy__body h2,
+body:has(.fp-site-header) .shopify-policy__body h3,
+body:has(.fp-site-header) .shopify-policy__body h4{
+  margin:38px 0 14px;
+  font-family:Georgia,"Times New Roman",serif;
+  line-height:1;
+  letter-spacing:-.025em;
+  text-transform:lowercase;
+}
+body:has(.fp-site-header) .shopify-policy__body h2{font-size:32px}
+body:has(.fp-site-header) .shopify-policy__body h3{font-size:24px}
+body:has(.fp-site-header) .shopify-policy__body p,
+body:has(.fp-site-header) .shopify-policy__body ul,
+body:has(.fp-site-header) .shopify-policy__body ol{margin:0 0 17px}
+body:has(.fp-site-header) .shopify-policy__body a{color:inherit;text-underline-offset:4px}
+body:has(.fp-site-header) .shopify-policy__body table{width:100%;border-collapse:collapse;margin:28px 0}
+body:has(.fp-site-header) .shopify-policy__body th,
+body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid var(--fp-ink);text-align:left}
+
+@media(max-width:749px){
+  .fp-pdp .fp-pdp__add:disabled:before{font-size:12px}
+  body:has(.fp-site-header) .shopify-policy__container{width:calc(100% - 40px);padding:46px 0 72px}
+  body:has(.fp-site-header) .shopify-policy__title h1{font-size:58px;margin-bottom:34px}
+  body:has(.fp-site-header) .shopify-policy__body{font-size:11px;line-height:1.68}
+  body:has(.fp-site-header) .shopify-policy__body h2{font-size:27px}
+  body:has(.fp-site-header) .shopify-policy__body h3{font-size:21px}
+}
