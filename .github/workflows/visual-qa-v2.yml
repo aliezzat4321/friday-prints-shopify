@@ -2,6 +2,9 @@ name: Friday Prints Draft Browser QA
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - friday-build
 
 permissions:
   contents: read
@@ -9,7 +12,7 @@ permissions:
 jobs:
   browser-qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,66 +23,113 @@ jobs:
           npm init -y >/dev/null 2>&1
           npm install playwright@1.55.0 >/dev/null 2>&1
           npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Allow Shopify preview sync
+        run: sleep 20
       - name: Render and audit connected Shopify draft
         env:
-          STORE_URL: https://3ywsb3-5k.myshopify.com/?preview_theme_id=205012467998
+          STORE_URL: https://wy9z7gjpgosgm5mi-108268650782.shopifypreview.com
         run: |
-          cat > /tmp/qa.mjs <<'EOF'
+          cat > qa.mjs <<'EOF'
           import { chromium } from 'playwright';
           import fs from 'node:fs';
+
           fs.mkdirSync('visual-qa-v2', { recursive: true });
-          const browser = await chromium.launch({headless:true});
-          const configs=[['desktop',1440,1000],['mobile',390,844]];
-          const report=[];
-          let failed=false;
-          for(const [name,width,height] of configs){
-            const ctx=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
-            const page=await ctx.newPage();
-            const consoleErrors=[]; const requestFailures=[];
-            page.on('console',m=>{if(m.type()==='error')consoleErrors.push(m.text())});
-            page.on('requestfailed',r=>requestFailures.push({url:r.url(),error:r.failure()?.errorText||'failed'}));
-            const resp=await page.goto(process.env.STORE_URL,{waitUntil:'domcontentloaded',timeout:60000});
-            await page.waitForLoadState('networkidle',{timeout:30000}).catch(()=>{});
-            await page.evaluate(async()=>{if(document.fonts?.ready)await document.fonts.ready});
-            await page.waitForTimeout(1200);
-            const metrics=await page.evaluate(()=>{
-              const qs=s=>document.querySelector(s);
-              const rect=s=>{const e=qs(s);if(!e)return null;const r=e.getBoundingClientRect();return {x:+r.x.toFixed(1),y:+r.y.toFixed(1),width:+r.width.toFixed(1),height:+r.height.toFixed(1),bottom:+r.bottom.toFixed(1)}};
-              const broken=[...document.images].filter(i=>!i.complete||i.naturalWidth===0).map(i=>({src:i.currentSrc||i.src,alt:i.alt}));
+          const browser = await chromium.launch({ headless: true });
+          const configs = [
+            ['desktop-1440', 1440, 1000],
+            ['laptop-1280', 1280, 900],
+            ['tablet-landscape-1024', 1024, 768],
+            ['tablet-portrait-820', 820, 1180],
+            ['mobile-390', 390, 844],
+            ['mobile-320', 320, 700]
+          ];
+          const report = [];
+          let failed = false;
+
+          for (const [name, width, height] of configs) {
+            const ctx = await browser.newContext({ viewport: { width, height }, deviceScaleFactor: 1 });
+            const page = await ctx.newPage();
+            const consoleErrors = [];
+            const requestFailures = [];
+            page.on('console', m => { if (m.type() === 'error') consoleErrors.push(m.text()); });
+            page.on('requestfailed', r => requestFailures.push({ url: r.url(), error: r.failure()?.errorText || 'failed' }));
+
+            const resp = await page.goto(process.env.STORE_URL, { waitUntil: 'domcontentloaded', timeout: 60000 });
+            await page.waitForLoadState('networkidle', { timeout: 30000 }).catch(() => {});
+            await page.evaluate(async () => { if (document.fonts?.ready) await document.fonts.ready; });
+            await page.waitForTimeout(1500);
+
+            const metrics = await page.evaluate(() => {
+              const qs = s => document.querySelector(s);
+              const rect = s => {
+                const e = qs(s);
+                if (!e) return null;
+                const r = e.getBoundingClientRect();
+                return { x:+r.x.toFixed(1), y:+r.y.toFixed(1), width:+r.width.toFixed(1), height:+r.height.toFixed(1), bottom:+r.bottom.toFixed(1) };
+              };
+              const brokenImages = [...document.images]
+                .filter(i => !i.complete || i.naturalWidth === 0)
+                .map(i => ({ src: i.currentSrc || i.src, alt: i.alt }));
+              const navLabels = [...document.querySelectorAll('.fp-nav__links a')].map(a => a.textContent.trim());
               return {
-                title:document.title,
-                bodyText:document.body.innerText.slice(0,1200),
-                scrollWidth:document.documentElement.scrollWidth,
-                clientWidth:document.documentElement.clientWidth,
-                scrollHeight:document.documentElement.scrollHeight,
-                brokenImages:broken,
-                header:rect('.fr-site-header'),hero:rect('.fr-hero'),heroCopy:rect('.fr-hero__copy'),heroScene:rect('.fr-hero__scene'),story:rect('.fr-story'),benefits:rect('.fr-benefits'),collection:rect('.fr-collection'),services:rect('.fr-services'),newsletter:rect('.fr-newsletter'),footer:rect('.fr-footer'),
-                productCount:document.querySelectorAll('.fr-product').length
+                title: document.title,
+                bodyText: document.body.innerText.slice(0, 1600),
+                scrollWidth: document.documentElement.scrollWidth,
+                clientWidth: document.documentElement.clientWidth,
+                scrollHeight: document.documentElement.scrollHeight,
+                brokenImages,
+                header: rect('.fp-site-header'),
+                hero: rect('.fp-hero'),
+                heroCopy: rect('.fp-hero__copy'),
+                heroScene: rect('.fp-hero__scene'),
+                collection: rect('.fp-collection'),
+                story: rect('.fp-story'),
+                benefits: rect('.fp-benefits'),
+                newsletter: rect('.fp-newsletter'),
+                footer: rect('.fp-footer'),
+                productCount: document.querySelectorAll('.fp-product').length,
+                navLabels,
+                searchHref: qs('.fp-search')?.getAttribute('href') || null,
+                cartHref: qs('.fp-cart')?.getAttribute('href') || null,
+                mobileMenuLinks: document.querySelectorAll('.fp-mobile-menu a').length
               };
             });
-            const passwordPage=/enter using password|password to enter|opening soon/i.test(metrics.bodyText);
-            const overflow=metrics.scrollWidth>metrics.clientWidth+2;
-            const heroTooTall=name==='mobile'&&metrics.hero&&metrics.hero.height>760;
-            const errors=[];
-            if(passwordPage)errors.push('PASSWORD_PAGE_RENDERED');
-            if(metrics.brokenImages.length)errors.push(`BROKEN_IMAGES:${metrics.brokenImages.length}`);
-            if(overflow)errors.push(`HORIZONTAL_OVERFLOW:${metrics.scrollWidth}-${metrics.clientWidth}`);
-            if(heroTooTall)errors.push(`MOBILE_HERO_TOO_TALL:${metrics.hero.height}`);
-            if(!metrics.hero)errors.push('HERO_MISSING');
-            if(!metrics.collection)errors.push('COLLECTION_MISSING');
-            if(errors.length)failed=true;
-            await page.screenshot({path:`visual-qa-v2/${name}-full.png`,fullPage:true});
-            await page.screenshot({path:`visual-qa-v2/${name}-viewport.png`,fullPage:false});
-            fs.writeFileSync(`visual-qa-v2/${name}.html`,await page.content());
-            report.push({name,httpStatus:resp?.status()??null,url:page.url(),metrics,consoleErrors,requestFailures,errors});
+
+            const passwordPage = /enter using password|password to enter|opening soon/i.test(metrics.bodyText);
+            const overflow = metrics.scrollWidth > metrics.clientWidth + 2;
+            const isMobile = width <= 749;
+            const errors = [];
+
+            if (passwordPage) errors.push('PASSWORD_PAGE_RENDERED');
+            if (metrics.brokenImages.length) errors.push(`BROKEN_IMAGES:${metrics.brokenImages.length}`);
+            if (overflow) errors.push(`HORIZONTAL_OVERFLOW:${metrics.scrollWidth}-${metrics.clientWidth}`);
+            if (!metrics.header) errors.push('HEADER_MISSING');
+            if (!metrics.hero) errors.push('HERO_MISSING');
+            if (!metrics.collection) errors.push('PRINT_RAIL_MISSING');
+            if (!metrics.story) errors.push('GIGI_STORY_MISSING');
+            if (!metrics.newsletter) errors.push('NEWSLETTER_MISSING');
+            if (!metrics.footer) errors.push('FRIDAY_FOOTER_MISSING');
+            if (metrics.productCount < 3) errors.push(`TOO_FEW_PRODUCTS:${metrics.productCount}`);
+            if (!metrics.searchHref) errors.push('SEARCH_LINK_MISSING');
+            if (!metrics.cartHref) errors.push('CART_LINK_MISSING');
+            if (metrics.collection && metrics.story && metrics.collection.y > metrics.story.y) errors.push('PRINTS_NOT_BEFORE_STORY');
+            if (isMobile && metrics.mobileMenuLinks < 4) errors.push(`MOBILE_MENU_TOO_SHORT:${metrics.mobileMenuLinks}`);
+            if (isMobile && metrics.hero && metrics.hero.height > 900) errors.push(`MOBILE_HERO_TOO_TALL:${metrics.hero.height}`);
+
+            if (errors.length) failed = true;
+            await page.screenshot({ path: `visual-qa-v2/${name}-full.png`, fullPage: true });
+            await page.screenshot({ path: `visual-qa-v2/${name}-viewport.png`, fullPage: false });
+            fs.writeFileSync(`visual-qa-v2/${name}.html`, await page.content());
+            report.push({ name, width, height, httpStatus: resp?.status() ?? null, url: page.url(), metrics, consoleErrors, requestFailures, errors });
             await ctx.close();
           }
+
           await browser.close();
-          fs.writeFileSync('visual-qa-v2/report.json',JSON.stringify(report,null,2));
-          console.log(JSON.stringify(report,null,2));
-          if(failed)process.exitCode=1;
+          fs.writeFileSync('visual-qa-v2/report.json', JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          if (failed) process.exitCode = 1;
           EOF
-          node /tmp/qa.mjs
+          node qa.mjs
       - name: Upload screenshots and report
         if: always()
         uses: actions/upload-artifact@v4
