@@ -1,5 +1,6 @@
-<section class="fp-section fp-story" id="FridayStory-{{ section.id }}" style="--fp-story-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-story-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;--fp-story-heading-desktop:{{ section.settings.heading_size_desktop }}px;--fp-story-heading-mobile:{{ section.settings.heading_size_mobile }}px;--fp-story-body-desktop:{{ section.settings.body_size_desktop }}px;--fp-story-body-mobile:{{ section.settings.body_size_mobile }}px;--fp-story-copy-width:{{ section.settings.copy_width }}px;">
+<section class="fp-section fp-story" id="FridayStory-{{ section.id }}" style="--fp-story-bg:{{ section.settings.background_color }};--fp-story-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-story-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;--fp-story-heading-desktop:{{ section.settings.heading_size_desktop }}px;--fp-story-heading-mobile:{{ section.settings.heading_size_mobile }}px;--fp-story-body-desktop:{{ section.settings.body_size_desktop }}px;--fp-story-body-mobile:{{ section.settings.body_size_mobile }}px;--fp-story-copy-width:{{ section.settings.copy_width }}px;">
   <style>
+    #FridayStory-{{ section.id }}{background:var(--fp-story-bg)}
     #FridayStory-{{ section.id }} .fp-story__grid{gap:72px;padding:64px 56px 60px}
     #FridayStory-{{ section.id }} .fp-story__copy{max-width:var(--fp-story-copy-width)}
     #FridayStory-{{ section.id }} .fp-story__title{font-size:var(--fp-story-heading-desktop);margin-bottom:22px}
@@ -54,6 +55,8 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "the story" },
     { "type": "richtext", "id": "story", "label": "Story", "default": "<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>" },
     { "type": "text", "id": "handle", "label": "Handle / caption", "default": "@fridayprints.art" },
+    { "type": "header", "content": "Design-safe styling" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FBF1E4" },
     { "type": "header", "content": "GiGi artwork" },
     { "type": "image_picker", "id": "gigi_icon", "label": "GiGi image" },
     { "type": "text", "id": "gigi_alt", "label": "GiGi alt text", "default": "GiGi" },
