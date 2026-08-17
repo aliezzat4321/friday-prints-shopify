@@ -23,6 +23,8 @@
     transform: none !important;
     box-shadow: none !important;
   }
+  #FridayHeader-{{ section.id }} .fp-search{display:grid;place-items:center;width:34px;height:34px;color:var(--fp-ink);text-decoration:none;flex:0 0 auto}
+  #FridayHeader-{{ section.id }} .fp-search svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7}
 </style>
 <header class="fp-site-header" id="FridayHeader-{{ section.id }}">
   {% if section.settings.show_announcement and section.settings.announcement != blank %}
@@ -45,17 +47,29 @@
       </a>
 
       <nav class="fp-nav__links" aria-label="{{ section.settings.navigation_label | escape }}">
-        {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}"{% if request.path == section.settings.nav_1_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_1_label }}</a>{% endif %}
-        {% if section.settings.nav_2_label != blank and section.settings.nav_2_url != blank %}<a href="{{ section.settings.nav_2_url }}"{% if request.path == section.settings.nav_2_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_2_label }}</a>{% endif %}
-        {% if section.settings.nav_3_label != blank and section.settings.nav_3_url != blank %}<a href="{{ section.settings.nav_3_url }}"{% if request.path == section.settings.nav_3_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_3_label }}</a>{% endif %}
-        {% if section.settings.nav_4_label != blank and section.settings.nav_4_url != blank %}<a href="{{ section.settings.nav_4_url }}"{% if request.path == section.settings.nav_4_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_4_label }}</a>{% endif %}
-        {% if section.settings.nav_5_label != blank and section.settings.nav_5_url != blank %}<a href="{{ section.settings.nav_5_url }}"{% if request.path == section.settings.nav_5_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_5_label }}</a>{% endif %}
-        {% if section.settings.nav_6_label != blank and section.settings.nav_6_url != blank %}<a href="{{ section.settings.nav_6_url }}"{% if request.path == section.settings.nav_6_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_6_label }}</a>{% endif %}
+        {% if section.settings.main_menu != blank %}
+          {% for link in section.settings.main_menu.links %}
+            <a href="{{ link.url }}"{% if link.current %} class="is-active" aria-current="page"{% endif %}>{{ link.title }}</a>
+          {% endfor %}
+        {% else %}
+          {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}"{% if request.path == section.settings.nav_1_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_1_label }}</a>{% endif %}
+          {% if section.settings.nav_2_label != blank and section.settings.nav_2_url != blank %}<a href="{{ section.settings.nav_2_url }}"{% if request.path == section.settings.nav_2_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_2_label }}</a>{% endif %}
+          {% if section.settings.nav_3_label != blank and section.settings.nav_3_url != blank %}<a href="{{ section.settings.nav_3_url }}"{% if request.path == section.settings.nav_3_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_3_label }}</a>{% endif %}
+          {% if section.settings.nav_4_label != blank and section.settings.nav_4_url != blank %}<a href="{{ section.settings.nav_4_url }}"{% if request.path == section.settings.nav_4_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_4_label }}</a>{% endif %}
+          {% if section.settings.nav_5_label != blank and section.settings.nav_5_url != blank %}<a href="{{ section.settings.nav_5_url }}"{% if request.path == section.settings.nav_5_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_5_label }}</a>{% endif %}
+          {% if section.settings.nav_6_label != blank and section.settings.nav_6_url != blank %}<a href="{{ section.settings.nav_6_url }}"{% if request.path == section.settings.nav_6_url %} class="is-active" aria-current="page"{% endif %}>{{ section.settings.nav_6_label }}</a>{% endif %}
+        {% endif %}
       </nav>
 
       <div class="fp-nav__actions">
+        {% if section.settings.show_search %}
+          <a class="fp-search" href="{{ routes.search_url }}" aria-label="{{ section.settings.search_label | escape }}">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="m16 16 5 5"/></svg>
+          </a>
+        {% endif %}
+
         {% if section.settings.show_instagram and section.settings.instagram_url != blank %}
-          <a class="fp-instagram" href="{{ section.settings.instagram_url }}" aria-label="{{ section.settings.instagram_label | escape }}">
+          <a class="fp-instagram" href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ section.settings.instagram_label | escape }}">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg>
           </a>
         {% endif %}
@@ -77,12 +91,17 @@
         <details class="fp-menu">
           <summary aria-label="{{ section.settings.menu_open_label | escape }}"><i></i><i></i></summary>
           <nav class="fp-mobile-menu" aria-label="{{ section.settings.mobile_navigation_label | escape }}">
-            {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}">{{ section.settings.nav_1_label }}</a>{% endif %}
-            {% if section.settings.nav_2_label != blank and section.settings.nav_2_url != blank %}<a href="{{ section.settings.nav_2_url }}">{{ section.settings.nav_2_label }}</a>{% endif %}
-            {% if section.settings.nav_3_label != blank and section.settings.nav_3_url != blank %}<a href="{{ section.settings.nav_3_url }}">{{ section.settings.nav_3_label }}</a>{% endif %}
-            {% if section.settings.nav_4_label != blank and section.settings.nav_4_url != blank %}<a href="{{ section.settings.nav_4_url }}">{{ section.settings.nav_4_label }}</a>{% endif %}
-            {% if section.settings.nav_5_label != blank and section.settings.nav_5_url != blank %}<a href="{{ section.settings.nav_5_url }}">{{ section.settings.nav_5_label }}</a>{% endif %}
-            {% if section.settings.nav_6_label != blank and section.settings.nav_6_url != blank %}<a href="{{ section.settings.nav_6_url }}">{{ section.settings.nav_6_label }}</a>{% endif %}
+            {% if section.settings.main_menu != blank %}
+              {% for link in section.settings.main_menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+            {% else %}
+              {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}">{{ section.settings.nav_1_label }}</a>{% endif %}
+              {% if section.settings.nav_2_label != blank and section.settings.nav_2_url != blank %}<a href="{{ section.settings.nav_2_url }}">{{ section.settings.nav_2_label }}</a>{% endif %}
+              {% if section.settings.nav_3_label != blank and section.settings.nav_3_url != blank %}<a href="{{ section.settings.nav_3_url }}">{{ section.settings.nav_3_label }}</a>{% endif %}
+              {% if section.settings.nav_4_label != blank and section.settings.nav_4_url != blank %}<a href="{{ section.settings.nav_4_url }}">{{ section.settings.nav_4_label }}</a>{% endif %}
+              {% if section.settings.nav_5_label != blank and section.settings.nav_5_url != blank %}<a href="{{ section.settings.nav_5_url }}">{{ section.settings.nav_5_label }}</a>{% endif %}
+              {% if section.settings.nav_6_label != blank and section.settings.nav_6_url != blank %}<a href="{{ section.settings.nav_6_url }}">{{ section.settings.nav_6_label }}</a>{% endif %}
+            {% endif %}
+            {% if section.settings.show_search %}<a href="{{ routes.search_url }}">{{ section.settings.search_label }}</a>{% endif %}
           </nav>
         </details>
       </div>
@@ -107,24 +126,27 @@
     { "type": "text", "id": "logo_alt", "label": "Logo accessibility label", "default": "Friday Prints home" },
 
     { "type": "header", "content": "Navigation" },
+    { "type": "link_list", "id": "main_menu", "label": "Shopify navigation menu", "info": "Preferred handoff control. If blank, the fallback links below are used." },
     { "type": "text", "id": "navigation_label", "label": "Desktop navigation accessibility label", "default": "Main navigation" },
     { "type": "text", "id": "mobile_navigation_label", "label": "Mobile navigation accessibility label", "default": "Mobile navigation" },
     { "type": "text", "id": "menu_open_label", "label": "Menu button accessibility label", "default": "Open menu" },
-    { "type": "text", "id": "nav_1_label", "label": "Link 1 label", "default": "home" },
-    { "type": "url", "id": "nav_1_url", "label": "Link 1 URL" },
-    { "type": "text", "id": "nav_2_label", "label": "Link 2 label", "default": "collections" },
-    { "type": "url", "id": "nav_2_url", "label": "Link 2 URL" },
-    { "type": "text", "id": "nav_3_label", "label": "Link 3 label", "default": "about" },
-    { "type": "url", "id": "nav_3_url", "label": "Link 3 URL" },
-    { "type": "text", "id": "nav_4_label", "label": "Link 4 label", "default": "info" },
-    { "type": "url", "id": "nav_4_url", "label": "Link 4 URL" },
-    { "type": "text", "id": "nav_5_label", "label": "Link 5 label", "default": "faq" },
-    { "type": "url", "id": "nav_5_url", "label": "Link 5 URL" },
-    { "type": "text", "id": "nav_6_label", "label": "Link 6 label", "default": "contact" },
-    { "type": "url", "id": "nav_6_url", "label": "Link 6 URL" },
+    { "type": "text", "id": "nav_1_label", "label": "Fallback link 1 label", "default": "shop all" },
+    { "type": "url", "id": "nav_1_url", "label": "Fallback link 1 URL" },
+    { "type": "text", "id": "nav_2_label", "label": "Fallback link 2 label", "default": "world of GiGi" },
+    { "type": "url", "id": "nav_2_url", "label": "Fallback link 2 URL" },
+    { "type": "text", "id": "nav_3_label", "label": "Fallback link 3 label", "default": "print guide" },
+    { "type": "url", "id": "nav_3_url", "label": "Fallback link 3 URL" },
+    { "type": "text", "id": "nav_4_label", "label": "Fallback link 4 label", "default": "faq" },
+    { "type": "url", "id": "nav_4_url", "label": "Fallback link 4 URL" },
+    { "type": "text", "id": "nav_5_label", "label": "Fallback link 5 label" },
+    { "type": "url", "id": "nav_5_url", "label": "Fallback link 5 URL" },
+    { "type": "text", "id": "nav_6_label", "label": "Fallback link 6 label" },
+    { "type": "url", "id": "nav_6_url", "label": "Fallback link 6 URL" },
 
-    { "type": "header", "content": "Header icons" },
-    { "type": "checkbox", "id": "show_instagram", "label": "Show Instagram", "default": true },
+    { "type": "header", "content": "Header actions" },
+    { "type": "checkbox", "id": "show_search", "label": "Show search", "default": true },
+    { "type": "text", "id": "search_label", "label": "Search accessibility label", "default": "Search prints" },
+    { "type": "checkbox", "id": "show_instagram", "label": "Show Instagram", "default": false },
     { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
     { "type": "text", "id": "instagram_label", "label": "Instagram accessibility label", "default": "Instagram" },
     { "type": "image_picker", "id": "gigi_icon", "label": "GiGi image" },
