@@ -1,5 +1,3 @@
-
-
 {% liquid
   assign custom_color = false
   if section.settings.background_color != blank or section.settings.text_color != blank
@@ -21,7 +19,7 @@
       class="section{% if custom_color %} color-custom-{{ section.id }}{% endif %} section--{{ section.settings.section_width }}"
     >
       <div
-        class="cart-page spacing-style{% if cart.empty? %} cart-page--empty{% endif %}"
+        class="cart-page spacing-style cart-page--empty"
         style="{% render 'spacing-style', settings: section.settings %}"
       >
         <div class="cart-page__title">
@@ -30,6 +28,7 @@
         <div class="cart-page__items">
           {%- content_for 'block', id: 'cart-page-items', type: '_cart-products', force_empty: true %}
         </div>
+        <p class="fp-cart-empty-note">Nothing here yet. Go find something for your walls.</p>
         {{ cart_page_more_blocks_content }}
       </div>
     </div>
@@ -50,6 +49,10 @@
       <div class="cart-page__items">
         {%- content_for 'block', id: 'cart-page-items', type: '_cart-products' %}
       </div>
+
+      {%- if cart.empty? -%}
+        <p class="fp-cart-empty-note">Nothing here yet. Go find something for your walls.</p>
+      {%- endif -%}
 
       {%- unless cart.empty? -%}
         <div class="cart-page__summary">
@@ -75,6 +78,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: 52vh;
   }
 
   .cart-page--empty .cart-page__title,
@@ -88,6 +92,36 @@
 
   .cart-page--empty .cart-title {
     text-align: center;
+  }
+
+  .cart-page--empty .cart-items__wrapper > p {
+    display: none;
+  }
+
+  .cart-page--empty .cart-page__items {
+    margin-block-start: 18px;
+  }
+
+  .fp-cart-empty-note {
+    order: 2;
+    max-width: 38ch;
+    margin: 14px 20px 0;
+    text-align: center;
+    font: 11px/1.5 "Courier New", monospace;
+    letter-spacing: .01em;
+  }
+
+  .cart-page--empty .cart-page__items {
+    order: 3;
+  }
+
+  .cart-page--empty .cart-page__more-blocks {
+    order: 4;
+  }
+
+  .cart-page--empty .cart-items__empty-button {
+    border-radius: 0;
+    text-transform: lowercase;
   }
 
   .cart-page__main {
@@ -116,8 +150,6 @@
       align-self: stretch;
       grid-template-rows: subgrid;
       padding-top: 0;
-
-      /* needed to support blurred effect from hero section */
       position: relative;
     }
 
@@ -144,33 +176,15 @@
     "groups": ["header", "footer"]
   },
   "blocks": [
-    {
-      "type": "@theme"
-    },
-    {
-      "type": "@app"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "video"
-    },
-    {
-      "type": "group"
-    },
-    {
-      "type": "spacer"
-    }
+    { "type": "@theme" },
+    { "type": "@app" },
+    { "type": "text" },
+    { "type": "icon" },
+    { "type": "image" },
+    { "type": "button" },
+    { "type": "video" },
+    { "type": "group" },
+    { "type": "spacer" }
   ],
   "settings": [
     {
@@ -178,14 +192,8 @@
       "id": "section_width",
       "label": "t:settings.width",
       "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
+        { "value": "page-width", "label": "t:options.page" },
+        { "value": "full-width", "label": "t:options.full" }
       ],
       "default": "page-width"
     },
