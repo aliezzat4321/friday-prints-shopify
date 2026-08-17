@@ -8,10 +8,12 @@
     #FridayFooter-{{ section.id }} .fp-footer__col{gap:13px;padding-top:4px}
     #FridayFooter-{{ section.id }} .fp-footer__col strong{font-size:var(--fp-footer-heading-desktop);margin-bottom:7px}
     #FridayFooter-{{ section.id }} .fp-footer__col a,#FridayFooter-{{ section.id }} .fp-footer__col>span{font-size:var(--fp-footer-link-desktop);line-height:1.45}
-    #FridayFooter-{{ section.id }} .fp-footer__social{margin-top:22px}
+    #FridayFooter-{{ section.id }} .fp-footer__social{display:flex;flex-wrap:wrap;gap:16px;margin-top:22px}
     #FridayFooter-{{ section.id }} .fp-footer__social a,#FridayFooter-{{ section.id }} .fp-footer__social>span{display:inline-flex;align-items:center;gap:9px;color:inherit;text-decoration:none;font:700 14px/1 "Courier New",monospace;text-transform:lowercase}
     #FridayFooter-{{ section.id }} .fp-footer__social svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;flex:0 0 auto}
     #FridayFooter-{{ section.id }} .fp-footer__social a:hover span{text-decoration:underline;text-underline-offset:4px}
+    #FridayFooter-{{ section.id }} .fp-footer__email{display:inline-block;margin-top:15px;color:inherit;text-decoration:none;font:12px/1.4 "Courier New",monospace}
+    #FridayFooter-{{ section.id }} .fp-footer__email:hover{text-decoration:underline;text-underline-offset:4px}
     #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap{margin-top:26px;min-height:88px}
     #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap span{font-size:10.5px}
     #FridayFooter-{{ section.id }} .fp-footer__bottom{font-size:10px}
@@ -27,6 +29,7 @@
       #FridayFooter-{{ section.id }} .fp-footer__social{margin-top:18px}
       #FridayFooter-{{ section.id }} .fp-footer__social a,#FridayFooter-{{ section.id }} .fp-footer__social>span{font-size:13px;gap:8px}
       #FridayFooter-{{ section.id }} .fp-footer__social svg{width:22px;height:22px}
+      #FridayFooter-{{ section.id }} .fp-footer__email{font-size:11px;margin-top:13px}
       #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap{margin-top:20px;min-height:78px}
       #FridayFooter-{{ section.id }} .fp-footer__col{min-height:132px;padding:21px 12px 18px 0}
       #FridayFooter-{{ section.id }} .fp-footer__col strong{font-size:var(--fp-footer-heading-mobile)}
@@ -46,6 +49,7 @@
           {% if section.settings.instagram_url != blank %}</a>{% else %}</span>{% endif %}
         </div>
       {% endif %}
+      {% if section.settings.support_email != blank %}<a class="fp-footer__email" href="mailto:{{ section.settings.support_email | escape }}">{{ section.settings.email_label }} → {{ section.settings.support_email }}</a>{% endif %}
       {% if section.settings.gigi_icon != blank or section.settings.location_text != blank or request.design_mode %}
         <div class="fp-footer__gigi-wrap">
           {% if section.settings.gigi_icon != blank %}
@@ -61,10 +65,14 @@
     {% for block in section.blocks %}
       <nav class="fp-footer__col" aria-label="{{ block.settings.heading | escape }}" {{ block.shopify_attributes }}>
         {% if block.settings.heading != blank %}<strong>{{ block.settings.heading }}</strong>{% endif %}
-        {% if block.settings.link_1_label != blank %}{% if block.settings.link_1_url != blank %}<a href="{{ block.settings.link_1_url }}">{{ block.settings.link_1_label }}</a>{% else %}<span>{{ block.settings.link_1_label }}</span>{% endif %}{% endif %}
-        {% if block.settings.link_2_label != blank %}{% if block.settings.link_2_url != blank %}<a href="{{ block.settings.link_2_url }}">{{ block.settings.link_2_label }}</a>{% else %}<span>{{ block.settings.link_2_label }}</span>{% endif %}{% endif %}
-        {% if block.settings.link_3_label != blank %}{% if block.settings.link_3_url != blank %}<a href="{{ block.settings.link_3_url }}">{{ block.settings.link_3_label }}</a>{% else %}<span>{{ block.settings.link_3_label }}</span>{% endif %}{% endif %}
-        {% if block.settings.link_4_label != blank %}{% if block.settings.link_4_url != blank %}<a href="{{ block.settings.link_4_url }}">{{ block.settings.link_4_label }}</a>{% else %}<span>{{ block.settings.link_4_label }}</span>{% endif %}{% endif %}
+        {% if block.settings.menu != blank %}
+          {% for link in block.settings.menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
+        {% else %}
+          {% if block.settings.link_1_label != blank %}{% if block.settings.link_1_url != blank %}<a href="{{ block.settings.link_1_url }}">{{ block.settings.link_1_label }}</a>{% else %}<span>{{ block.settings.link_1_label }}</span>{% endif %}{% endif %}
+          {% if block.settings.link_2_label != blank %}{% if block.settings.link_2_url != blank %}<a href="{{ block.settings.link_2_url }}">{{ block.settings.link_2_label }}</a>{% else %}<span>{{ block.settings.link_2_label }}</span>{% endif %}{% endif %}
+          {% if block.settings.link_3_label != blank %}{% if block.settings.link_3_url != blank %}<a href="{{ block.settings.link_3_url }}">{{ block.settings.link_3_label }}</a>{% else %}<span>{{ block.settings.link_3_label }}</span>{% endif %}{% endif %}
+          {% if block.settings.link_4_label != blank %}{% if block.settings.link_4_url != blank %}<a href="{{ block.settings.link_4_url }}">{{ block.settings.link_4_label }}</a>{% else %}<span>{{ block.settings.link_4_label }}</span>{% endif %}{% endif %}
+        {% endif %}
       </nav>
     {% endfor %}
   </div>
@@ -88,10 +96,12 @@
     { "type": "text", "id": "gigi_alt", "label": "GiGi alt text", "default": "GiGi" },
     { "type": "range", "id": "gigi_size_desktop", "label": "GiGi size — desktop", "min": 50, "max": 130, "step": 5, "unit": "px", "default": 90 },
     { "type": "range", "id": "gigi_size_mobile", "label": "GiGi size — mobile", "min": 40, "max": 90, "step": 5, "unit": "px", "default": 65 },
-    { "type": "header", "content": "Instagram" },
+    { "type": "header", "content": "Contact" },
     { "type": "checkbox", "id": "show_instagram", "label": "Show Instagram", "default": true },
     { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
-    { "type": "text", "id": "instagram_label", "label": "Instagram label", "default": "instagram" },
+    { "type": "text", "id": "instagram_label", "label": "Instagram label", "default": "@fridayprints.art" },
+    { "type": "text", "id": "support_email", "label": "Support email" },
+    { "type": "text", "id": "email_label", "label": "Email label", "default": "questions" },
     { "type": "header", "content": "Footer typography" },
     { "type": "range", "id": "heading_size_desktop", "label": "Column heading — desktop", "min": 11, "max": 16, "step": 1, "unit": "px", "default": 13 },
     { "type": "range", "id": "heading_size_mobile", "label": "Column heading — mobile", "min": 10, "max": 14, "step": 1, "unit": "px", "default": 12 },
@@ -108,14 +118,15 @@
       "name": "Footer column",
       "settings": [
         { "type": "text", "id": "heading", "label": "Heading", "default": "SHOP" },
-        { "type": "text", "id": "link_1_label", "label": "Link 1 label" },
-        { "type": "url", "id": "link_1_url", "label": "Link 1 URL" },
-        { "type": "text", "id": "link_2_label", "label": "Link 2 label" },
-        { "type": "url", "id": "link_2_url", "label": "Link 2 URL" },
-        { "type": "text", "id": "link_3_label", "label": "Link 3 label" },
-        { "type": "url", "id": "link_3_url", "label": "Link 3 URL" },
-        { "type": "text", "id": "link_4_label", "label": "Link 4 label" },
-        { "type": "url", "id": "link_4_url", "label": "Link 4 URL" }
+        { "type": "link_list", "id": "menu", "label": "Shopify navigation menu", "info": "Preferred handoff control. If blank, fallback links below are used." },
+        { "type": "text", "id": "link_1_label", "label": "Fallback link 1 label" },
+        { "type": "url", "id": "link_1_url", "label": "Fallback link 1 URL" },
+        { "type": "text", "id": "link_2_label", "label": "Fallback link 2 label" },
+        { "type": "url", "id": "link_2_url", "label": "Fallback link 2 URL" },
+        { "type": "text", "id": "link_3_label", "label": "Fallback link 3 label" },
+        { "type": "url", "id": "link_3_url", "label": "Fallback link 3 URL" },
+        { "type": "text", "id": "link_4_label", "label": "Fallback link 4 label" },
+        { "type": "url", "id": "link_4_url", "label": "Fallback link 4 URL" }
       ]
     }
   ],
@@ -123,10 +134,10 @@
     {
       "name": "Friday footer",
       "blocks": [
-        { "type": "column", "settings": { "heading": "SHOP", "link_1_label": "shop prints" } },
-        { "type": "column", "settings": { "heading": "ABOUT", "link_1_label": "our story" } },
-        { "type": "column", "settings": { "heading": "INFO", "link_1_label": "print info", "link_2_label": "faq", "link_3_label": "contact" } },
-        { "type": "column", "settings": { "heading": "LEGAL", "link_1_label": "shipping policy", "link_2_label": "privacy policy" } }
+        { "type": "column", "settings": { "heading": "SHOP", "link_1_label": "shop all prints" } },
+        { "type": "column", "settings": { "heading": "EXPLORE", "link_1_label": "world of GiGi" } },
+        { "type": "column", "settings": { "heading": "HELP", "link_1_label": "print guide", "link_2_label": "faq", "link_3_label": "shipping" } },
+        { "type": "column", "settings": { "heading": "LEGAL", "link_1_label": "privacy" } }
       ]
     }
   ]
