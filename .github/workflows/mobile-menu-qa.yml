@@ -134,3 +134,5 @@ jobs:
           name: friday-mobile-menu-open-state
           path: mobile-menu-qa/
           retention-days: 7
+
+# QA trigger: vertical rhythm refinement
