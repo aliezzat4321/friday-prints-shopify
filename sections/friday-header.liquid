@@ -57,7 +57,15 @@
     #FridayHeader-{{ section.id }} .fp-menu>summary i:first-child{top:13px}
     #FridayHeader-{{ section.id }} .fp-menu>summary i:last-child{top:22px}
     #FridayHeader-{{ section.id }} .fp-menu[open]>summary{
-      position:relative!important;
+      position:fixed!important;
+      left:var(--fp-menu-button-left)!important;
+      top:var(--fp-menu-button-top)!important;
+      width:var(--fp-menu-button-width)!important;
+      height:var(--fp-menu-button-height)!important;
+      z-index:1004!important;
+    }
+    #FridayHeader-{{ section.id }}:has(.fp-menu[open]) .fp-logo{
+      position:relative;
       z-index:1004!important;
     }
     #FridayHeader-{{ section.id }} .fp-menu[open]>summary i:first-child{top:18px;transform:rotate(45deg)}
@@ -83,30 +91,16 @@
       opacity:0;
       visibility:hidden;
       pointer-events:none;
-      transform:translateY(-10px);
-      transition:opacity .24s ease,transform .3s cubic-bezier(.2,.7,.2,1),visibility 0s linear .3s;
+      transition:opacity .18s ease,visibility 0s linear .18s;
     }
     #FridayHeader-{{ section.id }} .fp-menu[open] .fp-mobile-menu{
       opacity:1;
       visibility:visible;
       pointer-events:auto;
-      transform:none;
-      transition:opacity .24s ease,transform .3s cubic-bezier(.2,.7,.2,1),visibility 0s;
+      transition:opacity .18s ease,visibility 0s;
     }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__top{
-      min-height:76px;
-      display:flex;
-      align-items:flex-start;
-      justify-content:flex-end;
-      padding:5px 54px 18px 0;
-      border-bottom:1px solid var(--fp-ink);
-    }
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__index{
-      padding-top:5px;
-      color:var(--fp-red);
-      font:700 9px/1 "Courier New",monospace;
-      letter-spacing:.1em;
-      text-transform:uppercase;
+    #FridayHeader-{{ section.id }} .fp-mobile-menu{
+      padding-top:112px!important;
     }
     #FridayHeader-{{ section.id }} .fp-mobile-menu__links{
       display:flex;
@@ -144,7 +138,7 @@
     #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom{
       display:block;
       padding-top:14px;
-      border-top:1px solid var(--fp-ink);
+      border-top:1px solid color-mix(in srgb,var(--fp-ink) 16%,transparent);
     }
     #FridayHeader-{{ section.id }} .fp-mobile-menu__bottom p{
       margin:0;
@@ -156,7 +150,6 @@
   @media (max-width: 360px){
     #FridayHeader-{{ section.id }} .fp-mobile-menu{padding:16px 18px 20px!important}
     #FridayHeader-{{ section.id }} .fp-mobile-menu__links>a{font-size:30px!important;padding:10px 0!important}
-    #FridayHeader-{{ section.id }} .fp-mobile-menu__top{min-height:64px}
   }
   @media (prefers-reduced-motion:reduce){
     #FridayHeader-{{ section.id }} .fp-mobile-menu,
@@ -228,9 +221,6 @@
         <details class="fp-menu">
           <summary aria-label="{{ section.settings.menu_open_label | escape }}"><i></i><i></i></summary>
           <nav class="fp-mobile-menu" aria-label="{{ section.settings.mobile_navigation_label | escape }}">
-            <div class="fp-mobile-menu__top">
-              <span class="fp-mobile-menu__index">menu / 01</span>
-            </div>
             <div class="fp-mobile-menu__links">
               {% if section.settings.main_menu != blank %}
                 {% for link in section.settings.main_menu.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}
@@ -260,10 +250,24 @@
     root.dataset.fpMenuReady = 'true';
     const menu = root.querySelector('.fp-menu');
     if (!menu) return;
+    const summary = menu.querySelector('summary');
+    const pinMenuButton = () => {
+      if (!summary || menu.open) return;
+      const rect = summary.getBoundingClientRect();
+      root.style.setProperty('--fp-menu-button-left', `${rect.left}px`);
+      root.style.setProperty('--fp-menu-button-top', `${rect.top}px`);
+      root.style.setProperty('--fp-menu-button-width', `${rect.width}px`);
+      root.style.setProperty('--fp-menu-button-height', `${rect.height}px`);
+    };
+    summary?.addEventListener('pointerdown', pinMenuButton);
+    summary?.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') pinMenuButton();
+    });
+    window.addEventListener('resize', pinMenuButton, { passive: true });
+    pinMenuButton();
     const sync = () => {
       document.documentElement.classList.toggle('fp-mobile-menu-open', menu.open);
       document.body.classList.toggle('fp-mobile-menu-open', menu.open);
-      const summary = menu.querySelector('summary');
       if (summary) summary.setAttribute('aria-label', menu.open ? 'Close menu' : {{ section.settings.menu_open_label | json }});
     };
     menu.addEventListener('toggle', sync);
