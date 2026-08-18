@@ -1,0 +1,355 @@
+{
+  "pass": false,
+  "report": [
+    {
+      "name": "desktop-1440",
+      "width": 1440,
+      "height": 1000,
+      "expectedCols": 4,
+      "ok": true,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 137,
+        "bottom": 137
+      },
+      "head": {
+        "x": 0,
+        "y": 137,
+        "w": 1440,
+        "h": 163.8,
+        "bottom": 300.8
+      },
+      "tools": {
+        "x": 0,
+        "y": 300.8,
+        "w": 1440,
+        "h": 46,
+        "bottom": 346.8
+      },
+      "grid": {
+        "x": 0,
+        "y": 346.8,
+        "w": 1440,
+        "h": 2645.7,
+        "bottom": 2992.5
+      },
+      "firstCard": {
+        "x": 46,
+        "y": 380.8,
+        "w": 316,
+        "h": 475.1,
+        "bottom": 855.9
+      },
+      "firstMedia": {
+        "x": 46,
+        "y": 380.8,
+        "w": 316,
+        "h": 447,
+        "bottom": 827.7
+      },
+      "titleFont": 87.84,
+      "cols": 4,
+      "metaColumns": "229.375px 72.625px",
+      "editionVisible": 0,
+      "sortLabel": "sort \u2014",
+      "sortValue": "title a\u2013z",
+      "bodyHeight": 1000,
+      "overflow": false,
+      "brokenImages": 0
+    },
+    {
+      "name": "laptop-1280",
+      "width": 1280,
+      "height": 800,
+      "expectedCols": 4,
+      "ok": true,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 1280,
+        "h": 137,
+        "bottom": 137
+      },
+      "head": {
+        "x": 0,
+        "y": 137,
+        "w": 1280,
+        "h": 157.2,
+        "bottom": 294.2
+      },
+      "tools": {
+        "x": 0,
+        "y": 294.2,
+        "w": 1280,
+        "h": 46,
+        "bottom": 340.2
+      },
+      "grid": {
+        "x": 0,
+        "y": 340.2,
+        "w": 1280,
+        "h": 2395.2,
+        "bottom": 2735.4
+      },
+      "firstCard": {
+        "x": 46,
+        "y": 374.2,
+        "w": 276,
+        "h": 434.8,
+        "bottom": 808.9
+      },
+      "firstMedia": {
+        "x": 46,
+        "y": 374.2,
+        "w": 276,
+        "h": 390.4,
+        "bottom": 764.6
+      },
+      "titleFont": 80,
+      "cols": 4,
+      "metaColumns": "189.375px 72.625px",
+      "editionVisible": 0,
+      "sortLabel": "sort \u2014",
+      "sortValue": "title a\u2013z",
+      "bodyHeight": 800,
+      "overflow": false,
+      "brokenImages": 0
+    },
+    {
+      "name": "tablet-1024",
+      "width": 1024,
+      "height": 768,
+      "expectedCols": 4,
+      "ok": true,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 1024,
+        "h": 129,
+        "bottom": 129
+      },
+      "head": {
+        "x": 0,
+        "y": 129,
+        "w": 1024,
+        "h": 144.5,
+        "bottom": 273.5
+      },
+      "tools": {
+        "x": 0,
+        "y": 273.5,
+        "w": 1024,
+        "h": 46,
+        "bottom": 319.5
+      },
+      "grid": {
+        "x": 0,
+        "y": 319.5,
+        "w": 1024,
+        "h": 2045.6,
+        "bottom": 2365.1
+      },
+      "firstCard": {
+        "x": 30,
+        "y": 349.5,
+        "w": 227.5,
+        "h": 363.1,
+        "bottom": 712.6
+      },
+      "firstMedia": {
+        "x": 30,
+        "y": 349.5,
+        "w": 227.5,
+        "h": 321.8,
+        "bottom": 671.3
+      },
+      "titleFont": 72,
+      "cols": 4,
+      "metaColumns": "227.5px",
+      "editionVisible": 0,
+      "sortLabel": "sort \u2014",
+      "sortValue": "title a\u2013z",
+      "bodyHeight": 768,
+      "overflow": false,
+      "brokenImages": 0
+    },
+    {
+      "name": "tablet-820",
+      "width": 820,
+      "height": 1180,
+      "expectedCols": 3,
+      "ok": true,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 820,
+        "h": 123,
+        "bottom": 123
+      },
+      "head": {
+        "x": 0,
+        "y": 123,
+        "w": 820,
+        "h": 134.1,
+        "bottom": 257.1
+      },
+      "tools": {
+        "x": 0,
+        "y": 257.1,
+        "w": 820,
+        "h": 44,
+        "bottom": 301.1
+      },
+      "grid": {
+        "x": 0,
+        "y": 301.1,
+        "w": 820,
+        "h": 2955.2,
+        "bottom": 3256.3
+      },
+      "firstCard": {
+        "x": 28,
+        "y": 329.1,
+        "w": 241.3,
+        "h": 381.3,
+        "bottom": 710.4
+      },
+      "firstMedia": {
+        "x": 28,
+        "y": 329.1,
+        "w": 241.3,
+        "h": 341.3,
+        "bottom": 670.4
+      },
+      "titleFont": 68,
+      "cols": 3,
+      "metaColumns": "241.328px",
+      "editionVisible": 0,
+      "sortLabel": "sort \u2014",
+      "sortValue": "title a\u2013z",
+      "bodyHeight": 3703,
+      "overflow": false,
+      "brokenImages": 0
+    },
+    {
+      "name": "mobile-390",
+      "width": 390,
+      "height": 844,
+      "expectedCols": 2,
+      "ok": false,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 109,
+        "bottom": 109
+      },
+      "head": {
+        "x": 0,
+        "y": 109,
+        "w": 390,
+        "h": 179.7,
+        "bottom": 288.7
+      },
+      "tools": {
+        "x": 0,
+        "y": 288.7,
+        "w": 390,
+        "h": 44,
+        "bottom": 332.7
+      },
+      "grid": {
+        "x": 0,
+        "y": 332.7,
+        "w": 390,
+        "h": 3224.1,
+        "bottom": 3556.7
+      },
+      "firstCard": {
+        "x": 10,
+        "y": 354.7,
+        "w": 180,
+        "h": 290.4,
+        "bottom": 645.1
+      },
+      "firstMedia": {
+        "x": 10,
+        "y": 354.7,
+        "w": 180,
+        "h": 254.6,
+        "bottom": 609.3
+      },
+      "titleFont": 54.6,
+      "cols": 2,
+      "metaColumns": "180px",
+      "editionVisible": 0,
+      "sortLabel": "sort \u2014",
+      "sortValue": "title a\u2013z",
+      "bodyHeight": 4358,
+      "overflow": false,
+      "brokenImages": 0
+    },
+    {
+      "name": "mobile-320",
+      "width": 320,
+      "height": 700,
+      "expectedCols": 2,
+      "ok": false,
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 109,
+        "bottom": 109
+      },
+      "head": {
+        "x": 0,
+        "y": 109,
+        "w": 320,
+        "h": 179.2,
+        "bottom": 288.2
+      },
+      "tools": {
+        "x": 0,
+        "y": 288.2,
+        "w": 320,
+        "h": 44,
+        "bottom": 332.2
+      },
+      "grid": {
+        "x": 0,
+        "y": 332.2,
+        "w": 320,
+        "h": 2765.9,
+        "bottom": 3098.1
+      },
+      "firstCard": {
+        "x": 10,
+        "y": 354.2,
+        "w": 145,
+        "h": 253.2,
+        "bottom": 607.4
+      },
+      "firstMedia": {
+        "x": 10,
+        "y": 354.2,
+        "w": 145,
+        "h": 205.1,
+        "bottom": 559.3
+      },
+      "titleFont": 54,
+      "cols": 2,
+      "metaColumns": "145px",
+      "editionVisible": 0,
+      "sortLabel": "sort \u2014",
+      "sortValue": "title a\u2013z",
+      "bodyHeight": 3928,
+      "overflow": false,
+      "brokenImages": 0
+    }
+  ],
+  "run_id": 32143474220,
+  "source_sha": "22c7aa46c7d5fa8e624ae5af6a38740bfb5d867e"
+}
