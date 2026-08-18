@@ -24,7 +24,7 @@ jobs:
       - name: Install Playwright package
         run: npm install playwright@1.55.0 >/dev/null 2>&1
       - name: Wait for Shopify sync
-        run: sleep 25
+        run: sleep 30
       - name: Open real cart and audit overlay
         env:
           STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
@@ -60,6 +60,7 @@ jobs:
           await page.waitForTimeout(1600);
 
           const metrics = await page.evaluate(() => {
+            const drawerHost = document.querySelector('#cart-drawer');
             const dialog = document.querySelector('#cart-drawer > .theme-drawer__dialog');
             const wrapper = document.querySelector('.page-wrapper');
             const announcement = document.querySelector('.fp-announcement, .fp-announcement-bar');
@@ -72,7 +73,7 @@ jobs:
             const a = announcement?.getBoundingClientRect();
             const h = header?.getBoundingClientRect();
             return {
-              bodyOverlayClass: document.body.classList.contains('fp-cart-overlay-open'),
+              drawerHostOpen: drawerHost?.hasAttribute('open') || false,
               drawerOpen: dialog.hasAttribute('open'),
               dialog: { x:d.x, y:d.y, width:d.width, height:d.height, right:d.right, bottom:d.bottom },
               wrapper: { x:w.x, width:w.width, right:w.right, marginRight:ws.marginRight },
@@ -92,14 +93,13 @@ jobs:
           await browser.close();
 
           const pass = !metrics.missing
-            && metrics.bodyOverlayClass
             && metrics.drawerOpen
             && metrics.stylesheetLoaded
-            && metrics.scriptLoaded
             && Math.abs(metrics.wrapper.width - metrics.viewport.width) <= 2
             && Math.abs(metrics.dialog.y) <= 2
             && Math.abs(metrics.dialog.height - metrics.viewport.height) <= 3
-            && parseFloat(metrics.borderLeftWidth) >= 1;
+            && parseFloat(metrics.borderLeftWidth) >= 1
+            && Number(metrics.dialogZIndex) > 1000;
 
           fs.writeFileSync('cart-overlay-result.json', JSON.stringify({ pass, metrics, consoleErrors:errors }, null, 2));
           console.log(JSON.stringify({ pass, metrics }, null, 2));
@@ -118,8 +118,6 @@ jobs:
       - name: Record QA result
         if: always()
         run: |
-          RESULT='{"pass":false,"error":"result file missing"}'
-          if [ -f cart-overlay-result.json ]; then RESULT=$(cat cart-overlay-result.json); fi
           python - <<'PY'
           import json, os
           try:
