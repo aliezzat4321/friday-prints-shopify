@@ -1,0 +1,35 @@
+/* Friday Prints — cart drawer overlay correction
+   The base theme squeezes the page on desktop. Friday's cart should instead
+   read as a distinct editorial overlay with a continuous edge from top to bottom. */
+
+@media (min-width: 990px) {
+  body:has(.fp-site-header):has(#cart-drawer[open]) .page-wrapper--drawer-open {
+    margin-right: 0 !important;
+  }
+
+  body:has(.fp-site-header):has(#cart-drawer[open])::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 2147482000;
+    background: rgb(23 18 15 / 0.14);
+    pointer-events: auto;
+  }
+
+  body:has(.fp-site-header) #cart-drawer[open] .theme-drawer__dialog {
+    z-index: 2147482001 !important;
+    top: 0 !important;
+    right: 0 !important;
+    height: 100dvh !important;
+    min-height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-left: 1px solid var(--fp-ink) !important;
+    box-shadow: none !important;
+  }
+
+  body:has(.fp-site-header) #cart-drawer[open] .theme-drawer__header {
+    position: relative;
+    z-index: 1;
+    background: var(--fp-cream);
+  }
+}
