@@ -1,0 +1,32 @@
+name: Quick Shopify Sync Check
+
+on:
+  push:
+    branches: [friday-build]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sync-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check connected preview for slim Friday at Home
+        shell: bash
+        run: |
+          set -euo pipefail
+          URL='https://il1m2791s4dmofov-108268650782.shopifypreview.com/?sync_check=${{ github.sha }}'
+          curl -LfsS --retry 3 --retry-delay 2 -A 'Mozilla/5.0' "$URL" -o /tmp/storefront.html
+          echo "Downloaded $(wc -c </tmp/storefront.html) bytes"
+          if grep -q -- '--fp-at-home-height:340px' /tmp/storefront.html; then
+            echo 'SYNC_OK: slim Friday at Home is live.'
+            exit 0
+          fi
+          if grep -q 'minmax(220px,.56fr)' /tmp/storefront.html; then
+            echo 'SYNC_STALE: storefront is still serving the old Friday at Home layout.'
+          else
+            echo 'SYNC_UNKNOWN: neither new nor known-old marker was found.'
+          fi
+          grep -o -- '--fp-at-home-height:[^;]*' /tmp/storefront.html | head -5 || true
+          exit 1
