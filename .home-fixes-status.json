@@ -1,0 +1,34 @@
+{
+  "pass": false,
+  "meetGiGi": false,
+  "prevCorrectAtStart": false,
+  "prevEnablesAfterScroll": true,
+  "atHomeCompat": true,
+  "initial": {
+    "buttons": [
+      {
+        "text": "shop prints",
+        "transform": "lowercase"
+      },
+      {
+        "text": "Meet GiGi",
+        "transform": "lowercase"
+      }
+    ],
+    "rail": {
+      "scrollLeft": 54,
+      "scrollWidth": 2254,
+      "clientWidth": 1372
+    },
+    "prevDisabled": false,
+    "nextDisabled": false,
+    "atHomeTitleFont": "40px",
+    "atHomeHasCompatCss": true
+  },
+  "afterScroll": {
+    "scrollLeft": 364,
+    "prevDisabled": false
+  },
+  "run_id": 32117127851,
+  "source_sha": "2b8cb797ed559588194e9b2f57cf4e9a184907fc"
+}
