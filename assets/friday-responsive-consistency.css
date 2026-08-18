@@ -8,36 +8,36 @@
     height:clamp(76px,7vw,100px)!important;
   }
 
-  /* Keep editor/laptop widths compact. The former 620px floor made the Theme
-     Editor hero visibly taller than the intended storefront composition. */
+  /* Desktop/laptop hero is driven primarily by viewport HEIGHT, not width.
+     This prevents wide-but-short laptop screens from producing an oversized hero. */
   body:has(.fp-hero) .fp-hero__grid{
-    min-height:clamp(560px,47vw,680px)!important;
+    min-height:clamp(520px,58svh,560px)!important;
     padding-top:0!important;
     align-items:center!important;
   }
   body:has(.fp-hero) .fp-hero__copy{
-    padding-top:clamp(8px,1.2vw,18px)!important;
-    padding-bottom:clamp(28px,2.6vw,38px)!important;
-    padding-left:clamp(0px,1.1vw,18px)!important;
+    padding-top:clamp(6px,1vw,14px)!important;
+    padding-bottom:clamp(22px,2vw,30px)!important;
+    padding-left:clamp(0px,1vw,16px)!important;
   }
   body:has(.fp-hero) .fp-hero h1{
-    font-size:clamp(68px,6.6vw,96px)!important;
+    font-size:clamp(62px,5.9vw,88px)!important;
   }
   body:has(.fp-hero) .fp-hero__kicker{
-    font-size:clamp(13px,1.08vw,16px)!important;
-    margin-bottom:clamp(10px,1vw,13px)!important;
+    font-size:clamp(12px,1vw,15px)!important;
+    margin-bottom:clamp(9px,.9vw,12px)!important;
   }
   body:has(.fp-hero) .fp-hero__sub{
-    font-size:clamp(13px,1.08vw,16px)!important;
-    margin:clamp(20px,2vw,28px) 0 clamp(18px,1.8vw,25px)!important;
+    font-size:clamp(12px,1vw,15px)!important;
+    margin:clamp(17px,1.6vw,23px) 0 clamp(16px,1.5vw,21px)!important;
   }
   body:has(.fp-hero) .fp-btn{
-    min-height:clamp(44px,3.75vw,54px)!important;
-    font-size:clamp(11px,.98vw,14px)!important;
-    padding-inline:clamp(16px,1.7vw,24px)!important;
+    min-height:clamp(42px,3.4vw,49px)!important;
+    font-size:clamp(10px,.9vw,13px)!important;
+    padding-inline:clamp(15px,1.5vw,21px)!important;
   }
   body:has(.fp-hero) .fp-hero__scene img{
-    max-height:clamp(450px,42vw,610px)!important;
+    max-height:clamp(405px,52svh,520px)!important;
   }
 
   body:has(.fp-hero) .fp-collection__inner{
