@@ -1,15 +1,15 @@
 {
-  "pass": false,
+  "pass": true,
   "metrics": {
-    "drawerHostOpen": false,
-    "drawerOpen": false,
+    "drawerHostOpen": true,
+    "drawerOpen": true,
     "dialog": {
-      "x": 0,
+      "x": 940,
       "y": 0,
-      "width": 0,
-      "height": 0,
-      "right": 0,
-      "bottom": 0
+      "width": 500,
+      "height": 1000,
+      "right": 1440,
+      "bottom": 1000
     },
     "wrapper": {
       "x": 0,
@@ -29,10 +29,10 @@
       "width": 1440,
       "right": 1440
     },
-    "borderLeftWidth": "1px",
+    "borderLeftWidth": "2px",
     "borderLeftColor": "rgb(23, 18, 15)",
     "borderLeftStyle": "solid",
-    "dialogZIndex": "8",
+    "dialogZIndex": "2147482001",
     "viewport": {
       "width": 1440,
       "height": 1000
@@ -46,6 +46,6 @@
     "Failed to load resource: the server responded with a status of 403 ()",
     "Failed to load resource: the server responded with a status of 404 ()"
   ],
-  "run_id": 32137144281,
-  "source_sha": "cef92aecdf7acf752ce66107932fa47026868583"
+  "run_id": 32139468009,
+  "source_sha": "ab3acbff4162855aa697914ba8ae48e9ea333cb3"
 }
