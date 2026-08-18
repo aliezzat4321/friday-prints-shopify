@@ -42,9 +42,12 @@
         "collection": "all",
         "product_limit": 7,
         "show_prices": true,
+        "show_arrows": true,
         "button_label": "shop all prints",
         "button_link": "",
         "background_color": "#f2bdc5",
+        "heading_size_desktop": 62,
+        "heading_size_mobile": 44,
         "previous_label": "Previous prints",
         "next_label": "Next prints",
         "empty_message": "Choose a collection in this section."
@@ -76,11 +79,39 @@
     "friday_at_home": {
       "type": "friday-at-home",
       "blocks": {
-        "scene_1": {"type": "scene", "settings": {"alt": "Friday Prints at home"}},
-        "scene_2": {"type": "scene", "settings": {"alt": "Friday Prints at home"}},
-        "scene_3": {"type": "scene", "settings": {"alt": "Friday Prints at home"}}
+        "scene_1": {
+          "type": "scene",
+          "settings": {
+            "image": "shopify://shop_images/7E73CCE9-4FE4-4A97-A4F3-57325A6D3601.jpg",
+            "product": "",
+            "link": "",
+            "alt": "Friday Prints at home"
+          }
+        },
+        "scene_2": {
+          "type": "scene",
+          "settings": {
+            "image": "shopify://shop_images/120E4DF1-B3BC-41CB-BB51-0EF2F87C6BD1.jpg",
+            "product": "",
+            "link": "",
+            "alt": "Friday Prints at home"
+          }
+        },
+        "scene_3": {
+          "type": "scene",
+          "settings": {
+            "image": "shopify://shop_images/74F314D8-9E59-4B4F-A125-60ACFA3439CB.jpg",
+            "product": "",
+            "link": "",
+            "alt": "Friday Prints at home"
+          }
+        }
       },
-      "block_order": ["scene_1", "scene_2", "scene_3"],
+      "block_order": [
+        "scene_1",
+        "scene_2",
+        "scene_3"
+      ],
       "settings": {
         "heading": "friday at home",
         "text": "Printed to live with you.",
@@ -95,15 +126,46 @@
     "friday_benefits": {
       "type": "friday-benefits",
       "blocks": {
-        "benefit_1": {"type": "benefit", "settings": {"icon": "✹", "heading": "NUMBERED EDITIONS", "text": "Every Friday print belongs to a limited numbered edition."}},
-        "benefit_2": {"type": "benefit", "settings": {"icon": "100", "heading": "A3 / 100", "text": "A3 prints are limited to 100 editions per design."}},
-        "benefit_3": {"type": "benefit", "settings": {"icon": "150", "heading": "A4 / 150", "text": "A4 prints are limited to 150 editions per design."}},
-        "benefit_4": {"type": "benefit", "settings": {"icon": "▣", "heading": "PREMIUM MATTE", "text": "Rich colour, a soft finish and a removable mount."}}
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "✹",
+            "heading": "NUMBERED EDITIONS",
+            "text": "Every Friday print belongs to a limited numbered edition."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "100",
+            "heading": "A3 / 100",
+            "text": "A3 prints are limited to 100 editions per design."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "150",
+            "heading": "A4 / 150",
+            "text": "A4 prints are limited to 150 editions per design."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "▣",
+            "heading": "PREMIUM MATTE",
+            "text": "Rich colour, a soft finish and a removable mount."
+          }
+        }
       },
-      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"],
-      "settings": {
-        "background_color": "#fbf1e4"
-      }
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
+      ],
+      "settings": {}
     },
     "friday_newsletter": {
       "type": "friday-newsletter",
@@ -127,5 +189,12 @@
       }
     }
   },
-  "order": ["friday_hero", "friday_collection", "friday_story", "friday_at_home", "friday_benefits", "friday_newsletter"]
+  "order": [
+    "friday_hero",
+    "friday_collection",
+    "friday_story",
+    "friday_at_home",
+    "friday_benefits",
+    "friday_newsletter"
+  ]
 }
