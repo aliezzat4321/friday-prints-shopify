@@ -20,6 +20,8 @@
     #FridayCollection-{{ section.id }} .fp-product p{margin:0;text-align:left;font-size:12px}
     #FridayCollection-{{ section.id }} .fp-collection__cta{margin-top:17px}
     #FridayCollection-{{ section.id }} .fp-collection__cta a{min-height:48px;padding:0 26px}
+    #FridayCollection-{{ section.id }} .fp-arrow{transition:opacity .18s ease,visibility .18s ease}
+    #FridayCollection-{{ section.id }} .fp-arrow:disabled{opacity:0;visibility:hidden;pointer-events:none}
     @media(max-width:1100px) and (min-width:750px){
       #FridayCollection-{{ section.id }} .fp-collection__inner{padding:46px 0 42px}
       #FridayCollection-{{ section.id }} .fp-collection__rail{gap:20px;padding-inline:34px}
@@ -55,7 +57,7 @@
     {% endif %}
 
     {% if fp_collection != blank and fp_collection.products_count > 0 %}
-      {% if section.settings.show_arrows %}<button class="fp-arrow fp-arrow--prev" type="button" aria-label="{{ section.settings.previous_label | escape }}" data-fp-prev>‹</button>{% endif %}
+      {% if section.settings.show_arrows %}<button class="fp-arrow fp-arrow--prev" type="button" aria-label="{{ section.settings.previous_label | escape }}" data-fp-prev disabled>‹</button>{% endif %}
       <div class="fp-collection__rail" data-fp-rail>
         {% for product in fp_collection.products limit: section.settings.product_limit %}
           {% assign fp_product_alt = product.featured_image.alt | default: product.title %}
@@ -88,9 +90,23 @@
       if (!root || root.dataset.fpCollectionReady === 'true') return;
       const rail = root.querySelector('[data-fp-rail]');
       if (!rail) return;
+
+      const prev = root.querySelector('[data-fp-prev]');
+      const next = root.querySelector('[data-fp-next]');
+      const edge = 3;
+
+      const updateArrows = () => {
+        const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+        if (prev) prev.disabled = maxScroll <= edge || rail.scrollLeft <= edge;
+        if (next) next.disabled = maxScroll <= edge || rail.scrollLeft >= maxScroll - edge;
+      };
+
       root.dataset.fpCollectionReady = 'true';
-      root.querySelector('[data-fp-prev]')?.addEventListener('click', () => rail.scrollBy({ left: -rail.clientWidth * .72, behavior: 'smooth' }));
-      root.querySelector('[data-fp-next]')?.addEventListener('click', () => rail.scrollBy({ left: rail.clientWidth * .72, behavior: 'smooth' }));
+      prev?.addEventListener('click', () => rail.scrollBy({ left: -rail.clientWidth * .72, behavior: 'smooth' }));
+      next?.addEventListener('click', () => rail.scrollBy({ left: rail.clientWidth * .72, behavior: 'smooth' }));
+      rail.addEventListener('scroll', updateArrows, { passive: true });
+      window.addEventListener('resize', updateArrows, { passive: true });
+      requestAnimationFrame(updateArrows);
     };
 
     init(document.getElementById('FridayCollection-{{ section.id }}'));
@@ -99,14 +115,9 @@
       window.__fridayCollectionEditorListener = true;
       document.addEventListener('shopify:section:load', (event) => {
         const root = event.target.querySelector?.('[id^="FridayCollection-"]');
-        if (root) {
-          root.dataset.fpCollectionReady = 'false';
-          const rail = root.querySelector('[data-fp-rail]');
-          if (!rail) return;
-          root.dataset.fpCollectionReady = 'true';
-          root.querySelector('[data-fp-prev]')?.addEventListener('click', () => rail.scrollBy({ left: -rail.clientWidth * .72, behavior: 'smooth' }));
-          root.querySelector('[data-fp-next]')?.addEventListener('click', () => rail.scrollBy({ left: rail.clientWidth * .72, behavior: 'smooth' }));
-        }
+        if (!root) return;
+        root.dataset.fpCollectionReady = 'false';
+        init(root);
       });
     }
   })();
