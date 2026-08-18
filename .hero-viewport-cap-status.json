@@ -1,0 +1,147 @@
+{
+  "pass": false,
+  "report": [
+    {
+      "name": "laptop-short",
+      "width": 1280,
+      "height": 700,
+      "viewport": {
+        "w": 1280,
+        "h": 700
+      },
+      "header": {
+        "top": 0,
+        "height": 130.6,
+        "bottom": 130.6
+      },
+      "hero": {
+        "top": 130.6,
+        "height": 521,
+        "bottom": 651.6
+      },
+      "prints": {
+        "top": 651.6,
+        "height": 542.5,
+        "bottom": 1194.1
+      },
+      "capLoaded": false,
+      "overflow": false,
+      "totalHeaderHero": 651.6,
+      "fits": true
+    },
+    {
+      "name": "laptop",
+      "width": 1280,
+      "height": 800,
+      "viewport": {
+        "w": 1280,
+        "h": 800
+      },
+      "header": {
+        "top": 0,
+        "height": 130.6,
+        "bottom": 130.6
+      },
+      "hero": {
+        "top": 130.6,
+        "height": 521,
+        "bottom": 651.6
+      },
+      "prints": {
+        "top": 651.6,
+        "height": 542.5,
+        "bottom": 1194.1
+      },
+      "capLoaded": false,
+      "overflow": false,
+      "totalHeaderHero": 651.6,
+      "fits": true
+    },
+    {
+      "name": "desktop",
+      "width": 1440,
+      "height": 900,
+      "viewport": {
+        "w": 1440,
+        "h": 900
+      },
+      "header": {
+        "top": 0,
+        "height": 141,
+        "bottom": 141
+      },
+      "hero": {
+        "top": 141,
+        "height": 523,
+        "bottom": 664
+      },
+      "prints": {
+        "top": 664,
+        "height": 592.5,
+        "bottom": 1256.5
+      },
+      "capLoaded": false,
+      "overflow": false,
+      "totalHeaderHero": 664,
+      "fits": true
+    },
+    {
+      "name": "editor-like",
+      "width": 1024,
+      "height": 700,
+      "viewport": {
+        "w": 1024,
+        "h": 700
+      },
+      "header": {
+        "top": 0,
+        "height": 117,
+        "bottom": 117
+      },
+      "hero": {
+        "top": 117,
+        "height": 521,
+        "bottom": 638
+      },
+      "prints": {
+        "top": 638,
+        "height": 540.3,
+        "bottom": 1178.3
+      },
+      "capLoaded": false,
+      "overflow": false,
+      "totalHeaderHero": 638,
+      "fits": true
+    },
+    {
+      "name": "editor-short",
+      "width": 960,
+      "height": 650,
+      "viewport": {
+        "w": 960,
+        "h": 650
+      },
+      "header": {
+        "top": 0,
+        "height": 117,
+        "bottom": 117
+      },
+      "hero": {
+        "top": 117,
+        "height": 521,
+        "bottom": 638
+      },
+      "prints": {
+        "top": 638,
+        "height": 540.3,
+        "bottom": 1178.3
+      },
+      "capLoaded": false,
+      "overflow": false,
+      "totalHeaderHero": 638,
+      "fits": true
+    }
+  ],
+  "run_id": 32139648609,
+  "source_sha": "d4d8a8067b6b6ba61ec668dc03d0457d19650db9"
+}
