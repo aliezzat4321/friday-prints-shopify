@@ -1,6 +1,6 @@
 {
   "pass": false,
-  "meetGiGi": false,
+  "meetGiGi": true,
   "prevCorrectAtStart": false,
   "prevEnablesAfterScroll": true,
   "atHomeCompat": true,
@@ -8,11 +8,11 @@
     "buttons": [
       {
         "text": "shop prints",
-        "transform": "lowercase"
+        "transform": "none"
       },
       {
         "text": "Meet GiGi",
-        "transform": "lowercase"
+        "transform": "none"
       }
     ],
     "rail": {
@@ -29,6 +29,6 @@
     "scrollLeft": 364,
     "prevDisabled": false
   },
-  "run_id": 32117127851,
-  "source_sha": "2b8cb797ed559588194e9b2f57cf4e9a184907fc"
+  "run_id": 32117267776,
+  "source_sha": "5a4607f21d269deb6384f9e2b81f3b4590060494"
 }
