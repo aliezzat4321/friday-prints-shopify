@@ -1,0 +1,100 @@
+name: Hero Viewport Cap QA
+
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.hero-viewport-cap-status.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - name: Wait for Shopify sync
+        run: sleep 18
+      - name: Check hero against viewport
+        env:
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+        run: |
+          cat > qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('hero-viewport-cap-qa',{recursive:true});
+          const executablePath=fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined;
+          const browser=await chromium.launch({headless:true,executablePath});
+          const configs=[
+            ['laptop-short',1280,700],
+            ['laptop',1280,800],
+            ['desktop',1440,900],
+            ['editor-like',1024,700],
+            ['editor-short',960,650]
+          ];
+          const report=[];
+          let pass=true;
+          for(const [name,width,height] of configs){
+            const ctx=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
+            const page=await ctx.newPage();
+            await page.goto(`${process.env.STORE_URL}/?hero-cap=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            await page.waitForTimeout(700);
+            const m=await page.evaluate(()=>{
+              const r=s=>{const e=document.querySelector(s);if(!e)return null;const b=e.getBoundingClientRect();return {top:+b.top.toFixed(1),height:+b.height.toFixed(1),bottom:+b.bottom.toFixed(1)}};
+              return {
+                viewport:{w:innerWidth,h:innerHeight},
+                header:r('.fp-site-header'),
+                hero:r('.fp-hero'),
+                prints:r('.fp-collection'),
+                capLoaded:[...document.styleSheets].some(s=>(s.href||'').includes('friday-hero-viewport-cap.css')),
+                overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2
+              };
+            });
+            const total=(m.header?.height||0)+(m.hero?.height||0);
+            const fits=total<=height+1;
+            if(!fits||!m.capLoaded||m.overflow)pass=false;
+            report.push({name,width,height,...m,totalHeaderHero:+total.toFixed(1),fits});
+            await page.screenshot({path:`hero-viewport-cap-qa/${name}.png`,fullPage:false});
+            await ctx.close();
+          }
+          await browser.close();
+          const out={pass,report};
+          fs.writeFileSync('hero-viewport-cap-qa/report.json',JSON.stringify(out,null,2));
+          console.log(JSON.stringify(out,null,2));
+          if(!pass)process.exitCode=1;
+          EOF
+          node qa.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hero-viewport-cap-qa
+          path: hero-viewport-cap-qa/
+          retention-days: 2
+      - name: Record result
+        if: always()
+        run: |
+          python - <<'PY'
+          import json,os
+          try:data=json.load(open('hero-viewport-cap-qa/report.json'))
+          except Exception as e:data={'pass':False,'error':str(e)}
+          data['run_id']=int(os.environ['GITHUB_RUN_ID']);data['source_sha']=os.environ['GITHUB_SHA']
+          json.dump(data,open('.hero-viewport-cap-status.json','w'),indent=2)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .hero-viewport-cap-status.json
+          git commit -m 'Record hero viewport cap QA [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
