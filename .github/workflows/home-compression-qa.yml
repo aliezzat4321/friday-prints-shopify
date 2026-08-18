@@ -1,0 +1,69 @@
+name: Homepage Compression QA
+
+on:
+  push:
+    branches: [friday-build]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright package
+        run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - name: Wait for Shopify sync
+        run: sleep 18
+      - name: Audit compressed homepage
+        env:
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+        run: |
+          cat > home-compression-qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('home-compression-qa',{recursive:true});
+          const executablePath=fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined;
+          const browser=await chromium.launch({headless:true,executablePath});
+          const configs=[['desktop-1440',1440,1000],['laptop-1280',1280,900],['tablet-1024',1024,768],['tablet-820',820,1180],['mobile-390',390,844],['mobile-320',320,700]];
+          const sels={header:'.fp-site-header',hero:'.fp-hero',prints:'.fp-collection',story:'.fp-story',atHome:'.fp-at-home',facts:'.fp-benefits',newsletter:'.fp-newsletter',footer:'.fp-footer'};
+          const report=[];
+          let failed=false;
+          for(const [name,width,height] of configs){
+            const ctx=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
+            const page=await ctx.newPage();
+            await page.goto(`${process.env.STORE_URL}/?compression=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            await page.waitForTimeout(900);
+            const metrics=await page.evaluate((sels)=>{
+              const rect=(s)=>{const e=document.querySelector(s);if(!e)return null;const r=e.getBoundingClientRect();return {height:+r.height.toFixed(1),width:+r.width.toFixed(1)}};
+              const out={};for(const [k,s] of Object.entries(sels))out[k]=rect(s);
+              const premium=document.querySelector('.fp-benefit:nth-child(4) .fp-benefit__icon');
+              return {sections:out,docHeight:document.documentElement.scrollHeight,overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,premiumColor:premium?getComputedStyle(premium).color:null,compressionLoaded:[...document.styleSheets].some(s=>(s.href||'').includes('friday-home-compression.css'))};
+            },sels);
+            if(metrics.overflow||!metrics.compressionLoaded)failed=true;
+            await page.screenshot({path:`home-compression-qa/${name}-full.png`,fullPage:true});
+            report.push({name,width,height,metrics});
+            await ctx.close();
+          }
+          await browser.close();
+          fs.writeFileSync('home-compression-qa/report.json',JSON.stringify(report,null,2));
+          console.log(JSON.stringify(report,null,2));
+          if(failed)process.exitCode=1;
+          EOF
+          node home-compression-qa.mjs
+      - name: Upload audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-compression-qa
+          path: home-compression-qa/
+          retention-days: 2
