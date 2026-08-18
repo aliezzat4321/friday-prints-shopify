@@ -27,7 +27,7 @@ jobs:
         run: sleep 25
       - name: Test Shop, PDP and cart drawer
         env:
-          STORE_URL: https://wy9z7gjpgosgm5mi-108268650782.shopifypreview.com
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
         run: |
           cat > commerce-qa.mjs <<'EOF'
           import { chromium } from 'playwright';
@@ -106,7 +106,6 @@ jobs:
                 if (!selectedText?.trim()) errors.push('VARIANT_SELECTED_TEXT_MISSING');
               }
 
-              // Use an available variant before cart test.
               const availableVariant = page.locator('[data-fp-variant][data-available="true"]').first();
               if (await availableVariant.count()) {
                 await availableVariant.check({ force:true });
@@ -121,9 +120,40 @@ jobs:
                 const afterCart = await page.evaluate(() => fetch('/cart.js').then(r => r.json()).then(c => c.item_count));
                 const drawer = page.locator('#cart-drawer dialog');
                 const drawerOpen = await drawer.evaluate(el => el.open).catch(() => false);
-                cartTest = { beforeCart, afterCart, drawerOpen };
+
+                const overlayMetrics = await page.evaluate(() => {
+                  const dialog = document.querySelector('#cart-drawer > .theme-drawer__dialog');
+                  const wrapper = document.querySelector('.page-wrapper');
+                  const header = document.querySelector('.fp-site-header');
+                  if (!dialog || !wrapper) return null;
+                  const d = dialog.getBoundingClientRect();
+                  const w = wrapper.getBoundingClientRect();
+                  const ds = getComputedStyle(dialog);
+                  const ws = getComputedStyle(wrapper);
+                  return {
+                    bodyOverlayClass: document.body.classList.contains('fp-cart-overlay-open'),
+                    dialog: { x:d.x, y:d.y, width:d.width, height:d.height, right:d.right, bottom:d.bottom },
+                    wrapper: { x:w.x, width:w.width, right:w.right, marginRight:ws.marginRight },
+                    borderLeftWidth: ds.borderLeftWidth,
+                    borderLeftStyle: ds.borderLeftStyle,
+                    dialogZIndex: ds.zIndex,
+                    headerZIndex: header ? getComputedStyle(header).zIndex : null,
+                    viewport: { width:innerWidth, height:innerHeight }
+                  };
+                });
+
+                cartTest = { beforeCart, afterCart, drawerOpen, overlayMetrics };
                 if (afterCart <= beforeCart) errors.push(`CART_DID_NOT_INCREMENT:${beforeCart}->${afterCart}`);
                 if (!drawerOpen) errors.push('CART_DRAWER_DID_NOT_OPEN');
+
+                if (name === 'desktop') {
+                  if (!overlayMetrics?.bodyOverlayClass) errors.push('CART_OVERLAY_STATE_MISSING');
+                  if (Math.abs((overlayMetrics?.wrapper?.width ?? 0) - width) > 2) errors.push(`PAGE_STILL_SQUEEZED:${overlayMetrics?.wrapper?.width}`);
+                  if (Math.abs(overlayMetrics?.dialog?.y ?? 999) > 2) errors.push(`CART_NOT_AT_TOP:${overlayMetrics?.dialog?.y}`);
+                  if (Math.abs((overlayMetrics?.dialog?.height ?? 0) - height) > 3) errors.push(`CART_NOT_FULL_HEIGHT:${overlayMetrics?.dialog?.height}`);
+                  if ((parseFloat(overlayMetrics?.borderLeftWidth || '0') || 0) < 1) errors.push(`CART_LEFT_EDGE_MISSING:${overlayMetrics?.borderLeftWidth}`);
+                }
+
                 await page.screenshot({ path:`commerce-qa/${name}-cart-drawer.png`, fullPage:false });
               } else {
                 cartTest = { skipped:'No available product variant' };
