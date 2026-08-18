@@ -3,10 +3,12 @@ name: Homepage Compression QA
 on:
   push:
     branches: [friday-build]
+    paths-ignore:
+      - '.home-compression-status.json'
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   audit:
@@ -67,3 +69,23 @@ jobs:
           name: homepage-compression-qa
           path: home-compression-qa/
           retention-days: 2
+      - name: Record audit status
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os
+          try:
+              report=json.load(open('home-compression-qa/report.json'))
+              status={'pass': all((not r['metrics']['overflow']) and r['metrics']['compressionLoaded'] for r in report), 'report': report}
+          except Exception as e:
+              status={'pass':False,'error':str(e)}
+          status['run_id']=int(os.environ['GITHUB_RUN_ID'])
+          status['source_sha']=os.environ['GITHUB_SHA']
+          json.dump(status,open('.home-compression-status.json','w'),indent=2)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .home-compression-status.json
+          git commit -m 'Record homepage compression QA [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
