@@ -8,8 +8,10 @@
     height:clamp(76px,7vw,100px)!important;
   }
 
+  /* Keep editor/laptop widths compact. The former 620px floor made the Theme
+     Editor hero visibly taller than the intended storefront composition. */
   body:has(.fp-hero) .fp-hero__grid{
-    min-height:clamp(620px,47vw,680px)!important;
+    min-height:clamp(560px,47vw,680px)!important;
     padding-top:0!important;
     align-items:center!important;
   }
@@ -35,7 +37,7 @@
     padding-inline:clamp(16px,1.7vw,24px)!important;
   }
   body:has(.fp-hero) .fp-hero__scene img{
-    max-height:clamp(470px,42vw,610px)!important;
+    max-height:clamp(450px,42vw,610px)!important;
   }
 
   body:has(.fp-hero) .fp-collection__inner{
