@@ -1,35 +1,42 @@
 /* Friday Prints — cart drawer overlay correction
-   The base theme squeezes the page on desktop. Friday's cart should instead
-   read as a distinct editorial overlay with a continuous edge from top to bottom. */
+   Desktop cart must behave as a distinct right-side overlay, never as a squeezed page column. */
 
 @media (min-width: 990px) {
-  body:has(.fp-site-header):has(#cart-drawer[open]) .page-wrapper--drawer-open {
+  body.fp-cart-overlay-open .page-wrapper,
+  body.fp-cart-overlay-open .page-wrapper--drawer-open {
     margin-right: 0 !important;
   }
 
-  body:has(.fp-site-header):has(#cart-drawer[open])::before {
+  body.fp-cart-overlay-open::before {
     content: '';
     position: fixed;
     inset: 0;
     z-index: 2147482000;
-    background: rgb(23 18 15 / 0.14);
-    pointer-events: auto;
+    background: rgb(23 18 15 / 0.18);
+    pointer-events: none;
   }
 
-  body:has(.fp-site-header) #cart-drawer[open] .theme-drawer__dialog {
+  body.fp-cart-overlay-open #cart-drawer > .theme-drawer__dialog[open] {
     z-index: 2147482001 !important;
-    top: 0 !important;
-    right: 0 !important;
+    position: fixed !important;
+    inset: 0 0 0 auto !important;
+    width: min(500px, 100vw) !important;
     height: 100dvh !important;
     min-height: 100dvh !important;
     max-height: 100dvh !important;
-    border-left: 1px solid var(--fp-ink) !important;
-    box-shadow: none !important;
+    margin: 0 !important;
+    border: 0 !important;
+    border-left: 2px solid var(--fp-ink) !important;
+    border-radius: 0 !important;
+    background: var(--fp-cream) !important;
+    box-shadow: -12px 0 28px rgb(23 18 15 / 0.08) !important;
+    overflow: hidden !important;
   }
 
-  body:has(.fp-site-header) #cart-drawer[open] .theme-drawer__header {
+  body.fp-cart-overlay-open #cart-drawer > .theme-drawer__dialog[open] .theme-drawer__header {
     position: relative;
-    z-index: 1;
-    background: var(--fp-cream);
+    z-index: 2;
+    background: var(--fp-cream) !important;
+    border-bottom: 1px solid var(--fp-ink) !important;
   }
 }
