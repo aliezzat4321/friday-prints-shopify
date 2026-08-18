@@ -1,0 +1,94 @@
+name: Footer Colophon QA
+
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.footer-colophon-status.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - name: Wait for Shopify sync
+        run: sleep 18
+      - name: Check footer layouts
+        env:
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+        run: |
+          cat > qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('footer-colophon-qa',{recursive:true});
+          const executablePath=fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined;
+          const browser=await chromium.launch({headless:true,executablePath});
+          const configs=[['desktop-1440',1440,900],['laptop-1280',1280,800],['mobile-390',390,844]];
+          const report=[]; let pass=true;
+          for(const [name,width,height] of configs){
+            const ctx=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
+            const page=await ctx.newPage();
+            await page.goto(`${process.env.STORE_URL}/?footerqa=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            await page.waitForTimeout(700);
+            const footer=page.locator('.fp-footer').first();
+            await footer.scrollIntoViewIfNeeded();
+            await page.waitForTimeout(300);
+            const m=await page.evaluate(()=>{
+              const footer=document.querySelector('.fp-footer');
+              const wrap=document.querySelector('.fp-footer__gigi-wrap');
+              const sig=document.querySelector('.fp-footer__signature');
+              const bottom=document.querySelector('.fp-footer__bottom');
+              const r=e=>{if(!e)return null;const b=e.getBoundingClientRect();return {w:+b.width.toFixed(1),h:+b.height.toFixed(1),x:+b.x.toFixed(1),y:+b.y.toFixed(1)}};
+              const visible=e=>!!e&&getComputedStyle(e).display!=='none'&&getComputedStyle(e).visibility!=='hidden'&&e.getBoundingClientRect().height>0;
+              return {footer:r(footer),bottom:r(bottom),gigiWrapVisible:visible(wrap),signatureVisible:visible(sig),signatureText:sig?.textContent?.replace(/\s+/g,' ').trim()||'',overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2};
+            });
+            const desktop=width>=750;
+            const ok=!m.overflow && (desktop ? (!m.gigiWrapVisible&&m.signatureVisible&&m.signatureText.includes('CAIRO')) : (m.gigiWrapVisible&&!m.signatureVisible));
+            if(!ok)pass=false;
+            await footer.screenshot({path:`footer-colophon-qa/${name}.png`});
+            report.push({name,width,height,ok,...m});
+            await ctx.close();
+          }
+          await browser.close();
+          const out={pass,report};
+          fs.writeFileSync('footer-colophon-qa/report.json',JSON.stringify(out,null,2));
+          console.log(JSON.stringify(out,null,2));
+          if(!pass)process.exitCode=1;
+          EOF
+          node qa.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: footer-colophon-qa
+          path: footer-colophon-qa/
+          retention-days: 2
+      - name: Record result
+        if: always()
+        run: |
+          python - <<'PY'
+          import json,os
+          try:data=json.load(open('footer-colophon-qa/report.json'))
+          except Exception as e:data={'pass':False,'error':str(e)}
+          data['run_id']=int(os.environ['GITHUB_RUN_ID']);data['source_sha']=os.environ['GITHUB_SHA']
+          json.dump(data,open('.footer-colophon-status.json','w'),indent=2)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .footer-colophon-status.json
+          git commit -m 'Record footer colophon QA [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
