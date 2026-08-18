@@ -1,0 +1,595 @@
+{
+  "pass": true,
+  "report": [
+    {
+      "name": "desktop-1440",
+      "width": 1440,
+      "height": 1000,
+      "url": "https://il1m2791s4dmofov-108268650782.shopifypreview.com/collections/all?audit=1787059646293",
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 163
+      },
+      "shop": {
+        "x": 0,
+        "y": 163,
+        "w": 1440,
+        "h": 3219.2
+      },
+      "head": {
+        "x": 0,
+        "y": 163,
+        "w": 1440,
+        "h": 221.6
+      },
+      "tools": {
+        "x": 0,
+        "y": 384.6,
+        "w": 1440,
+        "h": 61.2
+      },
+      "grid": {
+        "x": 0,
+        "y": 445.8,
+        "w": 1440,
+        "h": 2830.4
+      },
+      "firstCard": {
+        "x": 46,
+        "y": 489.8,
+        "w": 314.5,
+        "h": 498.9
+      },
+      "firstMedia": {
+        "x": 46,
+        "y": 489.8,
+        "w": 314.5,
+        "h": 444.8
+      },
+      "footer": {
+        "x": 0,
+        "y": 3382.2,
+        "w": 1440,
+        "h": 309.3
+      },
+      "titleFont": 96,
+      "productCount": 20,
+      "gridColumns": "314.5px 314.5px 314.5px 314.5px",
+      "columnGap": "30px",
+      "rowGap": "54px",
+      "overflow": false,
+      "bodyHeight": 1000,
+      "firstFive": [
+        {
+          "title": "A Different Seoul, Still Her",
+          "media": {
+            "w": 314.5,
+            "h": 444.8
+          }
+        },
+        {
+          "title": "Before the Dress",
+          "media": {
+            "w": 314.5,
+            "h": 444.8
+          }
+        },
+        {
+          "title": "Carefully Held",
+          "media": {
+            "w": 314.5,
+            "h": 444.8
+          }
+        },
+        {
+          "title": "Cherry Hour",
+          "media": {
+            "w": 314.5,
+            "h": 444.8
+          }
+        },
+        {
+          "title": "Friday in Kyoto",
+          "media": {
+            "w": 314.5,
+            "h": 444.8
+          }
+        }
+      ]
+    },
+    {
+      "name": "laptop-1280",
+      "width": 1280,
+      "height": 800,
+      "url": "https://il1m2791s4dmofov-108268650782.shopifypreview.com/collections/all?audit=1787059650352",
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 1280,
+        "h": 163
+      },
+      "shop": {
+        "x": 0,
+        "y": 163,
+        "w": 1280,
+        "h": 2971.4
+      },
+      "head": {
+        "x": 0,
+        "y": 163,
+        "w": 1280,
+        "h": 221.6
+      },
+      "tools": {
+        "x": 0,
+        "y": 384.6,
+        "w": 1280,
+        "h": 61.2
+      },
+      "grid": {
+        "x": 0,
+        "y": 445.8,
+        "w": 1280,
+        "h": 2582.6
+      },
+      "firstCard": {
+        "x": 46,
+        "y": 489.8,
+        "w": 274.5,
+        "h": 459.8
+      },
+      "firstMedia": {
+        "x": 46,
+        "y": 489.8,
+        "w": 274.5,
+        "h": 388.3
+      },
+      "footer": {
+        "x": 0,
+        "y": 3134.4,
+        "w": 1280,
+        "h": 300.1
+      },
+      "titleFont": 96,
+      "productCount": 20,
+      "gridColumns": "274.5px 274.5px 274.5px 274.5px",
+      "columnGap": "30px",
+      "rowGap": "54px",
+      "overflow": false,
+      "bodyHeight": 800,
+      "firstFive": [
+        {
+          "title": "A Different Seoul, Still Her",
+          "media": {
+            "w": 274.5,
+            "h": 388.3
+          }
+        },
+        {
+          "title": "Before the Dress",
+          "media": {
+            "w": 274.5,
+            "h": 388.3
+          }
+        },
+        {
+          "title": "Carefully Held",
+          "media": {
+            "w": 274.5,
+            "h": 388.3
+          }
+        },
+        {
+          "title": "Cherry Hour",
+          "media": {
+            "w": 274.5,
+            "h": 388.3
+          }
+        },
+        {
+          "title": "Friday in Kyoto",
+          "media": {
+            "w": 274.5,
+            "h": 388.3
+          }
+        }
+      ]
+    },
+    {
+      "name": "tablet-1024",
+      "width": 1024,
+      "height": 768,
+      "url": "https://il1m2791s4dmofov-108268650782.shopifypreview.com/collections/all?audit=1787059653813",
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 1024,
+        "h": 145
+      },
+      "shop": {
+        "x": 0,
+        "y": 145,
+        "w": 1024,
+        "h": 4172.9
+      },
+      "head": {
+        "x": 0,
+        "y": 145,
+        "w": 1024,
+        "h": 221.6
+      },
+      "tools": {
+        "x": 0,
+        "y": 366.6,
+        "w": 1024,
+        "h": 61.2
+      },
+      "grid": {
+        "x": 0,
+        "y": 427.8,
+        "w": 1024,
+        "h": 3784.1
+      },
+      "firstCard": {
+        "x": 30,
+        "y": 463.8,
+        "w": 306.7,
+        "h": 505.3
+      },
+      "firstMedia": {
+        "x": 30,
+        "y": 463.8,
+        "w": 306.7,
+        "h": 433.7
+      },
+      "footer": {
+        "x": 0,
+        "y": 4317.9,
+        "w": 1024,
+        "h": 352.6
+      },
+      "titleFont": 96,
+      "productCount": 20,
+      "gridColumns": "306.656px 306.672px 306.656px",
+      "columnGap": "22px",
+      "rowGap": "42px",
+      "overflow": false,
+      "bodyHeight": 768,
+      "firstFive": [
+        {
+          "title": "A Different Seoul, Still Her",
+          "media": {
+            "w": 306.7,
+            "h": 433.7
+          }
+        },
+        {
+          "title": "Before the Dress",
+          "media": {
+            "w": 306.7,
+            "h": 433.8
+          }
+        },
+        {
+          "title": "Carefully Held",
+          "media": {
+            "w": 306.7,
+            "h": 433.7
+          }
+        },
+        {
+          "title": "Cherry Hour",
+          "media": {
+            "w": 306.7,
+            "h": 433.7
+          }
+        },
+        {
+          "title": "Friday in Kyoto",
+          "media": {
+            "w": 306.7,
+            "h": 433.8
+          }
+        }
+      ]
+    },
+    {
+      "name": "tablet-820",
+      "width": 820,
+      "height": 1180,
+      "url": "https://il1m2791s4dmofov-108268650782.shopifypreview.com/collections/all?audit=1787059657436",
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 820,
+        "h": 123
+      },
+      "shop": {
+        "x": 0,
+        "y": 123,
+        "w": 820,
+        "h": 3604.9
+      },
+      "head": {
+        "x": 0,
+        "y": 123,
+        "w": 820,
+        "h": 221.6
+      },
+      "tools": {
+        "x": 0,
+        "y": 344.6,
+        "w": 820,
+        "h": 61.2
+      },
+      "grid": {
+        "x": 0,
+        "y": 405.8,
+        "w": 820,
+        "h": 3216.1
+      },
+      "firstCard": {
+        "x": 30,
+        "y": 441.8,
+        "w": 238.7,
+        "h": 409.1
+      },
+      "firstMedia": {
+        "x": 30,
+        "y": 441.8,
+        "w": 238.7,
+        "h": 337.5
+      },
+      "footer": {
+        "x": 0,
+        "y": 3727.9,
+        "w": 820,
+        "h": 352.6
+      },
+      "titleFont": 96,
+      "productCount": 20,
+      "gridColumns": "238.656px 238.672px 238.672px",
+      "columnGap": "22px",
+      "rowGap": "42px",
+      "overflow": false,
+      "bodyHeight": 4080,
+      "firstFive": [
+        {
+          "title": "A Different Seoul, Still Her",
+          "media": {
+            "w": 238.7,
+            "h": 337.5
+          }
+        },
+        {
+          "title": "Before the Dress",
+          "media": {
+            "w": 238.7,
+            "h": 337.6
+          }
+        },
+        {
+          "title": "Carefully Held",
+          "media": {
+            "w": 238.7,
+            "h": 337.6
+          }
+        },
+        {
+          "title": "Cherry Hour",
+          "media": {
+            "w": 238.7,
+            "h": 337.5
+          }
+        },
+        {
+          "title": "Friday in Kyoto",
+          "media": {
+            "w": 238.7,
+            "h": 337.6
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile-390",
+      "width": 390,
+      "height": 844,
+      "url": "https://il1m2791s4dmofov-108268650782.shopifypreview.com/collections/all?audit=1787059661076",
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 109
+      },
+      "shop": {
+        "x": 0,
+        "y": 109,
+        "w": 390,
+        "h": 3800.5
+      },
+      "head": {
+        "x": 0,
+        "y": 109,
+        "w": 390,
+        "h": 224.9
+      },
+      "tools": {
+        "x": 0,
+        "y": 333.9,
+        "w": 390,
+        "h": 50.8
+      },
+      "grid": {
+        "x": 0,
+        "y": 384.7,
+        "w": 390,
+        "h": 3418.8
+      },
+      "firstCard": {
+        "x": 12,
+        "y": 410.7,
+        "w": 177,
+        "h": 305.3
+      },
+      "firstMedia": {
+        "x": 12,
+        "y": 410.7,
+        "w": 177,
+        "h": 250.3
+      },
+      "footer": {
+        "x": 0,
+        "y": 3909.5,
+        "w": 390,
+        "h": 717.5
+      },
+      "titleFont": 62,
+      "productCount": 20,
+      "gridColumns": "177px 177px",
+      "columnGap": "12px",
+      "rowGap": "32px",
+      "overflow": false,
+      "bodyHeight": 4627,
+      "firstFive": [
+        {
+          "title": "A Different Seoul, Still Her",
+          "media": {
+            "w": 177,
+            "h": 250.3
+          }
+        },
+        {
+          "title": "Before the Dress",
+          "media": {
+            "w": 177,
+            "h": 250.3
+          }
+        },
+        {
+          "title": "Carefully Held",
+          "media": {
+            "w": 177,
+            "h": 250.3
+          }
+        },
+        {
+          "title": "Cherry Hour",
+          "media": {
+            "w": 177,
+            "h": 250.3
+          }
+        },
+        {
+          "title": "Friday in Kyoto",
+          "media": {
+            "w": 177,
+            "h": 250.3
+          }
+        }
+      ]
+    },
+    {
+      "name": "mobile-320",
+      "width": 320,
+      "height": 700,
+      "url": "https://il1m2791s4dmofov-108268650782.shopifypreview.com/collections/all?audit=1787059664599",
+      "header": {
+        "x": 0,
+        "y": 0,
+        "w": 320,
+        "h": 109
+      },
+      "shop": {
+        "x": 0,
+        "y": 109,
+        "w": 320,
+        "h": 10280.1
+      },
+      "head": {
+        "x": 0,
+        "y": 109,
+        "w": 320,
+        "h": 224.9
+      },
+      "tools": {
+        "x": 0,
+        "y": 333.9,
+        "w": 320,
+        "h": 50.8
+      },
+      "grid": {
+        "x": 0,
+        "y": 384.7,
+        "w": 320,
+        "h": 9898.4
+      },
+      "firstCard": {
+        "x": 20,
+        "y": 410.7,
+        "w": 280,
+        "h": 454.9
+      },
+      "firstMedia": {
+        "x": 20,
+        "y": 410.7,
+        "w": 280,
+        "h": 396
+      },
+      "footer": {
+        "x": 0,
+        "y": 10389.1,
+        "w": 320,
+        "h": 746
+      },
+      "titleFont": 62,
+      "productCount": 20,
+      "gridColumns": "280px",
+      "columnGap": "38px",
+      "rowGap": "38px",
+      "overflow": false,
+      "bodyHeight": 11135,
+      "firstFive": [
+        {
+          "title": "A Different Seoul, Still Her",
+          "media": {
+            "w": 280,
+            "h": 396
+          }
+        },
+        {
+          "title": "Before the Dress",
+          "media": {
+            "w": 280,
+            "h": 396
+          }
+        },
+        {
+          "title": "Carefully Held",
+          "media": {
+            "w": 280,
+            "h": 396
+          }
+        },
+        {
+          "title": "Cherry Hour",
+          "media": {
+            "w": 280,
+            "h": 396
+          }
+        },
+        {
+          "title": "Friday in Kyoto",
+          "media": {
+            "w": 280,
+            "h": 396
+          }
+        }
+      ]
+    }
+  ],
+  "run_id": 32142412659,
+  "source_sha": "2a882aa919292845309129b7e6cf7e237e796c4f"
+}
