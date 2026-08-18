@@ -9,6 +9,36 @@
   unless can_add_cart
     assign add_to_cart_text = 'Sold out'
   endunless
+
+  assign fp_size_label = current_variant.title
+  if product.has_only_default_variant
+    assign fp_size_label = ''
+    if product.handle contains '-a3'
+      assign fp_size_label = 'A3'
+    elsif product.handle contains '-a4'
+      assign fp_size_label = 'A4'
+    elsif product.handle contains 'postcard'
+      assign fp_size_label = 'Postcard'
+    endif
+  endif
+
+  assign fp_edition_label = 'LIMITED NUMBERED EDITION'
+  assign fp_dimension_label = ''
+  if fp_size_label contains 'A3'
+    assign fp_edition_label = 'EDITION OF 100'
+    assign fp_dimension_label = '29.7 × 42 CM'
+  elsif fp_size_label contains 'A4'
+    assign fp_edition_label = 'EDITION OF 150'
+    assign fp_dimension_label = '21 × 29.7 CM'
+  elsif fp_size_label contains 'Postcard'
+    assign fp_edition_label = 'EDITION OF 250'
+  endif
+
+  assign description_plain = product.description | strip_html | strip
+  assign fallback_collection = product.collections.first
+  if fallback_collection == blank
+    assign fallback_collection = collections['all']
+  endif
 %}
 
 <section
@@ -19,76 +49,195 @@
   <style>
     #FridayProduct-{{ section.id }}{background:var(--fp-pdp-bg);color:var(--fp-ink);border-bottom:1px solid var(--fp-line)}
     #FridayProduct-{{ section.id }} *{box-sizing:border-box}
-    #FridayProduct-{{ section.id }} .fp-pdp__grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(390px,.65fr);align-items:start;min-height:70vh}
-    #FridayProduct-{{ section.id }} .fp-pdp__gallery{min-width:0;padding:38px 38px 70px;border-right:1px solid var(--fp-line)}
-    #FridayProduct-{{ section.id }} .fp-pdp__media-list{display:grid;gap:28px}
-    #FridayProduct-{{ section.id }} .fp-pdp__media{display:grid;place-items:center;min-height:420px;background:color-mix(in srgb,var(--fp-pdp-bg) 82%,#fff);overflow:hidden}
-    #FridayProduct-{{ section.id }} .fp-pdp__media img,#FridayProduct-{{ section.id }} .fp-pdp__media svg{display:block;width:100%;height:auto;max-height:min(76vh,900px);object-fit:contain}
-    #FridayProduct-{{ section.id }} .fp-pdp__media video,#FridayProduct-{{ section.id }} .fp-pdp__media model-viewer{width:100%;height:auto;max-height:76vh}
-    #FridayProduct-{{ section.id }} .fp-pdp__details{position:sticky;top:0;min-width:0;padding:54px 46px 62px;background:var(--fp-pdp-panel)}
-    #FridayProduct-{{ section.id }} .fp-pdp__eyebrow{margin:0 0 18px;color:var(--fp-pdp-accent);font:700 11px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
-    #FridayProduct-{{ section.id }} .fp-pdp__title{max-width:10ch;margin:0;font:700 var(--fp-pdp-title)/.84 Georgia,"Times New Roman",serif;letter-spacing:-.055em;text-transform:lowercase;text-wrap:balance}
-    #FridayProduct-{{ section.id }} .fp-pdp__price-row{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin:27px 0 0;padding-bottom:24px;border-bottom:1px solid var(--fp-line)}
-    #FridayProduct-{{ section.id }} .fp-pdp__price{font:700 18px/1 "Courier New",monospace}
-    #FridayProduct-{{ section.id }} .fp-pdp__edition{max-width:20ch;text-align:right;color:color-mix(in srgb,var(--fp-ink) 64%,transparent);font:10px/1.4 "Courier New",monospace;text-transform:uppercase;letter-spacing:.04em}
-    #FridayProduct-{{ section.id }} .fp-pdp__variants{margin-top:25px}
-    #FridayProduct-{{ section.id }} .fp-pdp__variants-label{display:flex;justify-content:space-between;gap:16px;margin-bottom:12px;font:700 10px/1 "Courier New",monospace;letter-spacing:.065em;text-transform:uppercase}
-    #FridayProduct-{{ section.id }} .fp-pdp__variant-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+    body:has(#FridayProduct-{{ section.id }}) .fp-nav{height:96px}
+
+    #FridayProduct-{{ section.id }} .fp-pdp__top{display:grid;grid-template-columns:minmax(0,1.22fr) minmax(390px,.78fr);align-items:start;border-bottom:1px solid var(--fp-line)}
+    #FridayProduct-{{ section.id }} .fp-pdp__gallery{min-width:0;padding:28px 34px 34px;border-right:1px solid var(--fp-line)}
+    #FridayProduct-{{ section.id }} .fp-pdp__back{display:inline-flex;align-items:center;gap:8px;margin:0 0 18px;color:inherit;text-decoration:none;font:700 10px/1 "Courier New",monospace;letter-spacing:.055em;text-transform:uppercase}
+    #FridayProduct-{{ section.id }} .fp-pdp__back:hover{text-decoration:underline;text-underline-offset:4px}
+    #FridayProduct-{{ section.id }} .fp-pdp__media-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+    #FridayProduct-{{ section.id }} .fp-pdp__media{position:relative;display:grid;place-items:center;min-width:0;overflow:hidden;background:transparent}
+    #FridayProduct-{{ section.id }} .fp-pdp__media:first-child{grid-column:1/-1}
+    #FridayProduct-{{ section.id }} .fp-pdp__media-button{position:relative;width:100%;min-height:0;padding:0;border:0;background:transparent;color:inherit;display:grid;place-items:center;cursor:zoom-in}
+    #FridayProduct-{{ section.id }} .fp-pdp__media img,#FridayProduct-{{ section.id }} .fp-pdp__media svg{display:block;width:auto;max-width:100%;height:auto;max-height:min(70svh,760px);object-fit:contain}
+    #FridayProduct-{{ section.id }} .fp-pdp__media:not(:first-child) img{max-height:500px}
+    #FridayProduct-{{ section.id }} .fp-pdp__media video,#FridayProduct-{{ section.id }} .fp-pdp__media model-viewer{width:100%;height:auto;max-height:70svh}
+    #FridayProduct-{{ section.id }} .fp-pdp__zoom-hint{position:absolute;right:10px;bottom:10px;padding:7px 9px;background:var(--fp-pdp-bg);border:1px solid var(--fp-ink);font:700 9px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.05em;opacity:0;transform:translateY(5px);transition:opacity .18s ease,transform .18s ease}
+    #FridayProduct-{{ section.id }} .fp-pdp__media-button:hover .fp-pdp__zoom-hint,#FridayProduct-{{ section.id }} .fp-pdp__media-button:focus-visible .fp-pdp__zoom-hint{opacity:1;transform:none}
+
+    #FridayProduct-{{ section.id }} .fp-pdp__details{min-width:0;padding:46px 44px 42px;background:var(--fp-pdp-panel)}
+    #FridayProduct-{{ section.id }} .fp-pdp__eyebrow{margin:0 0 15px;color:var(--fp-pdp-accent);font:700 10px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
+    #FridayProduct-{{ section.id }} .fp-pdp__title{max-width:11ch;margin:0;font:700 clamp(52px,5vw,var(--fp-pdp-title))/.88 Georgia,"Times New Roman",serif;letter-spacing:-.052em;text-transform:lowercase;text-wrap:balance}
+    #FridayProduct-{{ section.id }} .fp-pdp__price-row{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin:22px 0 0;padding-bottom:19px;border-bottom:1px solid var(--fp-line)}
+    #FridayProduct-{{ section.id }} .fp-pdp__price{font:700 17px/1 "Courier New",monospace}
+    #FridayProduct-{{ section.id }} .fp-pdp__edition{max-width:21ch;text-align:right;color:color-mix(in srgb,var(--fp-ink) 67%,transparent);font:10px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.045em}
+    #FridayProduct-{{ section.id }} .fp-pdp__size-line{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--fp-line);font:700 10px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.045em}
+    #FridayProduct-{{ section.id }} .fp-pdp__size-line span:last-child{text-align:right;color:color-mix(in srgb,var(--fp-ink) 65%,transparent)}
+    #FridayProduct-{{ section.id }} .fp-pdp__variants{margin-top:20px}
+    #FridayProduct-{{ section.id }} .fp-pdp__variants-label{display:flex;justify-content:space-between;gap:16px;margin-bottom:10px;font:700 9px/1 "Courier New",monospace;letter-spacing:.065em;text-transform:uppercase}
+    #FridayProduct-{{ section.id }} .fp-pdp__variant-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
     #FridayProduct-{{ section.id }} .fp-pdp__variant{position:relative}
     #FridayProduct-{{ section.id }} .fp-pdp__variant input{position:absolute;opacity:0;pointer-events:none}
-    #FridayProduct-{{ section.id }} .fp-pdp__variant label{min-height:50px;padding:10px 13px;border:1px solid var(--fp-ink);display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;font:700 11px/1.2 "Courier New",monospace;text-transform:uppercase;transition:background .18s ease,color .18s ease,transform .18s ease}
+    #FridayProduct-{{ section.id }} .fp-pdp__variant label{min-height:46px;padding:9px 12px;border:1px solid var(--fp-ink);display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;font:700 10px/1.2 "Courier New",monospace;text-transform:uppercase;transition:background .18s ease,color .18s ease,transform .18s ease}
     #FridayProduct-{{ section.id }} .fp-pdp__variant label small{font-size:8px;opacity:.58}
     #FridayProduct-{{ section.id }} .fp-pdp__variant input:checked+label{background:var(--fp-ink);color:#fff}
     #FridayProduct-{{ section.id }} .fp-pdp__variant input:focus-visible+label{outline:2px solid var(--fp-pdp-accent);outline-offset:3px}
-    #FridayProduct-{{ section.id }} .fp-pdp__variant label:hover{transform:translateY(-2px)}
-    #FridayProduct-{{ section.id }} .fp-pdp__buy{margin-top:13px}
-    #FridayProduct-{{ section.id }} .fp-pdp__add{width:100%!important;min-height:58px!important;border:1px solid var(--fp-pdp-accent)!important;border-radius:0!important;background:var(--fp-pdp-accent)!important;color:#fff!important;box-shadow:none!important;font:700 13px/1 "Courier New",monospace!important;letter-spacing:.035em!important;text-transform:lowercase!important;transition:transform .18s ease,background-color .18s ease!important}
-    #FridayProduct-{{ section.id }} .fp-pdp__add:hover:not(:disabled){transform:translateY(-2px)}
+    #FridayProduct-{{ section.id }} .fp-pdp__variant label:hover{transform:translateY(-1px)}
+    #FridayProduct-{{ section.id }} .fp-pdp__buy{margin-top:12px}
+    #FridayProduct-{{ section.id }} .fp-pdp__add{width:100%!important;min-height:56px!important;border:1px solid var(--fp-ink)!important;border-radius:0!important;background:var(--fp-ink)!important;color:#fff!important;box-shadow:none!important;font:700 12px/1 "Courier New",monospace!important;letter-spacing:.035em!important;text-transform:lowercase!important;transition:transform .18s ease,background-color .18s ease,color .18s ease!important}
+    #FridayProduct-{{ section.id }} .fp-pdp__add:hover:not(:disabled){transform:translateY(-1px);background:var(--fp-pdp-accent)!important;border-color:var(--fp-pdp-accent)!important}
     #FridayProduct-{{ section.id }} .fp-pdp__add:disabled{background:color-mix(in srgb,var(--fp-ink) 30%,var(--fp-pdp-bg))!important;border-color:transparent!important;color:color-mix(in srgb,var(--fp-ink) 62%,#fff)!important;cursor:not-allowed}
-    #FridayProduct-{{ section.id }} .fp-pdp__fineprint{margin:11px 0 0;text-align:center;font:9px/1.4 "Courier New",monospace;color:color-mix(in srgb,var(--fp-ink) 60%,transparent)}
-    #FridayProduct-{{ section.id }} .fp-pdp__description{margin-top:31px;padding-top:25px;border-top:1px solid var(--fp-line);font:13px/1.62 "Courier New",monospace}
-    #FridayProduct-{{ section.id }} .fp-pdp__description>*:first-child{margin-top:0}
-    #FridayProduct-{{ section.id }} .fp-pdp__description>*:last-child{margin-bottom:0}
-    #FridayProduct-{{ section.id }} .fp-pdp__accordions{margin-top:30px;border-top:1px solid var(--fp-ink)}
+    #FridayProduct-{{ section.id }} .fp-pdp__fineprint{margin:9px 0 0;text-align:center;font:9px/1.4 "Courier New",monospace;color:color-mix(in srgb,var(--fp-ink) 61%,transparent)}
+    #FridayProduct-{{ section.id }} .fp-pdp__assurances{display:grid;grid-template-columns:repeat(3,1fr);margin-top:18px;border:1px solid var(--fp-line)}
+    #FridayProduct-{{ section.id }} .fp-pdp__assurance{min-height:53px;padding:10px 8px;display:grid;place-items:center;text-align:center;border-right:1px solid var(--fp-line);font:700 8.5px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.045em}
+    #FridayProduct-{{ section.id }} .fp-pdp__assurance:last-child{border-right:0}
+    #FridayProduct-{{ section.id }} .fp-pdp__payment{margin:11px 0 0;text-align:center;font:10px/1.4 "Courier New",monospace}
+
+    #FridayProduct-{{ section.id }} .fp-pdp__below{border-top:0}
+    #FridayProduct-{{ section.id }} .fp-pdp__about{display:grid;grid-template-columns:minmax(220px,.6fr) minmax(0,1.4fr);gap:72px;padding:54px 46px 50px;border-bottom:1px solid var(--fp-line)}
+    #FridayProduct-{{ section.id }} .fp-pdp__section-label{margin:0;color:var(--fp-pdp-accent);font:700 10px/1 "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase}
+    #FridayProduct-{{ section.id }} .fp-pdp__about h2,#FridayProduct-{{ section.id }} .fp-pdp__recommend h2{margin:8px 0 0;font:700 clamp(40px,4vw,58px)/.9 Georgia,"Times New Roman",serif;letter-spacing:-.045em;text-transform:lowercase}
+    #FridayProduct-{{ section.id }} .fp-pdp__about-copy{max-width:70ch;font:14px/1.65 "Courier New",monospace}
+    #FridayProduct-{{ section.id }} .fp-pdp__about-copy>p{margin:0}
+    #FridayProduct-{{ section.id }} .fp-pdp__full-notes{margin-top:20px;border-top:1px solid var(--fp-ink);border-bottom:1px solid var(--fp-ink)}
+    #FridayProduct-{{ section.id }} .fp-pdp__full-notes summary{min-height:46px;display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;font:700 9px/1 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
+    #FridayProduct-{{ section.id }} .fp-pdp__full-notes summary::-webkit-details-marker{display:none}
+    #FridayProduct-{{ section.id }} .fp-pdp__full-notes summary:after{content:'+';font-size:15px;font-weight:400}
+    #FridayProduct-{{ section.id }} .fp-pdp__full-notes[open] summary:after{content:'−'}
+    #FridayProduct-{{ section.id }} .fp-pdp__full-notes .rte{padding:0 0 22px;font:12px/1.6 "Courier New",monospace}
+
+    #FridayProduct-{{ section.id }} .fp-pdp__fact-band{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--fp-line)}
+    #FridayProduct-{{ section.id }} .fp-pdp__fact{min-height:118px;padding:24px 26px;border-right:1px solid var(--fp-line);display:flex;flex-direction:column;justify-content:space-between;gap:16px}
+    #FridayProduct-{{ section.id }} .fp-pdp__fact:last-child{border-right:0}
+    #FridayProduct-{{ section.id }} .fp-pdp__fact small{font:700 9px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.06em;color:color-mix(in srgb,var(--fp-ink) 60%,transparent)}
+    #FridayProduct-{{ section.id }} .fp-pdp__fact strong{font:700 14px/1.35 "Courier New",monospace;text-transform:uppercase}
+
+    #FridayProduct-{{ section.id }} .fp-pdp__info{display:grid;grid-template-columns:minmax(240px,.6fr) minmax(0,1.4fr);gap:72px;padding:46px;border-bottom:1px solid var(--fp-line)}
+    #FridayProduct-{{ section.id }} .fp-pdp__accordions{border-top:1px solid var(--fp-ink)}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion{border-bottom:1px solid var(--fp-ink)}
-    #FridayProduct-{{ section.id }} .fp-pdp__accordion summary{min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:15px;cursor:pointer;list-style:none;font:700 10px/1 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
+    #FridayProduct-{{ section.id }} .fp-pdp__accordion summary{min-height:50px;display:flex;align-items:center;justify-content:space-between;gap:15px;cursor:pointer;list-style:none;font:700 10px/1 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion summary::-webkit-details-marker{display:none}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion summary:after{content:'+';font-size:16px;font-weight:400}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion[open] summary:after{content:'−'}
-    #FridayProduct-{{ section.id }} .fp-pdp__accordion-content{padding:0 0 18px;max-width:48ch;font:11px/1.55 "Courier New",monospace}
+    #FridayProduct-{{ section.id }} .fp-pdp__accordion-content{padding:0 0 20px;max-width:70ch;font:12px/1.6 "Courier New",monospace}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion-content p{margin:0 0 8px}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion-content p:last-child{margin-bottom:0}
-    #FridayProduct-{{ section.id }} .fp-pdp__support{margin-top:24px;font:10px/1.5 "Courier New",monospace}
+    #FridayProduct-{{ section.id }} .fp-pdp__support{margin:20px 0 0;font:10px/1.5 "Courier New",monospace}
     #FridayProduct-{{ section.id }} .fp-pdp__support a{color:inherit;text-underline-offset:3px}
     #FridayProduct-{{ section.id }} .fp-pdp__live{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    @media(max-width:1100px){
-      #FridayProduct-{{ section.id }} .fp-pdp__grid{grid-template-columns:minmax(0,1.05fr) minmax(350px,.95fr)}
-      #FridayProduct-{{ section.id }} .fp-pdp__gallery{padding:30px 26px 56px}
-      #FridayProduct-{{ section.id }} .fp-pdp__details{padding:44px 32px 54px}
-      #FridayProduct-{{ section.id }} .fp-pdp__title{font-size:clamp(52px,6vw,var(--fp-pdp-title))}
+
+    #FridayProduct-{{ section.id }} .fp-pdp__recommend{padding:46px 46px 58px;background:var(--fp-pdp-panel)}
+    #FridayProduct-{{ section.id }} .fp-pdp__recommend-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:26px}
+    #FridayProduct-{{ section.id }} .fp-pdp__recommend-all{color:inherit;text-decoration:none;font:700 10px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.055em}
+    #FridayProduct-{{ section.id }} .fp-pdp__recommend-all:hover{text-decoration:underline;text-underline-offset:4px}
+    #FridayProduct-{{ section.id }} .fp-pdp__recommend-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+    #FridayProduct-{{ section.id }} .fp-pdp-rec{color:inherit;text-decoration:none;min-width:0}
+    #FridayProduct-{{ section.id }} .fp-pdp-rec__media{aspect-ratio:.707;display:grid;place-items:center;overflow:hidden}
+    #FridayProduct-{{ section.id }} .fp-pdp-rec__media img{width:100%;height:100%;object-fit:contain;transition:transform .28s ease}
+    #FridayProduct-{{ section.id }} .fp-pdp-rec:hover .fp-pdp-rec__media img{transform:scale(1.012)}
+    #FridayProduct-{{ section.id }} .fp-pdp-rec__meta{display:flex;justify-content:space-between;gap:12px;padding-top:10px;font:700 10px/1.35 "Courier New",monospace;text-transform:lowercase}
+    #FridayProduct-{{ section.id }} .fp-pdp-rec__price{font-weight:400;white-space:nowrap}
+
+    #FridayProduct-{{ section.id }} .fp-pdp__lightbox{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:var(--fp-pdp-bg);color:var(--fp-ink)}
+    #FridayProduct-{{ section.id }} .fp-pdp__lightbox::backdrop{background:rgba(20,16,13,.66)}
+    #FridayProduct-{{ section.id }} .fp-pdp__lightbox-inner{position:relative;width:100%;height:100%;display:grid;place-items:center;padding:48px 78px}
+    #FridayProduct-{{ section.id }} .fp-pdp__lightbox img{display:block;max-width:100%;max-height:calc(100dvh - 96px);width:auto;height:auto;object-fit:contain}
+    #FridayProduct-{{ section.id }} .fp-pdp__lightbox-close,#FridayProduct-{{ section.id }} .fp-pdp__lightbox-nav{position:absolute;z-index:2;border:1px solid var(--fp-ink);background:var(--fp-pdp-bg);color:inherit;width:42px;height:42px;display:grid;place-items:center;cursor:pointer;font:18px/1 "Courier New",monospace}
+    #FridayProduct-{{ section.id }} .fp-pdp__lightbox-close{top:20px;right:20px}
+    #FridayProduct-{{ section.id }} .fp-pdp__lightbox-prev{left:20px;top:50%;transform:translateY(-50%)}
+    #FridayProduct-{{ section.id }} .fp-pdp__lightbox-next{right:20px;top:50%;transform:translateY(-50%)}
+
+    #FridayProduct-{{ section.id }} .fp-pdp__mobile-buybar{display:none}
+
+    @media(max-width:1100px) and (min-width:900px){
+      #FridayProduct-{{ section.id }} .fp-pdp__top{grid-template-columns:minmax(0,1.05fr) minmax(390px,.95fr)}
+      #FridayProduct-{{ section.id }} .fp-pdp__gallery{padding:24px 26px 30px}
+      #FridayProduct-{{ section.id }} .fp-pdp__details{padding:36px 30px 34px}
+      #FridayProduct-{{ section.id }} .fp-pdp__title{font-size:clamp(48px,5.4vw,62px)}
+      #FridayProduct-{{ section.id }} .fp-pdp__about,#FridayProduct-{{ section.id }} .fp-pdp__info{gap:44px;padding-inline:30px}
+      #FridayProduct-{{ section.id }} .fp-pdp__recommend{padding-inline:30px}
+      #FridayProduct-{{ section.id }} .fp-pdp__recommend-grid{gap:18px}
     }
+
+    @media(max-width:899px){
+      body:has(#FridayProduct-{{ section.id }}) .fp-nav{height:84px}
+      #FridayProduct-{{ section.id }} .fp-pdp__top{display:block}
+      #FridayProduct-{{ section.id }} .fp-pdp__gallery{padding:22px 24px 28px;border-right:0;border-bottom:1px solid var(--fp-line)}
+      #FridayProduct-{{ section.id }} .fp-pdp__media img{max-height:610px}
+      #FridayProduct-{{ section.id }} .fp-pdp__details{padding:34px 28px 38px}
+      #FridayProduct-{{ section.id }} .fp-pdp__title{max-width:14ch;font-size:clamp(48px,7.5vw,62px)}
+      #FridayProduct-{{ section.id }} .fp-pdp__about,#FridayProduct-{{ section.id }} .fp-pdp__info{grid-template-columns:1fr;gap:20px;padding:38px 28px}
+      #FridayProduct-{{ section.id }} .fp-pdp__fact-band{grid-template-columns:repeat(2,1fr)}
+      #FridayProduct-{{ section.id }} .fp-pdp__fact:nth-child(2){border-right:0}
+      #FridayProduct-{{ section.id }} .fp-pdp__fact:nth-child(-n+2){border-bottom:1px solid var(--fp-line)}
+      #FridayProduct-{{ section.id }} .fp-pdp__recommend{padding:38px 28px 48px}
+      #FridayProduct-{{ section.id }} .fp-pdp__recommend-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+      #FridayProduct-{{ section.id }} .fp-pdp-rec:nth-child(n+4){display:none}
+    }
+
     @media(max-width:749px){
-      #FridayProduct-{{ section.id }} .fp-pdp__grid{display:block}
-      #FridayProduct-{{ section.id }} .fp-pdp__gallery{padding:18px 12px 24px;border-right:0;border-bottom:1px solid var(--fp-line)}
-      #FridayProduct-{{ section.id }} .fp-pdp__media-list{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:2px}
+      body:has(#FridayProduct-{{ section.id }}) .fp-nav{height:auto}
+      #FridayProduct-{{ section.id }} .fp-pdp__gallery{padding:15px 12px 18px}
+      #FridayProduct-{{ section.id }} .fp-pdp__back{margin:0 8px 12px;font-size:9px}
+      #FridayProduct-{{ section.id }} .fp-pdp__media-list{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 8px 2px}
       #FridayProduct-{{ section.id }} .fp-pdp__media-list::-webkit-scrollbar{display:none}
-      #FridayProduct-{{ section.id }} .fp-pdp__media{flex:0 0 91%;min-height:0;aspect-ratio:.707;scroll-snap-align:center}
+      #FridayProduct-{{ section.id }} .fp-pdp__media{flex:0 0 78%;min-height:0;aspect-ratio:.707;scroll-snap-align:center}
+      #FridayProduct-{{ section.id }} .fp-pdp__media:first-child{grid-column:auto}
+      #FridayProduct-{{ section.id }} .fp-pdp__media-button{width:100%;height:100%}
       #FridayProduct-{{ section.id }} .fp-pdp__media img,#FridayProduct-{{ section.id }} .fp-pdp__media svg{width:100%;height:100%;max-height:none;object-fit:contain}
-      #FridayProduct-{{ section.id }} .fp-pdp__details{position:relative;top:auto;padding:34px 20px 48px}
-      #FridayProduct-{{ section.id }} .fp-pdp__eyebrow{font-size:9px;margin-bottom:12px}
-      #FridayProduct-{{ section.id }} .fp-pdp__title{max-width:11ch;font-size:var(--fp-pdp-title-mobile)}
-      #FridayProduct-{{ section.id }} .fp-pdp__price-row{margin-top:21px;padding-bottom:20px}
-      #FridayProduct-{{ section.id }} .fp-pdp__price{font-size:15px}
+      #FridayProduct-{{ section.id }} .fp-pdp__zoom-hint{display:none}
+      #FridayProduct-{{ section.id }} .fp-pdp__details{padding:24px 20px 32px}
+      #FridayProduct-{{ section.id }} .fp-pdp__eyebrow{font-size:8px;margin-bottom:10px}
+      #FridayProduct-{{ section.id }} .fp-pdp__title{max-width:12ch;font-size:clamp(42px,12vw,var(--fp-pdp-title-mobile));line-height:.9}
+      #FridayProduct-{{ section.id }} .fp-pdp__price-row{margin-top:17px;padding-bottom:16px}
+      #FridayProduct-{{ section.id }} .fp-pdp__price{font-size:14px}
       #FridayProduct-{{ section.id }} .fp-pdp__edition{font-size:8px}
-      #FridayProduct-{{ section.id }} .fp-pdp__variant label{min-height:48px;font-size:10px}
-      #FridayProduct-{{ section.id }} .fp-pdp__add{min-height:56px!important;font-size:12px!important}
-      #FridayProduct-{{ section.id }} .fp-pdp__description{font-size:12px}
+      #FridayProduct-{{ section.id }} .fp-pdp__size-line{font-size:8px;padding:10px 0}
+      #FridayProduct-{{ section.id }} .fp-pdp__variant label{min-height:44px;font-size:9px}
+      #FridayProduct-{{ section.id }} .fp-pdp__add{min-height:54px!important;font-size:11px!important}
+      #FridayProduct-{{ section.id }} .fp-pdp__assurances{margin-top:15px}
+      #FridayProduct-{{ section.id }} .fp-pdp__assurance{min-height:47px;font-size:7px;padding:8px 5px}
+      #FridayProduct-{{ section.id }} .fp-pdp__payment{font-size:9px}
+      #FridayProduct-{{ section.id }} .fp-pdp__about{padding:32px 20px;gap:17px}
+      #FridayProduct-{{ section.id }} .fp-pdp__about h2,#FridayProduct-{{ section.id }} .fp-pdp__recommend h2{font-size:38px}
+      #FridayProduct-{{ section.id }} .fp-pdp__about-copy{font-size:12px;line-height:1.6}
+      #FridayProduct-{{ section.id }} .fp-pdp__fact{min-height:100px;padding:18px 16px}
+      #FridayProduct-{{ section.id }} .fp-pdp__fact strong{font-size:11px}
+      #FridayProduct-{{ section.id }} .fp-pdp__info{padding:32px 20px;gap:17px}
+      #FridayProduct-{{ section.id }} .fp-pdp__recommend{padding:32px 0 42px}
+      #FridayProduct-{{ section.id }} .fp-pdp__recommend-head{padding:0 20px;margin-bottom:18px}
+      #FridayProduct-{{ section.id }} .fp-pdp__recommend-all{display:none}
+      #FridayProduct-{{ section.id }} .fp-pdp__recommend-grid{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 20px 4px}
+      #FridayProduct-{{ section.id }} .fp-pdp__recommend-grid::-webkit-scrollbar{display:none}
+      #FridayProduct-{{ section.id }} .fp-pdp-rec{display:block!important;flex:0 0 68vw;max-width:250px;scroll-snap-align:start}
+      #FridayProduct-{{ section.id }} .fp-pdp__lightbox-inner{padding:56px 16px 28px}
+      #FridayProduct-{{ section.id }} .fp-pdp__lightbox-nav{width:38px;height:38px;top:auto;bottom:18px;transform:none}
+      #FridayProduct-{{ section.id }} .fp-pdp__lightbox-prev{left:16px}
+      #FridayProduct-{{ section.id }} .fp-pdp__lightbox-next{right:16px}
+      #FridayProduct-{{ section.id }} .fp-pdp__lightbox-close{top:14px;right:14px;width:38px;height:38px}
+      #FridayProduct-{{ section.id }} .fp-pdp__mobile-buybar{position:fixed;left:0;right:0;bottom:0;z-index:2147481500;display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--fp-ink);background:var(--fp-pdp-bg);transform:translateY(115%);transition:transform .22s ease;box-shadow:0 -10px 28px rgba(23,18,15,.08)}
+      #FridayProduct-{{ section.id }} .fp-pdp__mobile-buybar.is-visible{transform:none}
+      #FridayProduct-{{ section.id }} .fp-pdp__mobile-buybar-meta{display:grid;gap:3px;font:700 9px/1.2 "Courier New",monospace;text-transform:uppercase}
+      #FridayProduct-{{ section.id }} .fp-pdp__mobile-buybar-meta span:last-child{font-weight:400;color:color-mix(in srgb,var(--fp-ink) 66%,transparent)}
+      #FridayProduct-{{ section.id }} .fp-pdp__mobile-buybar button{min-width:128px;height:44px;border:1px solid var(--fp-ink);background:var(--fp-ink);color:#fff;font:700 10px/1 "Courier New",monospace;text-transform:lowercase;cursor:pointer}
     }
-    @media(prefers-reduced-motion:reduce){#FridayProduct-{{ section.id }} .fp-pdp__variant label,#FridayProduct-{{ section.id }} .fp-pdp__add{transition:none}#FridayProduct-{{ section.id }} .fp-pdp__variant label:hover,#FridayProduct-{{ section.id }} .fp-pdp__add:hover{transform:none}}
+
+    @media(max-width:350px){
+      #FridayProduct-{{ section.id }} .fp-pdp__media{flex-basis:72%}
+      #FridayProduct-{{ section.id }} .fp-pdp__details{padding-top:20px}
+      #FridayProduct-{{ section.id }} .fp-pdp__title{font-size:42px}
+      #FridayProduct-{{ section.id }} .fp-pdp__mobile-buybar button{min-width:116px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      #FridayProduct-{{ section.id }} .fp-pdp__variant label,#FridayProduct-{{ section.id }} .fp-pdp__add,#FridayProduct-{{ section.id }} .fp-pdp-rec__media img,#FridayProduct-{{ section.id }} .fp-pdp__zoom-hint,#FridayProduct-{{ section.id }} .fp-pdp__mobile-buybar{transition:none}
+      #FridayProduct-{{ section.id }} .fp-pdp__variant label:hover,#FridayProduct-{{ section.id }} .fp-pdp__add:hover,#FridayProduct-{{ section.id }} .fp-pdp-rec:hover .fp-pdp-rec__media img{transform:none}
+    }
   </style>
 
-  <div class="fp-pdp__grid">
+  <div class="fp-pdp__top">
     <div class="fp-pdp__gallery" aria-label="{{ product.title | escape }} artwork gallery">
+      <a class="fp-pdp__back" href="{{ routes.all_products_collection_url }}">← all prints</a>
       <div class="fp-pdp__media-list" data-fp-media-list>
         {% if product.media.size > 0 %}
           {% for media in product.media %}
@@ -96,7 +245,20 @@
               {% case media.media_type %}
                 {% when 'image' %}
                   {% assign media_alt = media.alt | default: product.title %}
-                  {{ media | image_url: width: 1800 | image_tag: loading: forloop.first | default: 'lazy', widths: '480,720,960,1200,1500,1800', sizes: '(max-width: 749px) 91vw, (max-width: 1100px) 55vw, 65vw', alt: media_alt }}
+                  {% assign media_loading = 'lazy' %}
+                  {% if forloop.first %}{% assign media_loading = 'eager' %}{% endif %}
+                  <button
+                    type="button"
+                    class="fp-pdp__media-button"
+                    data-fp-lightbox-trigger
+                    data-index="{{ forloop.index0 }}"
+                    data-src="{{ media | image_url: width: 2400 }}"
+                    data-alt="{{ media_alt | escape }}"
+                    aria-label="Open {{ media_alt | escape }} full screen"
+                  >
+                    {{ media | image_url: width: 1800 | image_tag: loading: media_loading, widths: '480,720,960,1200,1500,1800', sizes: '(max-width: 749px) 78vw, (max-width: 899px) 90vw, (max-width: 1100px) 52vw, 62vw', alt: media_alt }}
+                    <span class="fp-pdp__zoom-hint" aria-hidden="true">view artwork +</span>
+                  </button>
                 {% when 'video' %}
                   {{ media | video_tag: controls: true, preload: 'metadata' }}
                 {% when 'external_video' %}
@@ -117,8 +279,13 @@
       <h1 class="fp-pdp__title">{{ product.title }}</h1>
 
       <div class="fp-pdp__price-row">
-        <span class="fp-pdp__price" data-fp-price>{{ current_variant.price | money }}</span>
-        <span class="fp-pdp__edition" data-fp-edition>limited numbered edition</span>
+        <span class="fp-pdp__price" data-fp-price>{{ current_variant.price | money_without_trailing_zeros }}</span>
+        <span class="fp-pdp__edition" data-fp-edition>{{ fp_edition_label }}</span>
+      </div>
+
+      <div class="fp-pdp__size-line">
+        <span data-fp-size>{% if fp_size_label != blank %}{{ fp_size_label }}{% else %}ART PRINT{% endif %}</span>
+        <span data-fp-dimension>{% if fp_dimension_label != blank %}{{ fp_dimension_label }}{% else %}NUMBERED EDITION{% endif %}</span>
       </div>
 
       <product-form-component
@@ -142,7 +309,6 @@
               <div class="fp-pdp__variants-label"><span>{{ section.settings.variant_label }}</span><span data-fp-selected>{{ current_variant.title }}</span></div>
               <div class="fp-pdp__variant-grid" role="radiogroup" aria-label="{{ section.settings.variant_label | escape }}">
                 {% for variant in product.variants %}
-                  {% assign variant_id_string = variant.id | append: '' %}
                   <div class="fp-pdp__variant">
                     <input
                       type="radio"
@@ -151,7 +317,7 @@
                       value="{{ variant.id }}"
                       data-fp-variant
                       data-title="{{ variant.title | escape }}"
-                      data-price="{{ variant.price | money | escape }}"
+                      data-price="{{ variant.price | money_without_trailing_zeros | escape }}"
                       data-available="{{ variant.available }}"
                       {% if variant.featured_media %}data-media-id="{{ variant.featured_media.id }}"{% endif %}
                       {% if variant.id == current_variant.id %}checked{% endif %}
@@ -179,55 +345,185 @@
         {% endform %}
       </product-form-component>
 
-      {% if product.description != blank %}<div class="fp-pdp__description rte">{{ product.description }}</div>{% endif %}
-
-      <div class="fp-pdp__accordions">
-        <details class="fp-pdp__accordion" open>
-          <summary>{{ section.settings.print_heading }}</summary>
-          <div class="fp-pdp__accordion-content">
-            <p>{{ section.settings.print_copy }}</p>
-            <p>{{ section.settings.mount_copy }}</p>
-          </div>
-        </details>
-        <details class="fp-pdp__accordion">
-          <summary>{{ section.settings.delivery_heading }}</summary>
-          <div class="fp-pdp__accordion-content"><p>{{ section.settings.delivery_copy }}</p></div>
-        </details>
-        <details class="fp-pdp__accordion">
-          <summary>{{ section.settings.returns_heading }}</summary>
-          <div class="fp-pdp__accordion-content"><p>{{ section.settings.returns_copy }}</p></div>
-        </details>
+      <div class="fp-pdp__assurances" aria-label="Print assurances">
+        <span class="fp-pdp__assurance">numbered<br>edition</span>
+        <span class="fp-pdp__assurance">premium<br>matte</span>
+        <span class="fp-pdp__assurance">made to<br>order</span>
       </div>
-
-      {% if section.settings.support_email != blank or section.settings.instagram_url != blank %}
-        <p class="fp-pdp__support">
-          {{ section.settings.support_prefix }}
-          {% if section.settings.support_email != blank %}<a href="mailto:{{ section.settings.support_email | escape }}">{{ section.settings.support_email }}</a>{% endif %}
-          {% if section.settings.support_email != blank and section.settings.instagram_url != blank %} · {% endif %}
-          {% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">{{ section.settings.instagram_label }}</a>{% endif %}
-        </p>
-      {% endif %}
+      {% if section.settings.payment_note != blank %}<p class="fp-pdp__payment">{{ section.settings.payment_note }}</p>{% endif %}
     </div>
+  </div>
+
+  <div class="fp-pdp__below">
+    {% if description_plain != blank %}
+      <section class="fp-pdp__about" aria-labelledby="FridayAbout-{{ section.id }}">
+        <div>
+          <p class="fp-pdp__section-label">01 · artwork</p>
+          <h2 id="FridayAbout-{{ section.id }}">about this print</h2>
+        </div>
+        <div class="fp-pdp__about-copy">
+          <p>{{ description_plain | truncatewords: 70 }}</p>
+          {% if description_plain.size > 420 %}
+            <details class="fp-pdp__full-notes">
+              <summary>full print notes</summary>
+              <div class="rte">{{ product.description }}</div>
+            </details>
+          {% endif %}
+        </div>
+      </section>
+    {% endif %}
+
+    <div class="fp-pdp__fact-band" aria-label="Print specifications">
+      <div class="fp-pdp__fact"><small>edition</small><strong data-fp-fact-edition>{{ fp_edition_label }}</strong></div>
+      <div class="fp-pdp__fact"><small>size</small><strong data-fp-fact-size>{% if fp_size_label != blank %}{{ fp_size_label }}{% else %}ART PRINT{% endif %}{% if fp_dimension_label != blank %}<br>{{ fp_dimension_label }}{% endif %}</strong></div>
+      <div class="fp-pdp__fact"><small>paper</small><strong>premium matte</strong></div>
+      <div class="fp-pdp__fact"><small>made</small><strong>to order<br>in Egypt</strong></div>
+    </div>
+
+    <section class="fp-pdp__info" aria-labelledby="FridayInfo-{{ section.id }}">
+      <div>
+        <p class="fp-pdp__section-label">02 · details</p>
+        <h2 id="FridayInfo-{{ section.id }}" style="margin:8px 0 0;font:700 clamp(34px,3vw,48px)/.92 Georgia,'Times New Roman',serif;letter-spacing:-.04em;text-transform:lowercase">before it arrives</h2>
+      </div>
+      <div>
+        <div class="fp-pdp__accordions">
+          <details class="fp-pdp__accordion" open>
+            <summary>{{ section.settings.print_heading }}</summary>
+            <div class="fp-pdp__accordion-content">
+              <p>{{ section.settings.print_copy }}</p>
+              <p>{{ section.settings.mount_copy }}</p>
+            </div>
+          </details>
+          <details class="fp-pdp__accordion">
+            <summary>{{ section.settings.delivery_heading }}</summary>
+            <div class="fp-pdp__accordion-content"><p>{{ section.settings.delivery_copy }}</p></div>
+          </details>
+          <details class="fp-pdp__accordion">
+            <summary>{{ section.settings.returns_heading }}</summary>
+            <div class="fp-pdp__accordion-content"><p>{{ section.settings.returns_copy }}</p></div>
+          </details>
+        </div>
+
+        {% if section.settings.support_email != blank or section.settings.instagram_url != blank %}
+          <p class="fp-pdp__support">
+            {{ section.settings.support_prefix }}
+            {% if section.settings.support_email != blank %}<a href="mailto:{{ section.settings.support_email | escape }}">{{ section.settings.support_email }}</a>{% endif %}
+            {% if section.settings.support_email != blank and section.settings.instagram_url != blank %} · {% endif %}
+            {% if section.settings.instagram_url != blank %}<a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">{{ section.settings.instagram_label }}</a>{% endif %}
+          </p>
+        {% endif %}
+      </div>
+    </section>
+  </div>
+
+  {% if section.settings.show_recommendations %}
+    <section class="fp-pdp__recommend" aria-labelledby="FridayRecommend-{{ section.id }}">
+      <div class="fp-pdp__recommend-head">
+        <div>
+          <p class="fp-pdp__section-label">03 · keep looking</p>
+          <h2 id="FridayRecommend-{{ section.id }}">{{ section.settings.recommendations_heading }}</h2>
+        </div>
+        <a class="fp-pdp__recommend-all" href="{{ routes.all_products_collection_url }}">shop all prints →</a>
+      </div>
+      <div class="fp-pdp__recommend-grid">
+        {% assign recommendation_count = 0 %}
+        {% if section.settings.recommended_products != blank %}
+          {% for recommended_product in section.settings.recommended_products limit: 4 %}
+            {% unless recommended_product.id == product.id %}
+              <a class="fp-pdp-rec" href="{{ recommended_product.url }}">
+                <div class="fp-pdp-rec__media">
+                  {% if recommended_product.featured_image %}
+                    {{ recommended_product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '240,360,520,680,800', sizes: '(max-width: 749px) 68vw, (max-width: 899px) 33vw, 25vw', alt: recommended_product.featured_image.alt | default: recommended_product.title }}
+                  {% endif %}
+                </div>
+                <div class="fp-pdp-rec__meta"><span>{{ recommended_product.title }}</span><span class="fp-pdp-rec__price">{{ recommended_product.price | money_without_trailing_zeros }}</span></div>
+              </a>
+              {% assign recommendation_count = recommendation_count | plus: 1 %}
+            {% endunless %}
+          {% endfor %}
+        {% else %}
+          {% for recommended_product in fallback_collection.products %}
+            {% unless recommended_product.id == product.id %}
+              <a class="fp-pdp-rec" href="{{ recommended_product.url }}">
+                <div class="fp-pdp-rec__media">
+                  {% if recommended_product.featured_image %}
+                    {{ recommended_product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '240,360,520,680,800', sizes: '(max-width: 749px) 68vw, (max-width: 899px) 33vw, 25vw', alt: recommended_product.featured_image.alt | default: recommended_product.title }}
+                  {% endif %}
+                </div>
+                <div class="fp-pdp-rec__meta"><span>{{ recommended_product.title }}</span><span class="fp-pdp-rec__price">{{ recommended_product.price | money_without_trailing_zeros }}</span></div>
+              </a>
+              {% assign recommendation_count = recommendation_count | plus: 1 %}
+              {% if recommendation_count >= 4 %}{% break %}{% endif %}
+            {% endunless %}
+          {% endfor %}
+        {% endif %}
+      </div>
+    </section>
+  {% endif %}
+
+  <dialog class="fp-pdp__lightbox" data-fp-lightbox aria-label="Artwork viewer">
+    <div class="fp-pdp__lightbox-inner">
+      <button class="fp-pdp__lightbox-close" type="button" data-fp-lightbox-close aria-label="Close artwork viewer">×</button>
+      <button class="fp-pdp__lightbox-nav fp-pdp__lightbox-prev" type="button" data-fp-lightbox-prev aria-label="Previous artwork">←</button>
+      <img data-fp-lightbox-image alt="">
+      <button class="fp-pdp__lightbox-nav fp-pdp__lightbox-next" type="button" data-fp-lightbox-next aria-label="Next artwork">→</button>
+    </div>
+  </dialog>
+
+  <div class="fp-pdp__mobile-buybar" data-fp-mobile-buybar aria-hidden="true">
+    <div class="fp-pdp__mobile-buybar-meta"><span data-fp-sticky-size>{% if fp_size_label != blank %}{{ fp_size_label }}{% else %}PRINT{% endif %}</span><span data-fp-sticky-price>{{ current_variant.price | money_without_trailing_zeros }}</span></div>
+    <button type="button" data-fp-sticky-add {% unless can_add_cart %}disabled{% endunless %}>{{ add_to_cart_text }}</button>
   </div>
 
   <script>
     (() => {
       const root = document.getElementById('FridayProduct-{{ section.id }}');
-      if (!root) return;
+      if (!root || root.dataset.fpReady === 'true') return;
+      root.dataset.fpReady = 'true';
+
+      const productHandle = {{ product.handle | json }};
       const variantId = root.querySelector('input[name="id"]');
       const price = root.querySelector('[data-fp-price]');
       const edition = root.querySelector('[data-fp-edition]');
+      const size = root.querySelector('[data-fp-size]');
+      const dimension = root.querySelector('[data-fp-dimension]');
+      const factEdition = root.querySelector('[data-fp-fact-edition]');
+      const factSize = root.querySelector('[data-fp-fact-size]');
       const selected = root.querySelector('[data-fp-selected]');
       const button = root.querySelector('[ref="addToCartButton"]');
       const buttonText = root.querySelector('[ref="addToCartText"]');
       const mediaList = root.querySelector('[data-fp-media-list]');
+      const stickyBar = root.querySelector('[data-fp-mobile-buybar]');
+      const stickyAdd = root.querySelector('[data-fp-sticky-add]');
+      const stickyPrice = root.querySelector('[data-fp-sticky-price]');
+      const stickySize = root.querySelector('[data-fp-sticky-size]');
 
-      const editionFor = (title = '') => {
-        const value = title.toLowerCase();
-        if (value.includes('a3')) return '1 of 100 editions';
-        if (value.includes('a4')) return '1 of 150 editions';
-        if (value.includes('postcard')) return '1 of 250 editions';
-        return 'limited numbered edition';
+      const metaFor = (title = '') => {
+        const value = `${title} ${productHandle}`.toLowerCase();
+        if (value.includes('a3')) return { size: 'A3', dimension: '29.7 × 42 CM', edition: 'EDITION OF 100' };
+        if (value.includes('a4')) return { size: 'A4', dimension: '21 × 29.7 CM', edition: 'EDITION OF 150' };
+        if (value.includes('postcard')) return { size: 'POSTCARD', dimension: 'NUMBERED EDITION', edition: 'EDITION OF 250' };
+        return { size: title && title.toLowerCase() !== 'default title' ? title : 'ART PRINT', dimension: 'NUMBERED EDITION', edition: 'LIMITED NUMBERED EDITION' };
+      };
+
+      const setButtonState = (available) => {
+        if (button) button.disabled = !available;
+        if (buttonText) buttonText.textContent = available ? 'Add to cart' : 'Sold out';
+        if (stickyAdd) {
+          stickyAdd.disabled = !available;
+          stickyAdd.textContent = available ? 'add to cart' : 'sold out';
+        }
+      };
+
+      const updateMeta = (variantTitle = '', variantPrice = '') => {
+        const meta = metaFor(variantTitle);
+        if (edition) edition.textContent = meta.edition;
+        if (factEdition) factEdition.textContent = meta.edition;
+        if (size) size.textContent = meta.size;
+        if (dimension) dimension.textContent = meta.dimension;
+        if (factSize) factSize.innerHTML = meta.dimension && meta.dimension !== 'NUMBERED EDITION' ? `${meta.size}<br>${meta.dimension}` : meta.size;
+        if (stickySize) stickySize.textContent = meta.size;
+        if (variantPrice && stickyPrice) stickyPrice.textContent = variantPrice;
       };
 
       const applyVariant = (input) => {
@@ -236,10 +532,9 @@
         variantId.disabled = false;
         if (price) price.textContent = input.dataset.price || '';
         if (selected) selected.textContent = input.dataset.title || '';
-        if (edition) edition.textContent = editionFor(input.dataset.title);
         const available = input.dataset.available === 'true';
-        if (button) button.disabled = !available;
-        if (buttonText) buttonText.textContent = available ? 'Add to cart' : 'Sold out';
+        setButtonState(available);
+        updateMeta(input.dataset.title || '', input.dataset.price || '');
         const mediaId = input.dataset.mediaId;
         if (mediaId && mediaList) {
           const target = mediaList.querySelector(`[data-media-id="${mediaId}"]`);
@@ -248,7 +543,58 @@
       };
 
       root.querySelectorAll('[data-fp-variant]').forEach((input) => input.addEventListener('change', () => applyVariant(input)));
-      applyVariant(root.querySelector('[data-fp-variant]:checked'));
+      const checkedVariant = root.querySelector('[data-fp-variant]:checked');
+      if (checkedVariant) applyVariant(checkedVariant);
+      else updateMeta({{ fp_size_label | json }}, {{ current_variant.price | money_without_trailing_zeros | json }});
+
+      const lightbox = root.querySelector('[data-fp-lightbox]');
+      const lightboxImage = root.querySelector('[data-fp-lightbox-image]');
+      const triggers = [...root.querySelectorAll('[data-fp-lightbox-trigger]')];
+      let activeIndex = 0;
+      const renderLightbox = (index) => {
+        if (!triggers.length || !lightboxImage) return;
+        activeIndex = (index + triggers.length) % triggers.length;
+        const trigger = triggers[activeIndex];
+        lightboxImage.src = trigger.dataset.src || '';
+        lightboxImage.alt = trigger.dataset.alt || '';
+        const showNav = triggers.length > 1;
+        root.querySelector('[data-fp-lightbox-prev]')?.toggleAttribute('hidden', !showNav);
+        root.querySelector('[data-fp-lightbox-next]')?.toggleAttribute('hidden', !showNav);
+      };
+      triggers.forEach((trigger, index) => trigger.addEventListener('click', () => {
+        renderLightbox(index);
+        lightbox?.showModal();
+      }));
+      root.querySelector('[data-fp-lightbox-close]')?.addEventListener('click', () => lightbox?.close());
+      root.querySelector('[data-fp-lightbox-prev]')?.addEventListener('click', () => renderLightbox(activeIndex - 1));
+      root.querySelector('[data-fp-lightbox-next]')?.addEventListener('click', () => renderLightbox(activeIndex + 1));
+      lightbox?.addEventListener('click', (event) => { if (event.target === lightbox) lightbox.close(); });
+      lightbox?.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') renderLightbox(activeIndex - 1);
+        if (event.key === 'ArrowRight') renderLightbox(activeIndex + 1);
+      });
+
+      if (stickyBar && button) {
+        let hasSeenMainCta = false;
+        const updateSticky = () => {
+          if (window.innerWidth > 749) {
+            stickyBar.classList.remove('is-visible');
+            stickyBar.setAttribute('aria-hidden', 'true');
+            return;
+          }
+          const rect = button.getBoundingClientRect();
+          if (rect.top < window.innerHeight && rect.bottom > 0) hasSeenMainCta = true;
+          const visible = hasSeenMainCta && rect.bottom < 0;
+          stickyBar.classList.toggle('is-visible', visible);
+          stickyBar.setAttribute('aria-hidden', visible ? 'false' : 'true');
+        };
+        window.addEventListener('scroll', updateSticky, { passive: true });
+        window.addEventListener('resize', updateSticky);
+        updateSticky();
+      }
+      stickyAdd?.addEventListener('click', () => {
+        if (!stickyAdd.disabled) button?.click();
+      });
     })();
   </script>
 </section>
@@ -261,14 +607,19 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "LIMITED EDITION ART PRINT" },
     { "type": "text", "id": "variant_label", "label": "Variant label", "default": "choose your size" },
     { "type": "text", "id": "fineprint", "label": "Purchase note", "default": "Made to order in Egypt · edition number on the back" },
+    { "type": "text", "id": "payment_note", "label": "Payment note", "default": "Instapay · Cash on delivery" },
     { "type": "header", "content": "Print guide" },
-    { "type": "text", "id": "print_heading", "label": "Print accordion heading", "default": "the print" },
+    { "type": "text", "id": "print_heading", "label": "Print accordion heading", "default": "care & framing" },
     { "type": "textarea", "id": "print_copy", "label": "Print details", "default": "Printed on premium matte paper, chosen for its rich colours and soft finish. Every Friday print is part of a limited numbered edition, with the edition number on the back." },
     { "type": "textarea", "id": "mount_copy", "label": "Mount details", "default": "Your print comes with a removable cardboard mount. Remove it to reveal the tinted border around the artwork, or keep it on for a clean, classic look." },
     { "type": "text", "id": "delivery_heading", "label": "Delivery accordion heading", "default": "delivery" },
     { "type": "textarea", "id": "delivery_copy", "label": "Delivery copy", "default": "Delivery typically takes 3–5 working days once your print has been produced and is ready to ship." },
     { "type": "text", "id": "returns_heading", "label": "Returns accordion heading", "default": "returns" },
-    { "type": "textarea", "id": "returns_copy", "label": "Returns copy", "default": "Because each print is made to order, all print sales are final and cannot be returned or exchanged. If your order arrives damaged, please get in touch and we’ll help." },
+    { "type": "textarea", "id": "returns_copy", "label": "Returns copy", "default": "Friday Prints are produced to order in limited editions. We do not normally accept returns or exchanges for change of mind where permitted by applicable law. This does not affect rights under applicable consumer protection law. If your order arrives damaged, defective or incorrect, contact us with photos and your order number." },
+    { "type": "header", "content": "Recommendations" },
+    { "type": "checkbox", "id": "show_recommendations", "label": "Show more prints", "default": true },
+    { "type": "text", "id": "recommendations_heading", "label": "Recommendations heading", "default": "more from GiGi" },
+    { "type": "product_list", "id": "recommended_products", "label": "Recommended prints", "limit": 4, "info": "Optional. Leave blank to automatically use other prints from the same collection." },
     { "type": "header", "content": "Support" },
     { "type": "text", "id": "support_prefix", "label": "Support intro", "default": "Questions?" },
     { "type": "text", "id": "support_email", "label": "Support email", "default": "Eldemirdsh@gmail.com" },
@@ -277,9 +628,9 @@
     { "type": "header", "content": "Design-safe styling" },
     { "type": "color", "id": "background_color", "label": "Artwork background", "default": "#FBF1E4" },
     { "type": "color", "id": "panel_color", "label": "Purchase panel", "default": "#FBF1E4" },
-    { "type": "color", "id": "accent_color", "label": "Accent / add to cart", "default": "#E53F36" },
-    { "type": "range", "id": "title_size_desktop", "label": "Title size — desktop", "min": 54, "max": 96, "step": 2, "unit": "px", "default": 72 },
-    { "type": "range", "id": "title_size_mobile", "label": "Title size — mobile", "min": 44, "max": 70, "step": 2, "unit": "px", "default": 56 }
+    { "type": "color", "id": "accent_color", "label": "Accent colour", "default": "#E53F36" },
+    { "type": "range", "id": "title_size_desktop", "label": "Title size — desktop", "min": 54, "max": 96, "step": 2, "unit": "px", "default": 68 },
+    { "type": "range", "id": "title_size_mobile", "label": "Title size — mobile", "min": 42, "max": 64, "step": 2, "unit": "px", "default": 48 }
   ],
   "presets": [{ "name": "Friday product" }]
 }
