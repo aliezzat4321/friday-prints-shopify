@@ -30,7 +30,10 @@
     #FridayAtHome-{{ section.id }} .fp-at-home__title{
       margin:0;
       max-width:9ch;
-      font:700 var(--fp-at-home-heading-desktop)/.9 "Courier New",Courier,monospace;
+      font-family:"Courier New",Courier,monospace;
+      font-weight:700;
+      font-size:min(var(--fp-at-home-heading-desktop),52px);
+      line-height:.9;
       letter-spacing:-.065em;
       text-transform:uppercase;
     }
@@ -107,7 +110,7 @@
         grid-template-columns:minmax(215px,29%) minmax(0,71%);
       }
       #FridayAtHome-{{ section.id }} .fp-at-home__intro{padding:34px 28px}
-      #FridayAtHome-{{ section.id }} .fp-at-home__title{font-size:clamp(28px,3.4vw,var(--fp-at-home-heading-desktop))}
+      #FridayAtHome-{{ section.id }} .fp-at-home__title{font-size:min(clamp(28px,3.4vw,var(--fp-at-home-heading-desktop)),52px)}
       #FridayAtHome-{{ section.id }} .fp-at-home__text{margin-top:16px;font-size:11px}
     }
 
@@ -125,7 +128,7 @@
       }
       #FridayAtHome-{{ section.id }} .fp-at-home__title{
         max-width:none;
-        font-size:var(--fp-at-home-heading-mobile);
+        font-size:min(var(--fp-at-home-heading-mobile),40px);
         letter-spacing:-.055em;
       }
       #FridayAtHome-{{ section.id }} .fp-at-home__text{
@@ -212,8 +215,8 @@
     { "type": "header", "content": "Design-safe styling" },
     { "type": "color", "id": "background_color", "label": "Background", "default": "#F3CF78" },
     { "type": "range", "id": "section_height_desktop", "label": "Section height — desktop", "min": 280, "max": 420, "step": 10, "unit": "px", "default": 340 },
-    { "type": "range", "id": "heading_size_desktop", "label": "Heading size — desktop", "min": 30, "max": 52, "step": 1, "unit": "px", "default": 40 },
-    { "type": "range", "id": "heading_size_mobile", "label": "Heading size — mobile", "min": 26, "max": 40, "step": 1, "unit": "px", "default": 32 }
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size — desktop", "min": 30, "max": 64, "step": 1, "unit": "px", "default": 40 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size — mobile", "min": 26, "max": 48, "step": 1, "unit": "px", "default": 32 }
   ],
   "blocks": [
     {
