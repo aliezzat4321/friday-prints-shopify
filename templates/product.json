@@ -15,13 +15,17 @@
         "eyebrow": "LIMITED EDITION ART PRINT",
         "variant_label": "choose your size",
         "fineprint": "Made to order in Egypt · edition number on the back",
-        "print_heading": "the print",
+        "payment_note": "Instapay · Cash on delivery",
+        "print_heading": "care & framing",
         "print_copy": "Printed on premium matte paper, chosen for its rich colours and soft finish. Every Friday print is part of a limited numbered edition, with the edition number on the back.",
         "mount_copy": "Your print comes with a removable cardboard mount. Remove it to reveal the tinted border around the artwork, or keep it on for a clean, classic look.",
         "delivery_heading": "delivery",
         "delivery_copy": "Delivery typically takes 3–5 working days once your print has been produced and is ready to ship.",
         "returns_heading": "returns",
-        "returns_copy": "Because each print is made to order, all print sales are final and cannot be returned or exchanged. If your order arrives damaged, please get in touch and we’ll help.",
+        "returns_copy": "Friday Prints are produced to order in limited editions. We do not normally accept returns or exchanges for change of mind where permitted by applicable law. This does not affect rights under applicable consumer protection law. If your order arrives damaged, defective or incorrect, contact us with photos and your order number.",
+        "show_recommendations": true,
+        "recommendations_heading": "more from GiGi",
+        "recommended_products": [],
         "support_prefix": "Questions?",
         "support_email": "Eldemirdsh@gmail.com",
         "instagram_url": "https://www.instagram.com/fridayprints.art/",
@@ -29,8 +33,8 @@
         "background_color": "#FBF1E4",
         "panel_color": "#FBF1E4",
         "accent_color": "#E53F36",
-        "title_size_desktop": 72,
-        "title_size_mobile": 56
+        "title_size_desktop": 68,
+        "title_size_mobile": 48
       }
     }
   },
