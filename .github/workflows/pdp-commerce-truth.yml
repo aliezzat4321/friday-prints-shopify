@@ -1,0 +1,83 @@
+name: PDP Commerce Truth
+
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.pdp-commerce-truth.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  truth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - run: sleep 15
+      - name: Verify cart and sticky bar
+        env:
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+        run: |
+          cat > truth.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          const executablePath=fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined;
+          const browser=await chromium.launch({headless:true,executablePath});
+          const ctx=await browser.newContext({viewport:{width:1280,height:800}});
+          const page=await ctx.newPage();
+          await page.goto(`${process.env.STORE_URL}/collections/all?truth=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+          await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+          const href=await page.locator('.fp-shop-card').first().getAttribute('href');
+          const productUrl=new URL(href,process.env.STORE_URL).toString();
+          await page.goto(`${productUrl}?truth=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+          await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+          await page.waitForTimeout(700);
+          await page.evaluate(async()=>{await fetch('/cart/clear.js',{method:'POST',headers:{'Content-Type':'application/json'}});});
+          const before=await page.evaluate(async()=>await (await fetch('/cart.js')).json()).then(c=>c.item_count);
+          const add=page.locator('.fp-pdp__add');
+          const enabled=await add.isEnabled().catch(()=>false);
+          let after=before;
+          if(enabled){
+            await add.click();
+            await page.waitForTimeout(1300);
+            after=await page.evaluate(async()=>await (await fetch('/cart.js',{cache:'no-store'})).json()).then(c=>c.item_count);
+          }
+          await ctx.close();
+
+          const mctx=await browser.newContext({viewport:{width:390,height:844}});
+          const mobile=await mctx.newPage();
+          await mobile.goto(`${productUrl}?stickytruth=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+          await mobile.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+          await mobile.waitForTimeout(700);
+          const initial=await mobile.locator('[data-fp-mobile-buybar]').evaluate(e=>e.classList.contains('is-visible'));
+          const addBottom=await mobile.locator('.fp-pdp__add').evaluate(e=>e.getBoundingClientRect().bottom+scrollY);
+          await mobile.evaluate(y=>window.scrollTo(0,y+80),addBottom);
+          await mobile.waitForTimeout(250);
+          const afterScroll=await mobile.locator('[data-fp-mobile-buybar]').evaluate(e=>e.classList.contains('is-visible'));
+          await mctx.close();
+          await browser.close();
+          const out={pass:enabled&&before===0&&after===1&&!initial&&afterScroll,commerce:{enabled,before,after},sticky:{initial,afterScroll,addBottom}};
+          fs.writeFileSync('truth.json',JSON.stringify(out,null,2));
+          console.log(JSON.stringify(out,null,2));
+          if(!out.pass)process.exitCode=1;
+          EOF
+          node truth.mjs
+      - name: Record truth
+        if: always()
+        run: |
+          cp truth.json .pdp-commerce-truth.json || echo '{"pass":false,"error":"truth file missing"}' > .pdp-commerce-truth.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .pdp-commerce-truth.json
+          git commit -m 'Record PDP commerce truth [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
