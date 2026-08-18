@@ -1,0 +1,117 @@
+name: Homepage Design Audit
+
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.homepage-design-audit-status.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright package
+        run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - name: Wait for Shopify sync
+        run: sleep 15
+      - name: Capture current homepage at all breakpoints
+        env:
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+        run: |
+          cat > homepage-design-audit.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('homepage-design-audit', { recursive:true });
+          const executablePath = fs.existsSync('/usr/bin/google-chrome') ? '/usr/bin/google-chrome' : undefined;
+          const browser = await chromium.launch({ headless:true, executablePath });
+          const configs = [
+            ['desktop-1440',1440,1000],
+            ['laptop-1280',1280,900],
+            ['tablet-landscape-1024',1024,768],
+            ['tablet-portrait-820',820,1180],
+            ['mobile-390',390,844],
+            ['mobile-320',320,700]
+          ];
+          const selectors = {
+            announcement:'.fp-announcement',
+            header:'.fp-nav-wrap',
+            hero:'.fp-hero',
+            prints:'.fp-collection',
+            story:'.fp-story',
+            atHome:'.fp-at-home',
+            facts:'.fp-benefits',
+            newsletter:'.fp-newsletter',
+            footer:'.fp-footer'
+          };
+          const report=[];
+          for (const [name,width,height] of configs) {
+            const ctx = await browser.newContext({ viewport:{width,height}, deviceScaleFactor:1 });
+            const page = await ctx.newPage();
+            await page.goto(`${process.env.STORE_URL}/?design_audit=${Date.now()}`, {waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            await page.evaluate(async()=>{ if(document.fonts?.ready) await document.fonts.ready; });
+            await page.waitForTimeout(800);
+            const metrics = await page.evaluate((selectors) => {
+              const rect=(sel)=>{const e=document.querySelector(sel); if(!e)return null; const r=e.getBoundingClientRect(); return {x:r.x,y:r.top+scrollY,width:r.width,height:r.height,bottom:r.bottom+scrollY};};
+              const cs=(sel,prop)=>{const e=document.querySelector(sel);return e?getComputedStyle(e)[prop]:null};
+              const sectionRects={}; for(const [k,s] of Object.entries(selectors)) sectionRects[k]=rect(s);
+              return {
+                viewport:{width:innerWidth,height:innerHeight},
+                documentHeight:document.documentElement.scrollHeight,
+                sections:sectionRects,
+                typography:{
+                  heroTitle:cs('.fp-hero h1','fontSize'),
+                  heroSubtitle:cs('.fp-hero__sub','fontSize'),
+                  printsTitle:cs('.fp-collection__title h2','fontSize'),
+                  storyTitle:cs('.fp-story__title','fontSize'),
+                  atHomeTitle:cs('.fp-at-home__title','fontSize'),
+                  newsletterTitle:cs('.fp-newsletter h2','fontSize')
+                },
+                premiumIconColor:cs('.fp-benefit:nth-child(4) .fp-benefit__icon','color'),
+                products:document.querySelectorAll('.fp-product').length,
+                atHomeImages:[...document.querySelectorAll('.fp-at-home__scene img')].map(i=>({src:i.currentSrc||i.src,naturalWidth:i.naturalWidth,naturalHeight:i.naturalHeight})),
+                horizontalOverflow:document.documentElement.scrollWidth > document.documentElement.clientWidth+2
+              };
+            }, selectors);
+            await page.screenshot({path:`homepage-design-audit/${name}-full.png`,fullPage:true});
+            for (const [key,sel] of Object.entries(selectors)) {
+              const loc=page.locator(sel).first();
+              if(await loc.count()) await loc.screenshot({path:`homepage-design-audit/${name}-${key}.png`}).catch(()=>{});
+            }
+            report.push({name,width,height,metrics});
+            await ctx.close();
+          }
+          await browser.close();
+          fs.writeFileSync('homepage-design-audit/report.json',JSON.stringify(report,null,2));
+          console.log(JSON.stringify(report,null,2));
+          EOF
+          node homepage-design-audit.mjs
+      - name: Upload audit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-design-audit
+          path: homepage-design-audit/
+          retention-days: 3
+      - name: Record run id
+        if: always()
+        run: |
+          cat > .homepage-design-audit-status.json <<EOF
+          {"run_id":${GITHUB_RUN_ID},"source_sha":"${GITHUB_SHA}"}
+          EOF
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .homepage-design-audit-status.json
+          git commit -m 'Record homepage design audit [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
