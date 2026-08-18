@@ -1,7 +1,10 @@
 /* Friday Prints — launch hardening patches */
 
 /* Preserve intentional brand capitalization such as “Meet GiGi” in hero CTAs. */
-.fp-hero__buttons .fp-btn{text-transform:none}
+.fp-hero__buttons .fp-btn{text-transform:none!important}
+
+/* Print Facts: keep the material/finish icon neutral and editorial rather than muddy mustard. */
+.fp-benefit:nth-child(4n) .fp-benefit__icon{color:var(--fp-ink)!important}
 
 /* Custom PDP uses native Shopify add-to-cart state. Make disabled variants read correctly
    even though the native button component owns the inner success markup. */
