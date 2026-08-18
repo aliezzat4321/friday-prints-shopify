@@ -1,0 +1,91 @@
+name: PDP Commerce Truth V2
+
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.pdp-commerce-truth-v2.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  truth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - run: sleep 15
+      - name: Verify
+        env:
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+        run: |
+          cat > verify.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          const result={pass:false,commerce:{},sticky:{},errors:[]};
+          let browser;
+          try{
+            const executablePath=fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined;
+            browser=await chromium.launch({headless:true,executablePath});
+            const ctx=await browser.newContext({viewport:{width:1280,height:800}});
+            const page=await ctx.newPage();
+            page.on('pageerror',e=>result.errors.push(`page:${e}`));
+            await page.goto(`${process.env.STORE_URL}/collections/all?cv2=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            const href=await page.locator('.fp-shop-card').first().getAttribute('href');
+            if(!href) throw new Error('No product href');
+            const productUrl=new URL(href,process.env.STORE_URL).toString();
+            result.productUrl=productUrl;
+            await page.goto(`${productUrl}?cv2=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            await page.waitForTimeout(700);
+            const clearStatus=await page.evaluate(async()=>{const r=await fetch('/cart/clear.js',{method:'POST'});return r.status;});
+            const before=await page.evaluate(async()=>{const r=await fetch('/cart.js',{cache:'no-store'});const c=await r.json();return c.item_count;});
+            const add=page.locator('.fp-pdp__add');
+            const enabled=await add.isEnabled().catch(()=>false);
+            result.commerce={clearStatus,before,enabled};
+            if(enabled){
+              await add.click();
+              await page.waitForTimeout(1400);
+              const after=await page.evaluate(async()=>{const r=await fetch('/cart.js',{cache:'no-store'});const c=await r.json();return c.item_count;});
+              result.commerce.after=after;
+              result.commerce.added=after===before+1;
+            }
+            await ctx.close();
+
+            const mctx=await browser.newContext({viewport:{width:390,height:844}});
+            const mobile=await mctx.newPage();
+            await mobile.goto(`${productUrl}?sv2=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await mobile.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            await mobile.waitForTimeout(700);
+            const initial=await mobile.locator('[data-fp-mobile-buybar]').evaluate(e=>e.classList.contains('is-visible'));
+            const absoluteBottom=await mobile.locator('.fp-pdp__add').evaluate(e=>e.getBoundingClientRect().bottom+window.scrollY);
+            await mobile.evaluate(y=>window.scrollTo(0,y+100),absoluteBottom);
+            await mobile.waitForTimeout(350);
+            const afterScroll=await mobile.locator('[data-fp-mobile-buybar]').evaluate(e=>e.classList.contains('is-visible'));
+            result.sticky={initial,absoluteBottom,scrollY:await mobile.evaluate(()=>scrollY),afterScroll};
+            await mctx.close();
+            result.pass=result.commerce.added===true&&initial===false&&afterScroll===true&&result.errors.length===0;
+          }catch(e){result.errors.push(String(e?.stack||e));}
+          finally{if(browser)await browser.close().catch(()=>{});fs.writeFileSync('truth-v2.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result,null,2));}
+          if(!result.pass)process.exitCode=1;
+          EOF
+          node verify.mjs
+      - name: Record result
+        if: always()
+        run: |
+          if [ -f truth-v2.json ]; then cp truth-v2.json .pdp-commerce-truth-v2.json; else echo '{"pass":false,"errors":["truth-v2.json missing"]}' > .pdp-commerce-truth-v2.json; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .pdp-commerce-truth-v2.json
+          git commit -m 'Record PDP commerce truth v2 [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
