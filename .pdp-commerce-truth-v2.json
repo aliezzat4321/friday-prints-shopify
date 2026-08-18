@@ -1,0 +1,9 @@
+{
+  "pass": false,
+  "commerce": {},
+  "sticky": {},
+  "errors": [
+    "page.evaluate: SyntaxError: Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON\n    at /home/runner/work/friday-prints-shopify/friday-prints-shopify/verify.mjs:21:27"
+  ],
+  "productUrl": "https://il1m2791s4dmofov-108268650782.shopifypreview.com/products/a-different-seoul-still-her-a3"
+}
