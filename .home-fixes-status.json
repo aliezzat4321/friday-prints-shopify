@@ -1,7 +1,7 @@
 {
-  "pass": false,
+  "pass": true,
   "meetGiGi": true,
-  "prevCorrectAtStart": false,
+  "prevCorrectAtStart": true,
   "prevEnablesAfterScroll": true,
   "atHomeCompat": true,
   "initial": {
@@ -18,9 +18,10 @@
     "rail": {
       "scrollLeft": 54,
       "scrollWidth": 2254,
-      "clientWidth": 1372
+      "clientWidth": 1372,
+      "paddingLeft": 54
     },
-    "prevDisabled": false,
+    "prevDisabled": true,
     "nextDisabled": false,
     "atHomeTitleFont": "40px",
     "atHomeHasCompatCss": true
@@ -29,6 +30,6 @@
     "scrollLeft": 364,
     "prevDisabled": false
   },
-  "run_id": 32117267776,
-  "source_sha": "5a4607f21d269deb6384f9e2b81f3b4590060494"
+  "run_id": 32117543218,
+  "source_sha": "9f00d65dc3b2c8f27c9e54e9d5a53699d434ad0d"
 }
