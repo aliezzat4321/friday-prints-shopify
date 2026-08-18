@@ -1,0 +1,113 @@
+name: Shop All Refinement QA
+
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.shop-refinement-status.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - name: Wait for Shopify sync
+        run: sleep 18
+      - name: Validate refined catalogue
+        env:
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+        run: |
+          cat > qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('shop-refinement-qa',{recursive:true});
+          const executablePath=fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined;
+          const browser=await chromium.launch({headless:true,executablePath});
+          const configs=[
+            ['desktop-1440',1440,1000,4],
+            ['laptop-1280',1280,800,4],
+            ['tablet-1024',1024,768,4],
+            ['tablet-820',820,1180,3],
+            ['mobile-390',390,844,2],
+            ['mobile-320',320,700,2]
+          ];
+          const report=[]; let pass=true;
+          for(const [name,width,height,expectedCols] of configs){
+            const ctx=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
+            const page=await ctx.newPage();
+            await page.goto(`${process.env.STORE_URL}/collections/all?refine=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            await page.waitForTimeout(900);
+            const m=await page.evaluate(()=>{
+              const rect=s=>{const e=document.querySelector(s);if(!e)return null;const b=e.getBoundingClientRect();return {x:+b.x.toFixed(1),y:+b.y.toFixed(1),w:+b.width.toFixed(1),h:+b.height.toFixed(1),bottom:+b.bottom.toFixed(1)}};
+              const grid=document.querySelector('.fp-shop__grid');
+              const card=document.querySelector('.fp-shop-card');
+              const meta=card?.querySelector('.fp-shop-card__meta');
+              const title=document.querySelector('.fp-shop h1');
+              const edition=[...document.querySelectorAll('.fp-shop-card__edition')].filter(e=>getComputedStyle(e).display!=='none'&&e.getBoundingClientRect().height>0);
+              const sortLabel=document.querySelector('.fp-shop__sort label');
+              const sort=document.querySelector('.fp-shop__sort select');
+              const cols=grid?getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length:0;
+              return {
+                header:rect('.fp-site-header'),head:rect('.fp-shop__head'),tools:rect('.fp-shop__tools'),grid:rect('.fp-shop__grid'),firstCard:rect('.fp-shop-card'),firstMedia:rect('.fp-shop-card__media'),
+                titleFont:title?parseFloat(getComputedStyle(title).fontSize):0,
+                cols,
+                metaColumns:meta?getComputedStyle(meta).gridTemplateColumns:'',
+                editionVisible:edition.length,
+                sortLabel:sortLabel?.textContent?.replace(/\s+/g,' ').trim()||'',
+                sortValue:sort?.selectedOptions?.[0]?.textContent?.trim()||'',
+                bodyHeight:document.documentElement.scrollHeight,
+                overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
+                brokenImages:[...document.images].filter(i=>i.complete&&i.naturalWidth===0).length
+              };
+            });
+            const firstArtTarget=width>=750?410:350;
+            const ok=m.cols===expectedCols && !m.overflow && m.brokenImages===0 && m.editionVisible===0 && m.firstMedia && m.firstMedia.y<=firstArtTarget;
+            if(!ok)pass=false;
+            report.push({name,width,height,expectedCols,ok,...m});
+            await page.screenshot({path:`shop-refinement-qa/${name}-top.png`,fullPage:false});
+            await page.screenshot({path:`shop-refinement-qa/${name}-full.png`,fullPage:true});
+            await ctx.close();
+          }
+          await browser.close();
+          const out={pass,report};
+          fs.writeFileSync('shop-refinement-qa/report.json',JSON.stringify(out,null,2));
+          console.log(JSON.stringify(out,null,2));
+          if(!pass)process.exitCode=1;
+          EOF
+          node qa.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shop-refinement-qa
+          path: shop-refinement-qa/
+          retention-days: 2
+      - name: Record result
+        if: always()
+        run: |
+          python - <<'PY'
+          import json,os
+          try:data=json.load(open('shop-refinement-qa/report.json'))
+          except Exception as e:data={'pass':False,'error':str(e)}
+          data['run_id']=int(os.environ['GITHUB_RUN_ID']);data['source_sha']=os.environ['GITHUB_SHA']
+          json.dump(data,open('.shop-refinement-status.json','w'),indent=2)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .shop-refinement-status.json
+          git commit -m 'Record Shop All refinement QA [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
