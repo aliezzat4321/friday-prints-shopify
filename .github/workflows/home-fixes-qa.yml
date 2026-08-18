@@ -24,7 +24,7 @@ jobs:
       - name: Install Playwright package
         run: npm install playwright@1.55.0 >/dev/null 2>&1
       - name: Wait for Shopify sync
-        run: sleep 20
+        run: sleep 8
       - name: Audit homepage fixes
         env:
           STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
@@ -47,9 +47,10 @@ jobs:
             const next = document.querySelector('[data-fp-next]');
             const atHome = document.querySelector('[id^="FridayAtHome-"]');
             const title = atHome?.querySelector('.fp-at-home__title');
+            const railStyle = rail ? getComputedStyle(rail) : null;
             return {
               buttons,
-              rail: rail ? { scrollLeft:rail.scrollLeft, scrollWidth:rail.scrollWidth, clientWidth:rail.clientWidth } : null,
+              rail: rail ? { scrollLeft:rail.scrollLeft, scrollWidth:rail.scrollWidth, clientWidth:rail.clientWidth, paddingLeft:parseFloat(railStyle.paddingLeft) || 0 } : null,
               prevDisabled: prev?.disabled ?? null,
               nextDisabled: next?.disabled ?? null,
               atHomeTitleFont: title ? getComputedStyle(title).fontSize : null,
@@ -69,7 +70,7 @@ jobs:
 
           const meetGiGi = initial.buttons.some(b => b.text === 'Meet GiGi' && b.transform === 'none');
           const prevCorrectAtStart = initial.rail ? initial.prevDisabled === true : false;
-          const prevEnablesAfterScroll = initial.rail && initial.rail.scrollWidth > initial.rail.clientWidth ? afterScroll.scrollLeft > 3 && afterScroll.prevDisabled === false : true;
+          const prevEnablesAfterScroll = initial.rail && initial.rail.scrollWidth > initial.rail.clientWidth ? afterScroll.scrollLeft > initial.rail.paddingLeft + 3 && afterScroll.prevDisabled === false : true;
           const atHomeCompat = initial.atHomeHasCompatCss && parseFloat(initial.atHomeTitleFont || '999') <= 52.1;
           const pass = meetGiGi && prevCorrectAtStart && prevEnablesAfterScroll && atHomeCompat;
 
