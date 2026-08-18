@@ -7,7 +7,7 @@
       "name": "desktop-1440",
       "width": 1440,
       "height": 1000,
-      "ok": false,
+      "ok": true,
       "lightboxOpened": true,
       "stickyVisible": null,
       "errors": [],
@@ -84,13 +84,13 @@
       "price": "LE 3,200",
       "edition": "EDITION OF 100",
       "overflow": false,
-      "brokenImages": 1
+      "brokenImages": 0
     },
     {
       "name": "laptop-1280",
       "width": 1280,
       "height": 800,
-      "ok": false,
+      "ok": true,
       "lightboxOpened": true,
       "stickyVisible": null,
       "errors": [],
@@ -167,13 +167,13 @@
       "price": "LE 3,200",
       "edition": "EDITION OF 100",
       "overflow": false,
-      "brokenImages": 1
+      "brokenImages": 0
     },
     {
       "name": "tablet-1024",
       "width": 1024,
       "height": 768,
-      "ok": false,
+      "ok": true,
       "lightboxOpened": true,
       "stickyVisible": null,
       "errors": [],
@@ -250,13 +250,13 @@
       "price": "LE 3,200",
       "edition": "EDITION OF 100",
       "overflow": false,
-      "brokenImages": 1
+      "brokenImages": 0
     },
     {
       "name": "tablet-820",
       "width": 820,
       "height": 1180,
-      "ok": false,
+      "ok": true,
       "lightboxOpened": true,
       "stickyVisible": null,
       "errors": [],
@@ -333,7 +333,7 @@
       "price": "LE 3,200",
       "edition": "EDITION OF 100",
       "overflow": false,
-      "brokenImages": 1
+      "brokenImages": 0
     },
     {
       "name": "mobile-390",
@@ -416,7 +416,7 @@
       "price": "LE 3,200",
       "edition": "EDITION OF 100",
       "overflow": false,
-      "brokenImages": 1
+      "brokenImages": 0
     },
     {
       "name": "mobile-320",
@@ -499,9 +499,9 @@
       "price": "LE 3,200",
       "edition": "EDITION OF 100",
       "overflow": false,
-      "brokenImages": 1
+      "brokenImages": 0
     }
   ],
-  "run_id": 32149301161,
-  "source_sha": "471e8c3f77ff24bdee6eba8ff2f756ea600909ed"
+  "run_id": 32149638732,
+  "source_sha": "7306ddf65fea57a4c45e14dcb30dcc1b8e5bc001"
 }
