@@ -14,56 +14,93 @@
   <style>
     #FridayShop-{{ section.id }}{background:var(--fp-shop-bg);color:var(--fp-ink);min-height:60vh}
     #FridayShop-{{ section.id }} *{box-sizing:border-box}
-    #FridayShop-{{ section.id }} .fp-shop__head{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.55fr);gap:48px;align-items:end;padding:72px 46px 42px;border-bottom:1px solid var(--fp-line)}
-    #FridayShop-{{ section.id }} .fp-shop__eyebrow{margin:0 0 14px;color:var(--fp-red);font:700 12px/1 "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase}
-    #FridayShop-{{ section.id }} h1{margin:0;font:700 var(--fp-shop-heading)/.84 Georgia,"Times New Roman",serif;letter-spacing:-.055em;text-transform:lowercase}
-    #FridayShop-{{ section.id }} .fp-shop__intro{justify-self:end;max-width:42ch;padding-bottom:5px;font:14px/1.55 "Courier New",monospace}
+
+    /* The catalogue should arrive quickly: on non-home pages the navigation is
+       deliberately tighter so artwork enters the first viewport sooner. */
+    @media(min-width:750px){
+      body:has(#FridayShop-{{ section.id }}) .fp-nav{height:96px!important}
+    }
+
+    #FridayShop-{{ section.id }} .fp-shop__head{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.55fr);gap:44px;align-items:end;padding:40px 46px 28px;border-bottom:1px solid var(--fp-line)}
+    #FridayShop-{{ section.id }} .fp-shop__eyebrow{margin:0 0 10px;color:var(--fp-red);font:700 11px/1 "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase}
+    #FridayShop-{{ section.id }} h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:min(var(--fp-shop-heading),clamp(80px,6.1vw,88px));line-height:.84;letter-spacing:-.055em;text-transform:lowercase}
+    #FridayShop-{{ section.id }} .fp-shop__intro{justify-self:end;max-width:39ch;padding-bottom:3px;font:13px/1.5 "Courier New",monospace}
     #FridayShop-{{ section.id }} .fp-shop__intro p{margin:0}
-    #FridayShop-{{ section.id }} .fp-shop__tools{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 46px;border-bottom:1px solid var(--fp-line);font:700 11px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.055em}
+
+    #FridayShop-{{ section.id }} .fp-shop__tools{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:46px;padding:10px 46px;border-bottom:1px solid var(--fp-line);font:700 10px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.065em}
     #FridayShop-{{ section.id }} .fp-shop__count{white-space:nowrap}
-    #FridayShop-{{ section.id }} .fp-shop__sort{display:flex;align-items:center;gap:10px}
+    #FridayShop-{{ section.id }} .fp-shop__sort{display:flex;align-items:center;gap:7px}
     #FridayShop-{{ section.id }} .fp-shop__sort label{white-space:nowrap}
-    #FridayShop-{{ section.id }} .fp-shop__sort select{appearance:none;-webkit-appearance:none;border:0;border-bottom:1px solid var(--fp-ink);border-radius:0;background:transparent;color:inherit;padding:5px 22px 5px 2px;font:700 11px/1.2 "Courier New",monospace;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 9px) 50%,calc(100% - 5px) 50%;background-size:4px 4px,4px 4px;background-repeat:no-repeat}
-    #FridayShop-{{ section.id }} .fp-shop__grid{display:grid;grid-template-columns:repeat(var(--fp-shop-columns),minmax(0,1fr));column-gap:30px;row-gap:54px;padding:44px 46px 76px}
+    #FridayShop-{{ section.id }} .fp-shop__sort select{appearance:none;-webkit-appearance:none;border:0;border-bottom:1px solid color-mix(in srgb,var(--fp-ink) 55%,transparent);border-radius:0;background:transparent;color:inherit;padding:4px 20px 4px 2px;font:700 10px/1.2 "Courier New",monospace;text-transform:uppercase;letter-spacing:.035em;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 8px) 50%,calc(100% - 4px) 50%;background-size:4px 4px,4px 4px;background-repeat:no-repeat}
+
+    #FridayShop-{{ section.id }} .fp-shop__grid{display:grid;grid-template-columns:repeat(var(--fp-shop-columns),minmax(0,1fr));column-gap:28px;row-gap:44px;padding:34px 46px 60px}
     #FridayShop-{{ section.id }} .fp-shop-card{display:block;min-width:0;color:inherit;text-decoration:none}
     #FridayShop-{{ section.id }} .fp-shop-card__media{position:relative;aspect-ratio:.707;overflow:hidden;background:color-mix(in srgb,var(--fp-shop-bg) 85%,#fff)}
     #FridayShop-{{ section.id }} .fp-shop-card__media img,#FridayShop-{{ section.id }} .fp-shop-card__media svg{display:block;width:100%;height:100%;object-fit:contain;transition:transform .35s ease}
     #FridayShop-{{ section.id }} .fp-shop-card:hover .fp-shop-card__media img{transform:scale(1.012)}
-    #FridayShop-{{ section.id }} .fp-shop-card__badge{position:absolute;top:12px;left:12px;padding:7px 9px;background:var(--fp-shop-accent);color:#fff;font:700 9px/1 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
-    #FridayShop-{{ section.id }} .fp-shop-card__meta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:start;padding-top:13px;border-top:1px solid transparent;transition:border-color .2s ease}
+    #FridayShop-{{ section.id }} .fp-shop-card__badge{position:absolute;top:11px;left:11px;padding:7px 9px;background:var(--fp-shop-accent);color:#fff;font:700 9px/1 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
+    #FridayShop-{{ section.id }} .fp-shop-card__meta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:start;padding-top:11px;border-top:1px solid transparent;transition:border-color .2s ease}
     #FridayShop-{{ section.id }} .fp-shop-card:hover .fp-shop-card__meta{border-top-color:var(--fp-ink)}
-    #FridayShop-{{ section.id }} .fp-shop-card h2{margin:0;font:700 13px/1.35 "Courier New",monospace;text-transform:lowercase}
-    #FridayShop-{{ section.id }} .fp-shop-card__price{margin:0;font:12px/1.35 "Courier New",monospace;white-space:nowrap}
-    #FridayShop-{{ section.id }} .fp-shop-card__edition{grid-column:1/-1;margin-top:-7px;color:color-mix(in srgb,var(--fp-ink) 58%,transparent);font:10px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.04em}
-    #FridayShop-{{ section.id }} .fp-shop__pagination{display:flex;justify-content:center;align-items:center;gap:8px;padding:0 24px 68px;font:700 12px/1 "Courier New",monospace}
+    #FridayShop-{{ section.id }} .fp-shop-card h2{margin:0;font:700 12px/1.35 "Courier New",monospace;text-transform:lowercase}
+    #FridayShop-{{ section.id }} .fp-shop-card__price{margin:0;font:11px/1.35 "Courier New",monospace;white-space:nowrap}
+    #FridayShop-{{ section.id }} .fp-shop-card__edition{grid-column:1/-1;margin-top:-5px;color:color-mix(in srgb,var(--fp-ink) 56%,transparent);font:9px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.04em}
+
+    #FridayShop-{{ section.id }} .fp-shop__pagination{display:flex;justify-content:center;align-items:center;gap:8px;padding:0 24px 56px;font:700 12px/1 "Courier New",monospace}
     #FridayShop-{{ section.id }} .fp-shop__pagination a,#FridayShop-{{ section.id }} .fp-shop__pagination span{min-width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--fp-ink);color:inherit;text-decoration:none}
     #FridayShop-{{ section.id }} .fp-shop__pagination .is-current{background:var(--fp-ink);color:#fff}
-    #FridayShop-{{ section.id }} .fp-shop__empty{padding:90px 46px;text-align:center;font:14px/1.5 "Courier New",monospace}
-    @media(max-width:1100px){
-      #FridayShop-{{ section.id }} .fp-shop__head{padding-inline:30px;gap:30px}
+    #FridayShop-{{ section.id }} .fp-shop__empty{padding:80px 46px;text-align:center;font:14px/1.5 "Courier New",monospace}
+
+    /* Small desktop / landscape tablet: keep four columns so cards do not become
+       larger as the screen becomes narrower. */
+    @media(max-width:1100px) and (min-width:901px){
+      body:has(#FridayShop-{{ section.id }}) .fp-nav{height:88px!important}
+      #FridayShop-{{ section.id }} .fp-shop__head{gap:28px;padding:36px 30px 26px}
+      #FridayShop-{{ section.id }} h1{font-size:min(var(--fp-shop-heading),72px)}
+      #FridayShop-{{ section.id }} .fp-shop__intro{font-size:12px;max-width:34ch}
       #FridayShop-{{ section.id }} .fp-shop__tools{padding-inline:30px}
-      #FridayShop-{{ section.id }} .fp-shop__grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:42px 22px;padding:36px 30px 64px}
-    }
-    @media(max-width:749px){
-      #FridayShop-{{ section.id }} .fp-shop__head{grid-template-columns:1fr;gap:22px;padding:46px 20px 28px}
-      #FridayShop-{{ section.id }} h1{font-size:var(--fp-shop-heading-mobile)}
-      #FridayShop-{{ section.id }} .fp-shop__eyebrow{font-size:10px;margin-bottom:10px}
-      #FridayShop-{{ section.id }} .fp-shop__intro{justify-self:start;max-width:32ch;font-size:12px;padding-bottom:0}
-      #FridayShop-{{ section.id }} .fp-shop__tools{padding:14px 20px;font-size:9px}
-      #FridayShop-{{ section.id }} .fp-shop__sort label{display:none}
-      #FridayShop-{{ section.id }} .fp-shop__sort select{font-size:9px;max-width:150px}
-      #FridayShop-{{ section.id }} .fp-shop__grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 12px;padding:26px 12px 52px}
+      #FridayShop-{{ section.id }} .fp-shop__grid{grid-template-columns:repeat(4,minmax(0,1fr));column-gap:18px;row-gap:36px;padding:30px 30px 56px}
       #FridayShop-{{ section.id }} .fp-shop-card__meta{grid-template-columns:1fr;gap:3px;padding-top:9px}
-      #FridayShop-{{ section.id }} .fp-shop-card h2{font-size:10px;line-height:1.3}
-      #FridayShop-{{ section.id }} .fp-shop-card__price{font-size:9px}
-      #FridayShop-{{ section.id }} .fp-shop-card__edition{font-size:8px;margin-top:3px}
-      #FridayShop-{{ section.id }} .fp-shop-card__badge{top:7px;left:7px;font-size:7px;padding:5px 6px}
-    }
-    @media(max-width:350px){
-      #FridayShop-{{ section.id }} .fp-shop__grid{grid-template-columns:1fr;gap:38px;padding-inline:20px}
-      #FridayShop-{{ section.id }} .fp-shop-card h2{font-size:12px}
+      #FridayShop-{{ section.id }} .fp-shop-card h2{font-size:11px}
       #FridayShop-{{ section.id }} .fp-shop-card__price{font-size:10px}
+      #FridayShop-{{ section.id }} .fp-shop-card__edition{margin-top:2px}
     }
+
+    /* Portrait tablet: three calm columns, smaller masthead, stacked metadata. */
+    @media(max-width:900px) and (min-width:750px){
+      body:has(#FridayShop-{{ section.id }}) .fp-nav{height:82px!important}
+      #FridayShop-{{ section.id }} .fp-shop__head{grid-template-columns:minmax(0,1.25fr) minmax(220px,.75fr);gap:24px;padding:34px 28px 24px}
+      #FridayShop-{{ section.id }} h1{font-size:min(var(--fp-shop-heading),68px)}
+      #FridayShop-{{ section.id }} .fp-shop__eyebrow{font-size:10px;margin-bottom:8px}
+      #FridayShop-{{ section.id }} .fp-shop__intro{font-size:11px;max-width:30ch;padding-bottom:2px}
+      #FridayShop-{{ section.id }} .fp-shop__tools{min-height:44px;padding:9px 28px;font-size:9px}
+      #FridayShop-{{ section.id }} .fp-shop__sort select{font-size:9px}
+      #FridayShop-{{ section.id }} .fp-shop__grid{grid-template-columns:repeat(3,minmax(0,1fr));column-gap:20px;row-gap:34px;padding:28px 28px 54px}
+      #FridayShop-{{ section.id }} .fp-shop-card__meta{grid-template-columns:1fr;gap:3px;padding-top:9px}
+      #FridayShop-{{ section.id }} .fp-shop-card h2{font-size:10.5px}
+      #FridayShop-{{ section.id }} .fp-shop-card__price{font-size:9.5px}
+      #FridayShop-{{ section.id }} .fp-shop-card__edition{font-size:8px;margin-top:2px}
+    }
+
+    /* Mobile remains a true catalogue: two columns even at 320px. */
+    @media(max-width:749px){
+      #FridayShop-{{ section.id }} .fp-shop__head{grid-template-columns:1fr;gap:14px;padding:32px 20px 22px}
+      #FridayShop-{{ section.id }} h1{font-size:min(var(--fp-shop-heading-mobile),clamp(54px,14vw,58px))}
+      #FridayShop-{{ section.id }} .fp-shop__eyebrow{font-size:9px;margin-bottom:8px}
+      #FridayShop-{{ section.id }} .fp-shop__intro{justify-self:start;max-width:32ch;font-size:11px;line-height:1.45;padding-bottom:0}
+      #FridayShop-{{ section.id }} .fp-shop__tools{min-height:44px;padding:10px 14px;font-size:8.5px}
+      #FridayShop-{{ section.id }} .fp-shop__sort{gap:5px}
+      #FridayShop-{{ section.id }} .fp-shop__sort label{font-size:0}
+      #FridayShop-{{ section.id }} .fp-shop__sort label::after{content:'SORT —';font-size:8.5px}
+      #FridayShop-{{ section.id }} .fp-shop__sort select{font-size:8.5px;max-width:132px;padding-right:18px}
+      #FridayShop-{{ section.id }} .fp-shop__grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:10px;row-gap:28px;padding:22px 10px 46px}
+      #FridayShop-{{ section.id }} .fp-shop-card__meta{grid-template-columns:1fr;gap:3px;padding-top:8px}
+      #FridayShop-{{ section.id }} .fp-shop-card h2{font-size:9.5px;line-height:1.3}
+      #FridayShop-{{ section.id }} .fp-shop-card__price{font-size:8.5px}
+      #FridayShop-{{ section.id }} .fp-shop-card__edition{font-size:7.5px;margin-top:2px}
+      #FridayShop-{{ section.id }} .fp-shop-card__badge{top:6px;left:6px;font-size:6.5px;padding:5px 6px}
+      #FridayShop-{{ section.id }} .fp-shop__pagination{padding-bottom:46px}
+    }
+
     @media(prefers-reduced-motion:reduce){#FridayShop-{{ section.id }} .fp-shop-card__media img{transition:none}#FridayShop-{{ section.id }} .fp-shop-card:hover .fp-shop-card__media img{transform:none}}
   </style>
 
@@ -80,10 +117,33 @@
       {% if section.settings.show_product_count %}<span class="fp-shop__count">{{ collection.products_count }} prints</span>{% else %}<span></span>{% endif %}
       {% if section.settings.show_sort %}
         <form class="fp-shop__sort" method="get">
-          <label for="SortBy-{{ section.id }}">sort</label>
+          <label for="SortBy-{{ section.id }}">sort —</label>
           <select id="SortBy-{{ section.id }}" name="sort_by" onchange="this.form.submit()">
             {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
-            {% for option in collection.sort_options %}<option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>{{ option.name }}</option>{% endfor %}
+            {% for option in collection.sort_options %}
+              {% liquid
+                assign fp_sort_label = option.name
+                case option.value
+                  when 'manual'
+                    assign fp_sort_label = 'featured'
+                  when 'best-selling'
+                    assign fp_sort_label = 'popular'
+                  when 'title-ascending'
+                    assign fp_sort_label = 'title a–z'
+                  when 'title-descending'
+                    assign fp_sort_label = 'title z–a'
+                  when 'price-ascending'
+                    assign fp_sort_label = 'price low–high'
+                  when 'price-descending'
+                    assign fp_sort_label = 'price high–low'
+                  when 'created-ascending'
+                    assign fp_sort_label = 'oldest'
+                  when 'created-descending'
+                    assign fp_sort_label = 'newest'
+                endcase
+              %}
+              <option value="{{ option.value }}"{% if option.value == sort_by %} selected{% endif %}>{{ fp_sort_label }}</option>
+            {% endfor %}
           </select>
         </form>
       {% endif %}
@@ -96,7 +156,7 @@
           <a class="fp-shop-card" href="{{ product.url }}">
             <div class="fp-shop-card__media">
               {% if product.featured_image %}
-                {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '280,420,560,700,900,1200', sizes: '(max-width: 749px) 50vw, (max-width: 1100px) 33vw, 25vw', alt: fp_alt }}
+                {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '240,320,420,560,700,900,1200', sizes: '(max-width: 749px) 50vw, (max-width: 900px) 33vw, 25vw', alt: fp_alt }}
               {% else %}
                 {{ 'product-1' | placeholder_svg_tag }}
               {% endif %}
@@ -105,7 +165,7 @@
             <div class="fp-shop-card__meta">
               <h2>{{ product.title }}</h2>
               {% if section.settings.show_prices %}<p class="fp-shop-card__price">{{ product.price | money }}</p>{% endif %}
-              {% if section.settings.card_note != blank %}<span class="fp-shop-card__edition">{{ section.settings.card_note }}</span>{% endif %}
+              {% if section.settings.show_card_note and section.settings.card_note != blank %}<span class="fp-shop-card__edition">{{ section.settings.card_note }}</span>{% endif %}
             </div>
           </a>
         {% endfor %}
@@ -140,12 +200,13 @@
     { "type": "checkbox", "id": "show_prices", "label": "Show prices", "default": true },
     { "type": "checkbox", "id": "show_product_count", "label": "Show product count", "default": true },
     { "type": "checkbox", "id": "show_sort", "label": "Show sort", "default": true },
+    { "type": "checkbox", "id": "show_card_note", "label": "Show repeated card note", "default": false },
     { "type": "text", "id": "card_note", "label": "Card note", "default": "limited edition art print" },
     { "type": "header", "content": "Design-safe styling" },
     { "type": "color", "id": "background_color", "label": "Background", "default": "#FBF1E4" },
     { "type": "color", "id": "accent_color", "label": "Sold-out badge", "default": "#E53F36" },
-    { "type": "range", "id": "heading_size_desktop", "label": "Heading size — desktop", "min": 64, "max": 120, "step": 2, "unit": "px", "default": 96 },
-    { "type": "range", "id": "heading_size_mobile", "label": "Heading size — mobile", "min": 48, "max": 76, "step": 2, "unit": "px", "default": 62 }
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size — desktop", "min": 64, "max": 96, "step": 2, "unit": "px", "default": 88 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size — mobile", "min": 48, "max": 64, "step": 2, "unit": "px", "default": 58 }
   ],
   "presets": [{ "name": "Friday shop grid" }]
 }
