@@ -96,8 +96,10 @@
       const edge = 3;
 
       const updateArrows = () => {
+        const styles = getComputedStyle(rail);
+        const startOffset = parseFloat(styles.paddingLeft) || 0;
         const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
-        if (prev) prev.disabled = maxScroll <= edge || rail.scrollLeft <= edge;
+        if (prev) prev.disabled = maxScroll <= edge || rail.scrollLeft <= startOffset + edge;
         if (next) next.disabled = maxScroll <= edge || rail.scrollLeft >= maxScroll - edge;
       };
 
