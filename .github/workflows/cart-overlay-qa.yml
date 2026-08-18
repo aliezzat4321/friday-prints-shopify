@@ -1,0 +1,138 @@
+name: Friday Cart Overlay QA
+
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.cart-overlay-status.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cart-overlay-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright package
+        run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - name: Wait for Shopify sync
+        run: sleep 25
+      - name: Open real cart and audit overlay
+        env:
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+        run: |
+          cat > cart-overlay-qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+
+          const executablePath = fs.existsSync('/usr/bin/google-chrome') ? '/usr/bin/google-chrome' : undefined;
+          const browser = await chromium.launch({ headless:true, executablePath });
+          const page = await browser.newPage({ viewport:{ width:1440, height:1000 } });
+          const errors = [];
+          page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+
+          await page.goto(`${process.env.STORE_URL}/collections/all`, { waitUntil:'domcontentloaded', timeout:60000 });
+          await page.waitForLoadState('networkidle', { timeout:20000 }).catch(() => {});
+          const href = await page.locator('.fp-shop-card').first().getAttribute('href');
+          if (!href) throw new Error('No Friday product card found');
+
+          await page.goto(new URL(href, process.env.STORE_URL).href, { waitUntil:'domcontentloaded', timeout:60000 });
+          await page.waitForLoadState('networkidle', { timeout:20000 }).catch(() => {});
+          await page.waitForTimeout(800);
+
+          const availableVariant = page.locator('[data-fp-variant][data-available="true"]').first();
+          if (await availableVariant.count()) {
+            await availableVariant.check({ force:true });
+            await page.waitForTimeout(150);
+          }
+
+          const add = page.locator('.fp-pdp [ref="addToCartButton"]');
+          if (!(await add.count()) || await add.isDisabled()) throw new Error('Add to cart unavailable');
+          await add.click();
+          await page.waitForTimeout(1600);
+
+          const metrics = await page.evaluate(() => {
+            const dialog = document.querySelector('#cart-drawer > .theme-drawer__dialog');
+            const wrapper = document.querySelector('.page-wrapper');
+            const announcement = document.querySelector('.fp-announcement, .fp-announcement-bar');
+            const header = document.querySelector('.fp-site-header');
+            if (!dialog || !wrapper) return { missing:true };
+            const d = dialog.getBoundingClientRect();
+            const w = wrapper.getBoundingClientRect();
+            const ds = getComputedStyle(dialog);
+            const ws = getComputedStyle(wrapper);
+            const a = announcement?.getBoundingClientRect();
+            const h = header?.getBoundingClientRect();
+            return {
+              bodyOverlayClass: document.body.classList.contains('fp-cart-overlay-open'),
+              drawerOpen: dialog.hasAttribute('open'),
+              dialog: { x:d.x, y:d.y, width:d.width, height:d.height, right:d.right, bottom:d.bottom },
+              wrapper: { x:w.x, width:w.width, right:w.right, marginRight:ws.marginRight },
+              announcement: a ? { x:a.x, y:a.y, width:a.width, right:a.right } : null,
+              header: h ? { x:h.x, y:h.y, width:h.width, right:h.right } : null,
+              borderLeftWidth: ds.borderLeftWidth,
+              borderLeftColor: ds.borderLeftColor,
+              borderLeftStyle: ds.borderLeftStyle,
+              dialogZIndex: ds.zIndex,
+              viewport: { width:innerWidth, height:innerHeight },
+              stylesheetLoaded: [...document.styleSheets].some(s => (s.href || '').includes('friday-cart-overlay.css')),
+              scriptLoaded: [...document.scripts].some(s => (s.src || '').includes('friday-cart-overlay.js'))
+            };
+          });
+
+          await page.screenshot({ path:'cart-overlay-open.png', fullPage:false });
+          await browser.close();
+
+          const pass = !metrics.missing
+            && metrics.bodyOverlayClass
+            && metrics.drawerOpen
+            && metrics.stylesheetLoaded
+            && metrics.scriptLoaded
+            && Math.abs(metrics.wrapper.width - metrics.viewport.width) <= 2
+            && Math.abs(metrics.dialog.y) <= 2
+            && Math.abs(metrics.dialog.height - metrics.viewport.height) <= 3
+            && parseFloat(metrics.borderLeftWidth) >= 1;
+
+          fs.writeFileSync('cart-overlay-result.json', JSON.stringify({ pass, metrics, consoleErrors:errors }, null, 2));
+          console.log(JSON.stringify({ pass, metrics }, null, 2));
+          if (!pass) process.exitCode = 1;
+          EOF
+          node cart-overlay-qa.mjs
+      - name: Upload screenshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: friday-cart-overlay-open
+          path: |
+            cart-overlay-open.png
+            cart-overlay-result.json
+          retention-days: 3
+      - name: Record QA result
+        if: always()
+        run: |
+          RESULT='{"pass":false,"error":"result file missing"}'
+          if [ -f cart-overlay-result.json ]; then RESULT=$(cat cart-overlay-result.json); fi
+          python - <<'PY'
+          import json, os
+          try:
+              result=json.load(open('cart-overlay-result.json'))
+          except Exception as e:
+              result={'pass':False,'error':str(e)}
+          result['run_id']=int(os.environ['GITHUB_RUN_ID'])
+          result['source_sha']=os.environ['GITHUB_SHA']
+          json.dump(result,open('.cart-overlay-status.json','w'),indent=2)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .cart-overlay-status.json
+          git commit -m 'Record cart overlay QA [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
