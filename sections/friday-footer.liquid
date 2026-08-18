@@ -2,25 +2,38 @@
 {% if footer_column_count < 1 %}{% assign footer_column_count = 1 %}{% endif %}
 <footer class="fp-footer" id="FridayFooter-{{ section.id }}" style="--fp-footer-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-footer-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;--fp-footer-columns:{{ footer_column_count }};--fp-footer-link-desktop:{{ section.settings.link_size_desktop }}px;--fp-footer-link-mobile:{{ section.settings.link_size_mobile }}px;--fp-footer-heading-desktop:{{ section.settings.heading_size_desktop }}px;--fp-footer-heading-mobile:{{ section.settings.heading_size_mobile }}px;">
   <style>
-    #FridayFooter-{{ section.id }} .fp-footer__grid{grid-template-columns:1.55fr repeat(var(--fp-footer-columns),minmax(0,1fr));gap:34px;padding:52px 46px 44px}
-    #FridayFooter-{{ section.id }} .fp-footer__brand{font-size:clamp(48px,4.6vw,72px)}
-    #FridayFooter-{{ section.id }} .fp-footer__brand-block>p{font-size:13px;margin-top:20px}
-    #FridayFooter-{{ section.id }} .fp-footer__col{gap:13px;padding-top:4px}
-    #FridayFooter-{{ section.id }} .fp-footer__col strong{font-size:var(--fp-footer-heading-desktop);margin-bottom:7px}
-    #FridayFooter-{{ section.id }} .fp-footer__col a,#FridayFooter-{{ section.id }} .fp-footer__col>span{font-size:var(--fp-footer-link-desktop);line-height:1.45}
-    #FridayFooter-{{ section.id }} .fp-footer__social{display:flex;flex-wrap:wrap;gap:16px;margin-top:22px}
-    #FridayFooter-{{ section.id }} .fp-footer__social a,#FridayFooter-{{ section.id }} .fp-footer__social>span{display:inline-flex;align-items:center;gap:9px;color:inherit;text-decoration:none;font:700 14px/1 "Courier New",monospace;text-transform:lowercase}
-    #FridayFooter-{{ section.id }} .fp-footer__social svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;flex:0 0 auto}
+    #FridayFooter-{{ section.id }} .fp-footer__grid{grid-template-columns:1.45fr repeat(var(--fp-footer-columns),minmax(0,1fr));gap:28px;padding:34px 42px 26px}
+    #FridayFooter-{{ section.id }} .fp-footer__brand{font-size:clamp(48px,4vw,60px)}
+    #FridayFooter-{{ section.id }} .fp-footer__brand-block>p{font-size:12px;margin-top:13px}
+    #FridayFooter-{{ section.id }} .fp-footer__col{gap:10px;padding-top:3px}
+    #FridayFooter-{{ section.id }} .fp-footer__col strong{font-size:var(--fp-footer-heading-desktop);margin-bottom:5px}
+    #FridayFooter-{{ section.id }} .fp-footer__col a,#FridayFooter-{{ section.id }} .fp-footer__col>span{font-size:var(--fp-footer-link-desktop);line-height:1.4}
+    #FridayFooter-{{ section.id }} .fp-footer__social{display:flex;flex-wrap:wrap;gap:14px;margin-top:14px}
+    #FridayFooter-{{ section.id }} .fp-footer__social a,#FridayFooter-{{ section.id }} .fp-footer__social>span{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font:700 13px/1 "Courier New",monospace;text-transform:lowercase}
+    #FridayFooter-{{ section.id }} .fp-footer__social svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;flex:0 0 auto}
     #FridayFooter-{{ section.id }} .fp-footer__social a:hover span{text-decoration:underline;text-underline-offset:4px}
-    #FridayFooter-{{ section.id }} .fp-footer__email{display:inline-block;margin-top:15px;color:inherit;text-decoration:none;font:12px/1.4 "Courier New",monospace}
+    #FridayFooter-{{ section.id }} .fp-footer__email{display:inline-block;margin-top:10px;color:inherit;text-decoration:none;font:11px/1.35 "Courier New",monospace}
     #FridayFooter-{{ section.id }} .fp-footer__email:hover{text-decoration:underline;text-underline-offset:4px}
-    #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap{margin-top:26px;min-height:88px}
-    #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap span{font-size:10.5px}
-    #FridayFooter-{{ section.id }} .fp-footer__bottom{font-size:10px}
+
+    /* Desktop: GiGi becomes the centered colophon signature instead of floating under the brand. */
+    #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap{display:none}
+    #FridayFooter-{{ section.id }} .fp-footer__bottom{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:24px;min-height:54px;padding:8px 42px;font-size:10px}
+    #FridayFooter-{{ section.id }} .fp-footer__bottom>span:last-child{text-align:right}
+    #FridayFooter-{{ section.id }} .fp-footer__bottom-mobile-center{display:none}
+    #FridayFooter-{{ section.id }} .fp-footer__signature{display:flex;align-items:center;justify-content:center;gap:10px;white-space:nowrap;font:700 10px/1 "Courier New",monospace;letter-spacing:.045em;text-transform:uppercase}
+    #FridayFooter-{{ section.id }} .fp-footer__signature .fp-footer__gigi{display:block;width:auto!important;height:36px!important;max-width:44px!important;max-height:36px!important;object-fit:contain}
+    #FridayFooter-{{ section.id }} .fp-footer__signature-text{display:inline-block}
+
     @media(max-width:1100px) and (min-width:750px){
-      #FridayFooter-{{ section.id }} .fp-footer__grid{grid-template-columns:1.25fr repeat(2,minmax(0,1fr));row-gap:32px;padding:46px 28px 40px}
+      #FridayFooter-{{ section.id }} .fp-footer__grid{grid-template-columns:1.2fr repeat(2,minmax(0,1fr));row-gap:24px;padding:30px 28px 24px}
       #FridayFooter-{{ section.id }} .fp-footer__brand-block{grid-row:span 2}
+      #FridayFooter-{{ section.id }} .fp-footer__brand{font-size:48px}
+      #FridayFooter-{{ section.id }} .fp-footer__col a,#FridayFooter-{{ section.id }} .fp-footer__col>span{font-size:14px}
+      #FridayFooter-{{ section.id }} .fp-footer__bottom{padding:8px 28px;gap:16px}
+      #FridayFooter-{{ section.id }} .fp-footer__signature{font-size:9px;gap:8px}
+      #FridayFooter-{{ section.id }} .fp-footer__signature .fp-footer__gigi{height:32px!important;max-width:38px!important;max-height:32px!important}
     }
+
     @media(max-width:749px){
       #FridayFooter-{{ section.id }} .fp-footer__grid{grid-template-columns:1fr 1fr;gap:0;padding:36px 20px 26px}
       #FridayFooter-{{ section.id }} .fp-footer__brand-block{grid-column:1/-1;grid-row:auto;border-bottom:1px solid var(--fp-line);padding-bottom:26px;margin-bottom:4px}
@@ -30,11 +43,14 @@
       #FridayFooter-{{ section.id }} .fp-footer__social a,#FridayFooter-{{ section.id }} .fp-footer__social>span{font-size:13px;gap:8px}
       #FridayFooter-{{ section.id }} .fp-footer__social svg{width:22px;height:22px}
       #FridayFooter-{{ section.id }} .fp-footer__email{font-size:11px;margin-top:13px}
-      #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap{margin-top:20px;min-height:78px}
+      #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap{display:flex;margin-top:20px;min-height:78px}
+      #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap span{font-size:10.5px}
       #FridayFooter-{{ section.id }} .fp-footer__col{min-height:132px;padding:21px 12px 18px 0}
       #FridayFooter-{{ section.id }} .fp-footer__col strong{font-size:var(--fp-footer-heading-mobile)}
       #FridayFooter-{{ section.id }} .fp-footer__col a,#FridayFooter-{{ section.id }} .fp-footer__col>span{font-size:var(--fp-footer-link-mobile);line-height:1.5}
-      #FridayFooter-{{ section.id }} .fp-footer__bottom{font-size:9px}
+      #FridayFooter-{{ section.id }} .fp-footer__bottom{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;min-height:36px;padding:10px 20px;font-size:9px}
+      #FridayFooter-{{ section.id }} .fp-footer__bottom-mobile-center{display:inline}
+      #FridayFooter-{{ section.id }} .fp-footer__signature{display:none}
     }
   </style>
   <div class="fp-shell fp-footer__grid">
@@ -79,7 +95,13 @@
 
   <div class="fp-footer__bottom">
     <span>© {{ 'now' | date: '%Y' }} {{ section.settings.copyright_name }}</span>
-    <span>{{ section.settings.bottom_center }}</span>
+    <span class="fp-footer__bottom-mobile-center">{{ section.settings.bottom_center }}</span>
+    <span class="fp-footer__signature">
+      {% if section.settings.gigi_icon != blank %}
+        {{ section.settings.gigi_icon | image_url: width: 120 | image_tag: class: 'fp-footer__gigi', loading: 'lazy', widths: '60,90,120', sizes: '44px', alt: section.settings.gigi_alt }}
+      {% endif %}
+      {% if section.settings.location_text != blank %}<span class="fp-footer__signature-text">{{ section.settings.location_text }}</span>{% endif %}
+    </span>
     <span>{{ section.settings.bottom_right }}</span>
   </div>
 </footer>
