@@ -52,7 +52,7 @@ class PredictiveSearchComponent extends Component {
     if (dialog) {
       document.addEventListener('keydown', this.#handleKeyboardShortcut, { signal });
       dialog.addEventListener(DialogCloseEvent.eventName, this.#handleDialogClose, { signal });
-      dialog.addEventListener(DialogOpenEvent.eventName, this.#handleDialogOpen, { signal, once: true });
+      dialog.addEventListener(DialogOpenEvent.eventName, this.#handleDialogOpen, { signal });
 
       this.addEventListener('click', this.#handleModalClick, { signal });
     }
@@ -106,6 +106,8 @@ class PredictiveSearchComponent extends Component {
   };
 
   #handleDialogOpen = () => {
+    requestAnimationFrame(() => this.refs.searchInput.focus());
+
     if (
       this.dataset.showRecentlyViewed !== 'false' &&
       !this.#emptyStateLoaded &&

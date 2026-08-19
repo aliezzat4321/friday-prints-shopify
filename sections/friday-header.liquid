@@ -23,7 +23,7 @@
     transform: none !important;
     box-shadow: none !important;
   }
-  #FridayHeader-{{ section.id }} .fp-search{display:grid;place-items:center;width:34px;height:34px;color:var(--fp-ink);text-decoration:none;flex:0 0 auto}
+  #FridayHeader-{{ section.id }} .fp-search{display:grid;place-items:center;width:34px;height:34px;padding:0;border:0;background:transparent;color:var(--fp-ink);text-decoration:none;cursor:pointer;flex:0 0 auto}
   #FridayHeader-{{ section.id }} .fp-search svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7}
 
   /* Full-screen Friday menu — intentionally lives after friday-production.css so it wins the cascade. */
@@ -212,9 +212,9 @@
 
       <div class="fp-nav__actions">
         {% if section.settings.show_search %}
-          <a class="fp-search" href="{{ routes.search_url }}" aria-label="{{ section.settings.search_label | escape }}">
+          <button class="fp-search" type="button" aria-label="{{ section.settings.search_label | escape }}" aria-haspopup="dialog" on:click="#search-modal/showDialog">
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.6"/><path d="m16 16 5 5"/></svg>
-          </a>
+          </button>
         {% endif %}
 
         {% if section.settings.show_instagram and section.settings.instagram_url != blank %}
@@ -264,6 +264,7 @@
     </div>
   </div>
 </header>
+{% if section.settings.show_search %}{% render 'search-modal' %}{% endif %}
 <script>
   (() => {
     const root = document.getElementById('FridayHeader-{{ section.id }}');

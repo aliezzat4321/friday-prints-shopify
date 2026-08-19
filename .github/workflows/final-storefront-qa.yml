@@ -74,7 +74,7 @@ jobs:
 
               let searchOverlay=null;
               if(name==='search' && !navigationError){
-                const trigger=page.locator('search-button button').first();
+                const trigger=page.locator('.fp-search').first();
                 if(await trigger.count()){
                   await trigger.click();
                   await page.waitForTimeout(350);
