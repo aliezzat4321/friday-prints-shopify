@@ -1,25 +1,30 @@
 /* Friday Prints — mobile-only polish fixes */
 @media (max-width: 749px){
-  /* Give the navigation breathing room beneath the announcement bar. */
+  /* Give the navigation breathing room beneath the announcement bar
+     without turning the compact mobile header into a large block. */
   .fp-site-header .fp-nav{
-    height:92px!important;
-    min-height:92px!important;
-    padding-top:10px!important;
-    padding-bottom:8px!important;
+    height:58px!important;
+    min-height:58px!important;
+    padding-top:6px!important;
+    padding-bottom:2px!important;
     align-items:center!important;
   }
 
-  /* Remove the accidental outer-right rule from the 2-column footer grid
-     while preserving the intentional divider between the two columns. */
+  /* Mobile footer: keep the internal centre divider, remove the accidental
+     rule on the far-right edge of the two-column navigation grid. */
   .fp-footer .fp-footer__grid{
     border-right:0!important;
   }
-  .fp-footer .fp-footer__col:nth-of-type(2n){
+  .fp-footer .fp-footer__col{
     border-right:0!important;
+  }
+  .fp-footer .fp-footer__col:nth-of-type(2n){
+    border-left:1px solid var(--fp-line)!important;
+    padding-left:12px!important;
   }
 
   /* Product artwork should anchor to the same left edge as the PDP copy,
-     rather than reading as a centered carousel card on first load. */
+     rather than reading as a centred carousel card on first load. */
   .fp-pdp .fp-pdp__gallery{
     padding-left:20px!important;
     padding-right:0!important;
