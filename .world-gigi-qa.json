@@ -1,14 +1,15 @@
 {
-  "pass": true,
-  "run_id": 32301284906,
-  "source_sha": "0f21d8cb5f0626bbd83c6201f059fdd19c7eea89",
+  "pass": false,
+  "run_id": 32301330420,
+  "source_sha": "682178b61bfbd631d8b3b80851dd676f0698fba4",
   "out": [
     {
       "name": "desktop-1440",
       "w": 1440,
       "h": 1000,
-      "ok": true,
+      "ok": false,
       "m": {
+        "cssLoaded": false,
         "title": "world of GiGi",
         "hero": {
           "x": 0,
@@ -35,9 +36,7 @@
           "bottom": 2662.4
         },
         "galleryDisplay": "grid",
-        "gridTemplateColumns": "440px 440px 440px",
-        "signoffContent": "\"still wandering.\"",
-        "signoffDisplay": "flex",
+        "overflowX": "visible",
         "cardCount": 5,
         "cards": [
           {
@@ -81,48 +80,19 @@
             "bottom": 2605.8
           }
         ],
-        "imgHeights": [
-          621.3,
-          623,
-          622.2,
-          623.9,
-          621.3
-        ],
-        "imgNatural": [
-          [
-            475,
-            670
-          ],
-          [
-            475,
-            672
-          ],
-          [
-            475,
-            671
-          ],
-          [
-            475,
-            673
-          ],
-          [
-            475,
-            670
-          ]
-        ],
         "broken": 0,
         "overflow": false,
-        "storyLast": "36px",
-        "titleTransform": "none"
+        "storyLast": "36px"
       },
-      "actualCols": 3
+      "composition": false
     },
     {
       "name": "laptop-1280",
       "w": 1280,
       "h": 800,
-      "ok": true,
+      "ok": false,
       "m": {
+        "cssLoaded": false,
         "title": "world of GiGi",
         "hero": {
           "x": 0,
@@ -149,9 +119,7 @@
           "bottom": 2491.6
         },
         "galleryDisplay": "grid",
-        "gridTemplateColumns": "386.656px 386.672px 386.656px",
-        "signoffContent": "\"still wandering.\"",
-        "signoffDisplay": "flex",
+        "overflowX": "visible",
         "cardCount": 5,
         "cards": [
           {
@@ -195,48 +163,19 @@
             "bottom": 2435.3
           }
         ],
-        "imgHeights": [
-          546,
-          547.5,
-          546.7,
-          548.3,
-          546
-        ],
-        "imgNatural": [
-          [
-            422,
-            596
-          ],
-          [
-            422,
-            598
-          ],
-          [
-            422,
-            597
-          ],
-          [
-            422,
-            598
-          ],
-          [
-            422,
-            596
-          ]
-        ],
         "broken": 0,
         "overflow": false,
-        "storyLast": "36px",
-        "titleTransform": "none"
+        "storyLast": "36px"
       },
-      "actualCols": 3
+      "composition": false
     },
     {
       "name": "tablet-820",
       "w": 820,
       "h": 1180,
-      "ok": true,
+      "ok": false,
       "m": {
+        "cssLoaded": false,
         "title": "world of GiGi",
         "hero": {
           "x": 0,
@@ -263,9 +202,7 @@
           "bottom": 2859.2
         },
         "galleryDisplay": "grid",
-        "gridTemplateColumns": "374px 374px",
-        "signoffContent": "\"still wandering.\"",
-        "signoffDisplay": "flex",
+        "overflowX": "visible",
         "cardCount": 5,
         "cards": [
           {
@@ -309,48 +246,19 @@
             "bottom": 2815.2
           }
         ],
-        "imgHeights": [
-          527.3,
-          529.8,
-          528.6,
-          531.1,
-          527.3
-        ],
-        "imgNatural": [
-          [
-            270,
-            381
-          ],
-          [
-            270,
-            383
-          ],
-          [
-            270,
-            382
-          ],
-          [
-            270,
-            384
-          ],
-          [
-            270,
-            381
-          ]
-        ],
         "broken": 0,
         "overflow": false,
-        "storyLast": "32px",
-        "titleTransform": "none"
+        "storyLast": "32px"
       },
-      "actualCols": 2
+      "composition": false
     },
     {
       "name": "mobile-390",
       "w": 390,
       "h": 844,
-      "ok": true,
+      "ok": false,
       "m": {
+        "cssLoaded": false,
         "title": "world of GiGi",
         "hero": {
           "x": 0,
@@ -377,9 +285,7 @@
           "bottom": 2233
         },
         "galleryDisplay": "grid",
-        "gridTemplateColumns": "183px 183px",
-        "signoffContent": "\"still wandering.\"",
-        "signoffDisplay": "flex",
+        "overflowX": "visible",
         "cardCount": 5,
         "cards": [
           {
@@ -423,48 +329,19 @@
             "bottom": 2201
           }
         ],
-        "imgHeights": [
-          258,
-          259.3,
-          258.6,
-          259.9,
-          258
-        ],
-        "imgNatural": [
-          [
-            195,
-            274
-          ],
-          [
-            195,
-            276
-          ],
-          [
-            195,
-            275
-          ],
-          [
-            195,
-            276
-          ],
-          [
-            195,
-            274
-          ]
-        ],
         "broken": 0,
         "overflow": false,
-        "storyLast": "30px",
-        "titleTransform": "none"
+        "storyLast": "30px"
       },
-      "actualCols": 2
+      "composition": false
     },
     {
       "name": "mobile-320",
       "w": 320,
       "h": 700,
-      "ok": true,
+      "ok": false,
       "m": {
+        "cssLoaded": false,
         "title": "world of GiGi",
         "hero": {
           "x": 0,
@@ -491,9 +368,7 @@
           "bottom": 2123.4
         },
         "galleryDisplay": "grid",
-        "gridTemplateColumns": "148px 148px",
-        "signoffContent": "\"still wandering.\"",
-        "signoffDisplay": "flex",
+        "overflowX": "visible",
         "cardCount": 5,
         "cards": [
           {
@@ -537,41 +412,11 @@
             "bottom": 2091.4
           }
         ],
-        "imgHeights": [
-          208.7,
-          209.7,
-          209.2,
-          210.2,
-          208.7
-        ],
-        "imgNatural": [
-          [
-            160,
-            225
-          ],
-          [
-            160,
-            226
-          ],
-          [
-            160,
-            226
-          ],
-          [
-            160,
-            227
-          ],
-          [
-            160,
-            225
-          ]
-        ],
         "broken": 0,
         "overflow": false,
-        "storyLast": "30px",
-        "titleTransform": "none"
+        "storyLast": "30px"
       },
-      "actualCols": 2
+      "composition": false
     }
   ]
 }
