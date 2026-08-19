@@ -1,4 +1,4 @@
-name: Friday Cart Overlay QA
+name: Friday Cart Experience QA
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
         run: sleep 30
       - name: Open real cart and audit overlay
         env:
-          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
         run: |
           cat > cart-overlay-qa.mjs <<'EOF'
           import { chromium } from 'playwright';
@@ -90,9 +90,42 @@ jobs:
           });
 
           await page.screenshot({ path:'cart-overlay-open.png', fullPage:false });
+
+          await page.goto(`${process.env.STORE_URL}/cart?cartqa=${Date.now()}`, { waitUntil:'domcontentloaded', timeout:60000 });
+          await page.waitForLoadState('networkidle', { timeout:20000 }).catch(() => {});
+          await page.waitForTimeout(900);
+
+          const readCart = async () => page.evaluate(() => {
+            const summary=document.querySelector('.cart-page__summary');
+            const checkout=document.querySelector('main[data-template*="cart"] .cart__checkout-button');
+            const media=document.querySelector('main[data-template*="cart"] .cart-items__media-container');
+            const total=document.querySelector('main[data-template*="cart"] .cart-totals__total-value');
+            if(!summary||!checkout||!media||!total) return {missing:true};
+            const s=getComputedStyle(summary); const b=getComputedStyle(checkout);
+            return {
+              summaryBg:s.backgroundColor,
+              summaryBorderLeft:parseFloat(s.borderLeftWidth),
+              summaryBorderTop:parseFloat(s.borderTopWidth),
+              checkoutBg:b.backgroundColor,
+              checkoutText:checkout.textContent.trim(),
+              checkoutWidth:checkout.getBoundingClientRect().width,
+              mediaWidth:media.getBoundingClientRect().width,
+              total:total.textContent.trim(),
+              kicker:Boolean(document.querySelector('.fp-cart-summary-kicker')),
+              assurances:Boolean(document.querySelector('.fp-cart-assurances')),
+              overflow:document.documentElement.scrollWidth>innerWidth+2
+            };
+          });
+
+          const cartDesktop=await readCart();
+          await page.screenshot({ path:'cart-page-desktop.png', fullPage:true });
+          await page.setViewportSize({ width:390, height:844 });
+          await page.waitForTimeout(400);
+          const cartMobile=await readCart();
+          await page.screenshot({ path:'cart-page-mobile.png', fullPage:true });
           await browser.close();
 
-          const pass = !metrics.missing
+          const overlayPass = !metrics.missing
             && metrics.drawerOpen
             && metrics.stylesheetLoaded
             && Math.abs(metrics.wrapper.width - metrics.viewport.width) <= 2
@@ -101,8 +134,28 @@ jobs:
             && parseFloat(metrics.borderLeftWidth) >= 1
             && Number(metrics.dialogZIndex) > 1000;
 
-          fs.writeFileSync('cart-overlay-result.json', JSON.stringify({ pass, metrics, consoleErrors:errors }, null, 2));
-          console.log(JSON.stringify({ pass, metrics }, null, 2));
+          const desktopPass=!cartDesktop.missing
+            && cartDesktop.summaryBg==='rgba(0, 0, 0, 0)'
+            && cartDesktop.summaryBorderLeft>=1
+            && cartDesktop.checkoutBg.includes('21, 19, 15')
+            && cartDesktop.checkoutText.toLowerCase().includes('proceed to checkout')
+            && cartDesktop.mediaWidth>=130
+            && !cartDesktop.total.includes('EGP')
+            && cartDesktop.kicker&&cartDesktop.assurances&&!cartDesktop.overflow;
+
+          const mobilePass=!cartMobile.missing
+            && cartMobile.summaryBg==='rgba(0, 0, 0, 0)'
+            && cartMobile.summaryBorderLeft===0
+            && cartMobile.summaryBorderTop>=1
+            && cartMobile.checkoutWidth>=330
+            && cartMobile.mediaWidth>=90
+            && !cartMobile.total.includes('EGP')
+            && !cartMobile.overflow;
+
+          const pass=overlayPass&&desktopPass&&mobilePass;
+
+          fs.writeFileSync('cart-overlay-result.json', JSON.stringify({ pass, overlayPass, desktopPass, mobilePass, metrics, cartDesktop, cartMobile, consoleErrors:errors }, null, 2));
+          console.log(JSON.stringify({ pass, overlayPass, desktopPass, mobilePass, cartDesktop, cartMobile }, null, 2));
           if (!pass) process.exitCode = 1;
           EOF
           node cart-overlay-qa.mjs
@@ -113,6 +166,8 @@ jobs:
           name: friday-cart-overlay-open
           path: |
             cart-overlay-open.png
+            cart-page-desktop.png
+            cart-page-mobile.png
             cart-overlay-result.json
           retention-days: 3
       - name: Record QA result

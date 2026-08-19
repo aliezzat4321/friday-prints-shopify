@@ -123,7 +123,7 @@
             {% endif %}
           >
             <summary class="cart-discount__summary">
-              <span class="cart-discount__label cart-primary-typography">{{ 'content.discount' | t }}</span>
+              <span class="cart-discount__label cart-primary-typography">{% if request.page_type == 'cart' %}have a discount code?{% else %}{{ 'content.discount' | t }}{% endif %}</span>
 
               <span class="cart-totals__icon">
                 {{- 'icon-plus.svg' | inline_asset_content -}}
@@ -219,13 +219,7 @@
     </div>
   {% endif %}
 
-  {%- liquid
-    if settings.currency_code_enabled_cart_total
-      assign total_price = cart.total_price | money_with_currency
-    else
-      assign total_price = cart.total_price | money
-    endif
-  -%}
+  {%- assign total_price = cart.total_price | money -%}
 
   <div class="cart-totals__container{% if settings.show_installments %} cart-totals__container--has-installments{% endif %}">
     <span
@@ -269,7 +263,7 @@
     form="cart-form"
   >
     <span class="button-text">
-      {{ 'content.checkout' | t }}
+      {% if request.page_type == 'cart' %}proceed to checkout →{% else %}{{ 'content.checkout' | t }} →{% endif %}
     </span>
   </button>
 
@@ -284,6 +278,14 @@
     </div>
   {% endif %}
 </div>
+
+{% if request.page_type == 'cart' %}
+  <ul class="fp-cart-assurances" aria-label="Order information">
+    <li>numbered edition</li>
+    <li>made to order in Egypt</li>
+    <li>Instapay + cash on delivery</li>
+  </ul>
+{% endif %}
 
 {% stylesheet %}
   .cart-actions {

@@ -28,7 +28,13 @@
       {{ 'content.your_cart_is_empty' | t }}
     {%- else -%}
       {{ block_settings.title }}
-      {%- if block_settings.show_count -%}{% render 'cart-bubble' %}{%- endif -%}
+      {%- if block_settings.show_count -%}
+        {%- if request.page_type == 'cart' -%}
+          <span class="fp-cart-count">{% if cart.item_count < 10 %}0{% endif %}{{ cart.item_count }} {% if cart.item_count == 1 %}PRINT{% else %}PRINTS{% endif %}</span>
+        {%- else -%}
+          {% render 'cart-bubble' %}
+        {%- endif -%}
+      {%- endif -%}
     {%- endif -%}
   </h1>
 </div>
