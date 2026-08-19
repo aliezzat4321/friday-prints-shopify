@@ -1,35 +1,21 @@
 {
-  "pass": true,
-  "meetGiGi": true,
-  "prevCorrectAtStart": true,
+  "pass": false,
+  "meetGiGi": false,
+  "prevCorrectAtStart": false,
   "prevEnablesAfterScroll": true,
-  "atHomeCompat": true,
+  "atHomeCompat": false,
   "initial": {
-    "buttons": [
-      {
-        "text": "shop prints",
-        "transform": "none"
-      },
-      {
-        "text": "Meet GiGi",
-        "transform": "none"
-      }
-    ],
-    "rail": {
-      "scrollLeft": 48,
-      "scrollWidth": 1910,
-      "clientWidth": 1372,
-      "paddingLeft": 48
-    },
-    "prevDisabled": true,
-    "nextDisabled": false,
-    "atHomeTitleFont": "40px",
-    "atHomeHasCompatCss": true
+    "buttons": [],
+    "rail": null,
+    "prevDisabled": null,
+    "nextDisabled": null,
+    "atHomeTitleFont": null,
+    "atHomeHasCompatCss": false
   },
   "afterScroll": {
-    "scrollLeft": 538,
-    "prevDisabled": false
+    "scrollLeft": null,
+    "prevDisabled": null
   },
-  "run_id": 32243841318,
-  "source_sha": "31450f910d5ede9e6147f73996bb3ceee93d488a"
+  "run_id": 32290871237,
+  "source_sha": "dc70585a10085167c5881ff87639bdcc10ec5996"
 }
