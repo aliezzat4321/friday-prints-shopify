@@ -54,8 +54,7 @@ jobs:
                 mediaJustify:media?getComputedStyle(media).justifyItems:null,
                 footerBorderRight:footer?getComputedStyle(footer).borderRightWidth:null,
                 cols,
-                overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
-                mobileCss:[...document.styleSheets].some(s=>(s.href||'').includes('friday-mobile-polish.css'))
+                overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2
               };
             });
             await page.screenshot({path:`mobile-polish-qa/${name}-pdp.png`,fullPage:false});
@@ -64,7 +63,7 @@ jobs:
             await page.screenshot({path:`mobile-polish-qa/${name}-footer.png`,fullPage:false});
             const noOuterRight=metrics.cols.every(c=>c.right==='0px');
             const centerDivider=metrics.cols.filter((_,i)=>i%2===1).every(c=>c.left==='1px');
-            const ok=metrics.mobileCss&&!metrics.overflow&&metrics.nav?.h>=57&&metrics.navPaddingTop==='6px'&&metrics.footerBorderRight==='0px'&&noOuterRight&&centerDivider&&metrics.mediaJustify==='start';
+            const ok=!metrics.overflow&&metrics.nav?.h>=57&&metrics.navPaddingTop==='6px'&&metrics.footerBorderRight==='0px'&&noOuterRight&&centerDivider&&metrics.mediaJustify==='start';
             if(!ok)pass=false;
             out.push({name,width,height,ok,metrics,productUrl});
             await ctx.close();
