@@ -86,11 +86,11 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
     padding-left:12px!important;
   }
 
-  /* PDP: first artwork aligns to the page's left content edge instead of
-     sitting visually centred inside the horizontal media rail. */
+  /* PDP: align the gallery to the content edge, but keep intentional breathing
+     room on the right. Multi-image products retain the horizontal swipe rail. */
   .fp-pdp .fp-pdp__gallery{
     padding-left:20px!important;
-    padding-right:0!important;
+    padding-right:20px!important;
   }
   .fp-pdp .fp-pdp__media-list{
     justify-content:flex-start!important;
@@ -108,5 +108,27 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
     object-position:left center!important;
     margin-left:0!important;
     margin-right:auto!important;
+  }
+
+  /* A single artwork should not look like a 78%-wide carousel card pinned to
+     the left. Give it a deliberate editorial width with balanced whitespace. */
+  .fp-pdp .fp-pdp__media:only-child{
+    flex:0 0 min(84vw,330px)!important;
+    width:min(84vw,330px)!important;
+    max-width:min(84vw,330px)!important;
+    aspect-ratio:auto!important;
+  }
+  .fp-pdp .fp-pdp__media:only-child .fp-pdp__media-button{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+  }
+  .fp-pdp .fp-pdp__media:only-child img,
+  .fp-pdp .fp-pdp__media:only-child svg{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    max-width:100%!important;
+    max-height:none!important;
   }
 }
