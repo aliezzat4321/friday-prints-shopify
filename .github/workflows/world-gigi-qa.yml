@@ -64,7 +64,15 @@ jobs:
             const ok=m.title==='world of GiGi' && m.cardCount>=5 && m.broken===0 && !m.overflow && m.columnCount===expectedCols && m.storyLast!=='16px';
             if(!ok) pass=false;
             out.push({name,w,h,ok,m});
-            await page.screenshot({path:`world-gigi-qa/${name}-full.png`,fullPage:true});
+            await page.screenshot({path:`world-gigi-qa/${name}-viewport.png`,fullPage:false});
+            const hero=page.locator('.fp-content-page--about .fp-page-hero');
+            const story=page.locator('.fp-world__story');
+            const galleryHead=page.locator('.fp-world__gallery-head');
+            const gallery=page.locator('.fp-world__gallery');
+            if(await hero.count()) await hero.screenshot({path:`world-gigi-qa/${name}-hero.png`});
+            if(await story.count()) await story.screenshot({path:`world-gigi-qa/${name}-story.png`});
+            if(await galleryHead.count()) await galleryHead.screenshot({path:`world-gigi-qa/${name}-gallery-head.png`});
+            if(await gallery.count()) await gallery.screenshot({path:`world-gigi-qa/${name}-gallery.png`});
             await ctx.close();
           }
           await browser.close();
