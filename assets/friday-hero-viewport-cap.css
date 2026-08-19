@@ -132,3 +132,34 @@
 @media (max-width:340px){
   html body .fp-content-page--about .fp-page-title{font-size:54px!important}
 }
+
+/* GiGi is a character breaking through an orbit, not a logo trapped in a badge. */
+html body .fp-content-page--about .fp-world__gigi::before{
+  width:286px!important;
+  height:205px!important;
+  border:1px solid rgba(255,255,255,.86)!important;
+  border-right-color:transparent!important;
+  border-radius:50%!important;
+  transform:translate(-50%,-50%) rotate(-10deg)!important;
+}
+html body .fp-content-page--about .fp-world__gigi img{
+  max-width:235px!important;
+  max-height:270px!important;
+}
+
+@media (min-width:750px) and (max-width:1000px){
+  html body .fp-content-page--about .fp-world__gigi::before{width:220px!important;height:158px!important}
+  html body .fp-content-page--about .fp-world__gigi img{max-width:176px!important;max-height:210px!important}
+}
+
+@media (max-width:749px){
+  html body .fp-content-page--about .fp-world__gigi::before{
+    width:192px!important;
+    height:138px!important;
+    transform:translate(-50%,-50%) rotate(-9deg)!important;
+  }
+  html body .fp-content-page--about .fp-world__gigi img{
+    max-width:148px!important;
+    max-height:178px!important;
+  }
+}
