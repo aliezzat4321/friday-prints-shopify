@@ -41,11 +41,11 @@
     "scriptLoaded": false
   },
   "consoleErrors": [
-    "Failed to load resource: the server responded with a status of 404 ()",
     "Framing 'https://shop.app/' violates the following Content Security Policy directive: \"frame-ancestors 'self' https://shop.app https://admin.shopify.com\". The request has been blocked.\n",
     "Failed to load resource: the server responded with a status of 403 ()",
+    "Failed to load resource: the server responded with a status of 404 ()",
     "Failed to load resource: the server responded with a status of 404 ()"
   ],
-  "run_id": 32232856987,
-  "source_sha": "b5254b52b96be079c367f49f2994f3f55d44afab"
+  "run_id": 32232952174,
+  "source_sha": "01029431a2ee8c2dcde6740c6180028b47b3e93e"
 }
