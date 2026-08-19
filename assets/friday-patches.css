@@ -86,37 +86,31 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
     padding-left:12px!important;
   }
 
-  /* PDP: align the gallery to the content edge, but keep intentional breathing
-     room on the right. Multi-image products retain the horizontal swipe rail. */
+  /* PDP gallery keeps equal page gutters. Multi-image products retain the
+     horizontal swipe rail; single-image products become a centered art plate. */
   .fp-pdp .fp-pdp__gallery{
     padding-left:20px!important;
     padding-right:20px!important;
   }
   .fp-pdp .fp-pdp__media-list{
-    justify-content:flex-start!important;
     margin-left:0!important;
-    padding-left:0!important;
     scroll-padding-left:0!important;
   }
-  .fp-pdp .fp-pdp__media{
-    justify-items:start!important;
-    scroll-snap-align:start!important;
-    margin-left:0!important;
-  }
-  .fp-pdp .fp-pdp__media img,
-  .fp-pdp .fp-pdp__media svg{
-    object-position:left center!important;
-    margin-left:0!important;
-    margin-right:auto!important;
-  }
 
-  /* A single artwork should not look like a 78%-wide carousel card pinned to
-     the left. Give it a deliberate editorial width with balanced whitespace. */
+  .fp-pdp .fp-pdp__media-list:has(> .fp-pdp__media:only-child){
+    display:block!important;
+    overflow:visible!important;
+    padding-left:0!important;
+    padding-right:0!important;
+  }
   .fp-pdp .fp-pdp__media:only-child{
-    flex:0 0 min(84vw,330px)!important;
-    width:min(84vw,330px)!important;
-    max-width:min(84vw,330px)!important;
+    display:block!important;
+    flex:none!important;
+    width:100%!important;
+    max-width:100%!important;
     aspect-ratio:auto!important;
+    margin:0 auto!important;
+    scroll-snap-align:none!important;
   }
   .fp-pdp .fp-pdp__media:only-child .fp-pdp__media-button{
     display:block!important;
@@ -130,5 +124,8 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
     height:auto!important;
     max-width:100%!important;
     max-height:none!important;
+    object-position:center center!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
   }
 }
