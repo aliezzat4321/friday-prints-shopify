@@ -97,15 +97,15 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
     scroll-padding-left:0!important;
   }
 
-  /* For a one-image product, size the RAIL itself to the viewport minus both
-     gutters. Shopify adds a 10px rail inset on mobile, so neutralize it here. */
+  /* For a one-image product, size the rail itself to the viewport minus both
+     gutters and remove the carousel's auto-centering offset. */
   .fp-pdp .fp-pdp__media-list:has(> .fp-pdp__media:only-child){
     display:block!important;
     width:calc(100vw - 40px)!important;
     max-width:calc(100vw - 40px)!important;
     overflow:visible!important;
     padding:0!important;
-    margin-left:-10px!important;
+    margin-left:0!important;
     margin-right:0!important;
   }
   .fp-pdp .fp-pdp__media:only-child{
