@@ -1,0 +1,46 @@
+{
+  "run_id": 32303374636,
+  "source_sha": "816473815278a36c365b9aa29ee4d60c5ff9dfbd",
+  "out": [
+    {
+      "name": "desktop",
+      "w": 1440,
+      "h": 1000,
+      "m": {
+        "heroHeight": 400,
+        "gigiImg": {
+          "w": 279.39996337890625,
+          "h": 279.4000244140625,
+          "transform": "matrix(1.27, 0, 0, 1.27, 0, 0)"
+        },
+        "orbit": {
+          "w": "300px",
+          "h": "172px",
+          "borderRight": "rgba(0, 0, 0, 0)",
+          "borderBottom": "rgba(0, 0, 0, 0)"
+        },
+        "overflow": false
+      }
+    },
+    {
+      "name": "mobile",
+      "w": 390,
+      "h": 844,
+      "m": {
+        "heroHeight": 429.09375,
+        "gigiImg": {
+          "w": 173.59999084472656,
+          "h": 173.5999755859375,
+          "transform": "matrix(1.24, 0, 0, 1.24, 0, 0)"
+        },
+        "orbit": {
+          "w": "202px",
+          "h": "122px",
+          "borderRight": "rgba(0, 0, 0, 0)",
+          "borderBottom": "rgba(0, 0, 0, 0)"
+        },
+        "overflow": false
+      }
+    }
+  ]
+}
