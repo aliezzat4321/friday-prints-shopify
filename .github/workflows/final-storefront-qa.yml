@@ -92,9 +92,12 @@ jobs:
                     const box=node.getBoundingClientRect();
                     const masthead=node.querySelector('.fp-search-overlay__masthead')?.getBoundingClientRect();
                     const searchField=node.querySelector('.predictive-search-form__header')?.getBoundingClientRect();
+                    const reset=node.querySelector('.predictive-search__reset-button');
+                    const resetBox=reset?.getBoundingClientRect();
                     return {
                       fitsViewport:box.left>=-1&&box.right<=window.innerWidth+1&&box.top>=-1&&box.bottom<=window.innerHeight+1,
-                      fieldBelowHeading:!!masthead&&!!searchField&&searchField.top>=masthead.bottom-2
+                      fieldBelowHeading:!!masthead&&!!searchField&&searchField.top>=masthead.bottom-2,
+                      resetFits:!!reset&&!!resetBox&&reset.scrollWidth<=reset.clientWidth+1&&resetBox.right<=box.right+1
                     };
                   }) : null;
                   searchOverlay={opened,heading:heading?.trim()||null,resultCards,viewAllPresent,layout};
@@ -140,6 +143,7 @@ jobs:
                 if(!searchOverlay?.viewAllPresent) errors.push('VIEW_ALL_RESULTS_MISSING');
                 if(!searchOverlay?.layout?.fitsViewport) errors.push('SEARCH_OVERLAY_OUTSIDE_VIEWPORT');
                 if(device==='mobile'&&!searchOverlay?.layout?.fieldBelowHeading) errors.push('MOBILE_SEARCH_OVERLAY_NOT_STACKED');
+                if(device==='mobile'&&!searchOverlay?.layout?.resetFits) errors.push('MOBILE_SEARCH_CLEAR_CLIPPED');
               }
 
               await page.evaluate(()=>window.scrollTo(0,0)).catch(()=>{});
