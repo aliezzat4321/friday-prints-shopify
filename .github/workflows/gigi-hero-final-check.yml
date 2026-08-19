@@ -33,14 +33,16 @@ jobs:
               const hero=document.querySelector('.fp-content-page--about .fp-page-hero');
               const g=document.querySelector('.fp-world__gigi'); const img=g?.querySelector('img');
               const before=g?getComputedStyle(g,'::before'):null;
-              return {heroHeight:hero?.getBoundingClientRect().height,gigiImg:img?{w:img.getBoundingClientRect().width,h:img.getBoundingClientRect().height,transform:getComputedStyle(img).transform}:null,orbit:before?{w:before.width,h:before.height,borderRight:before.borderRightColor,borderBottom:before.borderBottomColor}:null,overflow:document.documentElement.scrollWidth>innerWidth+2};
+              return {cssLoaded:[...document.styleSheets].some(s=>(s.href||'').includes('friday-world-v4.css')),heroHeight:hero?.getBoundingClientRect().height,gigiImg:img?{w:img.getBoundingClientRect().width,h:img.getBoundingClientRect().height,transform:getComputedStyle(img).transform}:null,orbit:before?{content:before.content,display:before.display}:null,overflow:document.documentElement.scrollWidth>innerWidth+2};
             });
-            out.push({name,w,h,m});
+            const expectedHeight=name==='mobile'?m.heroHeight>=520:m.heroHeight>=480&&m.heroHeight<=520;
+            const ok=m.cssLoaded&&expectedHeight&&m.gigiImg?.w>250&&(m.orbit?.display==='none'||m.orbit?.content==='none')&&!m.overflow;
+            out.push({name,w,h,ok,m});
             await page.locator('.fp-content-page--about .fp-page-hero').screenshot({path:`gigi-hero-final-check/${name}.png`});
             await ctx.close();
           }
           await browser.close();
-          fs.writeFileSync('.gigi-hero-final-check.json',JSON.stringify({run_id:Number(process.env.GITHUB_RUN_ID),source_sha:process.env.GITHUB_SHA,out},null,2));
+          fs.writeFileSync('.gigi-hero-final-check.json',JSON.stringify({pass:out.every(v=>v.ok),run_id:Number(process.env.GITHUB_RUN_ID),source_sha:process.env.GITHUB_SHA,out},null,2));
           EOF
           node check.mjs
       - name: Record
