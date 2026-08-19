@@ -27,6 +27,71 @@ function init() {
 }
 
 /**
+ * These mobile rules need to win over Friday section-level stylesheets that
+ * are emitted later in the document than the global CSS bundle. Injecting one
+ * final runtime sheet keeps desktop untouched and makes the mobile handoff
+ * deterministic in both storefront preview and Theme Editor navigation.
+ */
+function installFridayMobilePolish() {
+  if (document.getElementById('friday-mobile-polish-runtime')) return;
+
+  const style = document.createElement('style');
+  style.id = 'friday-mobile-polish-runtime';
+  style.textContent = `
+    @media (max-width: 749px) {
+      .fp-site-header .fp-nav {
+        height: 58px !important;
+        min-height: 58px !important;
+        padding-top: 6px !important;
+        padding-bottom: 2px !important;
+        align-items: center !important;
+      }
+
+      .fp-footer .fp-footer__grid {
+        border-right: 0 !important;
+      }
+      .fp-footer .fp-footer__col {
+        border-right: 0 !important;
+      }
+      .fp-footer .fp-footer__col:nth-of-type(2n) {
+        border-left: 1px solid var(--fp-line) !important;
+        padding-left: 12px !important;
+      }
+
+      .fp-pdp .fp-pdp__gallery {
+        padding-left: 20px !important;
+        padding-right: 0 !important;
+      }
+      .fp-pdp .fp-pdp__back {
+        margin-left: 0 !important;
+      }
+      .fp-pdp .fp-pdp__media-list {
+        justify-content: flex-start !important;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        scroll-padding-left: 0 !important;
+      }
+      .fp-pdp .fp-pdp__media {
+        justify-items: start !important;
+        place-items: start !important;
+        scroll-snap-align: start !important;
+        margin-left: 0 !important;
+      }
+      .fp-pdp .fp-pdp__media-button {
+        place-items: start !important;
+      }
+      .fp-pdp .fp-pdp__media img,
+      .fp-pdp .fp-pdp__media svg {
+        object-position: left center !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+/**
  * Small runtime hardening for the custom Friday PDP.
  * The section owns the main interaction logic; this layer only makes the
  * initial lightbox image and the mobile post-CTA buy bar deterministic after
@@ -91,6 +156,8 @@ if (window.Shopify?.actions) {
   document.addEventListener('DOMContentLoaded', init, { once: true });
 }
 
+installFridayMobilePolish();
+
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => initFridayPdpRuntime(document), { once: true });
 } else {
@@ -98,5 +165,6 @@ if (document.readyState === 'loading') {
 }
 
 document.addEventListener('shopify:section:load', (event) => {
+  installFridayMobilePolish();
   initFridayPdpRuntime(event.target instanceof Element ? event.target : document);
 });
