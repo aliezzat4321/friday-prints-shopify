@@ -1,0 +1,95 @@
+name: Mobile Polish QA
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.mobile-polish-status.json'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - run: sleep 18
+      - name: Check mobile surfaces
+        env:
+          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+        run: |
+          cat > qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('mobile-polish-qa',{recursive:true});
+          const executablePath=fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined;
+          const browser=await chromium.launch({headless:true,executablePath});
+          const out=[]; let pass=true;
+          for(const [name,width,height] of [['mobile-390',390,844],['mobile-320',320,700]]){
+            const ctx=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
+            const page=await ctx.newPage();
+            await page.goto(`${process.env.STORE_URL}/collections/all?mp=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            const href=await page.locator('.fp-shop-card').first().getAttribute('href');
+            if(!href) throw new Error('No product');
+            const productUrl=new URL(href,process.env.STORE_URL).toString();
+            await page.goto(`${productUrl}?mp=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            await page.waitForTimeout(700);
+            const metrics=await page.evaluate(()=>{
+              const r=s=>{const e=document.querySelector(s);if(!e)return null;const b=e.getBoundingClientRect();return {x:b.x,y:b.y,w:b.width,h:b.height,right:b.right}};
+              const nav=document.querySelector('.fp-nav');
+              const ann=document.querySelector('.fp-announcement');
+              const media=document.querySelector('.fp-pdp__media');
+              const gallery=document.querySelector('.fp-pdp__gallery');
+              const footer=document.querySelector('.fp-footer__grid');
+              const cols=[...document.querySelectorAll('.fp-footer__col')].map(e=>({right:getComputedStyle(e).borderRightWidth,rect:e.getBoundingClientRect().toJSON()}));
+              return {
+                nav:r('.fp-nav'),announcement:r('.fp-announcement'),media:r('.fp-pdp__media'),gallery:r('.fp-pdp__gallery'),footer:r('.fp-footer__grid'),
+                navPaddingTop:nav?getComputedStyle(nav).paddingTop:null,
+                mediaJustify:media?getComputedStyle(media).justifyItems:null,
+                footerBorderRight:footer?getComputedStyle(footer).borderRightWidth:null,
+                cols,
+                overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
+                mobileCss:[...document.styleSheets].some(s=>(s.href||'').includes('friday-mobile-polish.css'))
+              };
+            });
+            await page.screenshot({path:`mobile-polish-qa/${name}-pdp.png`,fullPage:false});
+            await page.evaluate(()=>window.scrollTo(0,document.documentElement.scrollHeight));
+            await page.waitForTimeout(150);
+            await page.screenshot({path:`mobile-polish-qa/${name}-footer.png`,fullPage:false});
+            const outerRight=metrics.cols.filter((_,i)=>i%2===1).every(c=>c.right==='0px');
+            const ok=metrics.mobileCss&&!metrics.overflow&&metrics.nav?.h>=90&&metrics.navPaddingTop==='10px'&&metrics.footerBorderRight==='0px'&&outerRight&&metrics.mediaJustify==='start';
+            if(!ok)pass=false;
+            out.push({name,width,height,ok,metrics,productUrl});
+            await ctx.close();
+          }
+          await browser.close();
+          fs.writeFileSync('mobile-polish-qa/report.json',JSON.stringify({pass,out},null,2));
+          console.log(JSON.stringify({pass,out},null,2));
+          if(!pass)process.exitCode=1;
+          EOF
+          node qa.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-polish-qa
+          path: mobile-polish-qa/
+          retention-days: 2
+      - name: Record result
+        if: always()
+        run: |
+          cp mobile-polish-qa/report.json .mobile-polish-status.json || echo '{"pass":false}' > .mobile-polish-status.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .mobile-polish-status.json
+          git commit -m 'Record mobile polish QA [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
