@@ -1,51 +1,57 @@
 {
-  "pass": true,
-  "run_id": 32301559379,
-  "source_sha": "60f09fb9e65b54f99aee9efeebb83f618d9ac211",
+  "pass": false,
+  "run_id": 32301564467,
+  "source_sha": "4419aa00431cad9027955f8fbd74d5218fc84b1a",
   "out": [
     {
       "name": "desktop",
       "w": 1440,
       "h": 1000,
-      "cols": 3,
-      "actual": 3,
-      "ok": true,
+      "ok": false,
       "m": {
         "display": "grid",
         "grid": "440px 440px 440px",
-        "signoff": "\"still wandering.\"",
-        "signoffDisplay": "flex",
-        "signoffAlign": "center",
+        "overflowX": "visible",
         "cards": [
           {
             "x": 46,
             "y": 1347.5,
             "w": 440,
-            "h": 621.3
+            "h": 621.3,
+            "right": 486,
+            "bottom": 1968.7
           },
           {
             "x": 500,
             "y": 1347.5,
             "w": 440,
-            "h": 623
+            "h": 623,
+            "right": 940,
+            "bottom": 1970.5
           },
           {
             "x": 954,
             "y": 1347.5,
             "w": 440,
-            "h": 622.2
+            "h": 622.2,
+            "right": 1394,
+            "bottom": 1969.6
           },
           {
             "x": 46,
             "y": 1984.5,
             "w": 440,
-            "h": 623.9
+            "h": 623.9,
+            "right": 486,
+            "bottom": 2608.4
           },
           {
             "x": 500,
             "y": 1984.5,
             "w": 440,
-            "h": 621.3
+            "h": 621.3,
+            "right": 940,
+            "bottom": 2605.8
           }
         ],
         "broken": 0,
@@ -55,59 +61,143 @@
           "x": 0,
           "y": 163,
           "w": 1440,
-          "h": 420
+          "h": 420,
+          "right": 1440,
+          "bottom": 583
         },
         "gigi": {
           "x": 935.9,
           "y": 211.5,
           "w": 360,
-          "h": 330
-        }
+          "h": 330,
+          "right": 1295.9,
+          "bottom": 541.5
+        },
+        "v3": false
+      }
+    },
+    {
+      "name": "laptop",
+      "w": 1280,
+      "h": 800,
+      "ok": false,
+      "m": {
+        "display": "grid",
+        "grid": "386.656px 386.672px 386.656px",
+        "overflowX": "visible",
+        "cards": [
+          {
+            "x": 46,
+            "y": 1327.9,
+            "w": 386.7,
+            "h": 546,
+            "right": 432.7,
+            "bottom": 1873.8
+          },
+          {
+            "x": 446.7,
+            "y": 1327.9,
+            "w": 386.7,
+            "h": 547.5,
+            "right": 833.3,
+            "bottom": 1875.4
+          },
+          {
+            "x": 847.3,
+            "y": 1327.9,
+            "w": 386.7,
+            "h": 546.7,
+            "right": 1234,
+            "bottom": 1874.6
+          },
+          {
+            "x": 46,
+            "y": 1889.4,
+            "w": 386.7,
+            "h": 548.3,
+            "right": 432.7,
+            "bottom": 2437.6
+          },
+          {
+            "x": 446.7,
+            "y": 1889.4,
+            "w": 386.7,
+            "h": 546,
+            "right": 833.3,
+            "bottom": 2435.3
+          }
+        ],
+        "broken": 0,
+        "overflow": false,
+        "title": "world of GiGi",
+        "hero": {
+          "x": 0,
+          "y": 163,
+          "w": 1280,
+          "h": 420,
+          "right": 1280,
+          "bottom": 583
+        },
+        "gigi": {
+          "x": 809.5,
+          "y": 211.5,
+          "w": 360,
+          "h": 330,
+          "right": 1169.5,
+          "bottom": 541.5
+        },
+        "v3": false
       }
     },
     {
       "name": "tablet",
       "w": 820,
       "h": 1180,
-      "cols": 2,
-      "actual": 2,
-      "ok": true,
+      "ok": false,
       "m": {
         "display": "grid",
         "grid": "374px 374px",
-        "signoff": "\"still wandering.\"",
-        "signoffDisplay": "flex",
-        "signoffAlign": "center",
+        "overflowX": "visible",
         "cards": [
           {
             "x": 30,
             "y": 1203,
             "w": 374,
-            "h": 527.3
+            "h": 527.3,
+            "right": 404,
+            "bottom": 1730.3
           },
           {
             "x": 416,
             "y": 1203,
             "w": 374,
-            "h": 529.8
+            "h": 529.8,
+            "right": 790,
+            "bottom": 1732.8
           },
           {
             "x": 30,
             "y": 1744.8,
             "w": 374,
-            "h": 528.6
+            "h": 528.6,
+            "right": 404,
+            "bottom": 2273.4
           },
           {
             "x": 416,
             "y": 1744.8,
             "w": 374,
-            "h": 531.1
+            "h": 531.1,
+            "right": 790,
+            "bottom": 2275.9
           },
           {
             "x": 30,
             "y": 2287.9,
             "w": 374,
-            "h": 527.3
+            "h": 527.3,
+            "right": 404,
+            "bottom": 2815.2
           }
         ],
         "broken": 0,
@@ -117,59 +207,70 @@
           "x": 0,
           "y": 123,
           "w": 820,
-          "h": 390
+          "h": 390,
+          "right": 820,
+          "bottom": 513
         },
         "gigi": {
           "x": 559.4,
           "y": 181.5,
           "w": 230.6,
-          "h": 280
-        }
+          "h": 280,
+          "right": 790,
+          "bottom": 461.5
+        },
+        "v3": false
       }
     },
     {
       "name": "mobile",
       "w": 390,
       "h": 844,
-      "cols": 2,
-      "actual": 2,
-      "ok": true,
+      "ok": false,
       "m": {
         "display": "grid",
         "grid": "183px 183px",
-        "signoff": "\"still wandering.\"",
-        "signoffDisplay": "flex",
-        "signoffAlign": "center",
+        "overflowX": "visible",
         "cards": [
           {
             "x": 8,
             "y": 1408.5,
             "w": 183,
-            "h": 258.8
+            "h": 258.8,
+            "right": 191,
+            "bottom": 1667.3
           },
           {
             "x": 199,
             "y": 1408.5,
             "w": 183,
-            "h": 258.8
+            "h": 258.8,
+            "right": 382,
+            "bottom": 1667.3
           },
           {
             "x": 8,
             "y": 1675.3,
             "w": 183,
-            "h": 258.8
+            "h": 258.8,
+            "right": 191,
+            "bottom": 1934.2
           },
           {
             "x": 199,
             "y": 1675.3,
             "w": 183,
-            "h": 258.8
+            "h": 258.8,
+            "right": 382,
+            "bottom": 1934.2
           },
           {
             "x": 8,
             "y": 1942.2,
             "w": 183,
-            "h": 258.8
+            "h": 258.8,
+            "right": 191,
+            "bottom": 2201
           }
         ],
         "broken": 0,
@@ -179,14 +280,92 @@
           "x": 0,
           "y": 93,
           "w": 390,
-          "h": 446.1
+          "h": 446.1,
+          "right": 390,
+          "bottom": 539.1
         },
         "gigi": {
           "x": 20,
           "y": 320.1,
           "w": 350,
-          "h": 218
-        }
+          "h": 218,
+          "right": 370,
+          "bottom": 538.1
+        },
+        "v3": false
+      }
+    },
+    {
+      "name": "small-mobile",
+      "w": 320,
+      "h": 700,
+      "ok": false,
+      "m": {
+        "display": "grid",
+        "grid": "148px 148px",
+        "overflowX": "visible",
+        "cards": [
+          {
+            "x": 8,
+            "y": 1447.4,
+            "w": 148,
+            "h": 209.3,
+            "right": 156,
+            "bottom": 1656.7
+          },
+          {
+            "x": 164,
+            "y": 1447.4,
+            "w": 148,
+            "h": 209.3,
+            "right": 312,
+            "bottom": 1656.7
+          },
+          {
+            "x": 8,
+            "y": 1664.7,
+            "w": 148,
+            "h": 209.3,
+            "right": 156,
+            "bottom": 1874
+          },
+          {
+            "x": 164,
+            "y": 1664.7,
+            "w": 148,
+            "h": 209.3,
+            "right": 312,
+            "bottom": 1874
+          },
+          {
+            "x": 8,
+            "y": 1882,
+            "w": 148,
+            "h": 209.3,
+            "right": 156,
+            "bottom": 2091.4
+          }
+        ],
+        "broken": 0,
+        "overflow": false,
+        "title": "world of GiGi",
+        "hero": {
+          "x": 0,
+          "y": 93,
+          "w": 320,
+          "h": 446.1,
+          "right": 320,
+          "bottom": 539.1
+        },
+        "gigi": {
+          "x": 20,
+          "y": 320.1,
+          "w": 280,
+          "h": 218,
+          "right": 300,
+          "bottom": 538.1
+        },
+        "v3": false
       }
     }
   ]
