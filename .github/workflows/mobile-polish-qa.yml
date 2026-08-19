@@ -47,7 +47,7 @@ jobs:
               const nav=document.querySelector('.fp-nav');
               const media=document.querySelector('.fp-pdp__media');
               const footer=document.querySelector('.fp-footer__grid');
-              const cols=[...document.querySelectorAll('.fp-footer__col')].map(e=>({right:getComputedStyle(e).borderRightWidth}));
+              const cols=[...document.querySelectorAll('.fp-footer__col')].map(e=>({right:getComputedStyle(e).borderRightWidth,left:getComputedStyle(e).borderLeftWidth}));
               return {
                 nav:r('.fp-nav'),announcement:r('.fp-announcement'),media:r('.fp-pdp__media'),gallery:r('.fp-pdp__gallery'),footer:r('.fp-footer__grid'),
                 navPaddingTop:nav?getComputedStyle(nav).paddingTop:null,
@@ -62,8 +62,9 @@ jobs:
             await page.evaluate(()=>window.scrollTo(0,document.documentElement.scrollHeight));
             await page.waitForTimeout(150);
             await page.screenshot({path:`mobile-polish-qa/${name}-footer.png`,fullPage:false});
-            const outerRight=metrics.cols.filter((_,i)=>i%2===1).every(c=>c.right==='0px');
-            const ok=metrics.mobileCss&&!metrics.overflow&&metrics.nav?.h>=90&&metrics.navPaddingTop==='10px'&&metrics.footerBorderRight==='0px'&&outerRight&&metrics.mediaJustify==='start';
+            const noOuterRight=metrics.cols.every(c=>c.right==='0px');
+            const centerDivider=metrics.cols.filter((_,i)=>i%2===1).every(c=>c.left==='1px');
+            const ok=metrics.mobileCss&&!metrics.overflow&&metrics.nav?.h>=57&&metrics.navPaddingTop==='6px'&&metrics.footerBorderRight==='0px'&&noOuterRight&&centerDivider&&metrics.mediaJustify==='start';
             if(!ok)pass=false;
             out.push({name,width,height,ok,metrics,productUrl});
             await ctx.close();
