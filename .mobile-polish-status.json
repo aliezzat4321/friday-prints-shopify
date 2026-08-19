@@ -47,16 +47,20 @@
         "footerBorderRight": "0px",
         "cols": [
           {
-            "right": "0px"
+            "right": "0px",
+            "left": "0px"
           },
           {
-            "right": "1px"
+            "right": "1px",
+            "left": "0px"
           },
           {
-            "right": "0px"
+            "right": "0px",
+            "left": "0px"
           },
           {
-            "right": "1px"
+            "right": "1px",
+            "left": "0px"
           }
         ],
         "overflow": false,
@@ -110,16 +114,20 @@
         "footerBorderRight": "0px",
         "cols": [
           {
-            "right": "0px"
+            "right": "0px",
+            "left": "0px"
           },
           {
-            "right": "1px"
+            "right": "1px",
+            "left": "0px"
           },
           {
-            "right": "0px"
+            "right": "0px",
+            "left": "0px"
           },
           {
-            "right": "1px"
+            "right": "1px",
+            "left": "0px"
           }
         ],
         "overflow": false,
