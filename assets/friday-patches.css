@@ -66,4 +66,47 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
   body:has(.fp-site-header) .shopify-policy__body{font-size:11px;line-height:1.68}
   body:has(.fp-site-header) .shopify-policy__body h2{font-size:27px}
   body:has(.fp-site-header) .shopify-policy__body h3{font-size:21px}
+
+  /* Mobile header: the old 42px navigation row made the logo/actions feel
+     glued to the announcement bar. Keep it compact, but restore breathing room. */
+  .fp-site-header .fp-nav{
+    height:58px!important;
+    min-height:58px!important;
+    padding-top:6px!important;
+    padding-bottom:2px!important;
+    align-items:center!important;
+  }
+
+  /* Mobile footer: no enclosing rule on the right edge. The only vertical
+     rule should be the divider between the two link columns. */
+  .fp-footer .fp-footer__grid{border-right:0!important}
+  .fp-footer .fp-footer__col{border-right:0!important}
+  .fp-footer .fp-footer__col:nth-of-type(2n){
+    border-left:1px solid var(--fp-line)!important;
+    padding-left:12px!important;
+  }
+
+  /* PDP: first artwork aligns to the page's left content edge instead of
+     sitting visually centred inside the horizontal media rail. */
+  .fp-pdp .fp-pdp__gallery{
+    padding-left:20px!important;
+    padding-right:0!important;
+  }
+  .fp-pdp .fp-pdp__media-list{
+    justify-content:flex-start!important;
+    margin-left:0!important;
+    padding-left:0!important;
+    scroll-padding-left:0!important;
+  }
+  .fp-pdp .fp-pdp__media{
+    justify-items:start!important;
+    scroll-snap-align:start!important;
+    margin-left:0!important;
+  }
+  .fp-pdp .fp-pdp__media img,
+  .fp-pdp .fp-pdp__media svg{
+    object-position:left center!important;
+    margin-left:0!important;
+    margin-right:auto!important;
+  }
 }
