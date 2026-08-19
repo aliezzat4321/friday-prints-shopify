@@ -1,8 +1,8 @@
 {
-  "pass": false,
+  "pass": true,
   "overlayPass": true,
-  "desktopPass": false,
-  "mobilePass": false,
+  "desktopPass": true,
+  "mobilePass": true,
   "metrics": {
     "drawerHostOpen": true,
     "drawerOpen": true,
@@ -70,12 +70,12 @@
     "overflow": false
   },
   "consoleErrors": [
-    "Failed to load resource: the server responded with a status of 403 ()",
-    "Framing 'https://shop.app/' violates the following Content Security Policy directive: \"frame-ancestors 'self' https://shop.app https://admin.shopify.com\". The request has been blocked.\n",
     "Failed to load resource: the server responded with a status of 404 ()",
+    "Framing 'https://shop.app/' violates the following Content Security Policy directive: \"frame-ancestors 'self' https://shop.app https://admin.shopify.com\". The request has been blocked.\n",
+    "Failed to load resource: the server responded with a status of 403 ()",
     "Failed to load resource: the server responded with a status of 404 ()",
     "Failed to load resource: the server responded with a status of 404 ()"
   ],
-  "run_id": 32305570429,
-  "source_sha": "2ab67a94ad2adcd6081bb8b4d9ad7bfa325477c5"
+  "run_id": 32305856363,
+  "source_sha": "48be822153e497290f43ea1b53fa8f93e0e9d367"
 }
