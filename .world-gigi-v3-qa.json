@@ -1,7 +1,7 @@
 {
   "pass": false,
-  "run_id": 32301929061,
-  "source_sha": "2b4d3d5a91c548e9687936115570616092782df1",
+  "run_id": 32301559475,
+  "source_sha": "60f09fb9e65b54f99aee9efeebb83f618d9ac211",
   "out": [
     {
       "name": "desktop",
@@ -116,7 +116,7 @@
           "w": 340,
           "h": 300
         },
-        "broken": 6,
+        "broken": 7,
         "pageOverflow": false,
         "title": "world of GiGi"
       }
@@ -175,7 +175,7 @@
           "w": 245,
           "h": 250
         },
-        "broken": 5,
+        "broken": 6,
         "pageOverflow": false,
         "title": "world of GiGi"
       }
@@ -234,7 +234,7 @@
           "w": 300,
           "h": 205
         },
-        "broken": 8,
+        "broken": 9,
         "pageOverflow": false,
         "title": "world of GiGi"
       }
@@ -293,7 +293,7 @@
           "w": 300,
           "h": 205
         },
-        "broken": 10,
+        "broken": 11,
         "pageOverflow": false,
         "title": "world of GiGi"
       }
