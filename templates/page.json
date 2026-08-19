@@ -12,6 +12,41 @@
     "friday_page": {
       "type": "friday-page",
       "blocks": {
+        "world_seoul": {
+          "type": "world_product",
+          "settings": {
+            "product": "a-different-seoul-still-her-a3",
+            "note": "LIMITED EDITION / A3"
+          }
+        },
+        "world_dress": {
+          "type": "world_product",
+          "settings": {
+            "product": "before-the-dress-a4",
+            "note": "LIMITED EDITION / A4"
+          }
+        },
+        "world_held": {
+          "type": "world_product",
+          "settings": {
+            "product": "carefully-held-a4",
+            "note": "LIMITED EDITION / A4"
+          }
+        },
+        "world_cherry": {
+          "type": "world_product",
+          "settings": {
+            "product": "cherry-hour",
+            "note": "LIMITED EDITION / A3 + A4"
+          }
+        },
+        "world_kyoto": {
+          "type": "world_product",
+          "settings": {
+            "product": "friday-in-kyoto",
+            "note": "LIMITED EDITION ART PRINT"
+          }
+        },
         "faq_limited": {
           "type": "faq_item",
           "settings": {
@@ -86,6 +121,11 @@
         }
       },
       "block_order": [
+        "world_seoul",
+        "world_dress",
+        "world_held",
+        "world_cherry",
+        "world_kyoto",
         "faq_limited",
         "faq_editions",
         "faq_paper",

@@ -105,5 +105,8 @@
     {% if template.name == 'product' %}
       <script src="{{ 'friday-cart-open.js' | asset_url }}" defer></script>
     {% endif %}
+    {% if template.name == 'page' and page.handle == 'about' %}
+      {{ 'friday-world-v4.css' | asset_url | stylesheet_tag }}
+    {% endif %}
   </body>
 </html>

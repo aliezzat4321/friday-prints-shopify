@@ -134,8 +134,11 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
   }
 }
 
+/* Legacy World of GiGi pass kept for history only. The impossible media
+   query prevents it from competing with the consolidated v4 stylesheet. */
+@media (max-width:0px) and (min-width:1px){
 /* ==========================================================
-   WORLD OF GIGI — editorial character-page art direction
+   WORLD OF GIGI — legacy editorial character-page art direction
    ========================================================== */
 .fp-content-page--about{overflow:clip}
 
@@ -339,4 +342,5 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
 @media (prefers-reduced-motion:reduce){
   .fp-content-page--about .fp-world__ticker-track{animation:none!important}
   .fp-content-page--about .fp-world-card img{transition:none!important}
+}
 }

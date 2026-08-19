@@ -15,32 +15,6 @@
     #FridayPage-{{ section.id }} .fp-page-intro{max-width:58ch;margin:28px 0 0;font:14px/1.62 "Courier New",monospace}
     #FridayPage-{{ section.id }} .fp-page-intro p{margin:0}
 
-    #FridayPage-{{ section.id }}.fp-content-page--about .fp-page-hero{min-height:480px;background:var(--fp-pink);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(240px,.7fr);gap:50px;align-items:center}
-    #FridayPage-{{ section.id }} .fp-world__gigi{justify-self:center;align-self:end;width:min(100%,300px);height:360px;display:grid;place-items:end center;position:relative}
-    #FridayPage-{{ section.id }} .fp-world__gigi:before{content:"";position:absolute;width:280px;height:330px;border:2px solid rgba(255,255,255,.72);border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%) rotate(8deg)}
-    #FridayPage-{{ section.id }} .fp-world__gigi img{position:relative;z-index:1;display:block;max-width:220px;max-height:310px;width:auto;height:auto;object-fit:contain}
-    #FridayPage-{{ section.id }} .fp-world__story{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;padding:72px 46px;background:var(--fp-cream);border-bottom:1px solid var(--fp-line)}
-    #FridayPage-{{ section.id }} .fp-world__story h2{margin:0;color:var(--fp-red);font:italic 44px/1 Georgia,"Times New Roman",serif;letter-spacing:-.025em}
-    #FridayPage-{{ section.id }} .fp-world__copy{max-width:660px;font:16px/1.7 "Courier New",monospace}
-    #FridayPage-{{ section.id }} .fp-world__copy p{margin:0 0 18px}
-    #FridayPage-{{ section.id }} .fp-world__copy p:last-child{margin-bottom:0}
-    #FridayPage-{{ section.id }} .fp-world__ticker{overflow:hidden;border-bottom:1px solid var(--fp-ink);background:var(--fp-yellow);white-space:nowrap}
-    #FridayPage-{{ section.id }} .fp-world__ticker-track{display:inline-flex;gap:38px;min-width:max-content;padding:16px 0;font:700 11px/1 "Courier New",monospace;letter-spacing:.07em;text-transform:uppercase;animation:fpTicker 24s linear infinite}
-    #FridayPage-{{ section.id }} .fp-world__ticker-track span:after{content:"✦";margin-left:38px;color:var(--fp-red)}
-    @keyframes fpTicker{to{transform:translateX(-50%)}}
-    #FridayPage-{{ section.id }} .fp-world__gallery-head{display:flex;align-items:end;justify-content:space-between;gap:30px;padding:58px 46px 28px;background:var(--fp-red);color:#fff}
-    #FridayPage-{{ section.id }} .fp-world__gallery-head h2{margin:0;font:700 clamp(48px,5vw,72px)/.88 Georgia,"Times New Roman",serif;letter-spacing:-.045em;text-transform:lowercase}
-    #FridayPage-{{ section.id }} .fp-world__gallery-head a{color:#fff;text-underline-offset:4px;font:700 11px/1 "Courier New",monospace;text-transform:lowercase}
-    #FridayPage-{{ section.id }} .fp-world__gallery{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:95px;gap:12px;padding:0 46px 62px;background:var(--fp-red)}
-    #FridayPage-{{ section.id }} .fp-world-card{display:block;overflow:hidden;background:var(--fp-cream);border:1px solid rgba(255,255,255,.7)}
-    #FridayPage-{{ section.id }} .fp-world-card img{width:100%;height:100%;object-fit:contain;display:block;transition:transform .35s ease}
-    #FridayPage-{{ section.id }} .fp-world-card:hover img{transform:scale(1.018)}
-    #FridayPage-{{ section.id }} .fp-world-card:nth-child(1){grid-column:1/5;grid-row:span 5}
-    #FridayPage-{{ section.id }} .fp-world-card:nth-child(2){grid-column:5/9;grid-row:span 4}
-    #FridayPage-{{ section.id }} .fp-world-card:nth-child(3){grid-column:9/13;grid-row:span 6}
-    #FridayPage-{{ section.id }} .fp-world-card:nth-child(4){grid-column:5/9;grid-row:span 5}
-    #FridayPage-{{ section.id }} .fp-world-card:nth-child(5){grid-column:1/5;grid-row:span 4}
-
     #FridayPage-{{ section.id }}.fp-content-page--info .fp-page-hero{background:var(--fp-yellow)}
     #FridayPage-{{ section.id }} .fp-guide__edition{display:grid;grid-template-columns:1.15fr repeat(3,1fr);border-bottom:1px solid var(--fp-ink)}
     #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:210px;padding:34px 28px;border-right:1px solid var(--fp-ink);display:flex;flex-direction:column;justify-content:space-between}
@@ -87,9 +61,8 @@
     #FridayPage-{{ section.id }} .fp-generic-page__content a{color:inherit;text-underline-offset:3px}
 
     @media(max-width:1000px){
-      #FridayPage-{{ section.id }} .fp-world__story,#FridayPage-{{ section.id }} .fp-guide__care,#FridayPage-{{ section.id }} .fp-faq{gap:40px;padding-inline:30px}
-      #FridayPage-{{ section.id }} .fp-page-hero,#FridayPage-{{ section.id }} .fp-world__gallery-head{padding-inline:30px}
-      #FridayPage-{{ section.id }} .fp-world__gallery{padding-inline:30px}
+      #FridayPage-{{ section.id }} .fp-guide__care,#FridayPage-{{ section.id }} .fp-faq{gap:40px;padding-inline:30px}
+      #FridayPage-{{ section.id }} .fp-page-hero{padding-inline:30px}
       #FridayPage-{{ section.id }} .fp-guide__edition{grid-template-columns:1fr 1fr}
       #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(1),#FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2){border-bottom:1px solid var(--fp-ink)}
       #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2n){border-right:0}
@@ -98,18 +71,6 @@
       #FridayPage-{{ section.id }} .fp-page-hero{padding:46px 20px 34px}
       #FridayPage-{{ section.id }} .fp-page-title{font-size:64px}
       #FridayPage-{{ section.id }} .fp-page-intro{font-size:12px;margin-top:20px}
-      #FridayPage-{{ section.id }}.fp-content-page--about .fp-page-hero{min-height:0;grid-template-columns:1fr;padding-bottom:0;gap:10px}
-      #FridayPage-{{ section.id }} .fp-world__gigi{height:235px;width:220px;justify-self:end;margin-right:-14px}
-      #FridayPage-{{ section.id }} .fp-world__gigi:before{width:185px;height:218px}
-      #FridayPage-{{ section.id }} .fp-world__gigi img{max-width:140px;max-height:200px}
-      #FridayPage-{{ section.id }} .fp-world__story{grid-template-columns:1fr;gap:20px;padding:43px 20px 48px}
-      #FridayPage-{{ section.id }} .fp-world__story h2{font-size:34px}
-      #FridayPage-{{ section.id }} .fp-world__copy{font-size:12px;line-height:1.65}
-      #FridayPage-{{ section.id }} .fp-world__ticker-track{font-size:9px;padding:13px 0}
-      #FridayPage-{{ section.id }} .fp-world__gallery-head{padding:40px 20px 22px}
-      #FridayPage-{{ section.id }} .fp-world__gallery-head h2{font-size:44px}
-      #FridayPage-{{ section.id }} .fp-world__gallery{grid-template-columns:1fr 1fr;grid-auto-rows:auto;gap:8px;padding:0 12px 38px}
-      #FridayPage-{{ section.id }} .fp-world-card:nth-child(n){grid-column:auto;grid-row:auto;aspect-ratio:.707}
       #FridayPage-{{ section.id }} .fp-guide__edition{grid-template-columns:1fr 1fr}
       #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:160px;padding:24px 20px}
       #FridayPage-{{ section.id }} .fp-guide__edition h2{font-size:27px}
@@ -129,31 +90,99 @@
       #FridayPage-{{ section.id }} .fp-generic-page h1{font-size:58px}
       #FridayPage-{{ section.id }} .fp-generic-page__content{font-size:12px}
     }
-    @media(prefers-reduced-motion:reduce){#FridayPage-{{ section.id }} .fp-world__ticker-track{animation:none}#FridayPage-{{ section.id }} .fp-world-card img{transition:none}#FridayPage-{{ section.id }} .fp-world-card:hover img{transform:none}}
   </style>
 
   {% case fp_handle %}
     {% when 'about' %}
       <div class="fp-page-hero">
-        <div>
+        <div class="fp-page-hero__copy">
           {% if section.settings.about_eyebrow != blank %}<p class="fp-page-eyebrow">{{ section.settings.about_eyebrow }}</p>{% endif %}
           <h1 class="fp-page-title">{{ section.settings.about_title }}</h1>
           {% if section.settings.about_intro != blank %}<div class="fp-page-intro"><p>{{ section.settings.about_intro }}</p></div>{% endif %}
         </div>
-        <div class="fp-world__gigi" aria-hidden="true">{% if gigi_image %}{{ gigi_image | image_url: width: 600 | image_tag: loading: 'eager', widths: '180,280,420,600', sizes: '(max-width:749px) 140px, 220px', alt: '' }}{% endif %}</div>
+        <figure class="fp-world__gigi">
+          {% if gigi_image %}
+            {{ gigi_image | image_url: width: 900 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '320,480,640,760,900', sizes: '(max-width:749px) 78vw, (max-width:1000px) 38vw, 430px', alt: section.settings.about_gigi_alt }}
+          {% endif %}
+          <figcaption><span>GIGI / CHARACTER 001 / CAIRO</span><em>still wandering.</em></figcaption>
+        </figure>
       </div>
       {% if section.settings.about_ticker != blank %}
         {% assign ticker_items = section.settings.about_ticker | split: ',' %}
         <div class="fp-world__ticker" aria-hidden="true"><div class="fp-world__ticker-track">{% for repeat in (1..2) %}{% for item in ticker_items %}<span>{{ item | strip }}</span>{% endfor %}{% endfor %}</div></div>
       {% endif %}
       <div class="fp-world__story">
-        <h2>{{ section.settings.about_story_title }}</h2>
+        <div class="fp-world__story-lead">
+          <h2>{{ section.settings.about_story_title }}</h2>
+          <dl class="fp-world__facts">
+            <div><dt>ORIGIN</dt><dd>CAIRO</dd></div>
+            <div><dt>ARRIVED</dt><dd>A QUIET FRIDAY NIGHT</dd></div>
+            <div><dt>COLLECTS</dt><dd>MOODS, QUIRKS &amp; ADVENTURES</dd></div>
+          </dl>
+        </div>
         <div class="fp-world__copy rte">{{ section.settings.about_story }}</div>
       </div>
-      {% if all_prints != blank and all_prints.products_count > 0 %}
-        <div class="fp-world__gallery-head"><h2>{{ section.settings.about_gallery_title }}</h2><a href="{{ all_prints.url }}">{{ section.settings.about_gallery_cta }}</a></div>
-        <div class="fp-world__gallery">{% for product in all_prints.products limit: 5 %}{% if product.featured_image %}<a class="fp-world-card" href="{{ product.url }}">{{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', widths: '300,500,700,1000', sizes: '(max-width:749px) 50vw, 33vw', alt: product.featured_image.alt | default: product.title }}</a>{% endif %}{% endfor %}</div>
-      {% endif %}
+      <section class="fp-world__archive" aria-labelledby="FridayWorldArchive-{{ section.id }}">
+        <div class="fp-world__gallery-head">
+          <div><p>THE ARCHIVE / CURATED FIELD NOTES</p><h2 id="FridayWorldArchive-{{ section.id }}">{{ section.settings.about_gallery_title }}</h2></div>
+          {% if all_prints != blank %}<a href="{{ all_prints.url }}">{{ section.settings.about_gallery_cta }}</a>{% endif %}
+        </div>
+        <div class="fp-world__gallery">
+          {% assign archive_index = 0 %}
+          {% for block in section.blocks %}
+            {% if block.type == 'world_product' and block.settings.product != blank %}
+              {% assign archive_product = block.settings.product %}
+              {% assign archive_index = archive_index | plus: 1 %}
+              {% capture archive_number %}{% if archive_index < 10 %}0{% endif %}{{ archive_index }}{% endcapture %}
+              {% assign archive_note = block.settings.note %}
+              {% assign archive_alt = archive_product.featured_image.alt | default: archive_product.title %}
+              {% if archive_note == blank %}
+                {% if archive_product.handle contains '-a3' %}
+                  {% assign archive_note = 'LIMITED EDITION / A3' %}
+                {% elsif archive_product.handle contains '-a4' %}
+                  {% assign archive_note = 'LIMITED EDITION / A4' %}
+                {% else %}
+                  {% assign archive_note = 'LIMITED EDITION ART PRINT' %}
+                {% endif %}
+              {% endif %}
+              <article class="fp-world-card" data-index="{{ archive_number | strip }}" {{ block.shopify_attributes }}>
+                <a class="fp-world-card__link" href="{{ archive_product.url }}" aria-label="View {{ archive_product.title | escape }}">
+                  <div class="fp-world-card__media">
+                    {{ archive_product.featured_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '320,480,640,800,1000,1200,1400', sizes: '(max-width:749px) 78vw, (max-width:1000px) 44vw, 48vw', alt: archive_alt }}
+                    <span class="fp-world-card__open" aria-hidden="true">VIEW PRINT ↗</span>
+                  </div>
+                  <div class="fp-world-card__caption">
+                    <span>{{ archive_number }}</span>
+                    <h3>{{ archive_product.title }}</h3>
+                    <p>{{ archive_note }}</p>
+                  </div>
+                </a>
+              </article>
+            {% endif %}
+          {% endfor %}
+
+          {% if archive_index == 0 and all_prints != blank %}
+            {% for archive_product in all_prints.products limit: 5 %}
+              {% assign archive_index = archive_index | plus: 1 %}
+              {% capture archive_number %}{% if archive_index < 10 %}0{% endif %}{{ archive_index }}{% endcapture %}
+              {% assign archive_alt = archive_product.featured_image.alt | default: archive_product.title %}
+              <article class="fp-world-card" data-index="{{ archive_number | strip }}">
+                <a class="fp-world-card__link" href="{{ archive_product.url }}" aria-label="View {{ archive_product.title | escape }}">
+                  <div class="fp-world-card__media">
+                    {{ archive_product.featured_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '320,480,640,800,1000,1200,1400', sizes: '(max-width:749px) 78vw, (max-width:1000px) 44vw, 48vw', alt: archive_alt }}
+                    <span class="fp-world-card__open" aria-hidden="true">VIEW PRINT ↗</span>
+                  </div>
+                  <div class="fp-world-card__caption"><span>{{ archive_number }}</span><h3>{{ archive_product.title }}</h3><p>LIMITED EDITION ART PRINT</p></div>
+                </a>
+              </article>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </section>
+      <div class="fp-world__closing">
+        <p>GiGi is still wandering.</p>
+        {% if all_prints != blank %}<a href="{{ all_prints.url }}">follow the journey <span aria-hidden="true">→</span></a>{% endif %}
+      </div>
 
     {% when 'info' %}
       <div class="fp-page-hero">
@@ -215,6 +244,7 @@
     { "type": "text", "id": "about_title", "label": "Title", "default": "world of GiGi" },
     { "type": "textarea", "id": "about_intro", "label": "Intro", "default": "One character, many moods, a growing collection of imagined places and unexpected company." },
     { "type": "image_picker", "id": "about_gigi", "label": "GiGi image" },
+    { "type": "text", "id": "about_gigi_alt", "label": "GiGi image alt text", "default": "GiGi, the long-necked character behind Friday Prints" },
     { "type": "text", "id": "about_ticker", "label": "Ticker words", "info": "Separate items with commas.", "default": "moods, quirks, adventures, new friends, imagined worlds, loud lines" },
     { "type": "text", "id": "about_story_title", "label": "Story heading", "default": "how GiGi got here" },
     { "type": "richtext", "id": "about_story", "label": "Story", "default": "<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>" },
@@ -260,6 +290,15 @@
   ],
   "blocks": [
     {
+      "type": "world_product",
+      "name": "World archive print",
+      "limit": 5,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Print" },
+        { "type": "text", "id": "note", "label": "Archive note", "info": "Optional. Example: LIMITED EDITION / A4" }
+      ]
+    },
+    {
       "type": "faq_item",
       "name": "FAQ item",
       "settings": [
@@ -269,7 +308,7 @@
       ]
     }
   ],
-  "max_blocks": 12,
+  "max_blocks": 17,
   "presets": [{ "name": "Friday page system" }]
 }
 {% endschema %}
