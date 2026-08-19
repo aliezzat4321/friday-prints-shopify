@@ -1,55 +1,55 @@
 {
-  "pass": false,
+  "pass": true,
   "out": [
     {
       "w": 390,
       "h": 844,
-      "ok": false,
+      "ok": true,
       "m": {
         "viewport": 390,
         "list": {
-          "x": 10,
+          "x": 20,
           "width": 350,
-          "right": 360
+          "right": 370
         },
         "media": {
-          "x": 10,
+          "x": 20,
           "width": 350,
-          "right": 360
+          "right": 370
         },
         "img": {
-          "x": 10,
+          "x": 20,
           "width": 350,
-          "right": 360
+          "right": 370
         },
-        "leftGutter": 10,
-        "rightGutter": 30,
+        "leftGutter": 20,
+        "rightGutter": 20,
         "patchLoaded": true
       }
     },
     {
       "w": 320,
       "h": 700,
-      "ok": false,
+      "ok": true,
       "m": {
         "viewport": 320,
         "list": {
-          "x": 10,
+          "x": 20,
           "width": 280,
-          "right": 290
+          "right": 300
         },
         "media": {
-          "x": 10,
+          "x": 20,
           "width": 280,
-          "right": 290
+          "right": 300
         },
         "img": {
-          "x": 10,
+          "x": 20,
           "width": 280,
-          "right": 290
+          "right": 300
         },
-        "leftGutter": 10,
-        "rightGutter": 30,
+        "leftGutter": 20,
+        "rightGutter": 20,
         "patchLoaded": true
       }
     }
