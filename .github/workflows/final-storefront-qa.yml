@@ -31,7 +31,7 @@ jobs:
         run: sleep 30
       - name: Audit launch routes
         env:
-          STORE_URL: https://wy9z7gjpgosgm5mi-108268650782.shopifypreview.com
+          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
         run: |
           cat > final-qa.mjs <<'EOF'
           import { chromium } from 'playwright';
