@@ -47,10 +47,13 @@ jobs:
               const gallery=document.querySelector('.fp-world__gallery');
               const cards=[...document.querySelectorAll('.fp-world-card')];
               const imgs=cards.map(c=>c.querySelector('img')).filter(Boolean);
-              const rect=e=>{const r=e?.getBoundingClientRect();return r?{x:+r.x.toFixed(1),y:+r.y.toFixed(1),w:+r.width.toFixed(1),h:+r.height.toFixed(1)}:null};
+              const rect=e=>{const r=e?.getBoundingClientRect();return r?{x:+r.x.toFixed(1),y:+r.y.toFixed(1),w:+r.width.toFixed(1),h:+r.height.toFixed(1),right:+r.right.toFixed(1),bottom:+r.bottom.toFixed(1)}:null};
+              const gs=gallery?getComputedStyle(gallery):null;
+              const before=gallery?getComputedStyle(gallery,'::before'):null;
               return {
                 title:title?.textContent?.trim(),hero:rect(hero),gigi:rect(gigi),gallery:rect(gallery),
-                columnCount:gallery?getComputedStyle(gallery).columnCount:null,
+                galleryDisplay:gs?.display,gridTemplateColumns:gs?.gridTemplateColumns,
+                signoffContent:before?.content,signoffDisplay:before?.display,
                 cardCount:cards.length,cards:cards.map(rect),
                 imgHeights:imgs.map(i=>+i.getBoundingClientRect().height.toFixed(1)),
                 imgNatural:imgs.map(i=>[i.naturalWidth,i.naturalHeight]),
@@ -60,10 +63,11 @@ jobs:
                 titleTransform:getComputedStyle(title||document.body).textTransform
               };
             });
-            const expectedCols=w<=1000?'2':'3';
-            const ok=m.title==='world of GiGi' && m.cardCount>=5 && m.broken===0 && !m.overflow && m.columnCount===expectedCols && m.storyLast!=='16px';
+            const expectedCols=w<=1000?2:3;
+            const actualCols=(m.gridTemplateColumns||'').split(' ').filter(Boolean).length;
+            const ok=m.title==='world of GiGi' && m.cardCount===5 && m.broken===0 && !m.overflow && m.galleryDisplay==='grid' && actualCols===expectedCols && (m.signoffContent||'').includes('still wandering') && m.storyLast!=='16px';
             if(!ok) pass=false;
-            out.push({name,w,h,ok,m});
+            out.push({name,w,h,ok,m,actualCols});
             await page.screenshot({path:`world-gigi-qa/${name}-viewport.png`,fullPage:false});
             const hero=page.locator('.fp-content-page--about .fp-page-hero');
             const story=page.locator('.fp-world__story');
