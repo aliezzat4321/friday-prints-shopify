@@ -8,22 +8,22 @@
       "m": {
         "viewport": 390,
         "list": {
-          "x": 30,
+          "x": 10,
           "width": 350,
-          "right": 380
+          "right": 360
         },
         "media": {
-          "x": 30,
+          "x": 10,
           "width": 350,
-          "right": 380
+          "right": 360
         },
         "img": {
-          "x": 30,
+          "x": 10,
           "width": 350,
-          "right": 380
+          "right": 360
         },
-        "leftGutter": 30,
-        "rightGutter": 10,
+        "leftGutter": 10,
+        "rightGutter": 30,
         "patchLoaded": true
       }
     },
@@ -34,22 +34,22 @@
       "m": {
         "viewport": 320,
         "list": {
-          "x": 30,
+          "x": 10,
           "width": 280,
-          "right": 310
+          "right": 290
         },
         "media": {
-          "x": 30,
+          "x": 10,
           "width": 280,
-          "right": 310
+          "right": 290
         },
         "img": {
-          "x": 30,
+          "x": 10,
           "width": 280,
-          "right": 310
+          "right": 290
         },
-        "leftGutter": 30,
-        "rightGutter": 10,
+        "leftGutter": 10,
+        "rightGutter": 30,
         "patchLoaded": true
       }
     }
