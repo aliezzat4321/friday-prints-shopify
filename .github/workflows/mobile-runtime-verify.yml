@@ -1,0 +1,91 @@
+name: Mobile Runtime Verify
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.mobile-runtime-status.json'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - run: sleep 20
+      - name: Verify exact mobile preview
+        env:
+          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
+        run: |
+          cat > verify.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+          fs.mkdirSync('mobile-runtime-verify',{recursive:true});
+          const executablePath=fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined;
+          const browser=await chromium.launch({headless:true,executablePath});
+          const out=[]; let pass=true;
+          for(const [name,width,height] of [['390',390,844],['320',320,700]]){
+            const ctx=await browser.newContext({viewport:{width,height},deviceScaleFactor:1});
+            const page=await ctx.newPage();
+            const errors=[]; page.on('pageerror',e=>errors.push(String(e)));
+            await page.goto(`${process.env.STORE_URL}/collections/all?mrv=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            const href=await page.locator('.fp-shop-card').first().getAttribute('href');
+            if(!href) throw new Error('No product');
+            const productUrl=new URL(href,process.env.STORE_URL).toString();
+            await page.goto(`${productUrl}?mrv=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
+            await page.waitForTimeout(900);
+            const metrics=await page.evaluate(()=>{
+              const nav=document.querySelector('.fp-nav');
+              const media=document.querySelector('.fp-pdp__media');
+              const cols=[...document.querySelectorAll('.fp-footer__col')].map(e=>({right:getComputedStyle(e).borderRightWidth,left:getComputedStyle(e).borderLeftWidth}));
+              return {
+                runtimeStyle:!!document.getElementById('friday-mobile-polish-runtime'),
+                navHeight:nav?.getBoundingClientRect().height||0,
+                navPaddingTop:nav?getComputedStyle(nav).paddingTop:null,
+                mediaJustify:media?getComputedStyle(media).justifyItems:null,
+                mediaSnap:media?getComputedStyle(media).scrollSnapAlign:null,
+                galleryPaddingLeft:getComputedStyle(document.querySelector('.fp-pdp__gallery')).paddingLeft,
+                cols,
+                overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2
+              };
+            });
+            await page.screenshot({path:`mobile-runtime-verify/mobile-${name}.png`,fullPage:true});
+            const noOuter=metrics.cols.every(c=>c.right==='0px');
+            const center=metrics.cols.filter((_,i)=>i%2===1).every(c=>c.left==='1px');
+            const ok=metrics.runtimeStyle && !metrics.overflow && metrics.navHeight>=57 && metrics.navPaddingTop==='6px' && metrics.mediaJustify==='start' && metrics.mediaSnap==='start' && metrics.galleryPaddingLeft==='20px' && noOuter && center && errors.length===0;
+            if(!ok) pass=false;
+            out.push({name,ok,metrics,errors,productUrl});
+            await ctx.close();
+          }
+          await browser.close();
+          fs.writeFileSync('mobile-runtime-verify/report.json',JSON.stringify({pass,out},null,2));
+          console.log(JSON.stringify({pass,out},null,2));
+          if(!pass)process.exitCode=1;
+          EOF
+          node verify.mjs
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-runtime-verify
+          path: mobile-runtime-verify/
+          retention-days: 2
+      - name: Record status
+        if: always()
+        run: |
+          cp mobile-runtime-verify/report.json .mobile-runtime-status.json || echo '{"pass":false}' > .mobile-runtime-status.json
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .mobile-runtime-status.json
+          git commit -m 'Record mobile runtime status [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
