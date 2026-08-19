@@ -1,0 +1,57 @@
+{
+  "pass": false,
+  "out": [
+    {
+      "w": 390,
+      "h": 844,
+      "ok": false,
+      "m": {
+        "viewport": 390,
+        "list": {
+          "x": 30,
+          "width": 350,
+          "right": 380
+        },
+        "media": {
+          "x": 30,
+          "width": 350,
+          "right": 380
+        },
+        "img": {
+          "x": 30,
+          "width": 350,
+          "right": 380
+        },
+        "leftGutter": 30,
+        "rightGutter": 10,
+        "patchLoaded": true
+      }
+    },
+    {
+      "w": 320,
+      "h": 700,
+      "ok": false,
+      "m": {
+        "viewport": 320,
+        "list": {
+          "x": 30,
+          "width": 280,
+          "right": 310
+        },
+        "media": {
+          "x": 30,
+          "width": 280,
+          "right": 310
+        },
+        "img": {
+          "x": 30,
+          "width": 280,
+          "right": 310
+        },
+        "leftGutter": 30,
+        "rightGutter": 10,
+        "patchLoaded": true
+      }
+    }
+  ]
+}
