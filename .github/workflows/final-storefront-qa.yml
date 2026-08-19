@@ -72,6 +72,30 @@ jobs:
                 await page.waitForTimeout(500);
               } catch (error) { navigationError=String(error); }
 
+              let searchOverlay=null;
+              if(name==='search' && !navigationError){
+                const trigger=page.locator('search-button button').first();
+                if(await trigger.count()){
+                  await trigger.click();
+                  await page.waitForTimeout(350);
+                  const dialog=page.locator('#search-modal dialog[open]');
+                  const input=page.locator('#search-modal input[name="q"]');
+                  const opened=await dialog.count()>0;
+                  const heading=opened ? await dialog.locator('.fp-search-overlay__heading').textContent().catch(()=>null) : null;
+                  if(opened){
+                    await input.fill('before the dress');
+                    await page.waitForTimeout(1000);
+                  }
+                  const resultCards=opened ? await dialog.locator('.predictive-search-results__card--product').count() : 0;
+                  const viewAllPresent=opened ? await dialog.locator('.predictive-search__search-button').isVisible().catch(()=>false) : false;
+                  searchOverlay={opened,heading:heading?.trim()||null,resultCards,viewAllPresent};
+                  await page.screenshot({path:`final-storefront-qa/${device}-search-overlay.png`,fullPage:false}).catch(()=>{});
+                  if(opened) await dialog.locator('.predictive-search__close-modal-button').click().catch(()=>{});
+                } else {
+                  searchOverlay={opened:false,heading:null,resultCards:0,viewAllPresent:false};
+                }
+              }
+
               const metrics=await page.evaluate((expectedSelector)=>{
                 const broken=[...document.images].filter(i=>i.complete&&i.naturalWidth===0).map(i=>({src:i.currentSrc||i.src,alt:i.alt}));
                 const text=document.body.innerText;
@@ -100,6 +124,12 @@ jobs:
               if(metrics.scrollWidth>metrics.clientWidth+2) errors.push(`HORIZONTAL_OVERFLOW:${metrics.scrollWidth}-${metrics.clientWidth}`);
               if(metrics.brokenImages.length) errors.push(`BROKEN_IMAGES:${metrics.brokenImages.length}`);
               if(metrics.stockFooterLeak) errors.push('STOCK_FOOTER_CONTENT_LEAK');
+              if(name==='search'){
+                if(!searchOverlay?.opened) errors.push('SEARCH_OVERLAY_DID_NOT_OPEN');
+                if(searchOverlay?.heading!=='search prints') errors.push('SEARCH_OVERLAY_HEADING_MISSING');
+                if((searchOverlay?.resultCards??0)<1) errors.push('PREDICTIVE_PRODUCT_RESULTS_MISSING');
+                if(!searchOverlay?.viewAllPresent) errors.push('VIEW_ALL_RESULTS_MISSING');
+              }
 
               await page.evaluate(()=>window.scrollTo(0,0)).catch(()=>{});
               await page.waitForTimeout(150);
@@ -109,7 +139,7 @@ jobs:
               await page.screenshot({path:`final-storefront-qa/${device}-${name}-bottom.png`,fullPage:false}).catch(()=>{});
 
               if(errors.length) failed=true;
-              report.push({device,name,path,status,url:page.url(),metrics,consoleErrors,errors,navigationError});
+              report.push({device,name,path,status,url:page.url(),metrics,searchOverlay,consoleErrors,errors,navigationError});
               await page.close();
             }
             await context.close();

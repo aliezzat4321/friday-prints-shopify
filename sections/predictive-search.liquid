@@ -67,9 +67,9 @@
         {%- if search_results_count > 0 -%}
           {% if predictive_search.resources.products.size > 0 %}
             {%- liquid
-              assign title = 'content.search_results_resource_products' | t
+              assign title = 'matching prints'
               assign products = predictive_search.resources.products
-              render 'predictive-search-products-list', title: title, products: products
+              render 'predictive-search-products-list', title: title, products: products, limit: 4
             -%}
           {% endif %}
 
@@ -103,9 +103,10 @@
             %}
           {% endif %}
         {%- elsif predictive_search.resources.queries.size == 0 -%}
-          <p class="predictive-search-results__no-results">
-            {{ 'content.search_results_no_results' | t: terms: predictive_search.terms }}
-          </p>
+          <div class="predictive-search-results__no-results fp-predictive-no-results">
+            <p>{{ 'content.search_results_no_results' | t: terms: predictive_search.terms }}</p>
+            <a href="{{ collections['all'].url | default: routes.collections_url }}">browse all prints&nbsp;&nbsp;→</a>
+          </div>
         {% endif %}
       {% else %}
         {%- liquid
@@ -151,6 +152,45 @@
     </div>
   </div>
 {%- endif -%}
+
+{% stylesheet %}
+  .predictive-search-results__no-results.fp-predictive-no-results {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    margin: 0;
+    color: #15110f;
+    font: 12px/1.5 "Courier New", monospace;
+    text-align: left;
+  }
+
+  .fp-predictive-no-results p {
+    margin: 0;
+  }
+
+  .fp-predictive-no-results a {
+    flex: none;
+    color: #15110f;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .fp-predictive-no-results a:hover {
+    color: #e53f36;
+  }
+
+  @media screen and (max-width: 749px) {
+    .fp-predictive-no-results {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 18px;
+      font-size: 11px;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

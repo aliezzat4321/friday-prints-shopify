@@ -12,15 +12,14 @@
     "friday_search": {
       "type": "friday-search",
       "settings": {
-        "eyebrow": "LOOKING FOR SOMETHING?",
-        "heading": "find a print",
-        "placeholder": "type a title, mood, anything...",
+        "eyebrow": "SEARCH THE ARCHIVE",
+        "heading": "search prints",
+        "placeholder": "what are you looking for?",
         "input_label": "Search Friday Prints",
-        "submit_label": "Search",
-        "start_heading": "go on, have a look.",
-        "start_text": "Search by print title or whatever you remember from GiGi’s world.",
-        "no_results_heading": "nothing here yet.",
-        "no_results_text": "Try another word, or head back to Shop All and browse the whole wall.",
+        "start_heading": "looking for something?",
+        "start_text": "Search by title or keyword.",
+        "no_results_heading": "nothing found for",
+        "no_results_text": "Try another word or browse the complete collection.",
         "results_per_page": 20,
         "background_color": "#FBF1E4",
         "accent_color": "#E53F36"

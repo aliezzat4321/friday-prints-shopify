@@ -57,7 +57,7 @@ class PredictiveSearchComponent extends Component {
       this.addEventListener('click', this.#handleModalClick, { signal });
     }
 
-    if (RecentlyViewed.getProducts().length > 0) {
+    if (this.dataset.showRecentlyViewed !== 'false' && RecentlyViewed.getProducts().length > 0) {
       requestIdleCallback(() => {
         this.#loadEmptyState();
       });
@@ -106,7 +106,11 @@ class PredictiveSearchComponent extends Component {
   };
 
   #handleDialogOpen = () => {
-    if (!this.#emptyStateLoaded && RecentlyViewed.getProducts().length > 0) {
+    if (
+      this.dataset.showRecentlyViewed !== 'false' &&
+      !this.#emptyStateLoaded &&
+      RecentlyViewed.getProducts().length > 0
+    ) {
       this.#loadEmptyState();
     }
   };
@@ -233,6 +237,9 @@ class PredictiveSearchComponent extends Component {
         } else {
           const searchUrl = new URL(Theme.routes.search_url, location.origin);
           searchUrl.searchParams.set('q', this.refs.searchInput.value);
+          if (this.dataset.resourceTypes === 'product') {
+            searchUrl.searchParams.set('type', 'product');
+          }
           window.location.href = searchUrl.toString();
         }
         break;
@@ -317,6 +324,9 @@ class PredictiveSearchComponent extends Component {
     const url = new URL(Theme.routes.predictive_search_url, location.origin);
     url.searchParams.set('q', searchTerm);
     url.searchParams.set('resources[limit_scope]', 'each');
+    if (this.dataset.resourceTypes) {
+      url.searchParams.set('resources[type]', this.dataset.resourceTypes);
+    }
 
     const { predictiveSearchResults } = this.refs;
 
@@ -422,7 +432,7 @@ class PredictiveSearchComponent extends Component {
      * when #closeResults is called and therefore the height is animated */
     const viewedProducts = RecentlyViewed.getProducts();
 
-    if (viewedProducts.length > 0) {
+    if (this.dataset.showRecentlyViewed !== 'false' && viewedProducts.length > 0) {
       const recentlyViewedMarkup = await this.#getRecentlyViewedProductsMarkup();
       if (!recentlyViewedMarkup) return;
 
