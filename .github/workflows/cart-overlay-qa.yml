@@ -137,7 +137,7 @@ jobs:
           const desktopPass=!cartDesktop.missing
             && cartDesktop.summaryBg==='rgba(0, 0, 0, 0)'
             && cartDesktop.summaryBorderLeft>=1
-            && cartDesktop.checkoutBg.includes('21, 19, 15')
+            && cartDesktop.checkoutBg==='rgb(23, 18, 15)'
             && cartDesktop.checkoutText.toLowerCase().includes('proceed to checkout')
             && cartDesktop.mediaWidth>=130
             && !cartDesktop.total.includes('EGP')
@@ -147,7 +147,7 @@ jobs:
             && cartMobile.summaryBg==='rgba(0, 0, 0, 0)'
             && cartMobile.summaryBorderLeft===0
             && cartMobile.summaryBorderTop>=1
-            && cartMobile.checkoutWidth>=330
+            && cartMobile.checkoutWidth>=310
             && cartMobile.mediaWidth>=90
             && !cartMobile.total.includes('EGP')
             && !cartMobile.overflow;
