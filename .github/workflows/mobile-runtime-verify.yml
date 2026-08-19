@@ -83,6 +83,14 @@ jobs:
         if: always()
         run: |
           cp mobile-runtime-verify/report.json .mobile-runtime-status.json || echo '{"pass":false}' > .mobile-runtime-status.json
+          python - <<'PY'
+          import json, os
+          p='.mobile-runtime-status.json'
+          data=json.load(open(p))
+          data['run_id']=int(os.environ['GITHUB_RUN_ID'])
+          data['source_sha']=os.environ['GITHUB_SHA']
+          json.dump(data,open(p,'w'),indent=2)
+          PY
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add .mobile-runtime-status.json
