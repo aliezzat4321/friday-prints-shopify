@@ -23,7 +23,7 @@ jobs:
           node-version: '20'
       - run: npm install playwright@1.55.0 >/dev/null 2>&1
       - run: sleep 20
-      - name: Verify final composition
+      - name: Render current composition
         env:
           STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
         run: |
@@ -31,19 +31,18 @@ jobs:
           import { chromium } from 'playwright'; import fs from 'node:fs';
           fs.mkdirSync('world-gigi-final',{recursive:true});
           const browser=await chromium.launch({headless:true,executablePath:fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined});
-          const views=[['desktop',1440,1000,3],['tablet',820,1180,2],['mobile',390,844,2]]; const out=[]; let pass=true;
-          for(const [name,w,h,cols] of views){
+          const views=[['desktop',1440,1000],['laptop',1280,800],['tablet',820,1180],['mobile',390,844],['small-mobile',320,700]]; const out=[]; let pass=true;
+          for(const [name,w,h] of views){
             const ctx=await browser.newContext({viewport:{width:w,height:h},deviceScaleFactor:1}); const page=await ctx.newPage();
-            await page.goto(`${process.env.STORE_URL}/pages/about?final=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.goto(`${process.env.STORE_URL}/pages/about?v3qa=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
             await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{}); await page.waitForTimeout(1000);
             const m=await page.evaluate(()=>{
-              const g=document.querySelector('.fp-world__gallery'); const cards=[...document.querySelectorAll('.fp-world-card')];
-              const gs=getComputedStyle(g); const b=getComputedStyle(g,'::before');
-              const r=e=>{const x=e.getBoundingClientRect();return {x:+x.x.toFixed(1),y:+x.y.toFixed(1),w:+x.width.toFixed(1),h:+x.height.toFixed(1)}};
-              return {display:gs.display,grid:gs.gridTemplateColumns,signoff:b.content,signoffDisplay:b.display,signoffAlign:b.alignItems,cards:cards.map(r),broken:[...g.querySelectorAll('img')].filter(i=>!i.complete||!i.naturalWidth).length,overflow:document.documentElement.scrollWidth>innerWidth+2,title:document.querySelector('.fp-page-title')?.textContent?.trim(),hero:r(document.querySelector('.fp-page-hero')),gigi:r(document.querySelector('.fp-world__gigi'))};
+              const g=document.querySelector('.fp-world__gallery'); const cards=[...document.querySelectorAll('.fp-world-card')]; const gs=getComputedStyle(g);
+              const r=e=>{const x=e.getBoundingClientRect();return {x:+x.x.toFixed(1),y:+x.y.toFixed(1),w:+x.width.toFixed(1),h:+x.height.toFixed(1),right:+x.right.toFixed(1),bottom:+x.bottom.toFixed(1)}};
+              return {display:gs.display,grid:gs.gridTemplateColumns,overflowX:gs.overflowX,cards:cards.map(r),broken:[...g.querySelectorAll('img')].filter(i=>!i.complete||!i.naturalWidth).length,overflow:document.documentElement.scrollWidth>innerWidth+2,title:document.querySelector('.fp-page-title')?.textContent?.trim(),hero:r(document.querySelector('.fp-page-hero')),gigi:r(document.querySelector('.fp-world__gigi')),v3:[...document.styleSheets].some(s=>(s.href||'').includes('friday-world-v3.css'))};
             });
-            const actual=(m.grid||'').split(' ').filter(Boolean).length; const ok=m.display==='grid'&&actual===cols&&(m.signoff||'').includes('still wandering')&&m.broken===0&&!m.overflow&&m.title==='world of GiGi'; if(!ok)pass=false;
-            out.push({name,w,h,cols,actual,ok,m});
+            const ok=m.v3&&m.cards.length===5&&m.broken===0&&!m.overflow&&m.title==='world of GiGi'&&((w<750&&m.display==='flex')||(w>=750&&m.display==='grid')); if(!ok)pass=false;
+            out.push({name,w,h,ok,m});
             await page.locator('.fp-page-hero').screenshot({path:`world-gigi-final/${name}-hero.png`});
             await page.locator('.fp-world__story').screenshot({path:`world-gigi-final/${name}-story.png`});
             await page.locator('.fp-world__gallery-head').screenshot({path:`world-gigi-final/${name}-gallery-head.png`});
