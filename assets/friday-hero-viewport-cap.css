@@ -119,13 +119,8 @@
     align-self:start!important;
     margin:5px 0 0!important;
   }
-  html body .fp-content-page--about .fp-world__gigi::before{
-    width:168px!important;
-    height:184px!important;
-  }
-  html body .fp-content-page--about .fp-world__gigi img{
-    max-width:140px!important;
-    max-height:165px!important;
+  html body .fp-content-page--about .fp-page-intro + .fp-world__gigi{
+    margin-top:5px!important;
   }
 }
 
@@ -133,33 +128,44 @@
   html body .fp-content-page--about .fp-page-title{font-size:54px!important}
 }
 
-/* GiGi is a character breaking through an orbit, not a logo trapped in a badge. */
+/* GiGi breaks through an incomplete orbit instead of sitting inside a badge. */
 html body .fp-content-page--about .fp-world__gigi::before{
-  width:286px!important;
-  height:205px!important;
-  border:1px solid rgba(255,255,255,.86)!important;
+  width:300px!important;
+  height:172px!important;
+  border:1px solid rgba(255,255,255,.88)!important;
   border-right-color:transparent!important;
+  border-bottom-color:transparent!important;
   border-radius:50%!important;
-  transform:translate(-50%,-50%) rotate(-10deg)!important;
+  transform:translate(-50%,-50%) rotate(-9deg)!important;
 }
 html body .fp-content-page--about .fp-world__gigi img{
   max-width:235px!important;
   max-height:270px!important;
+  transform:scale(1.27)!important;
+  transform-origin:center center!important;
 }
 
 @media (min-width:750px) and (max-width:1000px){
-  html body .fp-content-page--about .fp-world__gigi::before{width:220px!important;height:158px!important}
-  html body .fp-content-page--about .fp-world__gigi img{max-width:176px!important;max-height:210px!important}
+  html body .fp-content-page--about .fp-world__gigi::before{
+    width:230px!important;
+    height:138px!important;
+  }
+  html body .fp-content-page--about .fp-world__gigi img{
+    max-width:176px!important;
+    max-height:210px!important;
+    transform:scale(1.22)!important;
+  }
 }
 
 @media (max-width:749px){
   html body .fp-content-page--about .fp-world__gigi::before{
-    width:192px!important;
-    height:138px!important;
-    transform:translate(-50%,-50%) rotate(-9deg)!important;
+    width:202px!important;
+    height:122px!important;
+    transform:translate(-50%,-50%) rotate(-8deg)!important;
   }
   html body .fp-content-page--about .fp-world__gigi img{
     max-width:148px!important;
     max-height:178px!important;
+    transform:scale(1.24)!important;
   }
 }
