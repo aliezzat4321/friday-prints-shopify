@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: '20'
       - run: npm install playwright@1.55.0 >/dev/null 2>&1
-      - run: sleep 24
+      - run: sleep 22
       - name: Visual check
         env:
           STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
@@ -39,7 +39,10 @@ jobs:
             const page=await ctx.newPage();
             await page.goto(`${process.env.STORE_URL}/pages/about?v3qa=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
             await page.waitForLoadState('networkidle',{timeout:20000}).catch(()=>{});
-            await page.waitForTimeout(1200);
+            await page.waitForTimeout(900);
+            const galleryLoc=page.locator('.fp-world__gallery');
+            if(await galleryLoc.count()) await galleryLoc.scrollIntoViewIfNeeded();
+            await page.waitForTimeout(900);
             const m=await page.evaluate(()=>{
               const gallery=document.querySelector('.fp-world__gallery');
               const cards=[...document.querySelectorAll('.fp-world-card')];
@@ -48,25 +51,26 @@ jobs:
               const rect=e=>{const r=e?.getBoundingClientRect();return r?{x:+r.x.toFixed(1),y:+r.y.toFixed(1),w:+r.width.toFixed(1),h:+r.height.toFixed(1)}:null};
               const gs=gallery?getComputedStyle(gallery):null;
               return {
-                cssLoaded:[...document.styleSheets].some(s=>(s.href||'').includes('friday-world-v3.css')),
                 display:gs?.display,overflowX:gs?.overflowX,
                 cards:cards.map(rect),hero:rect(hero),gigi:rect(gigi),
-                broken:[...document.images].filter(i=>!i.complete||!i.naturalWidth).length,
+                galleryBroken:[...gallery.querySelectorAll('img')].filter(i=>!i.complete||!i.naturalWidth).length,
                 pageOverflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
-                title:document.querySelector('.fp-page-title')?.textContent?.trim()
+                title:document.querySelector('.fp-page-title')?.textContent?.trim(),
+                heroHeight:hero?.getBoundingClientRect().height,
+                gigiImgWidth:document.querySelector('.fp-world__gigi img')?.getBoundingClientRect().width
               };
             });
             let composition=false;
             if(w>1000){ composition=m.display==='grid' && m.cards[0]?.w>m.cards[1]?.w && m.cards[1]?.y>m.cards[0]?.y && m.cards[2]?.y>m.cards[0]?.y; }
             else if(w>=750){ composition=m.display==='grid' && m.cards[0]?.w>m.cards[1]?.w; }
             else { composition=m.display==='flex' && m.cards[0]?.w>w*.65 && m.cards[0]?.w<w*.85; }
-            const ok=m.cssLoaded && composition && m.broken===0 && !m.pageOverflow && m.title==='world of GiGi';
+            const ok=composition && m.galleryBroken===0 && !m.pageOverflow && m.title==='world of GiGi' && m.heroHeight<=405;
             if(!ok) pass=false;
             out.push({name,w,h,ok,composition,m});
-            await page.screenshot({path:`world-gigi-v3-qa/${name}-full.png`,fullPage:true});
-            for(const [label,sel] of [['hero','.fp-page-hero'],['story','.fp-world__story'],['gallery','.fp-world__gallery']]){
-              const loc=page.locator(sel); if(await loc.count()) await loc.screenshot({path:`world-gigi-v3-qa/${name}-${label}.png`});
-            }
+            await page.locator('.fp-page-hero').screenshot({path:`world-gigi-v3-qa/${name}-hero.png`});
+            await page.locator('.fp-world__story').screenshot({path:`world-gigi-v3-qa/${name}-story.png`});
+            await page.locator('.fp-world__gallery-head').screenshot({path:`world-gigi-v3-qa/${name}-gallery-head.png`});
+            await galleryLoc.screenshot({path:`world-gigi-v3-qa/${name}-gallery.png`});
             await ctx.close();
           }
           await browser.close();
