@@ -97,19 +97,23 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
     scroll-padding-left:0!important;
   }
 
+  /* For a one-image product, size the RAIL itself to the viewport minus both
+     gutters. This avoids the flex/scroller width leaking to the right edge. */
   .fp-pdp .fp-pdp__media-list:has(> .fp-pdp__media:only-child){
     display:block!important;
+    width:calc(100vw - 40px)!important;
+    max-width:calc(100vw - 40px)!important;
     overflow:visible!important;
-    padding-left:0!important;
-    padding-right:0!important;
+    padding:0!important;
+    margin:0 auto!important;
   }
   .fp-pdp .fp-pdp__media:only-child{
     display:block!important;
     flex:none!important;
-    width:calc(100vw - 40px)!important;
-    max-width:calc(100vw - 40px)!important;
+    width:100%!important;
+    max-width:100%!important;
     aspect-ratio:auto!important;
-    margin:0 auto!important;
+    margin:0!important;
     scroll-snap-align:none!important;
   }
   .fp-pdp .fp-pdp__media:only-child .fp-pdp__media-button{
@@ -125,7 +129,6 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
     max-width:100%!important;
     max-height:none!important;
     object-position:center center!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
+    margin:0 auto!important;
   }
 }
