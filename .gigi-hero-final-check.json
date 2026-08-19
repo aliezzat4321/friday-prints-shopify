@@ -1,23 +1,24 @@
 {
-  "run_id": 32303677764,
-  "source_sha": "f37dafc941d6999feac4fb01c7dbc152fd73be2b",
+  "pass": true,
+  "run_id": 32304022696,
+  "source_sha": "7296211cddde5c6dabb273714490c4eb0a29d455",
   "out": [
     {
       "name": "desktop",
       "w": 1440,
       "h": 1000,
+      "ok": true,
       "m": {
+        "cssLoaded": true,
         "heroHeight": 500,
         "gigiImg": {
-          "w": 298.449951171875,
-          "h": 298.449951171875,
-          "transform": "matrix(1.27, 0, 0, 1.27, 0, 0)"
+          "w": 440,
+          "h": 440,
+          "transform": "matrix(1, 0, 0, 1, 0, 12)"
         },
         "orbit": {
-          "w": "300px",
-          "h": "172px",
-          "borderRight": "rgba(0, 0, 0, 0)",
-          "borderBottom": "rgba(0, 0, 0, 0)"
+          "content": "none",
+          "display": "none"
         },
         "overflow": false
       }
@@ -26,18 +27,18 @@
       "name": "mobile",
       "w": 390,
       "h": 844,
+      "ok": true,
       "m": {
-        "heroHeight": 214.09375,
+        "cssLoaded": true,
+        "heroHeight": 565,
         "gigiImg": {
-          "w": 183.52001953125,
-          "h": 183.52001953125,
-          "transform": "matrix(1.24, 0, 0, 1.24, 0, 0)"
+          "w": 340,
+          "h": 340,
+          "transform": "matrix(1, 0, 0, 1, 0, 12)"
         },
         "orbit": {
-          "w": "202px",
-          "h": "122px",
-          "borderRight": "rgba(0, 0, 0, 0)",
-          "borderBottom": "rgba(0, 0, 0, 0)"
+          "content": "none",
+          "display": "none"
         },
         "overflow": false
       }
