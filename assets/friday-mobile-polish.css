@@ -1,0 +1,44 @@
+/* Friday Prints — mobile-only polish fixes */
+@media (max-width: 749px){
+  /* Give the navigation breathing room beneath the announcement bar. */
+  .fp-site-header .fp-nav{
+    height:92px!important;
+    min-height:92px!important;
+    padding-top:10px!important;
+    padding-bottom:8px!important;
+    align-items:center!important;
+  }
+
+  /* Remove the accidental outer-right rule from the 2-column footer grid
+     while preserving the intentional divider between the two columns. */
+  .fp-footer .fp-footer__grid{
+    border-right:0!important;
+  }
+  .fp-footer .fp-footer__col:nth-of-type(2n){
+    border-right:0!important;
+  }
+
+  /* Product artwork should anchor to the same left edge as the PDP copy,
+     rather than reading as a centered carousel card on first load. */
+  .fp-pdp .fp-pdp__gallery{
+    padding-left:20px!important;
+    padding-right:0!important;
+  }
+  .fp-pdp .fp-pdp__media-list{
+    justify-content:flex-start!important;
+    margin-left:0!important;
+    padding-left:0!important;
+    scroll-padding-left:0!important;
+  }
+  .fp-pdp .fp-pdp__media{
+    justify-items:start!important;
+    scroll-snap-align:start!important;
+    margin-left:0!important;
+  }
+  .fp-pdp .fp-pdp__media img,
+  .fp-pdp .fp-pdp__media svg{
+    object-position:left center!important;
+    margin-left:0!important;
+    margin-right:auto!important;
+  }
+}
