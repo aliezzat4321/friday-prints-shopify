@@ -6,3 +6,33 @@
 {{ 'friday-home-compression.css' | asset_url | stylesheet_tag }}
 {{ 'friday-responsive-consistency.css' | asset_url | stylesheet_tag }}
 {{ 'friday-hero-viewport-cap.css' | asset_url | stylesheet_tag }}
+
+<style>
+  /* World of GiGi art-wall finishing pass. The masonry flow changes visual
+     reading order, so numeric badges felt arbitrary; let the artwork lead. */
+  .fp-content-page--about .fp-world-card::before{display:none!important}
+
+  @media(min-width:750px){
+    .fp-content-page--about .fp-world__gallery{position:relative!important}
+    .fp-content-page--about .fp-world__gallery::before{
+      content:'still wandering.';
+      position:absolute;
+      right:46px;
+      bottom:155px;
+      z-index:1;
+      width:28%;
+      color:rgba(251,241,228,.9);
+      font:italic 700 46px/.95 Georgia,'Times New Roman',serif;
+      letter-spacing:-.04em;
+      pointer-events:none;
+    }
+  }
+  @media(min-width:750px) and (max-width:1000px){
+    .fp-content-page--about .fp-world__gallery::before{
+      right:30px;
+      bottom:135px;
+      width:43%;
+      font-size:38px;
+    }
+  }
+</style>
