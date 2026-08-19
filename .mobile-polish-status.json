@@ -25,21 +25,21 @@
           "x": 20,
           "y": 122,
           "w": 273,
-          "h": 386.125,
+          "h": 386.1,
           "right": 293
         },
         "gallery": {
           "x": 0,
           "y": 77,
           "w": 390,
-          "h": 452.125,
+          "h": 452.1,
           "right": 390
         },
         "footer": {
           "x": 0,
-          "y": 2316.546875,
+          "y": 2316.5,
           "w": 390,
-          "h": 670.484375,
+          "h": 670.5,
           "right": 390
         },
         "navPaddingTop": "0px",
@@ -47,62 +47,22 @@
         "footerBorderRight": "0px",
         "cols": [
           {
-            "right": "0px",
-            "rect": {
-              "x": 20,
-              "y": 2670.03125,
-              "width": 175,
-              "height": 145.5,
-              "top": 2670.03125,
-              "right": 195,
-              "bottom": 2815.53125,
-              "left": 20
-            }
+            "right": "0px"
           },
           {
-            "right": "1px",
-            "rect": {
-              "x": 195,
-              "y": 2670.03125,
-              "width": 175,
-              "height": 145.5,
-              "top": 2670.03125,
-              "right": 370,
-              "bottom": 2815.53125,
-              "left": 195
-            }
+            "right": "1px"
           },
           {
-            "right": "0px",
-            "rect": {
-              "x": 20,
-              "y": 2815.53125,
-              "width": 175,
-              "height": 145.5,
-              "top": 2815.53125,
-              "right": 195,
-              "bottom": 2961.03125,
-              "left": 20
-            }
+            "right": "0px"
           },
           {
-            "right": "1px",
-            "rect": {
-              "x": 195,
-              "y": 2815.53125,
-              "width": 175,
-              "height": 145.5,
-              "top": 2815.53125,
-              "right": 370,
-              "bottom": 2961.03125,
-              "left": 195
-            }
+            "right": "1px"
           }
         ],
         "overflow": false,
         "mobileCss": false
       },
-      "productUrl": "https://il1m2791s4dmofov-108268650782.shopifypreview.com/products/a-different-seoul-still-her-a3"
+      "productUrl": "https://tm06px8w771tm2dd-108268650782.shopifypreview.com/products/a-different-seoul-still-her-a3"
     },
     {
       "name": "mobile-320",
@@ -127,22 +87,22 @@
         "media": {
           "x": 20,
           "y": 122,
-          "w": 201.59375,
-          "h": 285.125,
-          "right": 221.59375
+          "w": 201.6,
+          "h": 285.1,
+          "right": 221.6
         },
         "gallery": {
           "x": 0,
           "y": 77,
           "w": 320,
-          "h": 351.125,
+          "h": 351.1,
           "right": 320
         },
         "footer": {
           "x": 0,
-          "y": 2210.46875,
+          "y": 2210.5,
           "w": 320,
-          "h": 689.984375,
+          "h": 690,
           "right": 320
         },
         "navPaddingTop": "0px",
@@ -150,62 +110,22 @@
         "footerBorderRight": "0px",
         "cols": [
           {
-            "right": "0px",
-            "rect": {
-              "x": 20,
-              "y": 2563.953125,
-              "width": 140,
-              "height": 145.5,
-              "top": 2563.953125,
-              "right": 160,
-              "bottom": 2709.453125,
-              "left": 20
-            }
+            "right": "0px"
           },
           {
-            "right": "1px",
-            "rect": {
-              "x": 160,
-              "y": 2563.953125,
-              "width": 140,
-              "height": 145.5,
-              "top": 2563.953125,
-              "right": 300,
-              "bottom": 2709.453125,
-              "left": 160
-            }
+            "right": "1px"
           },
           {
-            "right": "0px",
-            "rect": {
-              "x": 20,
-              "y": 2709.453125,
-              "width": 140,
-              "height": 165,
-              "top": 2709.453125,
-              "right": 160,
-              "bottom": 2874.453125,
-              "left": 20
-            }
+            "right": "0px"
           },
           {
-            "right": "1px",
-            "rect": {
-              "x": 160,
-              "y": 2709.453125,
-              "width": 140,
-              "height": 165,
-              "top": 2709.453125,
-              "right": 300,
-              "bottom": 2874.453125,
-              "left": 160
-            }
+            "right": "1px"
           }
         ],
         "overflow": false,
         "mobileCss": false
       },
-      "productUrl": "https://il1m2791s4dmofov-108268650782.shopifypreview.com/products/a-different-seoul-still-her-a3"
+      "productUrl": "https://tm06px8w771tm2dd-108268650782.shopifypreview.com/products/a-different-seoul-still-her-a3"
     }
   ]
 }
