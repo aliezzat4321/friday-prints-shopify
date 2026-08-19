@@ -74,3 +74,61 @@
     min-height:40px!important;
   }
 }
+
+/* World of GiGi mobile hero hard reset.
+   The editorial desktop hero uses two columns. On phones we explicitly collapse
+   that composition so the headline can never be squeezed into a one-character column. */
+@media (max-width:749px){
+  html body .fp-content-page--about .fp-page-hero{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    min-height:0!important;
+    height:auto!important;
+    max-height:none!important;
+    padding:34px 20px 0!important;
+    gap:4px!important;
+    align-items:start!important;
+  }
+  html body .fp-content-page--about .fp-page-hero > div:first-child{
+    width:100%!important;
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  html body .fp-content-page--about .fp-page-title{
+    display:block!important;
+    width:auto!important;
+    max-width:7.2ch!important;
+    font-size:58px!important;
+    line-height:.82!important;
+    white-space:normal!important;
+    word-break:normal!important;
+    overflow-wrap:normal!important;
+  }
+  html body .fp-content-page--about .fp-page-intro{
+    width:auto!important;
+    max-width:32ch!important;
+    margin-top:17px!important;
+    font-size:11px!important;
+    line-height:1.5!important;
+  }
+  html body .fp-content-page--about .fp-world__gigi{
+    width:100%!important;
+    max-width:100%!important;
+    height:205px!important;
+    justify-self:center!important;
+    align-self:start!important;
+    margin:5px 0 0!important;
+  }
+  html body .fp-content-page--about .fp-world__gigi::before{
+    width:168px!important;
+    height:184px!important;
+  }
+  html body .fp-content-page--about .fp-world__gigi img{
+    max-width:140px!important;
+    max-height:165px!important;
+  }
+}
+
+@media (max-width:340px){
+  html body .fp-content-page--about .fp-page-title{font-size:54px!important}
+}
