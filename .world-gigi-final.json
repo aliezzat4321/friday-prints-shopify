@@ -1,0 +1,193 @@
+{
+  "pass": true,
+  "run_id": 32301325846,
+  "source_sha": "884c4d4418ade0845336021c1abc51d545edc29d",
+  "out": [
+    {
+      "name": "desktop",
+      "w": 1440,
+      "h": 1000,
+      "cols": 3,
+      "actual": 3,
+      "ok": true,
+      "m": {
+        "display": "grid",
+        "grid": "440px 440px 440px",
+        "signoff": "\"still wandering.\"",
+        "signoffDisplay": "flex",
+        "signoffAlign": "center",
+        "cards": [
+          {
+            "x": 46,
+            "y": 1347.5,
+            "w": 440,
+            "h": 621.3
+          },
+          {
+            "x": 500,
+            "y": 1347.5,
+            "w": 440,
+            "h": 623
+          },
+          {
+            "x": 954,
+            "y": 1347.5,
+            "w": 440,
+            "h": 622.2
+          },
+          {
+            "x": 46,
+            "y": 1984.5,
+            "w": 440,
+            "h": 623.9
+          },
+          {
+            "x": 500,
+            "y": 1984.5,
+            "w": 440,
+            "h": 621.3
+          }
+        ],
+        "broken": 0,
+        "overflow": false,
+        "title": "world of GiGi",
+        "hero": {
+          "x": 0,
+          "y": 163,
+          "w": 1440,
+          "h": 420
+        },
+        "gigi": {
+          "x": 935.9,
+          "y": 211.5,
+          "w": 360,
+          "h": 330
+        }
+      }
+    },
+    {
+      "name": "tablet",
+      "w": 820,
+      "h": 1180,
+      "cols": 2,
+      "actual": 2,
+      "ok": true,
+      "m": {
+        "display": "grid",
+        "grid": "374px 374px",
+        "signoff": "\"still wandering.\"",
+        "signoffDisplay": "flex",
+        "signoffAlign": "center",
+        "cards": [
+          {
+            "x": 30,
+            "y": 1203,
+            "w": 374,
+            "h": 527.3
+          },
+          {
+            "x": 416,
+            "y": 1203,
+            "w": 374,
+            "h": 529.8
+          },
+          {
+            "x": 30,
+            "y": 1744.8,
+            "w": 374,
+            "h": 528.6
+          },
+          {
+            "x": 416,
+            "y": 1744.8,
+            "w": 374,
+            "h": 531.1
+          },
+          {
+            "x": 30,
+            "y": 2287.9,
+            "w": 374,
+            "h": 527.3
+          }
+        ],
+        "broken": 0,
+        "overflow": false,
+        "title": "world of GiGi",
+        "hero": {
+          "x": 0,
+          "y": 123,
+          "w": 820,
+          "h": 390
+        },
+        "gigi": {
+          "x": 559.4,
+          "y": 181.5,
+          "w": 230.6,
+          "h": 280
+        }
+      }
+    },
+    {
+      "name": "mobile",
+      "w": 390,
+      "h": 844,
+      "cols": 2,
+      "actual": 2,
+      "ok": true,
+      "m": {
+        "display": "grid",
+        "grid": "183px 183px",
+        "signoff": "\"still wandering.\"",
+        "signoffDisplay": "flex",
+        "signoffAlign": "center",
+        "cards": [
+          {
+            "x": 8,
+            "y": 1408.5,
+            "w": 183,
+            "h": 258.8
+          },
+          {
+            "x": 199,
+            "y": 1408.5,
+            "w": 183,
+            "h": 258.8
+          },
+          {
+            "x": 8,
+            "y": 1675.3,
+            "w": 183,
+            "h": 258.8
+          },
+          {
+            "x": 199,
+            "y": 1675.3,
+            "w": 183,
+            "h": 258.8
+          },
+          {
+            "x": 8,
+            "y": 1942.2,
+            "w": 183,
+            "h": 258.8
+          }
+        ],
+        "broken": 0,
+        "overflow": false,
+        "title": "world of GiGi",
+        "hero": {
+          "x": 0,
+          "y": 93,
+          "w": 390,
+          "h": 446.1
+        },
+        "gigi": {
+          "x": 20,
+          "y": 320.1,
+          "w": 350,
+          "h": 218
+        }
+      }
+    }
+  ]
+}
