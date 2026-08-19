@@ -133,3 +133,210 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
     margin:0 auto!important;
   }
 }
+
+/* ==========================================================
+   WORLD OF GIGI — editorial character-page art direction
+   ========================================================== */
+.fp-content-page--about{overflow:clip}
+
+.fp-content-page--about .fp-page-hero{
+  min-height:420px!important;
+  padding:42px 46px 38px!important;
+  grid-template-columns:minmax(0,1.16fr) minmax(300px,.84fr)!important;
+  gap:24px!important;
+  align-items:center!important;
+  overflow:hidden!important;
+  isolation:isolate;
+}
+.fp-content-page--about .fp-page-hero>div:first-child{position:relative;z-index:2;align-self:center;max-width:820px}
+.fp-content-page--about .fp-page-eyebrow{margin-bottom:12px!important;font-size:10px!important;letter-spacing:.11em!important}
+.fp-content-page--about .fp-page-title{
+  max-width:8ch!important;
+  font-size:clamp(74px,8.15vw,118px)!important;
+  line-height:.8!important;
+  letter-spacing:-.062em!important;
+  text-transform:none!important;
+  text-wrap:balance;
+}
+.fp-content-page--about .fp-page-intro{max-width:48ch!important;margin-top:22px!important;font-size:12.5px!important;line-height:1.55!important}
+.fp-content-page--about .fp-page-hero::after{
+  content:"01 / GIGI / STILL WANDERING";
+  position:absolute;right:28px;bottom:18px;z-index:3;
+  color:rgba(23,18,15,.55);
+  font:700 8px/1 "Courier New",monospace;
+  letter-spacing:.12em;text-transform:uppercase;
+}
+.fp-content-page--about .fp-world__gigi{
+  justify-self:center!important;align-self:center!important;
+  width:360px!important;max-width:100%!important;height:330px!important;
+  margin:0!important;display:grid!important;place-items:center!important;
+  position:relative!important;transform:translateY(2px);
+}
+.fp-content-page--about .fp-world__gigi::before{
+  width:250px!important;height:292px!important;left:50%!important;top:50%!important;
+  border:1.5px solid rgba(255,255,255,.82)!important;border-radius:50%!important;
+  transform:translate(-50%,-50%) rotate(-8deg)!important;
+  box-shadow:18px 12px 0 -17px rgba(255,255,255,.52);
+}
+.fp-content-page--about .fp-world__gigi::after{
+  content:"CHARACTER STUDY";position:absolute;left:50%;bottom:4px;transform:translateX(-50%);
+  white-space:nowrap;color:rgba(23,18,15,.55);
+  font:700 8px/1 "Courier New",monospace;letter-spacing:.13em;
+}
+.fp-content-page--about .fp-world__gigi img{
+  position:relative!important;z-index:2!important;width:auto!important;height:auto!important;
+  max-width:180px!important;max-height:230px!important;margin:0!important;object-fit:contain!important;
+  transform:translateY(-2px);
+}
+
+.fp-content-page--about .fp-world__ticker{border-top:0!important;border-bottom:1px solid var(--fp-ink)!important}
+.fp-content-page--about .fp-world__ticker-track{gap:31px!important;padding:13px 0!important;font-size:9.5px!important;animation-duration:20s!important}
+.fp-content-page--about .fp-world__ticker-track span::after{margin-left:31px!important}
+
+.fp-content-page--about .fp-world__story{
+  grid-template-columns:minmax(230px,.72fr) minmax(0,1.28fr)!important;
+  gap:72px!important;padding:54px 46px 62px!important;align-items:start!important;background:var(--fp-cream)!important;
+}
+.fp-content-page--about .fp-world__story h2{
+  max-width:6.5ch;margin:0!important;color:var(--fp-red)!important;
+  font-size:46px!important;line-height:.95!important;letter-spacing:-.035em!important;
+}
+.fp-content-page--about .fp-world__story h2::after{
+  content:"ORIGIN — CAIRO\A ARRIVED — A QUIET FRIDAY NIGHT\A COLLECTS — MOODS, QUIRKS & ADVENTURES";
+  display:block;max-width:30ch;margin-top:38px;padding-top:14px;border-top:1px solid var(--fp-ink);
+  white-space:pre-line;color:var(--fp-ink);
+  font:700 9px/1.8 "Courier New",monospace;letter-spacing:.045em;text-transform:uppercase;
+}
+.fp-content-page--about .fp-world__copy{max-width:650px!important;font-size:14px!important;line-height:1.68!important}
+.fp-content-page--about .fp-world__copy p{margin:0 0 15px!important}
+.fp-content-page--about .fp-world__copy p:first-child::first-letter{
+  float:left;margin:3px 8px 0 0;color:var(--fp-red);font:700 44px/.72 Georgia,"Times New Roman",serif;
+}
+.fp-content-page--about .fp-world__copy p:last-child{
+  max-width:16ch;margin:32px 0 0!important;padding-top:21px;border-top:1px solid var(--fp-ink);
+  color:var(--fp-ink);font:700 36px/1.03 Georgia,"Times New Roman",serif!important;letter-spacing:-.042em;
+}
+
+.fp-content-page--about .fp-world__gallery-head{
+  position:relative;align-items:flex-end!important;padding:44px 46px 24px!important;
+  background:var(--fp-red)!important;color:#fff!important;
+}
+.fp-content-page--about .fp-world__gallery-head::before{
+  content:"THE ARCHIVE / 05 FRAGMENTS";position:absolute;left:46px;top:22px;
+  color:rgba(255,255,255,.72);font:700 8px/1 "Courier New",monospace;letter-spacing:.12em;
+}
+.fp-content-page--about .fp-world__gallery-head h2{
+  max-width:9ch;font-size:clamp(52px,5.8vw,82px)!important;line-height:.84!important;letter-spacing:-.052em!important;
+}
+.fp-content-page--about .fp-world__gallery-head a{
+  margin-bottom:4px;padding:10px 13px;border:1px solid rgba(255,255,255,.72);
+  color:#fff!important;text-decoration:none!important;font-size:9px!important;letter-spacing:.04em;
+  transition:background .2s ease,color .2s ease;
+}
+.fp-content-page--about .fp-world__gallery-head a:hover{background:var(--fp-cream);color:var(--fp-red)!important}
+
+.fp-content-page--about .fp-world__gallery{
+  display:block!important;columns:3!important;column-gap:14px!important;
+  grid-template-columns:none!important;grid-auto-rows:auto!important;
+  padding:0 46px 54px!important;background:var(--fp-red)!important;
+}
+.fp-content-page--about .fp-world-card,
+.fp-content-page--about .fp-world-card:nth-child(n){
+  position:relative!important;display:inline-block!important;width:100%!important;height:auto!important;
+  margin:0 0 14px!important;grid-column:auto!important;grid-row:auto!important;
+  break-inside:avoid!important;overflow:hidden!important;vertical-align:top;
+  background:transparent!important;border:0!important;outline:1px solid rgba(255,255,255,.34);outline-offset:-1px;
+}
+.fp-content-page--about .fp-world-card img{
+  display:block!important;width:100%!important;height:auto!important;max-width:none!important;
+  object-fit:contain!important;background:transparent!important;transform:none!important;
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),filter .35s ease!important;
+}
+.fp-content-page--about .fp-world-card:hover img{transform:scale(1.012)!important;filter:saturate(1.03)}
+.fp-content-page--about .fp-world-card::before{
+  position:absolute;top:9px;left:9px;z-index:4;min-width:27px;min-height:27px;
+  display:grid;place-items:center;padding:4px;background:rgba(251,241,228,.96);color:var(--fp-red);
+  font:700 8px/1 "Courier New",monospace;letter-spacing:.05em;
+}
+.fp-content-page--about .fp-world-card:nth-child(1)::before{content:"01"}
+.fp-content-page--about .fp-world-card:nth-child(2)::before{content:"02"}
+.fp-content-page--about .fp-world-card:nth-child(3)::before{content:"03"}
+.fp-content-page--about .fp-world-card:nth-child(4)::before{content:"04"}
+.fp-content-page--about .fp-world-card:nth-child(5)::before{content:"05"}
+.fp-content-page--about .fp-world-card::after{
+  content:"VIEW PRINT ↗";position:absolute;right:9px;bottom:9px;z-index:4;padding:8px 9px;
+  background:rgba(251,241,228,.96);color:var(--fp-ink);font:700 8px/1 "Courier New",monospace;
+  letter-spacing:.04em;opacity:0;transform:translateY(5px);transition:opacity .2s ease,transform .2s ease;
+}
+.fp-content-page--about .fp-world-card:hover::after{opacity:1;transform:none}
+.fp-content-page--about .fp-world__gallery::after{
+  content:"still wandering.";display:block;column-span:all;margin:34px -46px -54px;
+  padding:29px 46px 32px;border-top:1px solid rgba(255,255,255,.55);background:var(--fp-cream);
+  color:var(--fp-ink);font:700 42px/.95 Georgia,"Times New Roman",serif;letter-spacing:-.04em;
+}
+
+@media (min-width:750px) and (max-width:1000px){
+  .fp-content-page--about .fp-page-hero{
+    min-height:390px!important;padding:38px 30px 34px!important;
+    grid-template-columns:minmax(0,1.38fr) minmax(230px,.62fr)!important;gap:16px!important;
+  }
+  .fp-content-page--about .fp-page-title{font-size:clamp(68px,8.8vw,86px)!important}
+  .fp-content-page--about .fp-world__gigi{width:270px!important;height:280px!important}
+  .fp-content-page--about .fp-world__gigi::before{width:210px!important;height:244px!important}
+  .fp-content-page--about .fp-world__gigi img{max-width:145px!important;max-height:190px!important}
+  .fp-content-page--about .fp-world__story{gap:40px!important;padding:48px 30px 54px!important}
+  .fp-content-page--about .fp-world__story h2{font-size:40px!important}
+  .fp-content-page--about .fp-world__copy{font-size:13px!important}
+  .fp-content-page--about .fp-world__copy p:last-child{font-size:32px!important}
+  .fp-content-page--about .fp-world__gallery-head{padding:40px 30px 22px!important}
+  .fp-content-page--about .fp-world__gallery-head::before{left:30px;top:19px}
+  .fp-content-page--about .fp-world__gallery{columns:2!important;column-gap:12px!important;padding:0 30px 44px!important}
+  .fp-content-page--about .fp-world-card,.fp-content-page--about .fp-world-card:nth-child(n){margin-bottom:12px!important}
+  .fp-content-page--about .fp-world__gallery::after{margin:30px -30px -44px;padding:26px 30px 28px;font-size:36px}
+}
+
+@media (max-width:749px){
+  .fp-content-page--about .fp-page-hero{
+    min-height:0!important;padding:35px 20px 0!important;grid-template-columns:1fr!important;
+    gap:4px!important;align-items:start!important;
+  }
+  .fp-content-page--about .fp-page-hero>div:first-child{max-width:none}
+  .fp-content-page--about .fp-page-eyebrow{font-size:8.5px!important;margin-bottom:10px!important}
+  .fp-content-page--about .fp-page-title{max-width:7ch!important;font-size:58px!important;line-height:.82!important}
+  .fp-content-page--about .fp-page-intro{max-width:32ch!important;margin-top:17px!important;font-size:11px!important;line-height:1.5!important}
+  .fp-content-page--about .fp-page-hero::after{display:none}
+  .fp-content-page--about .fp-world__gigi{
+    justify-self:center!important;width:100%!important;height:218px!important;margin:8px 0 0!important;transform:none!important;
+  }
+  .fp-content-page--about .fp-world__gigi::before{width:172px!important;height:195px!important;transform:translate(-50%,-50%) rotate(-7deg)!important}
+  .fp-content-page--about .fp-world__gigi::after{bottom:5px;font-size:7px}
+  .fp-content-page--about .fp-world__gigi img{max-width:118px!important;max-height:156px!important;transform:translateY(-2px)!important}
+
+  .fp-content-page--about .fp-world__ticker-track{gap:25px!important;padding:11px 0!important;font-size:8px!important}
+  .fp-content-page--about .fp-world__ticker-track span::after{margin-left:25px!important}
+
+  .fp-content-page--about .fp-world__story{grid-template-columns:1fr!important;gap:26px!important;padding:38px 20px 44px!important}
+  .fp-content-page--about .fp-world__story h2{max-width:7ch;font-size:34px!important}
+  .fp-content-page--about .fp-world__story h2::after{max-width:34ch;margin-top:24px;padding-top:12px;font-size:8px;line-height:1.75}
+  .fp-content-page--about .fp-world__copy{max-width:none!important;font-size:12px!important;line-height:1.62!important}
+  .fp-content-page--about .fp-world__copy p{margin-bottom:13px!important}
+  .fp-content-page--about .fp-world__copy p:first-child::first-letter{font-size:38px}
+  .fp-content-page--about .fp-world__copy p:last-child{max-width:14ch;margin-top:25px!important;padding-top:17px;font-size:30px!important}
+
+  .fp-content-page--about .fp-world__gallery-head{
+    display:grid!important;grid-template-columns:1fr auto;gap:15px!important;padding:37px 20px 19px!important;
+  }
+  .fp-content-page--about .fp-world__gallery-head::before{left:20px;top:17px;font-size:7px}
+  .fp-content-page--about .fp-world__gallery-head h2{font-size:44px!important;line-height:.86!important}
+  .fp-content-page--about .fp-world__gallery-head a{align-self:end;margin-bottom:1px;padding:8px 9px;font-size:7.5px!important}
+  .fp-content-page--about .fp-world__gallery{columns:2!important;column-gap:8px!important;padding:0 8px 32px!important}
+  .fp-content-page--about .fp-world-card,.fp-content-page--about .fp-world-card:nth-child(n){margin:0 0 8px!important;outline-color:rgba(255,255,255,.25)}
+  .fp-content-page--about .fp-world-card::before{top:6px;left:6px;min-width:22px;min-height:22px;font-size:7px}
+  .fp-content-page--about .fp-world-card::after{display:none}
+  .fp-content-page--about .fp-world__gallery::after{margin:24px -8px -32px;padding:24px 20px 27px;font-size:33px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .fp-content-page--about .fp-world__ticker-track{animation:none!important}
+  .fp-content-page--about .fp-world-card img{transition:none!important}
+}
