@@ -1,0 +1,58 @@
+name: GiGi Hero Final Check
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore: ['.gigi-hero-final-check.json']
+permissions:
+  contents: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: friday-build}
+      - uses: actions/setup-node@v4
+        with: {node-version: '20'}
+      - run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - run: sleep 20
+      - name: Render
+        env:
+          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
+        run: |
+          cat > check.mjs <<'EOF'
+          import { chromium } from 'playwright'; import fs from 'node:fs';
+          fs.mkdirSync('gigi-hero-final-check',{recursive:true});
+          const browser=await chromium.launch({headless:true,executablePath:fs.existsSync('/usr/bin/google-chrome')?'/usr/bin/google-chrome':undefined});
+          const out=[];
+          for(const [name,w,h] of [['desktop',1440,1000],['mobile',390,844]]){
+            const ctx=await browser.newContext({viewport:{width:w,height:h}}); const page=await ctx.newPage();
+            await page.goto(`${process.env.STORE_URL}/pages/about?heroFinal=${Date.now()}`,{waitUntil:'domcontentloaded',timeout:60000});
+            await page.waitForLoadState('networkidle',{timeout:15000}).catch(()=>{}); await page.waitForTimeout(900);
+            const m=await page.evaluate(()=>{
+              const hero=document.querySelector('.fp-content-page--about .fp-page-hero');
+              const g=document.querySelector('.fp-world__gigi'); const img=g?.querySelector('img');
+              const before=g?getComputedStyle(g,'::before'):null;
+              return {heroHeight:hero?.getBoundingClientRect().height,gigiImg:img?{w:img.getBoundingClientRect().width,h:img.getBoundingClientRect().height,transform:getComputedStyle(img).transform}:null,orbit:before?{w:before.width,h:before.height,borderRight:before.borderRightColor,borderBottom:before.borderBottomColor}:null,overflow:document.documentElement.scrollWidth>innerWidth+2};
+            });
+            out.push({name,w,h,m});
+            await page.locator('.fp-content-page--about .fp-page-hero').screenshot({path:`gigi-hero-final-check/${name}.png`});
+            await ctx.close();
+          }
+          await browser.close();
+          fs.writeFileSync('.gigi-hero-final-check.json',JSON.stringify({run_id:Number(process.env.GITHUB_RUN_ID),source_sha:process.env.GITHUB_SHA,out},null,2));
+          EOF
+          node check.mjs
+      - name: Record
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .gigi-hero-final-check.json
+          git commit -m 'Record GiGi hero final check [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gigi-hero-final-check
+          path: gigi-hero-final-check/
+          retention-days: 1
