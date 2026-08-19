@@ -8,31 +8,101 @@
 {{ 'friday-hero-viewport-cap.css' | asset_url | stylesheet_tag }}
 
 <style>
-  /* World of GiGi art-wall finishing pass. The masonry flow changes visual
-     reading order, so numeric badges felt arbitrary; let the artwork lead. */
+  /* World of GiGi art-wall finishing pass.
+     Five artworks + one editorial sign-off create a deliberate publication grid. */
   .fp-content-page--about .fp-world-card::before{display:none!important}
 
-  @media(min-width:750px){
-    .fp-content-page--about .fp-world__gallery{position:relative!important}
+  .fp-content-page--about .fp-world__gallery{
+    display:grid!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    grid-auto-flow:row!important;
+    grid-auto-rows:auto!important;
+    gap:14px!important;
+    columns:auto!important;
+    column-gap:14px!important;
+    position:relative!important;
+  }
+  .fp-content-page--about .fp-world-card,
+  .fp-content-page--about .fp-world-card:nth-child(n){
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    margin:0!important;
+    grid-column:auto!important;
+    grid-row:auto!important;
+    break-inside:auto!important;
+    align-self:start!important;
+  }
+  .fp-content-page--about .fp-world-card img{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+  }
+  .fp-content-page--about .fp-world__gallery::before{
+    content:'still wandering.';
+    position:static!important;
+    grid-column:3!important;
+    grid-row:2!important;
+    display:flex!important;
+    align-items:flex-end!important;
+    justify-content:flex-start!important;
+    align-self:stretch!important;
+    min-height:100%!important;
+    width:auto!important;
+    padding:18px 4px 11px!important;
+    border-top:1px solid rgba(251,241,228,.58)!important;
+    color:rgba(251,241,228,.94)!important;
+    font:italic 700 46px/.95 Georgia,'Times New Roman',serif!important;
+    letter-spacing:-.04em!important;
+    pointer-events:none!important;
+  }
+  .fp-content-page--about .fp-world__gallery::after{display:none!important}
+
+  @media(min-width:750px) and (max-width:1000px){
+    .fp-content-page--about .fp-world__gallery{
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      gap:12px!important;
+      column-gap:12px!important;
+    }
     .fp-content-page--about .fp-world__gallery::before{
-      content:'still wandering.';
-      position:absolute;
-      right:46px;
-      bottom:155px;
-      z-index:1;
-      width:28%;
-      color:rgba(251,241,228,.9);
-      font:italic 700 46px/.95 Georgia,'Times New Roman',serif;
-      letter-spacing:-.04em;
-      pointer-events:none;
+      grid-column:2!important;
+      grid-row:3!important;
+      padding:16px 4px 9px!important;
+      font-size:38px!important;
     }
   }
-  @media(min-width:750px) and (max-width:1000px){
-    .fp-content-page--about .fp-world__gallery::before{
-      right:30px;
-      bottom:135px;
-      width:43%;
-      font-size:38px;
+
+  @media(max-width:749px){
+    .fp-content-page--about .fp-world__gallery{
+      display:grid!important;
+      grid-template-columns:repeat(2,minmax(0,1fr))!important;
+      grid-auto-flow:row!important;
+      gap:8px!important;
+      columns:auto!important;
+      column-gap:8px!important;
     }
+    .fp-content-page--about .fp-world-card,
+    .fp-content-page--about .fp-world-card:nth-child(n){
+      display:block!important;
+      width:100%!important;
+      margin:0!important;
+    }
+    .fp-content-page--about .fp-world__gallery::before{
+      content:'still wandering.';
+      position:static!important;
+      grid-column:2!important;
+      grid-row:3!important;
+      display:flex!important;
+      align-items:flex-end!important;
+      align-self:stretch!important;
+      min-height:100%!important;
+      padding:12px 3px 8px!important;
+      border-top:1px solid rgba(251,241,228,.5)!important;
+      color:rgba(251,241,228,.94)!important;
+      font:italic 700 27px/.92 Georgia,'Times New Roman',serif!important;
+      letter-spacing:-.035em!important;
+      pointer-events:none!important;
+    }
+    .fp-content-page--about .fp-world__gallery::after{display:none!important}
   }
 </style>
