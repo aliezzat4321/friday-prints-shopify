@@ -170,10 +170,35 @@
   }
 }
 
-/* MOBILE: don't miniaturize the art. Make it a swipeable zine rail. */
+/* MOBILE: return hero to one column; artwork becomes a swipeable zine rail. */
 @media (max-width:749px){
-  .fp-content-page--about .fp-page-hero{padding-bottom:4px!important}
-  .fp-content-page--about .fp-world__gigi{height:205px!important;margin-top:5px!important}
+  .fp-content-page--about .fp-page-hero{
+    min-height:0!important;
+    padding:34px 20px 4px!important;
+    grid-template-columns:1fr!important;
+    gap:5px!important;
+    align-items:start!important;
+  }
+  .fp-content-page--about .fp-page-hero>div:first-child{max-width:none!important}
+  .fp-content-page--about .fp-page-title{
+    max-width:7ch!important;
+    font-size:58px!important;
+    line-height:.82!important;
+  }
+  .fp-content-page--about .fp-page-intro{
+    max-width:32ch!important;
+    margin-top:17px!important;
+    font-size:11px!important;
+    line-height:1.5!important;
+  }
+  .fp-content-page--about .fp-world__gigi{
+    justify-self:center!important;
+    width:100%!important;
+    max-width:100%!important;
+    height:205px!important;
+    margin:5px 0 0!important;
+    transform:none!important;
+  }
   .fp-content-page--about .fp-world__gigi::before{width:168px!important;height:184px!important}
   .fp-content-page--about .fp-world__gigi img{max-width:140px!important;max-height:165px!important}
 
@@ -208,5 +233,9 @@
   .fp-content-page--about .fp-world-card::before{top:7px!important;left:7px!important;width:25px!important;height:25px!important}
   .fp-content-page--about .fp-world-card::after{display:none!important}
   .fp-content-page--about .fp-world__gallery::after{display:none!important}
+}
+
+@media (max-width:340px){
+  .fp-content-page--about .fp-page-title{font-size:54px!important}
 }
 </style>
