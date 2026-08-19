@@ -49,27 +49,26 @@ jobs:
               const imgs=cards.map(c=>c.querySelector('img')).filter(Boolean);
               const rect=e=>{const r=e?.getBoundingClientRect();return r?{x:+r.x.toFixed(1),y:+r.y.toFixed(1),w:+r.width.toFixed(1),h:+r.height.toFixed(1)}:null};
               return {
-                cssLoaded:[...document.styleSheets].some(s=>(s.href||'').includes('friday-world-v2.css')),
-                title:title?.textContent?.trim(),
-                hero:rect(hero),gigi:rect(gigi),gallery:rect(gallery),
+                title:title?.textContent?.trim(),hero:rect(hero),gigi:rect(gigi),gallery:rect(gallery),
                 columnCount:gallery?getComputedStyle(gallery).columnCount:null,
-                cardCount:cards.length,
-                cards:cards.map(rect),
+                cardCount:cards.length,cards:cards.map(rect),
                 imgHeights:imgs.map(i=>+i.getBoundingClientRect().height.toFixed(1)),
                 imgNatural:imgs.map(i=>[i.naturalWidth,i.naturalHeight]),
                 broken:imgs.filter(i=>!i.complete||!i.naturalWidth).length,
                 overflow:document.documentElement.scrollWidth>document.documentElement.clientWidth+2,
-                storyLast:getComputedStyle(document.querySelector('.fp-world__copy p:last-child')||document.body).fontSize
+                storyLast:getComputedStyle(document.querySelector('.fp-world__copy p:last-child')||document.body).fontSize,
+                titleTransform:getComputedStyle(title||document.body).textTransform
               };
             });
-            const ok=m.cssLoaded && m.title==='world of GiGi' && m.cardCount>=5 && m.broken===0 && !m.overflow;
+            const expectedCols=w<=1000?'2':'3';
+            const ok=m.title==='world of GiGi' && m.cardCount>=5 && m.broken===0 && !m.overflow && m.columnCount===expectedCols && m.storyLast!=='16px';
             if(!ok) pass=false;
             out.push({name,w,h,ok,m});
             await page.screenshot({path:`world-gigi-qa/${name}-full.png`,fullPage:true});
             await ctx.close();
           }
           await browser.close();
-          fs.writeFileSync('.world-gigi-qa.json',JSON.stringify({pass,out},null,2));
+          fs.writeFileSync('.world-gigi-qa.json',JSON.stringify({pass,run_id:Number(process.env.GITHUB_RUN_ID),source_sha:process.env.GITHUB_SHA,out},null,2));
           if(!pass) process.exitCode=1;
           EOF
           node world-gigi-qa.mjs
