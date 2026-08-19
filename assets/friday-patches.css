@@ -106,8 +106,8 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
   .fp-pdp .fp-pdp__media:only-child{
     display:block!important;
     flex:none!important;
-    width:100%!important;
-    max-width:100%!important;
+    width:calc(100vw - 40px)!important;
+    max-width:calc(100vw - 40px)!important;
     aspect-ratio:auto!important;
     margin:0 auto!important;
     scroll-snap-align:none!important;
