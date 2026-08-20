@@ -1,0 +1,81 @@
+{
+  "pass": true,
+  "results": [
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1280,
+        "height": 900
+      },
+      "pass": true,
+      "optionCount": 2,
+      "selectorVisible": true,
+      "overflow": false,
+      "a3": {
+        "sizeName": "A3",
+        "checked": true,
+        "selectedVariantId": "59793239015710",
+        "expectedVariantId": "59793239015710",
+        "displayedSize": "A3",
+        "displayedDimension": "29.7 \u00d7 42 CM",
+        "selectedLabel": "A3",
+        "number": 1,
+        "total": 100,
+        "available": true,
+        "addDisabled": false
+      },
+      "a4": {
+        "sizeName": "A4",
+        "checked": true,
+        "selectedVariantId": "59793238982942",
+        "expectedVariantId": "59793238982942",
+        "displayedSize": "A4",
+        "displayedDimension": "21 \u00d7 29.7 CM",
+        "selectedLabel": "A4",
+        "number": 1,
+        "total": 150,
+        "available": true,
+        "addDisabled": false
+      }
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "pass": true,
+      "optionCount": 2,
+      "selectorVisible": true,
+      "overflow": false,
+      "a3": {
+        "sizeName": "A3",
+        "checked": true,
+        "selectedVariantId": "59793239015710",
+        "expectedVariantId": "59793239015710",
+        "displayedSize": "A3",
+        "displayedDimension": "29.7 \u00d7 42 CM",
+        "selectedLabel": "A3",
+        "number": 1,
+        "total": 100,
+        "available": true,
+        "addDisabled": false
+      },
+      "a4": {
+        "sizeName": "A4",
+        "checked": true,
+        "selectedVariantId": "59793238982942",
+        "expectedVariantId": "59793238982942",
+        "displayedSize": "A4",
+        "displayedDimension": "21 \u00d7 29.7 CM",
+        "selectedLabel": "A4",
+        "number": 1,
+        "total": 150,
+        "available": true,
+        "addDisabled": false
+      }
+    }
+  ],
+  "run_id": 32407318528,
+  "source_sha": "343ab719afab9b2c7173933cb323191900c346f9"
+}
