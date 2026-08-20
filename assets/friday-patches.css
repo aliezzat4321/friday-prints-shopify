@@ -77,13 +77,13 @@ body:has(.fp-site-header) .shopify-policy__body td{padding:11px;border:1px solid
     align-items:center!important;
   }
 
-  /* Mobile footer: no enclosing rule on the right edge. The only vertical
-     rule should be the divider between the two link columns. */
+  /* Mobile footer: keep the link directory open and editorial. Spacing,
+     rather than cell rules, separates the two columns. */
   .fp-footer .fp-footer__grid{border-right:0!important}
-  .fp-footer .fp-footer__col{border-right:0!important}
+  .fp-footer .fp-footer__col{border:0!important}
   .fp-footer .fp-footer__col:nth-of-type(2n){
-    border-left:1px solid var(--fp-line)!important;
-    padding-left:12px!important;
+    border-left:0!important;
+    padding-left:0!important;
   }
 
   /* PDP gallery keeps equal page gutters. Multi-image products retain the
