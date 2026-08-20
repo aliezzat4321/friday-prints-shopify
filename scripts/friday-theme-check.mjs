@@ -80,6 +80,8 @@ const required = [
   ['sections/friday-hero.liquid', /object-fit:cover!important/, 'mobile hero artwork fill'],
   ['sections/friday-product.liquid', /data-fp-next-edition/, 'next-edition product display'],
   ['sections/friday-product.liquid', /custom\.edition_total/, 'editable edition metafield support'],
+  ['sections/friday-product.liquid', /fp_description_intro contains 'size: a3'/, 'single-size A3 description fallback'],
+  ['sections/friday-product.liquid', /fp_description_intro contains 'size: a4'/, 'single-size A4 description fallback'],
   ['sections/friday-product.liquid', /product\.options_with_values/, 'Shopify Size option detection'],
   ['sections/friday-product.liquid', /fp_size_option_value_count\s*>\s*1/, 'multi-size-only selector rule'],
   ['sections/friday-product.liquid', /data-edition-total="\{\{\s*variant_edition_total/, 'variant-specific edition totals'],

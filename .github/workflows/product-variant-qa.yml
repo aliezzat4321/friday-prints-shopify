@@ -36,6 +36,10 @@ jobs:
           const executablePath = fs.existsSync('/usr/bin/google-chrome') ? '/usr/bin/google-chrome' : undefined;
           const browser = await chromium.launch({ headless: true, executablePath });
           const results = [];
+          const singleSizeProducts = [
+            { handle:'gigi-goes-to-the-jimjilbang', size:'A3', dimensions:'29.7 × 42 CM', total:100 },
+            { handle:'the-offering-copy', size:'A3', dimensions:'29.7 × 42 CM', total:100 }
+          ];
 
           for (const viewport of [{ name:'desktop', width:1280, height:900 }, { name:'mobile', width:390, height:844 }]) {
             const page = await browser.newPage({ viewport });
@@ -85,8 +89,37 @@ jobs:
               && item.number <= total;
 
             const pass = optionCount >= 2 && selectorVisible && valid(a3, 100) && valid(a4, 150) && !overflow;
-            results.push({ viewport, pass, optionCount, selectorVisible, overflow, a3, a4 });
             await page.screenshot({ path:`product-variant-${viewport.name}.png`, fullPage:true });
+            const singleSizeResults = [];
+            for (const product of singleSizeProducts) {
+              await page.goto(`${process.env.STORE_URL}/products/${product.handle}?singleqa=${Date.now()}`, { waitUntil:'domcontentloaded', timeout:60000 });
+              await page.waitForLoadState('networkidle', { timeout:20000 }).catch(() => {});
+              await page.waitForTimeout(600);
+              await page.locator('.fp-pdp').waitFor({ state:'visible', timeout:20000 });
+              const metrics = await page.evaluate(() => ({
+                displayedSize: document.querySelector('[data-fp-size]')?.textContent?.trim() || '',
+                displayedDimension: document.querySelector('[data-fp-dimension]')?.textContent?.trim() || '',
+                number: Number(document.querySelector('[data-fp-next-edition]')?.textContent || 0),
+                total: Number(document.querySelector('[data-fp-edition-total]')?.textContent || 0),
+                selectorCount: document.querySelectorAll('[data-fp-variant]').length,
+                selectorVisible: Boolean(document.querySelector('.fp-pdp__variants')?.getClientRects().length),
+                editionVisible: Boolean(document.querySelector('[data-fp-edition-preview]')?.getClientRects().length),
+                overflow: document.documentElement.scrollWidth > innerWidth + 2
+              }));
+              const productPass = metrics.displayedSize === product.size
+                && metrics.displayedDimension === product.dimensions
+                && metrics.total === product.total
+                && metrics.number >= 1
+                && metrics.number <= product.total
+                && metrics.selectorCount === 0
+                && !metrics.selectorVisible
+                && metrics.editionVisible
+                && !metrics.overflow;
+              singleSizeResults.push({ product, pass:productPass, ...metrics });
+              await page.screenshot({ path:`product-single-${product.handle}-${viewport.name}.png`, fullPage:true });
+            }
+
+            results.push({ viewport, pass:pass && singleSizeResults.every(item => item.pass), optionCount, selectorVisible, overflow, a3, a4, singleSizeResults });
             await page.close();
           }
 
@@ -105,6 +138,7 @@ jobs:
           path: |
             product-variant-desktop.png
             product-variant-mobile.png
+            product-single-*.png
             product-variant-result.json
           retention-days: 3
       - name: Record QA result

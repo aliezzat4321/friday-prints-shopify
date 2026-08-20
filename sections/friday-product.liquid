@@ -24,6 +24,9 @@
     assign add_to_cart_text = 'Sold out'
   endunless
 
+  assign description_plain = product.description | strip_html | strip
+  assign fp_description_intro = description_plain | downcase | replace: '&nbsp;', ' ' | slice: 0, 180
+
   assign fp_size_label = blank
   if fp_size_option_position == 1
     assign fp_size_label = current_variant.option1
@@ -45,6 +48,10 @@
       assign fp_size_label = 'A4'
     elsif product.handle contains 'postcard'
       assign fp_size_label = 'POSTCARD'
+    elsif fp_size_option_position == 0 and fp_description_intro contains 'size: a3'
+      assign fp_size_label = 'A3'
+    elsif fp_size_option_position == 0 and fp_description_intro contains 'size: a4'
+      assign fp_size_label = 'A4'
     else
       assign fp_size_label = 'ART PRINT'
     endif
@@ -85,7 +92,6 @@
     assign fp_edition_label = 'EDITION OF ' | append: fp_edition_total
   endif
 
-  assign description_plain = product.description | strip_html | strip
   assign fallback_collection = product.collections.first
   if fallback_collection == blank
     assign fallback_collection = collections['all']
