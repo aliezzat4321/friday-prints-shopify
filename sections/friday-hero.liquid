@@ -49,8 +49,8 @@
          canvas in CSS so the artwork follows the CTA as one composition instead of
          creating a false, empty section between the copy and the frame. */
       #FridayHero-{{ section.id }} .fp-hero__scene--curated{
-        width:calc(100% + 44px)!important;
-        margin-left:-22px!important;
+        width:100vw!important;
+        margin-left:calc(50% - 50vw)!important;
         padding:0!important;
         overflow:hidden!important;
       }
@@ -69,12 +69,6 @@
         margin:0!important;
         object-fit:cover!important;
         object-position:center 50%!important;
-      }
-    }
-    @media (max-width:374px){
-      #FridayHero-{{ section.id }} .fp-hero__scene--curated{
-        width:calc(100% + 36px)!important;
-        margin-left:-18px!important;
       }
     }
   </style>

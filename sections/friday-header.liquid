@@ -39,7 +39,9 @@
     #FridayHeader-{{ section.id }} .fp-logo{
       grid-column:2;
       grid-row:1;
-      justify-self:center;
+      position:absolute!important;
+      left:50%!important;
+      transform:translateX(-50%)!important;
       align-items:center;
       text-align:center;
       font-size:36px!important;
@@ -64,8 +66,8 @@
   }
   @media (max-width: 374px) {
     #FridayHeader-{{ section.id }} .fp-nav{grid-template-columns:44px minmax(0,1fr) auto!important;gap:6px!important;padding-inline:12px!important}
-    #FridayHeader-{{ section.id }} .fp-logo{font-size:32px!important;max-width:132px!important}
-    #FridayHeader-{{ section.id }} .fp-logo__image{width:min(var(--fp-logo-image-width),132px)!important}
+    #FridayHeader-{{ section.id }} .fp-logo{font-size:30px!important;max-width:116px!important}
+    #FridayHeader-{{ section.id }} .fp-logo__image{width:min(var(--fp-logo-image-width),116px)!important}
     #FridayHeader-{{ section.id }} .fp-search,#FridayHeader-{{ section.id }} .fp-cart{width:44px!important}
   }
 
@@ -125,6 +127,7 @@
       top:var(--fp-menu-logo-top)!important;
       width:var(--fp-menu-logo-width)!important;
       height:var(--fp-menu-logo-height)!important;
+      transform:none!important;
       z-index:2147483002!important;
     }
     #FridayHeader-{{ section.id }} .fp-menu[open]>summary i:first-child{top:18px;transform:rotate(45deg)}
