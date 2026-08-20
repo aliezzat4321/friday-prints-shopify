@@ -1,0 +1,128 @@
+name: Friday Product Variant QA
+
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.product-variant-status.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  product-variant-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install Playwright
+        run: npm install playwright@1.55.0 >/dev/null 2>&1
+      - name: Wait for Shopify sync
+        run: sleep 35
+      - name: Audit live A3 and A4 selection
+        env:
+          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
+        run: |
+          cat > product-variant-qa.mjs <<'EOF'
+          import { chromium } from 'playwright';
+          import fs from 'node:fs';
+
+          const executablePath = fs.existsSync('/usr/bin/google-chrome') ? '/usr/bin/google-chrome' : undefined;
+          const browser = await chromium.launch({ headless: true, executablePath });
+          const results = [];
+
+          for (const viewport of [{ name:'desktop', width:1280, height:900 }, { name:'mobile', width:390, height:844 }]) {
+            const page = await browser.newPage({ viewport });
+            await page.goto(`${process.env.STORE_URL}/products/cherry-hour?variantqa=${Date.now()}`, { waitUntil:'domcontentloaded', timeout:60000 });
+            await page.waitForLoadState('networkidle', { timeout:20000 }).catch(() => {});
+            await page.waitForTimeout(900);
+            await page.locator('.fp-pdp').waitFor({ state:'visible', timeout:20000 });
+
+            const inspectSize = async (sizeName) => {
+              const input = page.locator(`[data-fp-variant][data-size="${sizeName}"]`).first();
+              if (!(await input.count())) return { sizeName, missing:true };
+              await input.check({ force:true });
+              await page.waitForTimeout(180);
+              return page.evaluate((expectedSize) => {
+                const selectedInput = document.querySelector(`[data-fp-variant][data-size="${expectedSize}"]`);
+                const number = Number(document.querySelector('[data-fp-next-edition]')?.textContent || 0);
+                const total = Number(document.querySelector('[data-fp-edition-total]')?.textContent || 0);
+                return {
+                  sizeName: expectedSize,
+                  checked: Boolean(selectedInput?.checked),
+                  selectedVariantId: document.querySelector('.fp-pdp input[name="id"]')?.value || '',
+                  expectedVariantId: selectedInput?.value || '',
+                  displayedSize: document.querySelector('[data-fp-size]')?.textContent?.trim() || '',
+                  displayedDimension: document.querySelector('[data-fp-dimension]')?.textContent?.trim() || '',
+                  selectedLabel: document.querySelector('[data-fp-selected]')?.textContent?.trim() || '',
+                  number,
+                  total,
+                  available: selectedInput?.dataset.available === 'true',
+                  addDisabled: Boolean(document.querySelector('.fp-pdp [ref="addToCartButton"]')?.disabled)
+                };
+              }, sizeName);
+            };
+
+            const optionCount = await page.locator('[data-fp-variant]').count();
+            const a3 = await inspectSize('A3');
+            const a4 = await inspectSize('A4');
+            const overflow = await page.evaluate(() => document.documentElement.scrollWidth > innerWidth + 2);
+            const selectorVisible = await page.locator('.fp-pdp__variants').isVisible().catch(() => false);
+
+            const valid = (item, total) => !item.missing
+              && item.checked
+              && item.selectedVariantId === item.expectedVariantId
+              && item.displayedSize === item.sizeName
+              && item.selectedLabel === item.sizeName
+              && item.total === total
+              && item.number >= 1
+              && item.number <= total;
+
+            const pass = optionCount >= 2 && selectorVisible && valid(a3, 100) && valid(a4, 150) && !overflow;
+            results.push({ viewport, pass, optionCount, selectorVisible, overflow, a3, a4 });
+            await page.screenshot({ path:`product-variant-${viewport.name}.png`, fullPage:true });
+            await page.close();
+          }
+
+          await browser.close();
+          const pass = results.every(result => result.pass);
+          fs.writeFileSync('product-variant-result.json', JSON.stringify({ pass, results }, null, 2));
+          console.log(JSON.stringify({ pass, results }, null, 2));
+          if (!pass) process.exitCode = 1;
+          EOF
+          node product-variant-qa.mjs
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: friday-product-variant-qa
+          path: |
+            product-variant-desktop.png
+            product-variant-mobile.png
+            product-variant-result.json
+          retention-days: 3
+      - name: Record QA result
+        if: always()
+        run: |
+          python - <<'PY'
+          import json, os
+          try:
+              result=json.load(open('product-variant-result.json'))
+          except Exception as e:
+              result={'pass':False,'error':str(e)}
+          result['run_id']=int(os.environ['GITHUB_RUN_ID'])
+          result['source_sha']=os.environ['GITHUB_SHA']
+          json.dump(result,open('.product-variant-status.json','w'),indent=2)
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .product-variant-status.json
+          git commit -m 'Record product variant QA [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
