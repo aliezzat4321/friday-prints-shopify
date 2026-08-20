@@ -91,6 +91,35 @@ jobs:
 
           await page.screenshot({ path:'cart-overlay-open.png', fullPage:false });
 
+          await page.goto(`${process.env.STORE_URL}/products/cherry-hour?variantqa=${Date.now()}`, { waitUntil:'domcontentloaded', timeout:60000 });
+          await page.waitForLoadState('networkidle', { timeout:20000 }).catch(() => {});
+          await page.waitForTimeout(900);
+          const readVariant = async sizeName => {
+            const input=page.locator(`[data-fp-variant][data-size="${sizeName}"]`).first();
+            if(!(await input.count())) return {sizeName,missing:true};
+            await input.check({force:true});
+            await page.waitForTimeout(180);
+            return page.evaluate(expectedSize=>{
+              const selected=document.querySelector(`[data-fp-variant][data-size="${expectedSize}"]`);
+              return {
+                sizeName:expectedSize,
+                checked:Boolean(selected?.checked),
+                selectedVariantId:document.querySelector('.fp-pdp input[name="id"]')?.value||'',
+                expectedVariantId:selected?.value||'',
+                displayedSize:document.querySelector('[data-fp-size]')?.textContent?.trim()||'',
+                selectedLabel:document.querySelector('[data-fp-selected]')?.textContent?.trim()||'',
+                number:Number(document.querySelector('[data-fp-next-edition]')?.textContent||0),
+                total:Number(document.querySelector('[data-fp-edition-total]')?.textContent||0)
+              };
+            },sizeName);
+          };
+          const productVariantCount=await page.locator('[data-fp-variant]').count();
+          const productA3=await readVariant('A3');
+          const productA4=await readVariant('A4');
+          const validVariant=(item,total)=>!item.missing&&item.checked&&item.selectedVariantId===item.expectedVariantId&&item.displayedSize===item.sizeName&&item.selectedLabel===item.sizeName&&item.total===total&&item.number>=1&&item.number<=total;
+          const productVariantPass=productVariantCount>=2&&validVariant(productA3,100)&&validVariant(productA4,150);
+          await page.screenshot({path:'product-variant-desktop.png',fullPage:true});
+
           await page.goto(`${process.env.STORE_URL}/cart?cartqa=${Date.now()}`, { waitUntil:'domcontentloaded', timeout:60000 });
           await page.waitForLoadState('networkidle', { timeout:20000 }).catch(() => {});
           await page.waitForTimeout(900);
@@ -152,10 +181,10 @@ jobs:
             && !cartMobile.total.includes('EGP')
             && !cartMobile.overflow;
 
-          const pass=overlayPass&&desktopPass&&mobilePass;
+          const pass=overlayPass&&desktopPass&&mobilePass&&productVariantPass;
 
-          fs.writeFileSync('cart-overlay-result.json', JSON.stringify({ pass, overlayPass, desktopPass, mobilePass, metrics, cartDesktop, cartMobile, consoleErrors:errors }, null, 2));
-          console.log(JSON.stringify({ pass, overlayPass, desktopPass, mobilePass, cartDesktop, cartMobile }, null, 2));
+          fs.writeFileSync('cart-overlay-result.json', JSON.stringify({ pass, overlayPass, desktopPass, mobilePass, productVariantPass, productVariantCount, productA3, productA4, metrics, cartDesktop, cartMobile, consoleErrors:errors }, null, 2));
+          console.log(JSON.stringify({ pass, overlayPass, desktopPass, mobilePass, productVariantPass, productVariantCount, productA3, productA4, cartDesktop, cartMobile }, null, 2));
           if (!pass) process.exitCode = 1;
           EOF
           node cart-overlay-qa.mjs
@@ -168,6 +197,7 @@ jobs:
             cart-overlay-open.png
             cart-page-desktop.png
             cart-page-mobile.png
+            product-variant-desktop.png
             cart-overlay-result.json
           retention-days: 3
       - name: Record QA result
