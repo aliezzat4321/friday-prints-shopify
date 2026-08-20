@@ -1,6 +1,20 @@
 {% liquid
   assign current_variant = product.selected_or_first_available_variant
   assign product_form_id = 'FridayProductForm-' | append: section.id
+  assign fp_size_option_position = 0
+  assign fp_size_option_value_count = 0
+  for option in product.options_with_values
+    assign fp_option_name = option.name | downcase | strip
+    if fp_option_name == 'size' or fp_option_name contains 'size'
+      assign fp_size_option_position = option.position
+      assign fp_size_option_value_count = option.values.size
+      break
+    endif
+  endfor
+  assign fp_has_size_selector = false
+  if fp_size_option_position > 0 and fp_size_option_value_count > 1
+    assign fp_has_size_selector = true
+  endif
   assign can_add_cart = current_variant.available
   if current_variant == null
     assign can_add_cart = false
@@ -10,7 +24,17 @@
     assign add_to_cart_text = 'Sold out'
   endunless
 
-  assign fp_size_label = current_variant.metafields.custom.print_size.value | default: product.metafields.custom.print_size.value
+  assign fp_size_label = blank
+  if fp_size_option_position == 1
+    assign fp_size_label = current_variant.option1
+  elsif fp_size_option_position == 2
+    assign fp_size_label = current_variant.option2
+  elsif fp_size_option_position == 3
+    assign fp_size_label = current_variant.option3
+  endif
+  if fp_size_label == blank
+    assign fp_size_label = current_variant.metafields.custom.print_size.value | default: product.metafields.custom.print_size.value
+  endif
   if fp_size_label == blank and current_variant.title != 'Default Title'
     assign fp_size_label = current_variant.title
   endif
@@ -101,6 +125,7 @@
     #FridayProduct-{{ section.id }} .fp-pdp__size-line{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--fp-line);font:700 10px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.045em}
     #FridayProduct-{{ section.id }} .fp-pdp__size-line span:last-child{text-align:right;color:color-mix(in srgb,var(--fp-ink) 65%,transparent)}
     #FridayProduct-{{ section.id }} .fp-pdp__edition-preview{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;margin-top:18px;padding:15px 0 14px;border-top:1px solid var(--fp-ink);border-bottom:1px solid var(--fp-ink)}
+    #FridayProduct-{{ section.id }} .fp-pdp__edition-preview[hidden]{display:none}
     #FridayProduct-{{ section.id }} .fp-pdp__edition-preview-copy{display:grid;gap:5px;min-width:0}
     #FridayProduct-{{ section.id }} .fp-pdp__edition-preview-copy strong{font:700 9px/1.2 "Courier New",monospace;letter-spacing:.075em;text-transform:uppercase}
     #FridayProduct-{{ section.id }} .fp-pdp__edition-preview-copy small{max-width:34ch;color:color-mix(in srgb,var(--fp-ink) 63%,transparent);font:9px/1.35 "Courier New",monospace}
@@ -342,13 +367,23 @@
           >
           <input type="hidden" name="quantity" value="1">
 
-          {% unless product.has_only_default_variant %}
+          {% if fp_has_size_selector %}
             <div class="fp-pdp__variants">
-              <div class="fp-pdp__variants-label"><span>{{ section.settings.variant_label }}</span><span data-fp-selected>{{ current_variant.title }}</span></div>
+              <div class="fp-pdp__variants-label"><span>{{ section.settings.variant_label }}</span><span data-fp-selected>{{ fp_size_label }}</span></div>
               <div class="fp-pdp__variant-grid" role="radiogroup" aria-label="{{ section.settings.variant_label | escape }}">
                 {% for variant in product.variants %}
                   {% liquid
-                    assign variant_size = variant.metafields.custom.print_size.value | default: product.metafields.custom.print_size.value
+                    assign variant_size = blank
+                    if fp_size_option_position == 1
+                      assign variant_size = variant.option1
+                    elsif fp_size_option_position == 2
+                      assign variant_size = variant.option2
+                    elsif fp_size_option_position == 3
+                      assign variant_size = variant.option3
+                    endif
+                    if variant_size == blank
+                      assign variant_size = variant.metafields.custom.print_size.value | default: product.metafields.custom.print_size.value
+                    endif
                     if variant_size == blank and variant.title != 'Default Title'
                       assign variant_size = variant.title
                     endif
@@ -398,7 +433,7 @@
                       name="friday_variant"
                       value="{{ variant.id }}"
                       data-fp-variant
-                      data-title="{{ variant.title | escape }}"
+                      data-title="{{ variant_size | escape }}"
                       data-price="{{ variant.price | money_without_trailing_zeros | escape }}"
                       data-available="{{ variant.available }}"
                       data-size="{{ variant_size | escape }}"
@@ -409,24 +444,22 @@
                       {% if variant.id == current_variant.id %}checked{% endif %}
                     >
                     <label for="FridayVariant-{{ section.id }}-{{ variant.id }}">
-                      <span>{{ variant.title }}</span>
+                      <span>{{ variant_size }}</span>
                       {% unless variant.available %}<small>sold out</small>{% endunless %}
                     </label>
                   </div>
                 {% endfor %}
               </div>
             </div>
-          {% endunless %}
-
-          {% if fp_edition_total > 0 %}
-            <div class="fp-pdp__edition-preview" data-fp-edition-preview aria-live="polite">
-              <span class="fp-pdp__edition-preview-copy">
-                <strong>{{ section.settings.next_edition_label }}</strong>
-                <small>{{ section.settings.next_edition_note }}</small>
-              </span>
-              <span class="fp-pdp__edition-number"><span data-fp-next-edition>{{ fp_next_edition_padded }}</span><small>/<span data-fp-edition-total>{{ fp_edition_total }}</span></small></span>
-            </div>
           {% endif %}
+
+          <div class="fp-pdp__edition-preview" data-fp-edition-preview aria-live="polite" {% if fp_edition_total < 1 %}hidden{% endif %}>
+            <span class="fp-pdp__edition-preview-copy">
+              <strong>{{ section.settings.next_edition_label }}</strong>
+              <small>{{ section.settings.next_edition_note }}</small>
+            </span>
+            <span class="fp-pdp__edition-number"><span data-fp-next-edition>{{ fp_next_edition_padded }}</span><small>/<span data-fp-edition-total>{{ fp_edition_total }}</span></small></span>
+          </div>
 
           <div class="fp-pdp__buy" ref="productFormButtons">
             {% render 'add-to-cart-button',
@@ -641,6 +674,9 @@
         if (!input || !variantId) return;
         variantId.value = input.value;
         variantId.disabled = false;
+        const variantUrl = new URL(window.location.href);
+        variantUrl.searchParams.set('variant', input.value);
+        window.history.replaceState({}, '', `${variantUrl.pathname}${variantUrl.search}${variantUrl.hash}`);
         if (price) price.textContent = input.dataset.price || '';
         if (selected) selected.textContent = input.dataset.title || '';
         const available = input.dataset.available === 'true';

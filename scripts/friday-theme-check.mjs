@@ -80,6 +80,11 @@ const required = [
   ['sections/friday-hero.liquid', /object-fit:cover!important/, 'mobile hero artwork fill'],
   ['sections/friday-product.liquid', /data-fp-next-edition/, 'next-edition product display'],
   ['sections/friday-product.liquid', /custom\.edition_total/, 'editable edition metafield support'],
+  ['sections/friday-product.liquid', /product\.options_with_values/, 'Shopify Size option detection'],
+  ['sections/friday-product.liquid', /fp_size_option_value_count\s*>\s*1/, 'multi-size-only selector rule'],
+  ['sections/friday-product.liquid', /data-edition-total="\{\{\s*variant_edition_total/, 'variant-specific edition totals'],
+  ['sections/friday-product.liquid', /data-next-edition="\{\{\s*variant_next_edition/, 'variant-specific next edition numbers'],
+  ['sections/friday-product.liquid', /fp-pdp__edition-preview\[hidden\]\{display:none\}/, 'edition preview hidden state'],
   ['sections/friday-contact.liquid', /form\s+'contact'/, 'Shopify contact form'],
   ['sections/footer-group.json', /"link_2_url":\s*"\/pages\/contact"/, 'footer contact route'],
   ['sections/friday-header.liquid', /fp-menu[\s\S]*fp-logo/, 'mobile menu before centred logo']
