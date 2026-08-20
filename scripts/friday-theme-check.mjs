@@ -76,6 +76,8 @@ if (/3[–-]5\s+working\s+days/i.test(allText)) fail('Old 3–5 working-day prom
 const required = [
   ['templates/index.json', /"title_top":\s*"friday"/i, 'brand-first home title'],
   ['templates/index.json', /"use_curated_scene":\s*true/, 'clean hero artwork switch'],
+  ['sections/friday-hero.liquid', /aspect-ratio:6\/5/, 'tight mobile hero artwork crop'],
+  ['sections/friday-hero.liquid', /object-fit:cover!important/, 'mobile hero artwork fill'],
   ['sections/friday-product.liquid', /data-fp-next-edition/, 'next-edition product display'],
   ['sections/friday-product.liquid', /custom\.edition_total/, 'editable edition metafield support'],
   ['sections/friday-contact.liquid', /form\s+'contact'/, 'Shopify contact form'],

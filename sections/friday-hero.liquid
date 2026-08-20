@@ -39,14 +39,43 @@
       #FridayHero-{{ section.id }} .fp-btn{font-size:12px;min-height:48px}
     }
     @media (max-width:749px){
-      #FridayHero-{{ section.id }} .fp-hero__copy{padding:34px 0 27px}
+      #FridayHero-{{ section.id }} .fp-hero__copy{padding:34px 0 18px!important}
       #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:var(--fp-hero-kicker-mobile);margin-bottom:10px}
       #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(58px,18vw,var(--fp-hero-title-mobile));line-height:.79;max-width:360px}
       #FridayHero-{{ section.id }} .fp-hero__sub{font-size:var(--fp-hero-sub-mobile);line-height:1.45;margin:24px 0 21px;max-width:29ch}
       #FridayHero-{{ section.id }} .fp-hero__world{margin:-9px 0 20px;font-size:8.5px}
       #FridayHero-{{ section.id }} .fp-btn{font-size:var(--fp-hero-button-mobile);min-height:48px;padding-inline:14px}
-      #FridayHero-{{ section.id }} .fp-hero__scene--curated{width:calc(100% + 20px);margin-left:-10px}
-      #FridayHero-{{ section.id }} .fp-hero__scene--curated img{width:100%;max-width:none}
+      /* The portrait source intentionally contains generous cream canvas. Crop that
+         canvas in CSS so the artwork follows the CTA as one composition instead of
+         creating a false, empty section between the copy and the frame. */
+      #FridayHero-{{ section.id }} .fp-hero__scene--curated{
+        width:calc(100% + 44px)!important;
+        margin-left:-22px!important;
+        padding:0!important;
+        overflow:hidden!important;
+      }
+      #FridayHero-{{ section.id }} .fp-hero__scene--curated picture{
+        display:block!important;
+        width:100%!important;
+        aspect-ratio:6/5;
+        overflow:hidden!important;
+      }
+      #FridayHero-{{ section.id }} .fp-hero__scene--curated img{
+        display:block!important;
+        width:100%!important;
+        max-width:none!important;
+        height:100%!important;
+        max-height:none!important;
+        margin:0!important;
+        object-fit:cover!important;
+        object-position:center 50%!important;
+      }
+    }
+    @media (max-width:374px){
+      #FridayHero-{{ section.id }} .fp-hero__scene--curated{
+        width:calc(100% + 36px)!important;
+        margin-left:-18px!important;
+      }
     }
   </style>
   <div class="fp-shell fp-hero__grid">
