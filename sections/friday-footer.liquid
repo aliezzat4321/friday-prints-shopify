@@ -3,7 +3,7 @@
 <footer class="fp-footer" id="FridayFooter-{{ section.id }}" style="--fp-footer-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-footer-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;--fp-footer-columns:{{ footer_column_count }};--fp-footer-link-desktop:{{ section.settings.link_size_desktop }}px;--fp-footer-link-mobile:{{ section.settings.link_size_mobile }}px;--fp-footer-heading-desktop:{{ section.settings.heading_size_desktop }}px;--fp-footer-heading-mobile:{{ section.settings.heading_size_mobile }}px;">
   <style>
     #FridayFooter-{{ section.id }} .fp-footer__grid{grid-template-columns:1.45fr repeat(var(--fp-footer-columns),minmax(0,1fr));gap:28px;padding:34px 42px 26px}
-    #FridayFooter-{{ section.id }} .fp-footer__brand{font-size:clamp(48px,4vw,60px)}
+    #FridayFooter-{{ section.id }} .fp-footer__brand{font-size:clamp(58px,4.5vw,72px)}
     #FridayFooter-{{ section.id }} .fp-footer__brand-block>p{font-size:12px;margin-top:13px}
     #FridayFooter-{{ section.id }} .fp-footer__col{gap:10px;padding-top:3px}
     #FridayFooter-{{ section.id }} .fp-footer__col strong{font-size:var(--fp-footer-heading-desktop);margin-bottom:5px}
@@ -12,7 +12,7 @@
     #FridayFooter-{{ section.id }} .fp-footer__social a,#FridayFooter-{{ section.id }} .fp-footer__social>span{display:inline-flex;align-items:center;gap:8px;color:inherit;text-decoration:none;font:700 13px/1 "Courier New",monospace;text-transform:lowercase}
     #FridayFooter-{{ section.id }} .fp-footer__social svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.7;flex:0 0 auto}
     #FridayFooter-{{ section.id }} .fp-footer__social a:hover span{text-decoration:underline;text-underline-offset:4px}
-    #FridayFooter-{{ section.id }} .fp-footer__email{display:inline-block;margin-top:10px;color:inherit;text-decoration:none;font:11px/1.35 "Courier New",monospace}
+    #FridayFooter-{{ section.id }} .fp-footer__email{display:inline-block;max-width:100%;margin-top:10px;color:inherit;text-decoration:none;font:11px/1.35 "Courier New",monospace;overflow-wrap:anywhere}
     #FridayFooter-{{ section.id }} .fp-footer__email:hover{text-decoration:underline;text-underline-offset:4px}
 
     /* Desktop: GiGi becomes the centered colophon signature instead of floating under the brand. */
@@ -27,7 +27,7 @@
     @media(max-width:1100px) and (min-width:750px){
       #FridayFooter-{{ section.id }} .fp-footer__grid{grid-template-columns:1.2fr repeat(2,minmax(0,1fr));row-gap:24px;padding:30px 28px 24px}
       #FridayFooter-{{ section.id }} .fp-footer__brand-block{grid-row:span 2}
-      #FridayFooter-{{ section.id }} .fp-footer__brand{font-size:48px}
+      #FridayFooter-{{ section.id }} .fp-footer__brand{font-size:54px}
       #FridayFooter-{{ section.id }} .fp-footer__col a,#FridayFooter-{{ section.id }} .fp-footer__col>span{font-size:14px}
       #FridayFooter-{{ section.id }} .fp-footer__bottom{padding:8px 28px;gap:16px}
       #FridayFooter-{{ section.id }} .fp-footer__signature{font-size:9px;gap:8px}
@@ -37,14 +37,15 @@
     @media(max-width:749px){
       #FridayFooter-{{ section.id }} .fp-footer__grid{grid-template-columns:1fr 1fr;column-gap:28px;row-gap:6px;padding:36px 20px 26px}
       #FridayFooter-{{ section.id }} .fp-footer__brand-block{grid-column:1/-1;grid-row:auto;border-bottom:1px solid var(--fp-line);padding-bottom:26px;margin-bottom:4px}
-      #FridayFooter-{{ section.id }} .fp-footer__brand{font-size:48px}
+      #FridayFooter-{{ section.id }} .fp-footer__brand{font-size:58px;line-height:.72}
       #FridayFooter-{{ section.id }} .fp-footer__brand-block>p{font-size:11px;margin-top:16px}
       #FridayFooter-{{ section.id }} .fp-footer__social{margin-top:18px}
       #FridayFooter-{{ section.id }} .fp-footer__social a,#FridayFooter-{{ section.id }} .fp-footer__social>span{font-size:13px;gap:8px}
       #FridayFooter-{{ section.id }} .fp-footer__social svg{width:22px;height:22px}
       #FridayFooter-{{ section.id }} .fp-footer__email{font-size:11px;margin-top:13px}
-      #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap{display:flex;margin-top:20px;min-height:78px}
-      #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap span{font-size:10.5px}
+      #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:end;gap:20px;margin-top:22px;min-height:96px}
+      #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap .fp-footer__gigi{width:min(var(--fp-footer-gigi-mobile),90px)!important;max-width:90px!important;max-height:112px!important}
+      #FridayFooter-{{ section.id }} .fp-footer__gigi-wrap span{justify-self:end;max-width:19ch;padding-bottom:10px;font-size:9px;text-align:right;white-space:normal}
       #FridayFooter-{{ section.id }} .fp-footer__col{min-height:0;padding:21px 0 14px!important;border:0!important}
       #FridayFooter-{{ section.id }} .fp-footer__col:nth-of-type(2n){padding-left:0!important;border-left:0!important}
       #FridayFooter-{{ section.id }} .fp-footer__col strong{font-size:var(--fp-footer-heading-mobile)}
@@ -66,7 +67,7 @@
           {% if section.settings.instagram_url != blank %}</a>{% else %}</span>{% endif %}
         </div>
       {% endif %}
-      {% if section.settings.support_email != blank %}<a class="fp-footer__email" href="mailto:{{ section.settings.support_email | escape }}">{{ section.settings.email_label }} → {{ section.settings.support_email }}</a>{% endif %}
+      {% if section.settings.support_email != blank %}<a class="fp-footer__email" href="{{ routes.root_url }}pages/contact">{{ section.settings.email_label }} → send us a note</a>{% endif %}
       {% if section.settings.gigi_icon != blank or section.settings.location_text != blank or request.design_mode %}
         <div class="fp-footer__gigi-wrap">
           {% if section.settings.gigi_icon != blank %}

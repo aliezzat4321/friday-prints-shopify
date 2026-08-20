@@ -26,6 +26,49 @@
   #FridayHeader-{{ section.id }} .fp-search{display:grid;place-items:center;width:34px;height:34px;padding:0;border:0;background:transparent;color:var(--fp-ink);text-decoration:none;cursor:pointer;flex:0 0 auto}
   #FridayHeader-{{ section.id }} .fp-search svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7}
 
+  /* Mobile masthead: clear left / centre / right rhythm with the brand as the anchor. */
+  @media (max-width: 900px) {
+    #FridayHeader-{{ section.id }} .fp-nav{
+      grid-template-columns:44px minmax(0,1fr) auto!important;
+      gap:10px!important;
+      min-height:82px;
+      padding-inline:16px!important;
+    }
+    #FridayHeader-{{ section.id }} .fp-menu{grid-column:1;grid-row:1;justify-self:start;display:block!important}
+    #FridayHeader-{{ section.id }} .fp-menu>summary{width:44px!important;height:44px!important}
+    #FridayHeader-{{ section.id }} .fp-logo{
+      grid-column:2;
+      grid-row:1;
+      justify-self:center;
+      align-items:center;
+      text-align:center;
+      font-size:36px!important;
+      line-height:.72!important;
+      max-width:156px!important;
+    }
+    #FridayHeader-{{ section.id }} .fp-logo small{font-size:9px!important;margin-top:6px!important;letter-spacing:.01em!important}
+    #FridayHeader-{{ section.id }} .fp-logo__image{width:min(var(--fp-logo-image-width),156px)!important;max-height:58px!important;object-position:center!important}
+    #FridayHeader-{{ section.id }} .fp-nav__links{display:none!important}
+    #FridayHeader-{{ section.id }} .fp-nav__actions{
+      grid-column:3;
+      grid-row:1;
+      justify-self:end;
+      display:flex!important;
+      align-items:center;
+      gap:2px!important;
+    }
+    #FridayHeader-{{ section.id }} .fp-gigi-link,#FridayHeader-{{ section.id }} .fp-instagram{display:none!important}
+    #FridayHeader-{{ section.id }} .fp-search,#FridayHeader-{{ section.id }} .fp-cart{width:42px!important;height:44px!important}
+    #FridayHeader-{{ section.id }} .fp-search svg{width:25px;height:25px}
+    #FridayHeader-{{ section.id }} .fp-cart svg{width:27px;height:27px}
+  }
+  @media (max-width: 374px) {
+    #FridayHeader-{{ section.id }} .fp-nav{grid-template-columns:44px minmax(0,1fr) auto!important;gap:6px!important;padding-inline:12px!important}
+    #FridayHeader-{{ section.id }} .fp-logo{font-size:32px!important;max-width:132px!important}
+    #FridayHeader-{{ section.id }} .fp-logo__image{width:min(var(--fp-logo-image-width),132px)!important}
+    #FridayHeader-{{ section.id }} .fp-search,#FridayHeader-{{ section.id }} .fp-cart{width:44px!important}
+  }
+
   /* Full-screen Friday menu — intentionally lives after friday-production.css so it wins the cascade. */
   @media (max-width: 900px) {
     html.fp-mobile-menu-open,
@@ -186,6 +229,31 @@
 
   <div class="fp-nav-wrap">
     <div class="fp-shell fp-nav">
+      <details class="fp-menu">
+        <summary aria-label="{{ section.settings.menu_open_label | escape }}"><i></i><i></i></summary>
+        <nav class="fp-mobile-menu" aria-label="{{ section.settings.mobile_navigation_label | escape }}">
+          <div class="fp-mobile-menu__links">
+            {% if section.settings.main_menu != blank %}
+              {% for link in section.settings.main_menu.links %}<a href="{{ link.url }}">{{ link.title | replace: 'world of gigi', 'World of GiGi' }}</a>{% endfor %}
+            {% else %}
+              {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}">{{ section.settings.nav_1_label }}</a>{% endif %}
+              {% if section.settings.nav_2_label != blank and section.settings.nav_2_url != blank %}<a href="{{ section.settings.nav_2_url }}">{{ section.settings.nav_2_label }}</a>{% endif %}
+              {% if section.settings.nav_3_label != blank and section.settings.nav_3_url != blank %}<a href="{{ section.settings.nav_3_url }}">{{ section.settings.nav_3_label }}</a>{% endif %}
+              {% if section.settings.nav_4_label != blank and section.settings.nav_4_url != blank %}<a href="{{ section.settings.nav_4_url }}">{{ section.settings.nav_4_label }}</a>{% endif %}
+              {% if section.settings.nav_5_label != blank and section.settings.nav_5_url != blank %}<a href="{{ section.settings.nav_5_url }}">{{ section.settings.nav_5_label }}</a>{% endif %}
+              {% if section.settings.nav_6_label != blank and section.settings.nav_6_url != blank %}<a href="{{ section.settings.nav_6_url }}">{{ section.settings.nav_6_label }}</a>{% endif %}
+            {% endif %}
+            {% if section.settings.show_search %}<a href="{{ routes.search_url }}">{{ section.settings.search_label }}</a>{% endif %}
+            <a href="{{ routes.root_url }}pages/contact">contact</a>
+          </div>
+          {% if section.settings.mobile_menu_note != blank %}
+            <div class="fp-mobile-menu__bottom">
+              <p>{{ section.settings.mobile_menu_note }}</p>
+            </div>
+          {% endif %}
+        </nav>
+      </details>
+
       <a class="fp-logo" href="{{ routes.root_url }}" aria-label="{{ section.settings.logo_alt | escape }}">
         {% if section.settings.logo_image != blank %}
           {{ section.settings.logo_image | image_url: width: 700 | image_tag: class: 'fp-logo__image', loading: 'eager', widths: '160,240,360,500,700', sizes: '(max-width: 749px) 150px, 220px', alt: section.settings.logo_alt }}
@@ -237,29 +305,6 @@
           </a>
         {% endif %}
 
-        <details class="fp-menu">
-          <summary aria-label="{{ section.settings.menu_open_label | escape }}"><i></i><i></i></summary>
-          <nav class="fp-mobile-menu" aria-label="{{ section.settings.mobile_navigation_label | escape }}">
-            <div class="fp-mobile-menu__links">
-              {% if section.settings.main_menu != blank %}
-                {% for link in section.settings.main_menu.links %}<a href="{{ link.url }}">{{ link.title | replace: 'world of gigi', 'World of GiGi' }}</a>{% endfor %}
-              {% else %}
-                {% if section.settings.nav_1_label != blank and section.settings.nav_1_url != blank %}<a href="{{ section.settings.nav_1_url }}">{{ section.settings.nav_1_label }}</a>{% endif %}
-                {% if section.settings.nav_2_label != blank and section.settings.nav_2_url != blank %}<a href="{{ section.settings.nav_2_url }}">{{ section.settings.nav_2_label }}</a>{% endif %}
-                {% if section.settings.nav_3_label != blank and section.settings.nav_3_url != blank %}<a href="{{ section.settings.nav_3_url }}">{{ section.settings.nav_3_label }}</a>{% endif %}
-                {% if section.settings.nav_4_label != blank and section.settings.nav_4_url != blank %}<a href="{{ section.settings.nav_4_url }}">{{ section.settings.nav_4_label }}</a>{% endif %}
-                {% if section.settings.nav_5_label != blank and section.settings.nav_5_url != blank %}<a href="{{ section.settings.nav_5_url }}">{{ section.settings.nav_5_label }}</a>{% endif %}
-                {% if section.settings.nav_6_label != blank and section.settings.nav_6_url != blank %}<a href="{{ section.settings.nav_6_url }}">{{ section.settings.nav_6_label }}</a>{% endif %}
-              {% endif %}
-              {% if section.settings.show_search %}<a href="{{ routes.search_url }}">{{ section.settings.search_label }}</a>{% endif %}
-            </div>
-            {% if section.settings.mobile_menu_note != blank %}
-              <div class="fp-mobile-menu__bottom">
-                <p>{{ section.settings.mobile_menu_note }}</p>
-              </div>
-            {% endif %}
-          </nav>
-        </details>
       </div>
     </div>
   </div>

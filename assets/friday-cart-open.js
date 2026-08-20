@@ -1,20 +1,9 @@
 /* Friday Prints — product-page finishing layer.
    1) Restore Pitch's native AJAX product-form submit path for the custom PDP.
-   2) Bridge successful cart updates to Shopify's native cart drawer.
-   3) Pull the exact edition count from Amina's existing product description
-      when a print is a standalone A3/A4 product rather than a size variant. */
+   2) Bridge successful cart updates to Shopify's native cart drawer. */
 
 (() => {
   const ARM_TIMEOUT = 6000;
-
-  const syncEditionFromProductCopy = () => {
-    const edition = document.querySelector('.fp-pdp [data-fp-edition]');
-    const description = document.querySelector('.fp-pdp__description');
-    if (!edition || !description) return;
-
-    const match = description.textContent.match(/\b1\s*\/\s*\d+\s+editions?\b/i);
-    if (match) edition.textContent = match[0].replace(/\s+/g, ' ').replace(/\s*\/\s*/, '/');
-  };
 
   const armDrawerOpen = (button) => {
     if (!button || button.disabled) return;
@@ -53,8 +42,6 @@
       settled = true;
     }, ARM_TIMEOUT);
   };
-
-  syncEditionFromProductCopy();
 
   /* The custom Liquid form intentionally keeps Shopify's native
      product-form-component. Pitch normally wires this method through an

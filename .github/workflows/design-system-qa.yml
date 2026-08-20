@@ -1,0 +1,36 @@
+name: Friday Prints Design System QA
+
+on:
+  push:
+    branches:
+      - friday-build
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  design-system-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate theme source
+        run: node scripts/friday-theme-check.mjs
+      - name: Install responsive checker
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.55.0 >/dev/null 2>&1
+          npx playwright install --with-deps chromium >/dev/null 2>&1
+      - name: Check nine responsive views
+        run: node scripts/friday-responsive-check.mjs
+      - name: Upload responsive evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: friday-prints-responsive-qa
+          path: qa-artifacts/
+          retention-days: 7
