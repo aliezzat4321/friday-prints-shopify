@@ -1,0 +1,65 @@
+name: Friday Catalog Data QA
+
+on:
+  push:
+    branches: [friday-build]
+    paths-ignore:
+      - '.catalog-data-status.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  catalog-data-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: friday-build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Wait for Shopify sync
+        run: sleep 25
+      - name: Read live Shopify product data
+        env:
+          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
+        run: |
+          node --input-type=module <<'EOF'
+          import fs from 'node:fs';
+          const response=await fetch(`${process.env.STORE_URL}/products.json?limit=250`,{headers:{accept:'application/json'}});
+          if(!response.ok) throw new Error(`Products endpoint returned ${response.status}`);
+          const data=await response.json();
+          const products=(data.products||[]).map(product=>({
+            id:product.id,
+            title:product.title,
+            handle:product.handle,
+            options:product.options,
+            description:String(product.body_html||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim(),
+            variants:(product.variants||[]).map(variant=>({
+              id:variant.id,
+              title:variant.title,
+              option1:variant.option1,
+              option2:variant.option2,
+              option3:variant.option3,
+              price:variant.price,
+              available:variant.available
+            }))
+          }));
+          fs.writeFileSync('.catalog-data-status.json',JSON.stringify({pass:true,count:products.length,products},null,2));
+          console.log(JSON.stringify({count:products.length,products:products.map(({title,handle,options,variants})=>({title,handle,options,variants}))},null,2));
+          EOF
+      - name: Record catalog result
+        if: always()
+        run: |
+          if [ ! -f .catalog-data-status.json ]; then
+            echo '{"pass":false,"error":"catalog read failed"}' > .catalog-data-status.json
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .catalog-data-status.json
+          git commit -m 'Record catalog data QA [skip ci]' || exit 0
+          git pull --rebase origin friday-build
+          git push origin HEAD:friday-build
