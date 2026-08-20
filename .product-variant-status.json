@@ -36,7 +36,43 @@
         "total": 150,
         "available": true,
         "addDisabled": false
-      }
+      },
+      "singleSizeResults": [
+        {
+          "product": {
+            "handle": "gigi-goes-to-the-jimjilbang",
+            "size": "A3",
+            "dimensions": "29.7 \u00d7 42 CM",
+            "total": 100
+          },
+          "pass": true,
+          "displayedSize": "A3",
+          "displayedDimension": "29.7 \u00d7 42 CM",
+          "number": 1,
+          "total": 100,
+          "selectorCount": 0,
+          "selectorVisible": false,
+          "editionVisible": true,
+          "overflow": false
+        },
+        {
+          "product": {
+            "handle": "the-offering-copy",
+            "size": "A3",
+            "dimensions": "29.7 \u00d7 42 CM",
+            "total": 100
+          },
+          "pass": true,
+          "displayedSize": "A3",
+          "displayedDimension": "29.7 \u00d7 42 CM",
+          "number": 1,
+          "total": 100,
+          "selectorCount": 0,
+          "selectorVisible": false,
+          "editionVisible": true,
+          "overflow": false
+        }
+      ]
     },
     {
       "viewport": {
@@ -73,9 +109,45 @@
         "total": 150,
         "available": true,
         "addDisabled": false
-      }
+      },
+      "singleSizeResults": [
+        {
+          "product": {
+            "handle": "gigi-goes-to-the-jimjilbang",
+            "size": "A3",
+            "dimensions": "29.7 \u00d7 42 CM",
+            "total": 100
+          },
+          "pass": true,
+          "displayedSize": "A3",
+          "displayedDimension": "29.7 \u00d7 42 CM",
+          "number": 1,
+          "total": 100,
+          "selectorCount": 0,
+          "selectorVisible": false,
+          "editionVisible": true,
+          "overflow": false
+        },
+        {
+          "product": {
+            "handle": "the-offering-copy",
+            "size": "A3",
+            "dimensions": "29.7 \u00d7 42 CM",
+            "total": 100
+          },
+          "pass": true,
+          "displayedSize": "A3",
+          "displayedDimension": "29.7 \u00d7 42 CM",
+          "number": 1,
+          "total": 100,
+          "selectorCount": 0,
+          "selectorVisible": false,
+          "editionVisible": true,
+          "overflow": false
+        }
+      ]
     }
   ],
-  "run_id": 32408158517,
-  "source_sha": "658864253d1313e1f7b2673db83a230d349966ff"
+  "run_id": 32408652678,
+  "source_sha": "599079b0fc735f15fb6d1d7506a4f1cc96b7134e"
 }
