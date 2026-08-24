@@ -23,9 +23,9 @@
 
     {%- render 'meta-tags' -%}
     {%- if request.page_type == 'product' -%}
-      {{ product | structured_data }}
+      <script type="application/ld+json">{{ product | structured_data }}</script>
     {%- elsif request.page_type == 'article' -%}
-      {{ article | structured_data }}
+      <script type="application/ld+json">{{ article | structured_data }}</script>
     {%- endif -%}
     {%- render 'stylesheets' -%}
     {%- render 'card-hover-effect-styles' -%}
