@@ -359,10 +359,27 @@
     const navWrap = root.querySelector('.fp-nav-wrap');
     const summary = menu.querySelector('summary');
     const logo = root.querySelector('.fp-logo');
-    let lastScrollY = Math.max(window.scrollY, 0);
+    let scrollTarget = window;
+    const resolveScrollTarget = () => {
+      const pageWrapper = document.querySelector('.page-wrapper');
+      return window.matchMedia('(min-width: 990px)').matches && pageWrapper ? pageWrapper : window;
+    };
+    const getScrollPosition = () => Math.max(scrollTarget === window ? window.scrollY : scrollTarget.scrollTop, 0);
+    let lastScrollY = 0;
     let scrollTicking = false;
     let headerThreshold = root.offsetHeight;
-    let directionAnchor = lastScrollY;
+    let directionAnchor = 0;
+
+    const bindScrollTarget = () => {
+      const nextTarget = resolveScrollTarget();
+      if (nextTarget !== scrollTarget) {
+        scrollTarget.removeEventListener('scroll', requestHeaderSync);
+        scrollTarget = nextTarget;
+        scrollTarget.addEventListener('scroll', requestHeaderSync, { passive: true });
+      }
+      lastScrollY = getScrollPosition();
+      directionAnchor = lastScrollY;
+    };
 
     const measureHeader = () => {
       if (!navWrap) return;
@@ -371,13 +388,13 @@
       const navHeight = navWrap.offsetHeight;
       root.style.setProperty('--fp-floating-nav-height', `${navHeight}px`);
       headerThreshold = root.offsetTop + root.offsetHeight;
-      if (wasFloating && window.scrollY > headerThreshold) navWrap.classList.add('is-floating');
+      if (wasFloating && getScrollPosition() > headerThreshold) navWrap.classList.add('is-floating');
     };
 
     const syncFloatingHeader = () => {
       scrollTicking = false;
       if (!navWrap) return;
-      const currentY = Math.max(window.scrollY, 0);
+      const currentY = getScrollPosition();
       const beyondHeader = currentY > headerThreshold;
 
       if (!beyondHeader) {
@@ -425,8 +442,10 @@
     summary?.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') pinMenuChrome();
     });
-    window.addEventListener('scroll', requestHeaderSync, { passive: true });
+    scrollTarget.addEventListener('scroll', requestHeaderSync, { passive: true });
+    bindScrollTarget();
     window.addEventListener('resize', () => {
+      bindScrollTarget();
       measureHeader();
       pinMenuChrome();
       requestHeaderSync();
