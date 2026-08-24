@@ -26,63 +26,68 @@
     data-fp-films
   >
     <style>
-      #FridayFilms-{{ section.id }}{position:relative;overflow:hidden;isolation:isolate;background:var(--fp-films-bg);color:var(--fp-cream);border-block:1px solid var(--fp-ink)}
+      #FridayFilms-{{ section.id }}{position:relative;overflow:hidden;background:var(--fp-cream);color:var(--fp-ink);padding:clamp(42px,5.5vw,76px) clamp(22px,4vw,54px);border-block:1px solid var(--fp-ink)}
       #FridayFilms-{{ section.id }} *{box-sizing:border-box}
-      #FridayFilms-{{ section.id }} .fp-films__inner{width:min(100%,1360px);margin:0 auto;display:grid;grid-template-columns:minmax(330px,.72fr) minmax(480px,1.28fr);gap:clamp(54px,8vw,122px);align-items:center;padding:clamp(54px,5.3vw,78px) clamp(32px,5vw,72px)}
-      #FridayFilms-{{ section.id }} .fp-films__intro{position:relative;z-index:1;max-width:530px}
+      #FridayFilms-{{ section.id }} .fp-films__inner{width:min(100%,1180px);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,270px);gap:clamp(44px,7vw,92px);align-items:center;padding:clamp(38px,4vw,58px);background:var(--fp-films-bg);border:1px solid var(--fp-ink);box-shadow:12px 12px 0 var(--fp-ink)}
+      #FridayFilms-{{ section.id }} .fp-films__intro{position:relative;z-index:1;max-width:590px}
       #FridayFilms-{{ section.id }} .fp-films__eyebrow{display:flex;align-items:center;gap:10px;margin:0 0 17px;color:var(--fp-films-accent);font:700 9px/1 "Courier New",monospace;letter-spacing:.11em;text-transform:uppercase}
       #FridayFilms-{{ section.id }} .fp-films__eyebrow:before{content:'';width:27px;height:1px;background:currentColor}
-      #FridayFilms-{{ section.id }} h2{max-width:7.2ch;margin:0;color:var(--fp-cream);font:700 clamp(56px,6.1vw,84px)/.84 Georgia,"Times New Roman",serif;letter-spacing:-.06em;text-transform:lowercase;text-wrap:balance}
-      #FridayFilms-{{ section.id }} .fp-films__text{max-width:38ch;margin:23px 0 0;color:color-mix(in srgb,var(--fp-cream) 82%,transparent);font:12px/1.62 "Courier New",monospace}
-      #FridayFilms-{{ section.id }} .fp-films__note{display:flex;align-items:center;gap:10px;max-width:450px;margin:25px 0 0;padding-top:14px;border-top:1px solid color-mix(in srgb,var(--fp-cream) 30%,transparent);color:var(--fp-cream);font:700 8px/1.35 "Courier New",monospace;letter-spacing:.065em;text-transform:uppercase}
+      #FridayFilms-{{ section.id }} h2{max-width:7.2ch;margin:0;color:var(--fp-ink);font:700 clamp(52px,5.5vw,76px)/.84 Georgia,"Times New Roman",serif;letter-spacing:-.06em;text-transform:lowercase;text-wrap:balance}
+      #FridayFilms-{{ section.id }} .fp-films__text{max-width:40ch;margin:21px 0 0;color:var(--fp-ink);font:12px/1.62 "Courier New",monospace}
+      #FridayFilms-{{ section.id }} .fp-films__note{display:flex;align-items:center;gap:10px;max-width:470px;margin:21px 0 0;color:var(--fp-ink);font:700 8px/1.35 "Courier New",monospace;letter-spacing:.065em;text-transform:uppercase}
       #FridayFilms-{{ section.id }} .fp-films__note:before{content:'↘';color:var(--fp-films-accent);font-size:17px}
-      #FridayFilms-{{ section.id }} .fp-films__rail{min-width:0;display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 0 4px}
+      #FridayFilms-{{ section.id }} .fp-films__facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:25px;border-block:1px solid var(--fp-ink)}
+      #FridayFilms-{{ section.id }} .fp-films__fact{padding:13px 12px 14px;border-right:1px solid var(--fp-ink);font:700 7.5px/1.32 "Courier New",monospace;text-transform:uppercase;letter-spacing:.035em}
+      #FridayFilms-{{ section.id }} .fp-films__fact:first-child{padding-left:0}
+      #FridayFilms-{{ section.id }} .fp-films__fact:last-child{padding-right:0;border-right:0}
+      #FridayFilms-{{ section.id }} .fp-films__fact b{display:block;margin-bottom:6px;color:var(--fp-films-accent);font-size:9px}
+      #FridayFilms-{{ section.id }} .fp-films__rail{min-width:0;width:100%;justify-self:end;display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 0 4px}
       #FridayFilms-{{ section.id }} .fp-films__rail::-webkit-scrollbar{display:none}
       #FridayFilms-{{ section.id }} .fp-films__rail[data-count="1"]{display:block;overflow:visible}
-      #FridayFilms-{{ section.id }} .fp-film-card{flex:0 0 min(78%,610px);min-width:0;margin:0;scroll-snap-align:start}
-      #FridayFilms-{{ section.id }} .fp-film-card__media{position:relative;aspect-ratio:4/3;overflow:hidden;background:#090807;border:1px solid color-mix(in srgb,var(--fp-cream) 55%,transparent)}
+      #FridayFilms-{{ section.id }} .fp-film-card{flex:0 0 88%;min-width:0;margin:0;scroll-snap-align:start}
+      #FridayFilms-{{ section.id }} .fp-film-card__media{position:relative;aspect-ratio:9/16;overflow:hidden;background:#090807;border:1px solid var(--fp-ink)}
       #FridayFilms-{{ section.id }} .fp-film-card__media video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;background:#090807;filter:saturate(.92) contrast(1.02);transition:transform .7s cubic-bezier(.22,.61,.36,1),filter .35s ease}
       #FridayFilms-{{ section.id }} .fp-film-card:hover .fp-film-card__media video{transform:scale(1.025);filter:saturate(1) contrast(1.04)}
       #FridayFilms-{{ section.id }} .fp-film-card__index{position:absolute;left:14px;top:13px;z-index:3;padding:7px 9px;background:var(--fp-films-accent);color:var(--fp-ink);font:700 8px/1 "Courier New",monospace;letter-spacing:.075em;text-transform:uppercase}
       #FridayFilms-{{ section.id }} .fp-film-card__index:before{content:'FILM / '}
-      #FridayFilms-{{ section.id }} .fp-film-card__open{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:flex-start;width:100%;padding:18px;border:0;background:linear-gradient(180deg,transparent 48%,rgba(9,8,7,.68));color:var(--fp-cream);cursor:pointer;text-align:left}
+      #FridayFilms-{{ section.id }} .fp-film-card__open{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-end;justify-content:flex-end;width:100%;padding:12px;border:0;background:linear-gradient(180deg,transparent 58%,rgba(9,8,7,.58));color:var(--fp-cream);cursor:pointer;text-align:right}
       #FridayFilms-{{ section.id }} .fp-film-card__open span{display:inline-flex;align-items:center;gap:12px;padding:11px 13px;border:1px solid color-mix(in srgb,var(--fp-cream) 72%,transparent);background:rgba(9,8,7,.34);font:700 8px/1 "Courier New",monospace;letter-spacing:.07em;text-transform:uppercase;backdrop-filter:blur(8px)}
       #FridayFilms-{{ section.id }} .fp-film-card__open span:before{content:'▶';font-size:7px}
       #FridayFilms-{{ section.id }} .fp-film-card__open:focus-visible{outline:2px solid var(--fp-films-accent);outline-offset:-5px}
-      #FridayFilms-{{ section.id }} .fp-film-card__caption{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;margin-top:13px;padding-top:12px;border-top:1px solid color-mix(in srgb,var(--fp-cream) 48%,transparent);font-family:"Courier New",monospace}
-      #FridayFilms-{{ section.id }} .fp-film-card__caption span{max-width:32ch;color:color-mix(in srgb,var(--fp-cream) 70%,transparent);font-size:8px;line-height:1.45}
-      #FridayFilms-{{ section.id }} .fp-film-card__caption strong{color:var(--fp-cream);font-size:9px;line-height:1.3;letter-spacing:.05em;text-transform:uppercase}
+      #FridayFilms-{{ section.id }} .fp-film-card__caption{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;margin-top:10px;font-family:"Courier New",monospace}
+      #FridayFilms-{{ section.id }} .fp-film-card__caption span{max-width:32ch;color:var(--fp-ink);font-size:7px;line-height:1.45}
+      #FridayFilms-{{ section.id }} .fp-film-card__caption strong{color:var(--fp-ink);font-size:8px;line-height:1.3;letter-spacing:.05em;text-transform:uppercase}
       #FridayFilms-{{ section.id }} .fp-film-card__caption small{color:var(--fp-films-accent);font:700 8px/1 "Courier New",monospace;letter-spacing:.05em}
       #FridayFilms-{{ section.id }} .fp-film-card__placeholder{height:100%;display:grid;place-items:center;padding:30px;color:var(--fp-cream);text-align:center;font:700 10px/1.4 "Courier New",monospace;text-transform:uppercase}
 
-      #FridayFilms-{{ section.id }} .fp-film-dialog{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:color-mix(in srgb,var(--fp-ink) 97%,transparent);color:var(--fp-cream)}
+      #FridayFilms-{{ section.id }} .fp-film-dialog{width:100vw;max-width:none;height:100dvh;max-height:none;margin:0;padding:0;border:0;background:var(--fp-cream);color:var(--fp-ink)}
       #FridayFilms-{{ section.id }} .fp-film-dialog::backdrop{background:rgba(8,7,6,.88)}
       #FridayFilms-{{ section.id }} .fp-film-dialog__inner{position:relative;width:100%;height:100%;display:grid;grid-template-rows:1fr auto;place-items:center;padding:28px 70px 24px}
       #FridayFilms-{{ section.id }} .fp-film-dialog__stage{min-height:0;width:100%;height:100%;display:grid;place-items:center}
       #FridayFilms-{{ section.id }} .fp-film-dialog video{display:block;width:auto;height:auto;max-width:min(88vw,520px);max-height:calc(100dvh - 94px);aspect-ratio:9/16;object-fit:contain;background:#050505}
-      #FridayFilms-{{ section.id }} .fp-film-dialog__close{position:absolute;right:20px;top:20px;z-index:2;width:44px;height:44px;border:1px solid var(--fp-cream);background:transparent;color:var(--fp-cream);cursor:pointer;font:18px/1 "Courier New",monospace}
-      #FridayFilms-{{ section.id }} .fp-film-dialog__meta{width:min(88vw,520px);display:flex;justify-content:space-between;gap:20px;padding-top:10px;border-top:1px solid color-mix(in srgb,var(--fp-cream) 45%,transparent);font:700 8px/1.3 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
+      #FridayFilms-{{ section.id }} .fp-film-dialog__close{position:absolute;right:20px;top:20px;z-index:2;width:44px;height:44px;border:1px solid var(--fp-ink);background:var(--fp-cream);color:var(--fp-ink);cursor:pointer;font:18px/1 "Courier New",monospace}
+      #FridayFilms-{{ section.id }} .fp-film-dialog__meta{width:min(88vw,520px);display:flex;justify-content:space-between;gap:20px;padding-top:10px;border-top:1px solid var(--fp-ink);font:700 8px/1.3 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
       #FridayFilms-{{ section.id }} .fp-film-dialog__meta span:last-child{color:var(--fp-films-accent)}
 
       @media(max-width:1050px){
-        #FridayFilms-{{ section.id }} .fp-films__inner{grid-template-columns:minmax(290px,.8fr) minmax(400px,1.2fr);gap:48px;padding-inline:34px}
-        #FridayFilms-{{ section.id }} h2{font-size:clamp(52px,6.3vw,70px)}
+        #FridayFilms-{{ section.id }} .fp-films__inner{grid-template-columns:minmax(0,1fr) minmax(220px,250px);gap:42px;padding:40px}
+        #FridayFilms-{{ section.id }} h2{font-size:clamp(50px,6.3vw,68px)}
       }
       @media(max-width:899px){
-        #FridayFilms-{{ section.id }} .fp-films__inner{grid-template-columns:1fr;gap:31px;padding:46px 28px 52px}
-        #FridayFilms-{{ section.id }} .fp-films__intro{max-width:650px}
-        #FridayFilms-{{ section.id }} .fp-films__rail{width:min(100%,680px);justify-self:end}
+        #FridayFilms-{{ section.id }} .fp-films__inner{grid-template-columns:minmax(0,1fr) minmax(210px,230px);gap:32px;padding:36px}
       }
       @media(max-width:749px){
-        #FridayFilms-{{ section.id }} .fp-films__inner{gap:23px;padding:32px 18px 37px}
+        #FridayFilms-{{ section.id }}{padding:28px 16px 34px}
+        #FridayFilms-{{ section.id }} .fp-films__inner{grid-template-columns:1fr;gap:24px;padding:28px 20px;box-shadow:7px 7px 0 var(--fp-ink)}
         #FridayFilms-{{ section.id }} .fp-films__eyebrow{margin-bottom:11px;font-size:7.5px}
         #FridayFilms-{{ section.id }} .fp-films__eyebrow:before{width:19px}
         #FridayFilms-{{ section.id }} h2{max-width:7.7ch;font-size:clamp(43px,12.4vw,55px);line-height:.86}
         #FridayFilms-{{ section.id }} .fp-films__text{max-width:36ch;margin-top:14px;font-size:10px;line-height:1.53}
-        #FridayFilms-{{ section.id }} .fp-films__note{margin-top:16px;padding-top:10px;font-size:7px}
-        #FridayFilms-{{ section.id }} .fp-films__rail{width:100%}
+        #FridayFilms-{{ section.id }} .fp-films__note{margin-top:16px;font-size:7px}
+        #FridayFilms-{{ section.id }} .fp-films__facts{margin-top:19px}
+        #FridayFilms-{{ section.id }} .fp-films__fact{padding:11px 8px 12px;font-size:6.5px}
+        #FridayFilms-{{ section.id }} .fp-films__rail{width:min(58vw,220px);justify-self:end}
         #FridayFilms-{{ section.id }} .fp-film-card{flex-basis:88%;max-width:none}
-        #FridayFilms-{{ section.id }} .fp-film-card__media{aspect-ratio:4/3}
         #FridayFilms-{{ section.id }} .fp-film-card__index{left:10px;top:10px;padding:6px 8px;font-size:7px}
         #FridayFilms-{{ section.id }} .fp-film-card__open{padding:12px}
         #FridayFilms-{{ section.id }} .fp-film-card__open span{padding:9px 10px;font-size:7px}
@@ -103,6 +108,11 @@
         {% if section.settings.heading != blank %}<h2>{{ section.settings.heading }}</h2>{% endif %}
         {% if section.settings.text != blank %}<div class="fp-films__text">{{ section.settings.text }}</div>{% endif %}
         {% if section.settings.note != blank %}<p class="fp-films__note">{{ section.settings.note }}</p>{% endif %}
+        <div class="fp-films__facts" aria-label="What comes with your print">
+          <div class="fp-films__fact"><b>01</b>numbered<br>edition</div>
+          <div class="fp-films__fact"><b>02</b>removable<br>mount</div>
+          <div class="fp-films__fact"><b>03</b>packed<br>by hand</div>
+        </div>
       </header>
 
       <div class="fp-films__rail" data-count="{{ visible_story_count }}" aria-label="Friday Prints films">
@@ -244,7 +254,7 @@
     { "type": "checkbox", "id": "use_sample_video", "label": "Use the supplied unboxing video when the first block is empty", "default": true },
     { "type": "checkbox", "id": "autoplay", "label": "Autoplay preview silently when visible", "default": true },
     { "type": "checkbox", "id": "loop", "label": "Loop preview videos", "default": true },
-    { "type": "color", "id": "background_color", "label": "Film-room background", "default": "#17120F" },
+    { "type": "color", "id": "background_color", "label": "Insert background", "default": "#E9A5B2" },
     { "type": "color", "id": "accent_color", "label": "Accent", "default": "#E53F36" }
   ],
   "blocks": [
