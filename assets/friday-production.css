@@ -2,14 +2,22 @@
    Single source of truth for the custom Friday homepage. */
 
 :root{
-  --fp-cream:#fbf1e4;
+  --fp-cream:#fffdf8;
+  --fp-paper:#fff;
   --fp-pink:#f2bdc5;
   --fp-newsletter:#e9a5b2;
   --fp-red:#e53f36;
   --fp-yellow:#f3cf78;
   --fp-green:#2f8869;
+  --fp-green-text:#28765b;
   --fp-ink:#17120f;
   --fp-line:color-mix(in srgb,var(--fp-ink) 14%,transparent);
+  --fp-page-gutter:46px;
+  --fp-shell-offset:92px;
+  --fp-copy-measure:588px;
+  --fp-page-title:clamp(72px,8vw,112px);
+  --fp-section-title:clamp(40px,4vw,56px);
+  --fp-red-text:#c9362e;
 }
 
 body:has(.fp-site-header){background:var(--fp-cream);color:var(--fp-ink)}
@@ -18,10 +26,21 @@ body:has(.fp-site-header) #MainContent,
 body:has(.fp-site-header) #MainContent>.shopify-section{width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
 .fp-site-header,.fp-section,.fp-footer{width:100%;max-width:none;margin:0;box-sizing:border-box;color:var(--fp-ink)}
 .fp-site-header *,.fp-section *,.fp-footer *{box-sizing:border-box}
-.fp-shell{width:min(calc(100% - 68px),1500px);margin:0 auto}
+.fp-shell{width:min(calc(100% - var(--fp-shell-offset)),1500px);margin:0 auto}
+
+/* Shared interaction and focus contract. Visual sizes stay editorial while
+   functional targets remain comfortable on touch and keyboard. */
+.fp-site-header :where(a,button,summary):focus-visible,
+.fp-section :where(a,button,summary,input,textarea,select):focus-visible,
+.fp-footer :where(a,button):focus-visible{
+  outline:2px solid var(--fp-ink);
+  outline-offset:3px;
+}
+.fp-nav__links a{display:inline-flex;align-items:center;min-height:44px}
+.fp-search,.fp-instagram,.fp-cart{min-width:44px!important;min-height:44px!important}
 
 /* Announcement */
-.fp-announcement{min-height:40px;background:var(--fp-red);color:#fff;display:flex;align-items:center;justify-content:center;gap:12px;padding:9px 18px;text-align:center;font:700 12.5px/1.15 "Courier New",Courier,monospace;letter-spacing:.065em;text-transform:uppercase;overflow:hidden}
+.fp-announcement{min-height:40px;background:var(--fp-red-text);color:#fff;display:flex;align-items:center;justify-content:center;gap:12px;padding:9px 18px;text-align:center;font:700 12.5px/1.15 "Courier New",Courier,monospace;letter-spacing:.065em;text-transform:uppercase;overflow:hidden}
 .fp-announcement>span:nth-child(2){min-width:0}
 
 /* Header / navigation */
@@ -46,7 +65,7 @@ body:has(.fp-site-header) #MainContent>.shopify-section{width:100%!important;max
 .fp-gigi-editor-placeholder{display:grid;place-items:center;min-width:46px;height:38px;border:1px dashed var(--fp-line);font:7px/1.1 "Courier New",monospace;text-align:center;padding:3px}
 .fp-cart{position:relative;width:38px;height:38px;display:grid;place-items:center;flex:0 0 auto}
 .fp-cart svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.6}
-.fp-cart b{position:absolute;right:-8px;top:-9px;min-width:21px;height:21px;border-radius:50%;display:grid;place-items:center;background:var(--fp-red);color:#fff;font:11px/1 "Courier New",monospace}
+.fp-cart b{position:absolute;right:-8px;top:-9px;min-width:21px;height:21px;border-radius:50%;display:grid;place-items:center;background:var(--fp-red-text);color:#fff;font:11px/1 "Courier New",monospace}
 .fp-menu{display:none;position:relative;margin:0;padding:0;flex:0 0 auto}
 
 /* Shared drawer styling, activated at compact header breakpoints. */
@@ -66,7 +85,7 @@ body:has(.fp-site-header) #MainContent>.shopify-section{width:100%!important;max
 .fp-hero__sub{margin:36px 0 30px;max-width:29ch;font:700 20px/1.4 "Courier New",monospace;letter-spacing:.01em}
 .fp-hero__buttons{display:flex;gap:18px;flex-wrap:wrap}
 .fp-btn{min-height:58px;padding:0 27px;border:2px solid var(--fp-red);border-radius:8px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font:700 15.5px/1 "Courier New",monospace;text-transform:lowercase;color:var(--fp-ink)!important;background:transparent}
-.fp-btn--solid{background:var(--fp-red);color:#fff!important}
+.fp-btn--solid{background:var(--fp-red-text);border-color:var(--fp-red-text);color:#fff!important}
 .fp-hero__scene{align-self:end;min-width:0;display:flex;align-items:flex-end;justify-content:center;position:relative;z-index:1;padding:0 6px}
 .fp-hero__scene img{display:block;width:auto;height:auto;max-width:100%;max-height:645px;object-fit:contain;object-position:center bottom;margin:0 auto}
 .fp-hero__placeholder{width:100%;min-height:450px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--fp-line);font:12px/1.4 "Courier New",monospace;color:color-mix(in srgb,var(--fp-ink) 45%,transparent);text-align:center;padding:40px}
@@ -113,7 +132,7 @@ body:has(.fp-site-header) #MainContent>.shopify-section{width:100%!important;max
 .fp-product h3{margin:10px 0 4px;text-align:center;font:700 14px/1.25 "Courier New",monospace;text-transform:lowercase}
 .fp-product p{margin:0;text-align:center;font:12.5px/1.25 "Courier New",monospace}
 .fp-collection__cta{text-align:center;margin-top:12px}
-.fp-collection__cta a{display:inline-flex;min-height:44px;align-items:center;justify-content:center;background:var(--fp-green);color:#fff!important;border-radius:5px;padding:0 24px;text-decoration:none;font:700 13px/1 "Courier New",monospace}
+.fp-collection__cta a{display:inline-flex;min-height:44px;align-items:center;justify-content:center;background:var(--fp-green-text);color:#fff!important;border-radius:5px;padding:0 24px;text-decoration:none;font:700 13px/1 "Courier New",monospace}
 .fp-collection__empty{padding:48px 24px;text-align:center;font:13px/1.5 "Courier New",monospace}
 .fp-arrow{position:absolute;top:57%;width:42px;height:42px;border:0;border-radius:50%;background:var(--fp-ink);color:#fff;display:grid;place-items:center;font-size:23px;z-index:3;cursor:pointer}
 .fp-arrow--prev{left:18px}.fp-arrow--next{right:18px}
@@ -153,13 +172,15 @@ body:has(.fp-site-header) #MainContent>.shopify-section{width:100%!important;max
 .fp-footer__col{display:flex;flex-direction:column;gap:12px;padding-top:7px}
 .fp-footer__col strong{margin-bottom:8px;font:700 12px/1 "Courier New",monospace;letter-spacing:.06em}
 .fp-footer__col a,.fp-footer__col span{color:inherit;text-decoration:none;font:13px/1.4 "Courier New",monospace}
+.fp-footer__col a{display:inline-flex;align-items:center;min-height:32px;width:max-content;max-width:100%}
 .fp-footer__col a:hover{text-decoration:underline;text-underline-offset:4px}
 .fp-footer__bottom{min-height:46px;background:var(--fp-ink);color:#fff;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;padding:0 46px;font:700 9.5px/1 "Courier New",monospace;letter-spacing:.06em}
 .fp-footer__bottom span:nth-child(2){text-align:center}.fp-footer__bottom span:last-child{text-align:right}
 
 /* Tablet — compact spacing while keeping the full desktop navigation where it fits. */
 @media(max-width:1100px) and (min-width:901px){
-  .fp-shell{width:min(calc(100% - 42px),1040px)}
+  :root{--fp-page-gutter:28px;--fp-shell-offset:56px}
+  .fp-shell{width:min(calc(100% - var(--fp-shell-offset)),1040px)}
   .fp-nav{height:104px;grid-template-columns:175px minmax(0,1fr) 145px;gap:16px}
   .fp-logo{font-size:42px}.fp-logo small{font-size:11px}
   .fp-nav__links{font-size:11px;gap:18px}
@@ -172,6 +193,9 @@ body:has(.fp-site-header) #MainContent>.shopify-section{width:100%!important;max
 }
 
 /* Compact header — collapse before the links can collide with actions. */
+@media(max-width:900px) and (min-width:750px){
+  :root{--fp-page-gutter:28px;--fp-shell-offset:56px}
+}
 @media(max-width:900px){
   .fp-nav{height:82px;width:100%;max-width:100%;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding-inline:20px}
   .fp-logo{font-size:34px;min-width:0;max-width:190px}.fp-logo small{font-size:9px;margin-top:5px}.fp-logo__image{max-height:56px;width:min(var(--fp-logo-image-width),170px)}
@@ -184,7 +208,9 @@ body:has(.fp-site-header) #MainContent>.shopify-section{width:100%!important;max
 
 /* Mobile */
 @media(max-width:749px){
-  .fp-shell{width:100%;padding-inline:20px}
+  :root{--fp-page-gutter:20px;--fp-shell-offset:40px}
+  .fp-shell{width:100%;padding-inline:var(--fp-page-gutter)}
+  .fp-footer__col a{min-height:44px}
   .fp-announcement{min-height:34px;gap:7px;padding:8px 12px;font-size:8px;letter-spacing:.025em}
 
   .fp-nav{height:74px;gap:10px;padding-inline:18px}
@@ -206,7 +232,7 @@ body:has(.fp-site-header) #MainContent>.shopify-section{width:100%!important;max
 
   .fp-benefits__grid{grid-template-columns:1fr 1fr}.fp-benefit{min-height:160px;padding:22px 15px;border-bottom:1px solid var(--fp-line)}.fp-benefit:nth-child(2n){border-right:0}.fp-benefit:nth-last-child(-n+2){border-bottom:0}.fp-benefit__icon{font-size:27px;margin-bottom:11px}.fp-benefit h3{font-size:12px}.fp-benefit p{font-size:11.5px;line-height:1.48}
 
-  .fp-collection__inner{padding:34px 0 38px}.fp-collection__title{margin-bottom:22px;white-space:nowrap}.fp-collection__title h2{font-size:43px}.fp-collection__title-deco{font-size:24px;margin:0 5px}.fp-collection__rail{padding:0 18px 12px;gap:12px}.fp-product{flex:0 0 60vw;max-width:235px}.fp-product h3{font-size:12.5px;margin-top:9px}.fp-product p{font-size:11.5px}.fp-arrow{display:none}.fp-collection__cta a{font-size:11.5px;min-height:41px}.fp-collection__empty{padding:32px 20px;font-size:11px}
+  .fp-collection__inner{padding:34px 0 38px}.fp-collection__title{margin-bottom:22px;white-space:nowrap}.fp-collection__title h2{font-size:43px}.fp-collection__title-deco{font-size:24px;margin:0 5px}.fp-collection__rail{padding:0 18px 12px;gap:12px}.fp-product{flex:0 0 60vw;max-width:235px}.fp-product h3{font-size:12.5px;margin-top:9px}.fp-product p{font-size:11.5px}.fp-arrow{display:none}.fp-collection__cta a{font-size:11.5px;min-height:44px}.fp-collection__empty{padding:32px 20px;font-size:11px}
 
   .fp-services__grid{grid-template-columns:1fr 1fr}.fp-service{min-height:136px;padding:22px 14px;border-bottom:1px solid var(--fp-line)}.fp-service:nth-child(2n){border-right:0}.fp-service:nth-last-child(-n+2){border-bottom:0}.fp-service__icon{font-size:23px;margin-bottom:8px}.fp-service h3{font-size:12px}.fp-service p{font-size:11px;line-height:1.42}
 

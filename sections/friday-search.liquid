@@ -6,18 +6,18 @@
   <style>
     #FridaySearch-{{ section.id }}{min-height:62vh;background:var(--fp-search-bg);color:var(--fp-ink,#15110f)}
     #FridaySearch-{{ section.id }} *{box-sizing:border-box}
-    #FridaySearch-{{ section.id }} .fp-search-page__head{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(420px,1.28fr);align-items:end;gap:clamp(54px,8vw,140px);padding:54px 46px 36px;border-bottom:1px solid var(--fp-line,rgb(21 17 15/.22))}
-    #FridaySearch-{{ section.id }} .fp-search-page__eyebrow{margin:0 0 11px;color:var(--fp-search-accent);font:700 10px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
+    #FridaySearch-{{ section.id }} .fp-search-page__head{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(420px,1.28fr);align-items:end;gap:clamp(54px,8vw,140px);padding:54px var(--fp-page-gutter,46px) 36px;border-bottom:1px solid var(--fp-line,rgb(21 17 15/.22))}
+    #FridaySearch-{{ section.id }} .fp-search-page__eyebrow{margin:0 0 11px;color:var(--fp-red-text,var(--fp-search-accent));font:700 10px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
     #FridaySearch-{{ section.id }} h1{margin:0;font:700 clamp(58px,6.7vw,92px)/.84 Georgia,"Times New Roman",serif;letter-spacing:-.055em;text-transform:lowercase}
     #FridaySearch-{{ section.id }} .fp-search-page__form{display:grid;grid-template-columns:minmax(0,1fr) auto;width:100%;border-bottom:2px solid var(--fp-ink,#15110f)}
     #FridaySearch-{{ section.id }} .fp-search-page__input{min-width:0;border:0!important;border-radius:0!important;outline:0;background:transparent!important;color:inherit;padding:13px 0 14px;font:700 clamp(18px,1.8vw,25px)/1.2 "Courier New",monospace;letter-spacing:-.025em;box-shadow:none!important}
     #FridaySearch-{{ section.id }} .fp-search-page__input::placeholder{color:rgb(21 17 15/.4);opacity:1}
     #FridaySearch-{{ section.id }} .fp-search-page__submit{min-width:96px;border:0;background:transparent;color:inherit;cursor:pointer;font:700 10px/1 "Courier New",monospace;letter-spacing:.07em;text-align:right;text-transform:uppercase}
     #FridaySearch-{{ section.id }} .fp-search-page__submit:hover{color:var(--fp-search-accent)}
-    #FridaySearch-{{ section.id }} .fp-search-page__status{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:17px 46px;border-bottom:1px solid var(--fp-line,rgb(21 17 15/.22));font:700 10px/1.4 "Courier New",monospace;letter-spacing:.055em;text-transform:uppercase}
+    #FridaySearch-{{ section.id }} .fp-search-page__status{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:17px var(--fp-page-gutter,46px);border-bottom:1px solid var(--fp-line,rgb(21 17 15/.22));font:700 10px/1.4 "Courier New",monospace;letter-spacing:.055em;text-transform:uppercase}
     #FridaySearch-{{ section.id }} .fp-search-page__status a{color:inherit;text-decoration:none}
     #FridaySearch-{{ section.id }} .fp-search-page__status a:hover{color:var(--fp-search-accent)}
-    #FridaySearch-{{ section.id }} .fp-search-page__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:54px 28px;padding:42px 46px 76px}
+    #FridaySearch-{{ section.id }} .fp-search-page__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:54px 28px;padding:42px var(--fp-page-gutter,46px) 76px}
     #FridaySearch-{{ section.id }} .fp-search-card{display:block;min-width:0;color:inherit;text-decoration:none}
     #FridaySearch-{{ section.id }} .fp-search-card__media{aspect-ratio:.707;overflow:hidden;background:rgb(255 255 255/.28)}
     #FridaySearch-{{ section.id }} .fp-search-card__media img,#FridaySearch-{{ section.id }} .fp-search-card__media svg{display:block;width:100%;height:100%;object-fit:contain;transition:transform .3s ease}
@@ -25,15 +25,15 @@
     #FridaySearch-{{ section.id }} .fp-search-card__meta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;padding-top:12px}
     #FridaySearch-{{ section.id }} .fp-search-card h2{margin:0;font:700 13px/1.35 "Courier New",monospace;text-transform:lowercase}
     #FridaySearch-{{ section.id }} .fp-search-card p{margin:0;font:12px/1.35 "Courier New",monospace;white-space:nowrap}
-    #FridaySearch-{{ section.id }} .fp-search-page__empty{display:flex;align-items:flex-start;justify-content:space-between;gap:36px;padding:54px 46px 86px;border-bottom:1px solid var(--fp-line,rgb(21 17 15/.22))}
+    #FridaySearch-{{ section.id }} .fp-search-page__empty{display:flex;align-items:flex-start;justify-content:space-between;gap:36px;padding:54px var(--fp-page-gutter,46px) 86px;border-bottom:1px solid var(--fp-line,rgb(21 17 15/.22))}
     #FridaySearch-{{ section.id }} .fp-search-page__empty-copy{max-width:560px}
     #FridaySearch-{{ section.id }} .fp-search-page__empty strong{display:block;margin-bottom:10px;font:italic 30px/1.05 Georgia,"Times New Roman",serif;color:var(--fp-search-accent)}
     #FridaySearch-{{ section.id }} .fp-search-page__empty p{max-width:52ch;margin:0;font:12px/1.6 "Courier New",monospace}
     #FridaySearch-{{ section.id }} .fp-search-page__actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:22px}
-    #FridaySearch-{{ section.id }} .fp-search-page__actions a{padding:4px 0;border-bottom:1px solid currentColor;color:inherit;font:700 10px/1.4 "Courier New",monospace;letter-spacing:.06em;text-decoration:none;text-transform:uppercase}
+    #FridaySearch-{{ section.id }} .fp-search-page__actions a{display:inline-flex;align-items:center;min-height:44px;padding:4px 0;border-bottom:1px solid currentColor;color:inherit;font:700 10px/1.4 "Courier New",monospace;letter-spacing:.06em;text-decoration:none;text-transform:uppercase}
     #FridaySearch-{{ section.id }} .fp-search-page__actions a:hover{color:var(--fp-search-accent)}
     #FridaySearch-{{ section.id }} .fp-search-page__pagination{display:flex;justify-content:center;gap:8px;padding:0 24px 70px;font:700 11px/1 "Courier New",monospace}
-    #FridaySearch-{{ section.id }} .fp-search-page__pagination a,#FridaySearch-{{ section.id }} .fp-search-page__pagination span{min-width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--fp-ink,#15110f);color:inherit;text-decoration:none}
+    #FridaySearch-{{ section.id }} .fp-search-page__pagination a,#FridaySearch-{{ section.id }} .fp-search-page__pagination span{min-width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--fp-ink,#15110f);color:inherit;text-decoration:none}
     #FridaySearch-{{ section.id }} .fp-search-page__pagination .is-current{background:var(--fp-ink,#15110f);color:var(--fp-search-bg)}
     @media(max-width:1100px){
       #FridaySearch-{{ section.id }} .fp-search-page__head{grid-template-columns:1fr;gap:32px;padding-inline:30px}
@@ -44,7 +44,7 @@
     @media(max-width:749px){
       #FridaySearch-{{ section.id }} .fp-search-page__head{gap:28px;padding:38px 20px 28px}
       #FridaySearch-{{ section.id }} h1{font-size:57px}
-      #FridaySearch-{{ section.id }} .fp-search-page__eyebrow{font-size:9px}
+      #FridaySearch-{{ section.id }} .fp-search-page__eyebrow{font-size:10px}
       #FridaySearch-{{ section.id }} .fp-search-page__input{padding:11px 0 12px;font-size:17px}
       #FridaySearch-{{ section.id }} .fp-search-page__submit{min-width:82px;font-size:9px}
       #FridaySearch-{{ section.id }} .fp-search-page__status{align-items:flex-start;padding:13px 20px;font-size:9px}
@@ -133,7 +133,7 @@
     { "type": "text", "id": "no_results_heading", "label": "No results heading", "default": "nothing found for" },
     { "type": "textarea", "id": "no_results_text", "label": "No results text", "default": "Try another word or browse the complete collection." },
     { "type": "range", "id": "results_per_page", "label": "Results per page", "min": 8, "max": 24, "step": 4, "default": 20 },
-    { "type": "color", "id": "background_color", "label": "Background", "default": "#FBF1E4" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FFFDF8" },
     { "type": "color", "id": "accent_color", "label": "Accent", "default": "#E53F36" }
   ],
   "presets": [{ "name": "Friday search" }]

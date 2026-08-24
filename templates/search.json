@@ -21,7 +21,7 @@
         "no_results_heading": "nothing found for",
         "no_results_text": "Try another word or browse the complete collection.",
         "results_per_page": 20,
-        "background_color": "#FBF1E4",
+        "background_color": "#FFFDF8",
         "accent_color": "#E53F36"
       }
     }

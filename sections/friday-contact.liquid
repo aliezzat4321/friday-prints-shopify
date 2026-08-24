@@ -4,8 +4,8 @@
     #FridayContact-{{ section.id }} *{box-sizing:border-box}
     #FridayContact-{{ section.id }} .fp-contact__inner{padding-top:clamp(48px,7vw,104px);padding-bottom:clamp(64px,8vw,120px)}
     #FridayContact-{{ section.id }} .fp-contact__intro{display:grid;grid-template-columns:minmax(0,.76fr) minmax(300px,.44fr);align-items:end;gap:56px;padding-bottom:clamp(38px,5vw,66px);border-bottom:1px solid var(--fp-ink)}
-    #FridayContact-{{ section.id }} .fp-contact__eyebrow{margin:0 0 14px;color:var(--fp-red);font:700 10px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
-    #FridayContact-{{ section.id }} h1{margin:0;font:700 clamp(70px,9vw,138px)/.76 Georgia,"Times New Roman",serif;letter-spacing:-.06em;text-transform:lowercase;text-wrap:balance}
+    #FridayContact-{{ section.id }} .fp-contact__eyebrow{margin:0 0 14px;color:var(--fp-red-text,var(--fp-red));font:700 10px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
+    #FridayContact-{{ section.id }} h1{margin:0;font:700 var(--fp-page-title,clamp(72px,8vw,112px))/.8 Georgia,"Times New Roman",serif;letter-spacing:-.06em;text-transform:lowercase;text-wrap:balance}
     #FridayContact-{{ section.id }} .fp-contact__intro-copy{margin:0;max-width:34ch;font:14px/1.65 "Courier New",monospace}
     #FridayContact-{{ section.id }} .fp-contact__grid{display:grid;grid-template-columns:minmax(240px,.56fr) minmax(0,1.44fr);gap:clamp(44px,7vw,110px);padding-top:clamp(38px,5vw,66px)}
     #FridayContact-{{ section.id }} .fp-contact__aside{display:flex;flex-direction:column;gap:30px}
@@ -36,7 +36,7 @@
     }
     @media(max-width:649px){
       #FridayContact-{{ section.id }} .fp-contact__inner{padding-inline:20px;padding-top:42px;padding-bottom:72px}
-      #FridayContact-{{ section.id }} h1{font-size:clamp(68px,24vw,94px)}
+      #FridayContact-{{ section.id }} h1{font-size:clamp(58px,18vw,72px)}
       #FridayContact-{{ section.id }} .fp-contact__intro{gap:20px;padding-bottom:32px}
       #FridayContact-{{ section.id }} .fp-contact__intro-copy{font-size:12px;line-height:1.6}
       #FridayContact-{{ section.id }} .fp-contact__grid{grid-template-columns:1fr;gap:40px;padding-top:34px}

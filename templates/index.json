@@ -66,7 +66,7 @@
         "heading": "meet GiGi",
         "story": "<p>GiGi began as a way to personify friends — their moods, quirks and adventures.</p><p>Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>These prints are fragments of that world.</p>",
         "handle": "@fridayprints.art",
-        "background_color": "#fbf1e4",
+        "background_color": "#fffdf8",
         "gigi_icon": "shopify://shop_images/F5B43C2C-B0F3-4A1F-863E-388E114DCF02_2.png",
         "gigi_alt": "GiGi",
         "gigi_size_desktop": 220,
@@ -89,19 +89,17 @@
           }
         }
       },
-      "block_order": [
-        "unboxing_1"
-      ],
+      "block_order": ["unboxing_1"],
       "settings": {
-        "show_section": true,
+        "show_section": false,
         "eyebrow": "03 · UNBOX FRIDAY",
         "heading": "the art of arrival",
-        "text": "<p>Every print is wrapped by hand, numbered and ready to become part of your space.</p>",
+        "text": "<p>Every print leaves Cairo wrapped by hand, numbered and ready to become part of your space.</p>",
         "note": "MADE TO ORDER · PACKED WITH CARE",
         "use_sample_video": true,
-        "autoplay": true,
+        "autoplay": false,
         "loop": true,
-        "background_color": "#17120f",
+        "background_color": "#e9a5b2",
         "accent_color": "#e53f36"
       }
     },

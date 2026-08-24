@@ -1,4 +1,3 @@
-{{ 'friday-production.css' | asset_url | stylesheet_tag }}
 <style>
   :root {
     --fp-cream: {{ section.settings.color_cream }};
@@ -41,7 +40,7 @@
   #FridayHeader-{{ section.id }} .fp-nav-spacer{height:0;pointer-events:none}
   #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating + .fp-nav-spacer{height:var(--fp-floating-nav-height,0px)}
   #FridayHeader-{{ section.id }}.fp-menu-is-open .fp-nav-wrap{transform:none!important}
-  #FridayHeader-{{ section.id }} .fp-search{display:grid;place-items:center;width:34px;height:34px;padding:0;border:0;background:transparent;color:var(--fp-ink);text-decoration:none;cursor:pointer;flex:0 0 auto}
+  #FridayHeader-{{ section.id }} .fp-search{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;background:transparent;color:var(--fp-ink);text-decoration:none;cursor:pointer;flex:0 0 auto}
   #FridayHeader-{{ section.id }} .fp-search svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7}
   #FridayHeader-{{ section.id }} .fp-logo__mark{display:block;width:auto;height:var(--fp-logo-mark-desktop);max-width:86px;object-fit:contain;object-position:center;transition:transform .22s ease}
   #FridayHeader-{{ section.id }} .fp-logo:hover .fp-logo__mark{transform:translateY(-2px) rotate(-1.5deg)}
@@ -95,7 +94,7 @@
     #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating .fp-nav{min-height:66px!important;height:66px!important}
     #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating .fp-logo__mark{height:min(var(--fp-logo-mark-mobile),46px)!important}
     #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating .fp-search,
-    #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating .fp-cart{height:40px!important}
+    #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating .fp-cart{height:44px!important}
   }
   @media (max-width: 374px) {
     #FridayHeader-{{ section.id }} .fp-nav{grid-template-columns:44px minmax(0,1fr) auto!important;gap:6px!important;padding-inline:12px!important}
@@ -525,7 +524,7 @@
     { "type": "text", "id": "cart_label", "label": "Cart accessibility label", "default": "Cart" },
 
     { "type": "header", "content": "Friday Prints palette" },
-    { "type": "color", "id": "color_cream", "label": "Cream", "default": "#FBF1E4" },
+    { "type": "color", "id": "color_cream", "label": "Gallery white", "default": "#FFFDF8" },
     { "type": "color", "id": "color_pink", "label": "Pink", "default": "#F2BDC5" },
     { "type": "color", "id": "color_newsletter", "label": "Newsletter pink", "default": "#E9A5B2" },
     { "type": "color", "id": "color_red", "label": "Coral red", "default": "#E53F36" },

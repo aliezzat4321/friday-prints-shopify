@@ -16,7 +16,7 @@ body .fp-content-page--about .fp-page-hero{
   align-items:center!important;
   gap:24px!important;
   min-height:500px!important;
-  padding:50px 46px 40px!important;
+  padding:50px var(--fp-page-gutter,46px) 40px!important;
   overflow:hidden!important;
   border-bottom:0!important;
   background:var(--fp-pink)!important;
@@ -41,14 +41,14 @@ body .fp-content-page--about .fp-page-hero__copy{
 }
 body .fp-content-page--about .fp-page-eyebrow{
   margin:0 0 13px!important;
-  color:var(--fp-red)!important;
+  color:var(--fp-red-text,var(--fp-red))!important;
   font:700 10px/1 "Courier New",Courier,monospace!important;
   letter-spacing:.12em!important;
 }
 body .fp-content-page--about .fp-page-title{
   max-width:8.2ch!important;
   margin:0!important;
-  font:700 clamp(76px,8vw,124px)/.79 Georgia,"Times New Roman",serif!important;
+  font:700 var(--fp-page-title,clamp(72px,8vw,112px))/.79 Georgia,"Times New Roman",serif!important;
   letter-spacing:-.064em!important;
   text-transform:none!important;
   text-wrap:balance;
@@ -145,7 +145,7 @@ body .fp-content-page--about .fp-world__story{
   grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr)!important;
   align-items:start!important;
   gap:76px!important;
-  padding:66px 46px 72px!important;
+  padding:66px var(--fp-page-gutter,46px) 72px!important;
   border-bottom:1px solid var(--fp-line)!important;
   background:var(--fp-cream)!important;
 }
@@ -171,7 +171,7 @@ body .fp-content-page--about .fp-world__facts div{
 body .fp-content-page--about .fp-world__facts dt,
 body .fp-content-page--about .fp-world__facts dd{
   margin:0;
-  font:700 8.5px/1.45 "Courier New",Courier,monospace;
+  font:700 10px/1.45 "Courier New",Courier,monospace;
   letter-spacing:.045em;
   text-transform:uppercase;
 }
@@ -205,15 +205,15 @@ body .fp-content-page--about .fp-world__gallery-head{
   align-items:flex-end!important;
   justify-content:space-between!important;
   gap:32px!important;
-  padding:48px 46px 30px!important;
-  background:var(--fp-red)!important;
+  padding:48px var(--fp-page-gutter,46px) 30px!important;
+  background:var(--fp-red-text,var(--fp-red))!important;
   color:#fff!important;
 }
 body .fp-content-page--about .fp-world__gallery-head::before{content:none!important;display:none!important}
 body .fp-content-page--about .fp-world__gallery-head p{
   margin:0 0 13px;
   color:rgba(255,255,255,.76);
-  font:700 8px/1 "Courier New",Courier,monospace;
+  font:700 10px/1 "Courier New",Courier,monospace;
   letter-spacing:.13em;
 }
 body .fp-content-page--about .fp-world__gallery-head h2{
@@ -246,7 +246,7 @@ body .fp-content-page--about .fp-world__gallery{
   align-items:start!important;
   gap:54px 20px!important;
   columns:auto!important;
-  padding:58px 46px 70px!important;
+  padding:58px var(--fp-page-gutter,46px) 70px!important;
   overflow:visible!important;
   background:var(--fp-cream)!important;
   counter-reset:fpArchive;
@@ -307,9 +307,9 @@ body .fp-content-page--about .fp-world-card__open{
   bottom:10px;
   z-index:3;
   padding:9px 10px;
-  background:rgba(251,241,228,.96);
+  background:color-mix(in srgb,var(--fp-cream) 96%,transparent);
   color:var(--fp-ink);
-  font:700 8px/1 "Courier New",Courier,monospace;
+  font:700 9px/1 "Courier New",Courier,monospace;
   letter-spacing:.045em;
   opacity:0;
   transform:translateY(6px);
@@ -329,7 +329,7 @@ body .fp-content-page--about .fp-world-card__caption{
 body .fp-content-page--about .fp-world-card__caption>span,
 body .fp-content-page--about .fp-world-card__caption p{
   margin:0;
-  font:700 8px/1.4 "Courier New",Courier,monospace;
+  font:700 9px/1.4 "Courier New",Courier,monospace;
   letter-spacing:.055em;
   text-transform:uppercase;
 }
@@ -347,7 +347,7 @@ body .fp-content-page--about .fp-world__closing{
   align-items:flex-end;
   justify-content:space-between;
   gap:30px;
-  padding:42px 46px 48px;
+  padding:42px var(--fp-page-gutter,46px) 48px;
   border-top:1px solid var(--fp-ink);
   background:var(--fp-pink);
 }
@@ -370,26 +370,26 @@ body .fp-content-page--about .fp-world__closing a{
   body .fp-content-page--about .fp-page-hero{
     grid-template-columns:minmax(0,1.3fr) minmax(260px,.7fr)!important;
     min-height:430px!important;
-    padding:42px 30px 34px!important;
+    padding:42px var(--fp-page-gutter,28px) 34px!important;
   }
   body .fp-content-page--about .fp-page-title{font-size:clamp(70px,9vw,90px)!important}
   body .fp-content-page--about .fp-world__gigi{width:320px!important;height:350px!important;margin-bottom:-34px!important}
   body .fp-content-page--about .fp-world__gigi img{width:320px!important;max-height:350px!important}
   body .fp-content-page--about .fp-world__gigi figcaption{bottom:43px}
-  body .fp-content-page--about .fp-world__story{gap:42px!important;padding:54px 30px 60px!important}
+  body .fp-content-page--about .fp-world__story{gap:42px!important;padding:54px var(--fp-page-gutter,28px) 60px!important}
   body .fp-content-page--about .fp-world__story h2{font-size:40px!important}
   body .fp-content-page--about .fp-world__copy{font-size:13px!important}
-  body .fp-content-page--about .fp-world__gallery-head{padding:43px 30px 27px!important}
+  body .fp-content-page--about .fp-world__gallery-head{padding:43px var(--fp-page-gutter,28px) 27px!important}
   body .fp-content-page--about .fp-world__gallery{
     grid-template-columns:repeat(2,minmax(0,1fr))!important;
     gap:38px 14px!important;
-    padding:44px 30px 56px!important;
+    padding:44px var(--fp-page-gutter,28px) 56px!important;
   }
   body .fp-content-page--about .fp-world-card:nth-child(1){grid-column:1 / -1!important;width:68%!important;justify-self:center!important}
   body .fp-content-page--about .fp-world-card:nth-child(n+2){grid-column:auto!important;margin-top:0!important;width:100%!important}
   body .fp-content-page--about .fp-world-card__caption{grid-template-columns:32px 1fr;gap:10px}
   body .fp-content-page--about .fp-world-card__caption p{grid-column:2;text-align:left}
-  body .fp-content-page--about .fp-world__closing{padding:38px 30px 42px}
+  body .fp-content-page--about .fp-world__closing{padding:38px var(--fp-page-gutter,28px) 42px}
 }
 
 @media (max-width:749px){

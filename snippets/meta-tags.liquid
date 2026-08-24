@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#FBF1E4">
+<meta name="theme-color" content="#FFFDF8">
 
 {%- liquid
   assign seo_title = page_title | default: shop.name
@@ -22,6 +22,9 @@
     assign seo_title = 'Your Cart'
   elsif request.page_type == 'search'
     assign seo_title = 'Search Prints'
+    if seo_description == blank
+      assign seo_description = 'Search the Friday Prints collection of limited-edition art prints, made to order in Cairo.'
+    endif
   endif
 
   case request.path
@@ -43,6 +46,11 @@
       assign seo_title = 'FAQ'
       if seo_description == blank
         assign seo_description = 'Answers about Friday Prints editions, paper, mounts, delivery, returns and damaged orders.'
+      endif
+    when '/pages/contact'
+      assign seo_title = 'Contact'
+      if seo_description == blank
+        assign seo_description = 'Contact Friday Prints about an artwork, an order or choosing the right limited-edition print.'
       endif
   endcase
 

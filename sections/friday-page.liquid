@@ -9,9 +9,9 @@
   <style>
     #FridayPage-{{ section.id }}{background:var(--fp-cream);color:var(--fp-ink)}
     #FridayPage-{{ section.id }} *{box-sizing:border-box}
-    #FridayPage-{{ section.id }} .fp-page-hero{position:relative;overflow:hidden;padding:70px 46px 48px;border-bottom:1px solid var(--fp-line)}
-    #FridayPage-{{ section.id }} .fp-page-eyebrow{margin:0 0 14px;color:var(--fp-red);font:700 11px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
-    #FridayPage-{{ section.id }} .fp-page-title{max-width:12ch;margin:0;font:700 clamp(76px,9vw,136px)/.8 Georgia,"Times New Roman",serif;letter-spacing:-.06em;text-transform:lowercase;text-wrap:balance}
+    #FridayPage-{{ section.id }} .fp-page-hero{position:relative;overflow:hidden;padding:70px var(--fp-page-gutter,46px) 48px;border-bottom:1px solid var(--fp-line)}
+    #FridayPage-{{ section.id }} .fp-page-eyebrow{margin:0 0 14px;color:var(--fp-red-text,var(--fp-red));font:700 11px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
+    #FridayPage-{{ section.id }} .fp-page-title{max-width:12ch;margin:0;font:700 var(--fp-page-title,clamp(72px,8vw,112px))/.8 Georgia,"Times New Roman",serif;letter-spacing:-.06em;text-transform:lowercase;text-wrap:balance}
     #FridayPage-{{ section.id }} .fp-page-intro{max-width:58ch;margin:28px 0 0;font:14px/1.62 "Courier New",monospace}
     #FridayPage-{{ section.id }} .fp-page-intro p{margin:0}
 
@@ -27,21 +27,21 @@
     #FridayPage-{{ section.id }} .fp-guide-card:last-child{border-right:0}
     #FridayPage-{{ section.id }} .fp-guide-card:nth-child(1){background:var(--fp-cream)}
     #FridayPage-{{ section.id }} .fp-guide-card:nth-child(2){background:var(--fp-pink)}
-    #FridayPage-{{ section.id }} .fp-guide-card:nth-child(3){background:color-mix(in srgb,var(--fp-green) 88%,#fff);color:#fff}
+    #FridayPage-{{ section.id }} .fp-guide-card:nth-child(3){background:var(--fp-green-text,var(--fp-green));color:#fff}
     #FridayPage-{{ section.id }} .fp-guide-card__num{position:absolute;right:22px;top:17px;font:700 62px/.8 Georgia,serif;opacity:.14}
     #FridayPage-{{ section.id }} .fp-guide-card h3{margin:0 0 24px;font:700 27px/.95 Georgia,"Times New Roman",serif;letter-spacing:-.035em;text-transform:lowercase}
     #FridayPage-{{ section.id }} .fp-guide-card .rte{max-width:37ch;font:12px/1.62 "Courier New",monospace}
     #FridayPage-{{ section.id }} .fp-guide-card .rte p{margin:0 0 13px}
-    #FridayPage-{{ section.id }} .fp-guide__care{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;padding:65px 46px 70px;background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-guide__care{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;padding:65px var(--fp-page-gutter,46px) 70px;background:var(--fp-cream)}
     #FridayPage-{{ section.id }} .fp-guide__care h2{margin:0;font:italic 42px/1 Georgia,"Times New Roman",serif;color:var(--fp-red)}
     #FridayPage-{{ section.id }} .fp-guide__care-copy{display:grid;grid-template-columns:1fr 1fr;gap:24px 42px}
     #FridayPage-{{ section.id }} .fp-guide__care-copy div{padding-top:13px;border-top:1px solid var(--fp-ink)}
     #FridayPage-{{ section.id }} .fp-guide__care-copy strong{display:block;margin-bottom:8px;font:700 10px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.06em}
     #FridayPage-{{ section.id }} .fp-guide__care-copy p{margin:0;font:11px/1.55 "Courier New",monospace}
 
-    #FridayPage-{{ section.id }}.fp-content-page--faq .fp-page-hero{background:var(--fp-green);color:#fff}
+    #FridayPage-{{ section.id }}.fp-content-page--faq .fp-page-hero{background:var(--fp-green-text,var(--fp-green));color:#fff}
     #FridayPage-{{ section.id }}.fp-content-page--faq .fp-page-eyebrow{color:var(--fp-yellow)}
-    #FridayPage-{{ section.id }} .fp-faq{display:grid;grid-template-columns:.6fr 1.4fr;gap:70px;padding:68px 46px 80px;background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-faq{display:grid;grid-template-columns:.6fr 1.4fr;gap:70px;padding:68px var(--fp-page-gutter,46px) 80px;background:var(--fp-cream)}
     #FridayPage-{{ section.id }} .fp-faq__aside{position:sticky;top:28px;align-self:start}
     #FridayPage-{{ section.id }} .fp-faq__aside strong{display:block;margin-bottom:12px;color:var(--fp-red);font:italic 34px/1 Georgia,"Times New Roman",serif}
     #FridayPage-{{ section.id }} .fp-faq__aside p{max-width:28ch;margin:0;font:11px/1.55 "Courier New",monospace}
@@ -55,38 +55,38 @@
     #FridayPage-{{ section.id }} .fp-faq__answer{max-width:68ch;padding:0 48px 24px 0;font:12px/1.65 "Courier New",monospace}
     #FridayPage-{{ section.id }} .fp-faq__answer p{margin:0 0 10px}
 
-    #FridayPage-{{ section.id }} .fp-generic-page{padding:70px 46px 90px;background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-generic-page{padding:70px var(--fp-page-gutter,46px) 90px;background:var(--fp-cream)}
     #FridayPage-{{ section.id }} .fp-generic-page h1{max-width:12ch;margin:0 0 38px;font:700 clamp(62px,7vw,100px)/.82 Georgia,"Times New Roman",serif;letter-spacing:-.055em;text-transform:lowercase}
     #FridayPage-{{ section.id }} .fp-generic-page__content{max-width:760px;font:14px/1.7 "Courier New",monospace}
     #FridayPage-{{ section.id }} .fp-generic-page__content a{color:inherit;text-underline-offset:3px}
 
     @media(max-width:1000px){
-      #FridayPage-{{ section.id }} .fp-guide__care,#FridayPage-{{ section.id }} .fp-faq{gap:40px;padding-inline:30px}
-      #FridayPage-{{ section.id }} .fp-page-hero{padding-inline:30px}
+      #FridayPage-{{ section.id }} .fp-guide__care,#FridayPage-{{ section.id }} .fp-faq{gap:40px;padding-inline:var(--fp-page-gutter,28px)}
+      #FridayPage-{{ section.id }} .fp-page-hero{padding-inline:var(--fp-page-gutter,28px)}
       #FridayPage-{{ section.id }} .fp-guide__edition{grid-template-columns:1fr 1fr}
       #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(1),#FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2){border-bottom:1px solid var(--fp-ink)}
       #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2n){border-right:0}
     }
     @media(max-width:749px){
-      #FridayPage-{{ section.id }} .fp-page-hero{padding:46px 20px 34px}
+      #FridayPage-{{ section.id }} .fp-page-hero{padding:46px var(--fp-page-gutter,20px) 34px}
       #FridayPage-{{ section.id }} .fp-page-title{font-size:64px}
       #FridayPage-{{ section.id }} .fp-page-intro{font-size:12px;margin-top:20px}
       #FridayPage-{{ section.id }} .fp-guide__edition{grid-template-columns:1fr 1fr}
       #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:160px;padding:24px 20px}
       #FridayPage-{{ section.id }} .fp-guide__edition h2{font-size:27px}
       #FridayPage-{{ section.id }} .fp-guide__edition strong{font-size:40px}
-      #FridayPage-{{ section.id }} .fp-guide__edition span{font-size:8px}
+      #FridayPage-{{ section.id }} .fp-guide__edition span{font-size:10px}
       #FridayPage-{{ section.id }} .fp-guide__cards{grid-template-columns:1fr}
       #FridayPage-{{ section.id }} .fp-guide-card{min-height:0;padding:36px 20px 42px;border-right:0;border-bottom:1px solid var(--fp-ink)}
       #FridayPage-{{ section.id }} .fp-guide-card:last-child{border-bottom:0}
-      #FridayPage-{{ section.id }} .fp-guide__care{grid-template-columns:1fr;gap:28px;padding:45px 20px 52px}
+      #FridayPage-{{ section.id }} .fp-guide__care{grid-template-columns:1fr;gap:28px;padding:45px var(--fp-page-gutter,20px) 52px}
       #FridayPage-{{ section.id }} .fp-guide__care h2{font-size:34px}
       #FridayPage-{{ section.id }} .fp-guide__care-copy{grid-template-columns:1fr;gap:18px}
-      #FridayPage-{{ section.id }} .fp-faq{grid-template-columns:1fr;gap:33px;padding:45px 20px 60px}
+      #FridayPage-{{ section.id }} .fp-faq{grid-template-columns:1fr;gap:33px;padding:45px var(--fp-page-gutter,20px) 60px}
       #FridayPage-{{ section.id }} .fp-faq__aside{position:relative;top:auto}
       #FridayPage-{{ section.id }} .fp-faq summary{min-height:64px;font-size:12px}
       #FridayPage-{{ section.id }} .fp-faq__answer{padding-right:22px;font-size:11px}
-      #FridayPage-{{ section.id }} .fp-generic-page{padding:46px 20px 70px}
+      #FridayPage-{{ section.id }} .fp-generic-page{padding:46px var(--fp-page-gutter,20px) 70px}
       #FridayPage-{{ section.id }} .fp-generic-page h1{font-size:58px}
       #FridayPage-{{ section.id }} .fp-generic-page__content{font-size:12px}
     }

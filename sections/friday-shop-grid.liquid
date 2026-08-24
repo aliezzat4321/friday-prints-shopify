@@ -21,24 +21,24 @@
       body:has(#FridayShop-{{ section.id }}) .fp-nav{height:96px!important}
     }
 
-    #FridayShop-{{ section.id }} .fp-shop__head{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.55fr);gap:44px;align-items:end;padding:40px 46px 28px;border-bottom:1px solid var(--fp-line)}
-    #FridayShop-{{ section.id }} .fp-shop__eyebrow{margin:0 0 10px;color:var(--fp-red);font:700 11px/1 "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase}
+    #FridayShop-{{ section.id }} .fp-shop__head{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(260px,.55fr);gap:44px;align-items:end;padding:40px var(--fp-page-gutter,46px) 28px;border-bottom:1px solid var(--fp-line)}
+    #FridayShop-{{ section.id }} .fp-shop__eyebrow{margin:0 0 10px;color:var(--fp-red-text,var(--fp-red));font:700 11px/1 "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase}
     #FridayShop-{{ section.id }} h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:min(var(--fp-shop-heading),clamp(80px,6.1vw,88px));line-height:.84;letter-spacing:-.055em;text-transform:lowercase}
     #FridayShop-{{ section.id }} .fp-shop__intro{justify-self:end;max-width:39ch;padding-bottom:3px;font:13px/1.5 "Courier New",monospace}
     #FridayShop-{{ section.id }} .fp-shop__intro p{margin:0}
 
-    #FridayShop-{{ section.id }} .fp-shop__tools{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:46px;padding:10px 46px;border-bottom:1px solid var(--fp-line);font:700 10px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.065em}
+    #FridayShop-{{ section.id }} .fp-shop__tools{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:46px;padding:10px var(--fp-page-gutter,46px);border-bottom:1px solid var(--fp-line);font:700 10px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.065em}
     #FridayShop-{{ section.id }} .fp-shop__count{white-space:nowrap}
     #FridayShop-{{ section.id }} .fp-shop__sort{display:flex;align-items:center;gap:7px}
     #FridayShop-{{ section.id }} .fp-shop__sort label{white-space:nowrap}
     #FridayShop-{{ section.id }} .fp-shop__sort select{appearance:none;-webkit-appearance:none;border:0;border-bottom:1px solid color-mix(in srgb,var(--fp-ink) 55%,transparent);border-radius:0;background:transparent;color:inherit;padding:4px 20px 4px 2px;font:700 10px/1.2 "Courier New",monospace;text-transform:uppercase;letter-spacing:.035em;cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);background-position:calc(100% - 8px) 50%,calc(100% - 4px) 50%;background-size:4px 4px,4px 4px;background-repeat:no-repeat}
 
-    #FridayShop-{{ section.id }} .fp-shop__grid{display:grid;grid-template-columns:repeat(var(--fp-shop-columns),minmax(0,1fr));column-gap:28px;row-gap:44px;padding:34px 46px 60px}
+    #FridayShop-{{ section.id }} .fp-shop__grid{display:grid;grid-template-columns:repeat(var(--fp-shop-columns),minmax(0,1fr));column-gap:28px;row-gap:44px;padding:34px var(--fp-page-gutter,46px) 60px}
     #FridayShop-{{ section.id }} .fp-shop-card{display:block;min-width:0;color:inherit;text-decoration:none}
     #FridayShop-{{ section.id }} .fp-shop-card__media{position:relative;aspect-ratio:.707;overflow:hidden;background:color-mix(in srgb,var(--fp-shop-bg) 85%,#fff)}
     #FridayShop-{{ section.id }} .fp-shop-card__media img,#FridayShop-{{ section.id }} .fp-shop-card__media svg{display:block;width:100%;height:100%;object-fit:contain;transition:transform .35s ease}
     #FridayShop-{{ section.id }} .fp-shop-card:hover .fp-shop-card__media img{transform:scale(1.012)}
-    #FridayShop-{{ section.id }} .fp-shop-card__badge{position:absolute;top:11px;left:11px;padding:7px 9px;background:var(--fp-shop-accent);color:#fff;font:700 9px/1 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
+    #FridayShop-{{ section.id }} .fp-shop-card__badge{position:absolute;top:11px;left:11px;padding:7px 9px;background:var(--fp-red-text,var(--fp-shop-accent));color:#fff;font:700 9px/1 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
     #FridayShop-{{ section.id }} .fp-shop-card__meta{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:start;padding-top:11px;border-top:1px solid transparent;transition:border-color .2s ease}
     #FridayShop-{{ section.id }} .fp-shop-card:hover .fp-shop-card__meta{border-top-color:var(--fp-ink)}
     #FridayShop-{{ section.id }} .fp-shop-card h2{margin:0;font:700 12px/1.35 "Courier New",monospace;text-transform:lowercase}
@@ -46,7 +46,7 @@
     #FridayShop-{{ section.id }} .fp-shop-card__edition{grid-column:1/-1;margin-top:-5px;color:color-mix(in srgb,var(--fp-ink) 56%,transparent);font:9px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.04em}
 
     #FridayShop-{{ section.id }} .fp-shop__pagination{display:flex;justify-content:center;align-items:center;gap:8px;padding:0 24px 56px;font:700 12px/1 "Courier New",monospace}
-    #FridayShop-{{ section.id }} .fp-shop__pagination a,#FridayShop-{{ section.id }} .fp-shop__pagination span{min-width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--fp-ink);color:inherit;text-decoration:none}
+    #FridayShop-{{ section.id }} .fp-shop__pagination a,#FridayShop-{{ section.id }} .fp-shop__pagination span{min-width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--fp-ink);color:inherit;text-decoration:none}
     #FridayShop-{{ section.id }} .fp-shop__pagination .is-current{background:var(--fp-ink);color:#fff}
     #FridayShop-{{ section.id }} .fp-shop__empty{padding:80px 46px;text-align:center;font:14px/1.5 "Courier New",monospace}
 
@@ -87,17 +87,17 @@
       #FridayShop-{{ section.id }} h1{font-size:min(var(--fp-shop-heading-mobile),clamp(54px,14vw,58px))}
       #FridayShop-{{ section.id }} .fp-shop__eyebrow{font-size:9px;margin-bottom:8px}
       #FridayShop-{{ section.id }} .fp-shop__intro{justify-self:start;max-width:32ch;font-size:11px;line-height:1.45;padding-bottom:0}
-      #FridayShop-{{ section.id }} .fp-shop__tools{min-height:44px;padding:10px 14px;font-size:8.5px}
+      #FridayShop-{{ section.id }} .fp-shop__tools{min-height:44px;padding:10px var(--fp-page-gutter,20px);font-size:9.5px}
       #FridayShop-{{ section.id }} .fp-shop__sort{gap:5px}
       #FridayShop-{{ section.id }} .fp-shop__sort label{font-size:0}
-      #FridayShop-{{ section.id }} .fp-shop__sort label::after{content:'SORT —';font-size:8.5px}
-      #FridayShop-{{ section.id }} .fp-shop__sort select{font-size:8.5px;max-width:132px;padding-right:18px}
+      #FridayShop-{{ section.id }} .fp-shop__sort label::after{content:'SORT —';font-size:9.5px}
+      #FridayShop-{{ section.id }} .fp-shop__sort select{font-size:9.5px;max-width:138px;padding-right:18px}
       #FridayShop-{{ section.id }} .fp-shop__grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:10px;row-gap:28px;padding:22px 10px 46px}
       #FridayShop-{{ section.id }} .fp-shop-card__meta{grid-template-columns:1fr;gap:3px;padding-top:8px}
-      #FridayShop-{{ section.id }} .fp-shop-card h2{font-size:9.5px;line-height:1.3}
-      #FridayShop-{{ section.id }} .fp-shop-card__price{font-size:8.5px}
-      #FridayShop-{{ section.id }} .fp-shop-card__edition{font-size:7.5px;margin-top:2px}
-      #FridayShop-{{ section.id }} .fp-shop-card__badge{top:6px;left:6px;font-size:6.5px;padding:5px 6px}
+      #FridayShop-{{ section.id }} .fp-shop-card h2{font-size:11px;line-height:1.3}
+      #FridayShop-{{ section.id }} .fp-shop-card__price{font-size:10px}
+      #FridayShop-{{ section.id }} .fp-shop-card__edition{font-size:9px;margin-top:2px}
+      #FridayShop-{{ section.id }} .fp-shop-card__badge{top:6px;left:6px;font-size:8px;padding:6px 7px}
       #FridayShop-{{ section.id }} .fp-shop__pagination{padding-bottom:46px}
     }
 
@@ -203,7 +203,7 @@
     { "type": "checkbox", "id": "show_card_note", "label": "Show repeated card note", "default": false },
     { "type": "text", "id": "card_note", "label": "Card note", "default": "limited edition art print" },
     { "type": "header", "content": "Design-safe styling" },
-    { "type": "color", "id": "background_color", "label": "Background", "default": "#FBF1E4" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FFFDF8" },
     { "type": "color", "id": "accent_color", "label": "Sold-out badge", "default": "#E53F36" },
     { "type": "range", "id": "heading_size_desktop", "label": "Heading size — desktop", "min": 64, "max": 96, "step": 2, "unit": "px", "default": 88 },
     { "type": "range", "id": "heading_size_mobile", "label": "Heading size — mobile", "min": 48, "max": 64, "step": 2, "unit": "px", "default": 58 }
