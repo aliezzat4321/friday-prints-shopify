@@ -200,18 +200,19 @@
     #FridayProduct-{{ section.id }} .fp-pdp__support a{color:inherit;text-underline-offset:3px;overflow-wrap:anywhere}
     #FridayProduct-{{ section.id }} .fp-pdp__live{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.55fr);gap:clamp(44px,7vw,110px);align-items:center;padding:clamp(54px,6vw,90px) clamp(30px,5vw,72px);overflow:hidden;background:var(--fp-pdp-unbox);border-top:1px solid var(--fp-ink);border-bottom:1px solid var(--fp-ink)}
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox:after{content:'✦';position:absolute;right:5vw;top:44px;color:var(--fp-pdp-accent);font:48px/1 Georgia,serif;transform:rotate(12deg)}
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox-copy{position:relative;z-index:1;max-width:650px}
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox h2{max-width:8ch;margin:9px 0 0;font:700 clamp(54px,6.2vw,92px)/.84 Georgia,"Times New Roman",serif;letter-spacing:-.058em;text-transform:lowercase;text-wrap:balance}
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox-text{max-width:43ch;margin:27px 0 0;font:13px/1.65 "Courier New",monospace}
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox-note{display:flex;align-items:center;gap:11px;margin:31px 0 0;padding-top:16px;border-top:1px solid color-mix(in srgb,var(--fp-ink) 45%,transparent);font:700 9px/1.35 "Courier New",monospace;letter-spacing:.055em;text-transform:uppercase}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox{position:relative;overflow:hidden;isolation:isolate;background:var(--fp-pdp-unbox);border-top:1px solid var(--fp-ink);border-bottom:1px solid var(--fp-ink)}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-inner{width:min(100%,1280px);margin:0 auto;display:grid;grid-template-columns:minmax(360px,1fr) minmax(250px,330px);gap:clamp(52px,8vw,112px);align-items:center;padding:clamp(54px,5vw,72px) clamp(30px,5vw,70px)}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox:after{content:'✦';position:absolute;right:clamp(24px,4vw,56px);top:clamp(25px,3vw,42px);z-index:-1;color:var(--fp-pdp-accent);font:clamp(31px,3.2vw,46px)/1 Georgia,serif;transform:rotate(12deg)}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-copy{position:relative;z-index:1;max-width:610px}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox h2{max-width:8ch;margin:9px 0 0;font:700 clamp(50px,5.6vw,76px)/.85 Georgia,"Times New Roman",serif;letter-spacing:-.058em;text-transform:lowercase;text-wrap:balance}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-text{max-width:42ch;margin:22px 0 0;font:12.5px/1.62 "Courier New",monospace}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-note{display:flex;align-items:center;gap:11px;max-width:500px;margin:25px 0 0;padding-top:14px;border-top:1px solid color-mix(in srgb,var(--fp-ink) 42%,transparent);font:700 8.5px/1.35 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
     #FridayProduct-{{ section.id }} .fp-pdp__unbox-note:before{content:'↘';color:var(--fp-pdp-accent);font-size:18px}
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox-media{position:relative;z-index:1;justify-self:end;width:min(100%,430px);margin:0}
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox-frame{position:relative;aspect-ratio:9/16;overflow:hidden;background:var(--fp-ink)}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-media{position:relative;z-index:1;justify-self:end;width:min(100%,300px);margin:0 10px 0 0}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-frame{position:relative;aspect-ratio:9/16;overflow:visible;background:var(--fp-ink);border:1px solid var(--fp-ink);box-shadow:10px 10px 0 color-mix(in srgb,var(--fp-pdp-bg) 74%,transparent)}
     #FridayProduct-{{ section.id }} .fp-pdp__unbox-frame video{display:block;width:100%;height:100%;object-fit:cover;background:var(--fp-ink)}
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox-stamp{position:absolute;left:-35px;top:42px;z-index:2;display:grid;place-items:center;width:82px;height:82px;padding:10px;border-radius:50%;background:var(--fp-pdp-accent);color:#fff;text-align:center;font:700 9px/1.25 "Courier New",monospace;letter-spacing:.04em;text-transform:uppercase;transform:rotate(-9deg);pointer-events:none}
-    #FridayProduct-{{ section.id }} .fp-pdp__unbox-caption{display:flex;justify-content:space-between;gap:18px;margin-top:10px;padding-top:12px;border-top:1px solid var(--fp-ink);font:700 9px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.045em}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-stamp{position:absolute;left:-26px;top:25px;z-index:2;display:grid;place-items:center;width:64px;height:64px;padding:8px;border:1px solid var(--fp-ink);border-radius:50%;background:var(--fp-pdp-accent);color:#fff;text-align:center;font:700 7.5px/1.25 "Courier New",monospace;letter-spacing:.04em;text-transform:uppercase;transform:rotate(-9deg);pointer-events:none}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-caption{display:flex;justify-content:space-between;gap:18px;margin-top:19px;padding-top:11px;border-top:1px solid var(--fp-ink);font:700 8.5px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.05em}
     #FridayProduct-{{ section.id }} .fp-pdp__unbox-caption span:last-child{color:var(--fp-pdp-accent)}
 
     #FridayProduct-{{ section.id }} .fp-pdp__recommend{padding:46px 46px 58px;background:var(--fp-pdp-panel)}
@@ -255,7 +256,7 @@
       #FridayProduct-{{ section.id }} .fp-pdp__details{padding:34px 28px 38px}
       #FridayProduct-{{ section.id }} .fp-pdp__title{max-width:14ch;font-size:clamp(48px,7.5vw,62px)}
       #FridayProduct-{{ section.id }} .fp-pdp__about,#FridayProduct-{{ section.id }} .fp-pdp__info{grid-template-columns:1fr;gap:20px;padding:38px 28px}
-      #FridayProduct-{{ section.id }} .fp-pdp__unbox{grid-template-columns:minmax(0,1fr) minmax(270px,360px);gap:40px;padding:52px 38px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-inner{grid-template-columns:minmax(0,1fr) minmax(250px,290px);gap:44px;padding:50px 38px}
       #FridayProduct-{{ section.id }} .fp-pdp__fact-band{grid-template-columns:repeat(2,1fr)}
       #FridayProduct-{{ section.id }} .fp-pdp__fact:nth-child(2){border-right:0}
       #FridayProduct-{{ section.id }} .fp-pdp__fact:nth-child(-n+2){border-bottom:1px solid var(--fp-line)}
@@ -298,13 +299,15 @@
       #FridayProduct-{{ section.id }} .fp-pdp__fact{min-height:100px;padding:18px 16px}
       #FridayProduct-{{ section.id }} .fp-pdp__fact strong{font-size:11px}
       #FridayProduct-{{ section.id }} .fp-pdp__info{padding:32px 20px;gap:17px}
-      #FridayProduct-{{ section.id }} .fp-pdp__unbox{grid-template-columns:1fr;gap:28px;padding:42px 20px 48px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-inner{grid-template-columns:1fr;gap:24px;padding:34px 18px 42px}
       #FridayProduct-{{ section.id }} .fp-pdp__unbox:after{right:18px;top:25px;font-size:30px}
-      #FridayProduct-{{ section.id }} .fp-pdp__unbox h2{font-size:clamp(48px,15vw,64px);line-height:.86}
-      #FridayProduct-{{ section.id }} .fp-pdp__unbox-text{margin-top:20px;font-size:11px;line-height:1.6}
-      #FridayProduct-{{ section.id }} .fp-pdp__unbox-note{margin-top:20px;font-size:8px}
-      #FridayProduct-{{ section.id }} .fp-pdp__unbox-media{justify-self:center;width:min(82vw,340px)}
-      #FridayProduct-{{ section.id }} .fp-pdp__unbox-stamp{left:-18px;top:28px;width:68px;height:68px;font-size:7.5px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox h2{font-size:clamp(44px,12.6vw,56px);line-height:.86}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-text{margin-top:15px;font-size:10.5px;line-height:1.55}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-note{margin-top:17px;padding-top:11px;font-size:7.5px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-media{justify-self:end;width:min(69vw,268px);margin-right:3px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-frame{box-shadow:7px 7px 0 color-mix(in srgb,var(--fp-pdp-bg) 74%,transparent)}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-stamp{left:-16px;top:17px;width:52px;height:52px;font-size:6.5px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-caption{margin-top:15px;padding-top:10px;font-size:7.5px}
       #FridayProduct-{{ section.id }} .fp-pdp__recommend{padding:32px 0 42px}
       #FridayProduct-{{ section.id }} .fp-pdp__recommend-head{padding:0 20px;margin-bottom:18px}
       #FridayProduct-{{ section.id }} .fp-pdp__recommend-all{display:none}
@@ -585,23 +588,25 @@
 
   {% if fp_show_unboxing %}
     <section class="fp-pdp__unbox" aria-labelledby="FridayUnbox-{{ section.id }}">
-      <div class="fp-pdp__unbox-copy">
-        <p class="fp-pdp__section-label">03 · unbox friday</p>
-        <h2 id="FridayUnbox-{{ section.id }}">{{ section.settings.unboxing_heading }}</h2>
-        {% if section.settings.unboxing_text != blank %}<div class="fp-pdp__unbox-text">{{ section.settings.unboxing_text }}</div>{% endif %}
-        {% if section.settings.unboxing_note != blank %}<p class="fp-pdp__unbox-note">{{ section.settings.unboxing_note }}</p>{% endif %}
-      </div>
-      <figure class="fp-pdp__unbox-media">
-        <div class="fp-pdp__unbox-frame">
-          <span class="fp-pdp__unbox-stamp" aria-hidden="true">from cairo<br>with care</span>
-          {% if section.settings.unboxing_video != blank %}
-            {{ section.settings.unboxing_video | video_tag: image_size: '900x', autoplay: false, loop: false, muted: false, controls: true, playsinline: true, preload: 'metadata', poster: fp_unboxing_poster_url }}
-          {% else %}
-            <video src="{{ 'friday-unboxing.mp4' | asset_url }}" poster="{% if section.settings.unboxing_poster != blank %}{{ section.settings.unboxing_poster | image_url: width: 900 }}{% else %}{{ 'friday-unboxing-poster.webp' | asset_url }}{% endif %}" controls playsinline preload="metadata"></video>
-          {% endif %}
+      <div class="fp-pdp__unbox-inner">
+        <div class="fp-pdp__unbox-copy">
+          <p class="fp-pdp__section-label">03 · unbox friday</p>
+          <h2 id="FridayUnbox-{{ section.id }}">{{ section.settings.unboxing_heading }}</h2>
+          {% if section.settings.unboxing_text != blank %}<div class="fp-pdp__unbox-text">{{ section.settings.unboxing_text }}</div>{% endif %}
+          {% if section.settings.unboxing_note != blank %}<p class="fp-pdp__unbox-note">{{ section.settings.unboxing_note }}</p>{% endif %}
         </div>
-        <figcaption class="fp-pdp__unbox-caption"><span>{{ section.settings.unboxing_caption }}</span><span>PLAY ↗</span></figcaption>
-      </figure>
+        <figure class="fp-pdp__unbox-media">
+          <div class="fp-pdp__unbox-frame">
+            <span class="fp-pdp__unbox-stamp" aria-hidden="true">from cairo<br>with care</span>
+            {% if section.settings.unboxing_video != blank %}
+              {{ section.settings.unboxing_video | video_tag: image_size: '900x', autoplay: false, loop: false, muted: false, controls: true, playsinline: true, preload: 'metadata', poster: fp_unboxing_poster_url }}
+            {% else %}
+              <video src="{{ 'friday-unboxing.mp4' | asset_url }}" poster="{% if section.settings.unboxing_poster != blank %}{{ section.settings.unboxing_poster | image_url: width: 900 }}{% else %}{{ 'friday-unboxing-poster.webp' | asset_url }}{% endif %}" controls playsinline preload="metadata"></video>
+            {% endif %}
+          </div>
+          <figcaption class="fp-pdp__unbox-caption"><span>{{ section.settings.unboxing_caption }}</span><span>PLAY ↗</span></figcaption>
+        </figure>
+      </div>
     </section>
   {% endif %}
 
