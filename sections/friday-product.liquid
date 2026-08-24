@@ -114,7 +114,7 @@
   style="--fp-pdp-bg:{{ section.settings.background_color }};--fp-pdp-panel:{{ section.settings.panel_color }};--fp-pdp-accent:{{ section.settings.accent_color }};--fp-pdp-unbox:{{ section.settings.unboxing_background }};--fp-pdp-title:{{ section.settings.title_size_desktop }}px;--fp-pdp-title-mobile:{{ section.settings.title_size_mobile }}px;"
 >
   <style>
-    #FridayProduct-{{ section.id }}{background:var(--fp-pdp-bg);color:var(--fp-ink);border-bottom:1px solid var(--fp-line)}
+    #FridayProduct-{{ section.id }}{--fp-pdp-copy-measure:588px;background:var(--fp-pdp-bg);color:var(--fp-ink);border-bottom:1px solid var(--fp-line)}
     #FridayProduct-{{ section.id }} *{box-sizing:border-box}
     body:has(#FridayProduct-{{ section.id }}) .fp-nav{height:96px}
 
@@ -172,13 +172,13 @@
     #FridayProduct-{{ section.id }} .fp-pdp__section-label{margin:0;color:var(--fp-pdp-accent);font:700 10px/1 "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase}
     #FridayProduct-{{ section.id }} .fp-pdp__about h2,#FridayProduct-{{ section.id }} .fp-pdp__recommend h2{margin:8px 0 0;font:700 clamp(40px,4vw,58px)/.9 Georgia,"Times New Roman",serif;letter-spacing:-.045em;text-transform:lowercase}
     #FridayProduct-{{ section.id }} .fp-pdp__about-copy{width:100%;max-width:none;font:14px/1.65 "Courier New",monospace}
-    #FridayProduct-{{ section.id }} .fp-pdp__about-copy>p{max-width:70ch;margin:0}
+    #FridayProduct-{{ section.id }} .fp-pdp__about-copy>p{width:100%;max-width:var(--fp-pdp-copy-measure);margin:0}
     #FridayProduct-{{ section.id }} .fp-pdp__full-notes{margin-top:20px;border-top:1px solid var(--fp-ink);border-bottom:1px solid var(--fp-ink)}
     #FridayProduct-{{ section.id }} .fp-pdp__full-notes summary{min-height:46px;display:flex;align-items:center;justify-content:space-between;gap:14px;cursor:pointer;list-style:none;font:700 9px/1 "Courier New",monospace;letter-spacing:.06em;text-transform:uppercase}
     #FridayProduct-{{ section.id }} .fp-pdp__full-notes summary::-webkit-details-marker{display:none}
     #FridayProduct-{{ section.id }} .fp-pdp__full-notes summary:after{content:'+';font-size:15px;font-weight:400}
     #FridayProduct-{{ section.id }} .fp-pdp__full-notes[open] summary:after{content:'−'}
-    #FridayProduct-{{ section.id }} .fp-pdp__full-notes .rte{width:100%;max-width:588px;padding:0 0 22px;font:12px/1.6 "Courier New",monospace}
+    #FridayProduct-{{ section.id }} .fp-pdp__full-notes .rte{width:100%;max-width:var(--fp-pdp-copy-measure);padding:0 0 22px;font:12px/1.6 "Courier New",monospace}
 
     #FridayProduct-{{ section.id }} .fp-pdp__fact-band{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--fp-line)}
     #FridayProduct-{{ section.id }} .fp-pdp__fact{min-height:118px;padding:24px 26px;border-right:1px solid var(--fp-line);display:flex;flex-direction:column;justify-content:space-between;gap:16px}
@@ -193,7 +193,7 @@
     #FridayProduct-{{ section.id }} .fp-pdp__accordion summary::-webkit-details-marker{display:none}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion summary:after{content:'+';font-size:16px;font-weight:400}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion[open] summary:after{content:'−'}
-    #FridayProduct-{{ section.id }} .fp-pdp__accordion-content{padding:0 0 20px;max-width:70ch;font:12px/1.6 "Courier New",monospace}
+    #FridayProduct-{{ section.id }} .fp-pdp__accordion-content{width:100%;max-width:var(--fp-pdp-copy-measure);padding:0 0 20px;font:12px/1.6 "Courier New",monospace}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion-content p{margin:0 0 8px}
     #FridayProduct-{{ section.id }} .fp-pdp__accordion-content p:last-child{margin-bottom:0}
     #FridayProduct-{{ section.id }} .fp-pdp__support{margin:20px 0 0;font:10px/1.5 "Courier New",monospace}
