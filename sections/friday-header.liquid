@@ -360,6 +360,7 @@
     const summary = menu.querySelector('summary');
     const logo = root.querySelector('.fp-logo');
     let scrollTarget = window;
+    // Pitch scrolls .page-wrapper on desktop and the window on smaller screens.
     const resolveScrollTarget = () => {
       const pageWrapper = document.querySelector('.page-wrapper');
       return window.matchMedia('(min-width: 990px)').matches && pageWrapper ? pageWrapper : window;
