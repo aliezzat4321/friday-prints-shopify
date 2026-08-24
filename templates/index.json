@@ -99,7 +99,7 @@
         "use_sample_video": true,
         "autoplay": true,
         "loop": true,
-        "background_color": "#17120f",
+        "background_color": "#e9a5b2",
         "accent_color": "#e53f36"
       }
     },
