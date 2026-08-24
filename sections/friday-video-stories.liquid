@@ -1,4 +1,5 @@
 {% liquid
+  assign fp_home_unboxing_enabled = false
   assign visible_story_count = 0
   for block in section.blocks
     assign fp_block_is_visible = false
@@ -18,7 +19,7 @@
   endif
 %}
 
-{% if section.settings.show_section and visible_story_count > 0 %}
+{% if fp_home_unboxing_enabled and section.settings.show_section and visible_story_count > 0 %}
   <section
     class="fp-films"
     id="FridayFilms-{{ section.id }}"
@@ -87,7 +88,7 @@
         #FridayFilms-{{ section.id }} .fp-films__note{margin-top:16px;font-size:7px}
         #FridayFilms-{{ section.id }} .fp-films__facts{margin-top:19px}
         #FridayFilms-{{ section.id }} .fp-films__fact{padding:11px 8px 12px;font-size:6.5px}
-        #FridayFilms-{{ section.id }} .fp-films__rail{width:min(58vw,220px);justify-self:end}
+        #FridayFilms-{{ section.id }} .fp-films__rail{width:min(58vw,220px);justify-self:center}
         #FridayFilms-{{ section.id }} .fp-film-card{flex-basis:88%;max-width:none}
         #FridayFilms-{{ section.id }} .fp-film-card__index{left:10px;top:10px;padding:6px 8px;font-size:7px}
         #FridayFilms-{{ section.id }} .fp-film-card__open{padding:12px}
