@@ -19,12 +19,28 @@
     z-index: 90;
   }
   #FridayHeader-{{ section.id }} .fp-nav-wrap {
-    position: relative !important;
-    inset: auto !important;
-    width: 100% !important;
-    transform: none !important;
-    box-shadow: none !important;
+    position:relative;
+    width:100%;
+    z-index:91;
+    background:var(--fp-cream);
+    border-bottom:1px solid transparent;
+    transform:translateY(0);
+    transition:transform .28s cubic-bezier(.22,.61,.36,1),box-shadow .28s ease,background-color .28s ease,border-color .28s ease;
+    will-change:transform;
   }
+  #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating{
+    position:fixed;
+    inset:0 0 auto;
+    background:color-mix(in srgb,var(--fp-cream) 94%,transparent);
+    border-bottom-color:color-mix(in srgb,var(--fp-ink) 12%,transparent);
+    box-shadow:0 10px 32px rgba(32,20,13,.1);
+    -webkit-backdrop-filter:blur(14px);
+    backdrop-filter:blur(14px);
+  }
+  #FridayHeader-{{ section.id }} .fp-nav-wrap.is-hidden{transform:translateY(calc(-100% - 2px))}
+  #FridayHeader-{{ section.id }} .fp-nav-spacer{height:0;pointer-events:none}
+  #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating + .fp-nav-spacer{height:var(--fp-floating-nav-height,0px)}
+  #FridayHeader-{{ section.id }}.fp-menu-is-open .fp-nav-wrap{transform:none!important}
   #FridayHeader-{{ section.id }} .fp-search{display:grid;place-items:center;width:34px;height:34px;padding:0;border:0;background:transparent;color:var(--fp-ink);text-decoration:none;cursor:pointer;flex:0 0 auto}
   #FridayHeader-{{ section.id }} .fp-search svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7}
   #FridayHeader-{{ section.id }} .fp-logo__mark{display:block;width:auto;height:var(--fp-logo-mark-desktop);max-width:86px;object-fit:contain;object-position:center;transition:transform .22s ease}
@@ -76,6 +92,10 @@
     #FridayHeader-{{ section.id }} .fp-search,#FridayHeader-{{ section.id }} .fp-cart{width:42px!important;height:44px!important}
     #FridayHeader-{{ section.id }} .fp-search svg{width:25px;height:25px}
     #FridayHeader-{{ section.id }} .fp-cart svg{width:27px;height:27px}
+    #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating .fp-nav{min-height:66px!important;height:66px!important}
+    #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating .fp-logo__mark{height:min(var(--fp-logo-mark-mobile),46px)!important}
+    #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating .fp-search,
+    #FridayHeader-{{ section.id }} .fp-nav-wrap.is-floating .fp-cart{height:40px!important}
   }
   @media (max-width: 374px) {
     #FridayHeader-{{ section.id }} .fp-nav{grid-template-columns:44px minmax(0,1fr) auto!important;gap:6px!important;padding-inline:12px!important}
@@ -231,7 +251,8 @@
   }
   @media (prefers-reduced-motion:reduce){
     #FridayHeader-{{ section.id }} .fp-mobile-menu,
-    #FridayHeader-{{ section.id }} .fp-menu>summary i{transition:none!important}
+    #FridayHeader-{{ section.id }} .fp-menu>summary i,
+    #FridayHeader-{{ section.id }} .fp-nav-wrap{transition:none!important}
   }
 </style>
 <header class="fp-site-header" id="FridayHeader-{{ section.id }}">
@@ -326,6 +347,7 @@
       </div>
     </div>
   </div>
+  <div class="fp-nav-spacer" aria-hidden="true"></div>
 </header>
 <script>
   (() => {
@@ -334,8 +356,56 @@
     root.dataset.fpMenuReady = 'true';
     const menu = root.querySelector('.fp-menu');
     if (!menu) return;
+    const navWrap = root.querySelector('.fp-nav-wrap');
     const summary = menu.querySelector('summary');
     const logo = root.querySelector('.fp-logo');
+    let lastScrollY = Math.max(window.scrollY, 0);
+    let scrollTicking = false;
+    let headerThreshold = root.offsetHeight;
+    let directionAnchor = lastScrollY;
+
+    const measureHeader = () => {
+      if (!navWrap) return;
+      const wasFloating = navWrap.classList.contains('is-floating');
+      navWrap.classList.remove('is-floating', 'is-hidden');
+      const navHeight = navWrap.offsetHeight;
+      root.style.setProperty('--fp-floating-nav-height', `${navHeight}px`);
+      headerThreshold = root.offsetTop + root.offsetHeight;
+      if (wasFloating && window.scrollY > headerThreshold) navWrap.classList.add('is-floating');
+    };
+
+    const syncFloatingHeader = () => {
+      scrollTicking = false;
+      if (!navWrap) return;
+      const currentY = Math.max(window.scrollY, 0);
+      const beyondHeader = currentY > headerThreshold;
+
+      if (!beyondHeader) {
+        navWrap.classList.remove('is-floating', 'is-hidden');
+        directionAnchor = currentY;
+        lastScrollY = currentY;
+        return;
+      }
+
+      navWrap.classList.add('is-floating');
+      const delta = currentY - lastScrollY;
+      if (menu.open) {
+        navWrap.classList.remove('is-hidden');
+      } else if (delta > 5 && currentY - directionAnchor > 18) {
+        navWrap.classList.add('is-hidden');
+        directionAnchor = currentY;
+      } else if (delta < -5 && directionAnchor - currentY > 10) {
+        navWrap.classList.remove('is-hidden');
+        directionAnchor = currentY;
+      }
+      lastScrollY = currentY;
+    };
+
+    const requestHeaderSync = () => {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(syncFloatingHeader);
+    };
     const pinMenuChrome = () => {
       if (!summary || menu.open) return;
       const rect = summary.getBoundingClientRect();
@@ -355,7 +425,13 @@
     summary?.addEventListener('keydown', (event) => {
       if (event.key === 'Enter' || event.key === ' ') pinMenuChrome();
     });
-    window.addEventListener('resize', pinMenuChrome, { passive: true });
+    window.addEventListener('scroll', requestHeaderSync, { passive: true });
+    window.addEventListener('resize', () => {
+      measureHeader();
+      pinMenuChrome();
+      requestHeaderSync();
+    }, { passive: true });
+    measureHeader();
     pinMenuChrome();
     const sync = () => {
       document.documentElement.classList.toggle('fp-mobile-menu-open', menu.open);
@@ -364,10 +440,15 @@
       if (summary) summary.setAttribute('aria-label', menu.open ? 'Close menu' : {{ section.settings.menu_open_label | json }});
     };
     menu.addEventListener('toggle', sync);
+    menu.addEventListener('toggle', () => {
+      if (menu.open) navWrap?.classList.remove('is-hidden');
+      requestHeaderSync();
+    });
     menu.querySelectorAll('.fp-mobile-menu a').forEach((link) => link.addEventListener('click', () => { menu.open = false; sync(); }));
     document.addEventListener('keydown', (event) => { if (event.key === 'Escape' && menu.open) { menu.open = false; sync(); menu.querySelector('summary')?.focus(); } });
     document.addEventListener('shopify:section:unload', (event) => { if (event.target?.contains(root)) { document.documentElement.classList.remove('fp-mobile-menu-open'); document.body.classList.remove('fp-mobile-menu-open'); root.classList.remove('fp-menu-is-open'); } });
     sync();
+    requestHeaderSync();
   })();
 </script>
 
