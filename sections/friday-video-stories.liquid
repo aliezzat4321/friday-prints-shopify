@@ -1,0 +1,205 @@
+{% liquid
+  assign visible_story_count = 0
+  for block in section.blocks
+    assign fp_block_has_video = false
+    assign fp_block_is_visible = false
+    if block.settings.video != blank
+      assign fp_block_has_video = true
+      assign fp_block_is_visible = true
+    elsif forloop.first and section.settings.use_sample_video
+      assign fp_block_has_video = true
+      assign fp_block_is_visible = true
+    elsif request.design_mode
+      assign fp_block_is_visible = true
+    endif
+    if fp_block_is_visible
+      assign visible_story_count = visible_story_count | plus: 1
+    endif
+  endfor
+  if section.blocks.size < 1 and section.settings.use_sample_video
+    assign visible_story_count = 1
+  endif
+%}
+
+{% if section.settings.show_section and visible_story_count > 0 %}
+  <section
+    class="fp-films"
+    id="FridayFilms-{{ section.id }}"
+    style="--fp-films-bg:{{ section.settings.background_color }};--fp-films-accent:{{ section.settings.accent_color }};--fp-films-count:{{ visible_story_count }};"
+    data-fp-films
+  >
+    <style>
+      #FridayFilms-{{ section.id }}{position:relative;overflow:hidden;background:var(--fp-films-bg);color:var(--fp-ink);border-top:1px solid var(--fp-ink);border-bottom:1px solid var(--fp-ink)}
+      #FridayFilms-{{ section.id }} *{box-sizing:border-box}
+      #FridayFilms-{{ section.id }}:before{content:'✦';position:absolute;right:4.5vw;top:38px;color:var(--fp-films-accent);font:42px/1 Georgia,serif;transform:rotate(12deg);opacity:.9}
+      #FridayFilms-{{ section.id }} .fp-films__inner{display:grid;grid-template-columns:minmax(250px,.6fr) minmax(0,1.4fr);gap:clamp(38px,6vw,96px);padding:clamp(54px,6vw,92px) clamp(28px,4vw,64px)}
+      #FridayFilms-{{ section.id }} .fp-films__intro{align-self:start;position:sticky;top:28px;max-width:470px}
+      #FridayFilms-{{ section.id }} .fp-films__eyebrow{margin:0 0 18px;color:var(--fp-films-accent);font:700 10px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
+      #FridayFilms-{{ section.id }} h2{max-width:8ch;margin:0;font:700 clamp(52px,6vw,88px)/.84 Georgia,"Times New Roman",serif;letter-spacing:-.058em;text-transform:lowercase;text-wrap:balance}
+      #FridayFilms-{{ section.id }} .fp-films__text{max-width:37ch;margin:27px 0 0;font:13px/1.65 "Courier New",monospace}
+      #FridayFilms-{{ section.id }} .fp-films__note{display:flex;align-items:center;gap:10px;margin:30px 0 0;padding-top:16px;border-top:1px solid color-mix(in srgb,var(--fp-ink) 45%,transparent);font:700 9px/1.35 "Courier New",monospace;letter-spacing:.055em;text-transform:uppercase}
+      #FridayFilms-{{ section.id }} .fp-films__note:before{content:'↘';color:var(--fp-films-accent);font-size:18px}
+      #FridayFilms-{{ section.id }} .fp-films__rail{display:grid;grid-template-columns:repeat(var(--fp-films-count),minmax(0,1fr));gap:16px;align-items:start;min-width:0}
+      #FridayFilms-{{ section.id }} .fp-film-card{min-width:0;margin:0}
+      #FridayFilms-{{ section.id }} .fp-film-card__media{position:relative;overflow:hidden;aspect-ratio:9/16;background:var(--fp-ink)}
+      #FridayFilms-{{ section.id }} .fp-film-card__media video{display:block;width:100%;height:100%;object-fit:cover;background:var(--fp-ink)}
+      #FridayFilms-{{ section.id }} .fp-film-card__index{position:absolute;left:12px;top:12px;z-index:2;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--fp-films-bg);color:var(--fp-ink);font:700 9px/1 "Courier New",monospace}
+      #FridayFilms-{{ section.id }} .fp-film-card__sound{position:absolute;right:10px;bottom:10px;z-index:3;min-height:38px;padding:0 12px;border:1px solid var(--fp-cream);background:color-mix(in srgb,var(--fp-ink) 76%,transparent);color:#fff;cursor:pointer;font:700 8px/1 "Courier New",monospace;letter-spacing:.055em;text-transform:uppercase;backdrop-filter:blur(8px)}
+      #FridayFilms-{{ section.id }} .fp-film-card__sound:focus-visible{outline:2px solid var(--fp-films-accent);outline-offset:3px}
+      #FridayFilms-{{ section.id }} .fp-film-card__caption{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;padding:14px 0 0;border-top:1px solid var(--fp-ink);margin-top:10px;font-family:"Courier New",monospace}
+      #FridayFilms-{{ section.id }} .fp-film-card__caption strong{font-size:10px;line-height:1.3;text-transform:uppercase;letter-spacing:.045em}
+      #FridayFilms-{{ section.id }} .fp-film-card__caption span{max-width:25ch;font-size:9px;line-height:1.45;color:color-mix(in srgb,var(--fp-ink) 67%,transparent)}
+      #FridayFilms-{{ section.id }} .fp-film-card__caption small{font:700 9px/1 "Courier New",monospace;color:var(--fp-films-accent)}
+      #FridayFilms-{{ section.id }} .fp-film-card__placeholder{height:100%;display:grid;place-items:center;padding:30px;color:#fff;text-align:center;font:700 10px/1.4 "Courier New",monospace;text-transform:uppercase}
+      #FridayFilms-{{ section.id }} .fp-films__rail[data-count="1"]{grid-template-columns:minmax(250px,440px);justify-content:start}
+
+      @media(max-width:1050px){
+        #FridayFilms-{{ section.id }} .fp-films__inner{grid-template-columns:minmax(220px,.52fr) minmax(0,1.48fr);gap:42px;padding-inline:30px}
+        #FridayFilms-{{ section.id }} h2{font-size:clamp(50px,6.5vw,70px)}
+      }
+      @media(max-width:899px){
+        #FridayFilms-{{ section.id }} .fp-films__inner{grid-template-columns:1fr;gap:34px;padding:52px 28px 58px}
+        #FridayFilms-{{ section.id }} .fp-films__intro{position:static;max-width:620px}
+        #FridayFilms-{{ section.id }} h2{max-width:10ch}
+        #FridayFilms-{{ section.id }} .fp-films__rail{grid-template-columns:repeat(var(--fp-films-count),minmax(0,1fr))}
+        #FridayFilms-{{ section.id }} .fp-films__rail[data-count="1"]{grid-template-columns:minmax(260px,420px)}
+      }
+      @media(max-width:749px){
+        #FridayFilms-{{ section.id }}:before{right:18px;top:24px;font-size:29px}
+        #FridayFilms-{{ section.id }} .fp-films__inner{gap:29px;padding:42px 20px 48px}
+        #FridayFilms-{{ section.id }} .fp-films__eyebrow{font-size:8px;margin-bottom:13px}
+        #FridayFilms-{{ section.id }} h2{font-size:clamp(48px,15vw,64px);line-height:.86}
+        #FridayFilms-{{ section.id }} .fp-films__text{margin-top:20px;font-size:11px;line-height:1.6}
+        #FridayFilms-{{ section.id }} .fp-films__note{margin-top:20px;font-size:8px}
+        #FridayFilms-{{ section.id }} .fp-films__rail,#FridayFilms-{{ section.id }} .fp-films__rail[data-count="1"]{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:-20px;padding:0 20px 5px}
+        #FridayFilms-{{ section.id }} .fp-films__rail::-webkit-scrollbar{display:none}
+        #FridayFilms-{{ section.id }} .fp-film-card{flex:0 0 78vw;max-width:330px;scroll-snap-align:center}
+      }
+      @media(prefers-reduced-motion:reduce){#FridayFilms-{{ section.id }} video{scroll-behavior:auto}}
+    </style>
+
+    <div class="fp-films__inner">
+      <header class="fp-films__intro">
+        {% if section.settings.eyebrow != blank %}<p class="fp-films__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        {% if section.settings.heading != blank %}<h2>{{ section.settings.heading }}</h2>{% endif %}
+        {% if section.settings.text != blank %}<div class="fp-films__text">{{ section.settings.text }}</div>{% endif %}
+        {% if section.settings.note != blank %}<p class="fp-films__note">{{ section.settings.note }}</p>{% endif %}
+      </header>
+
+      <div class="fp-films__rail" data-count="{{ visible_story_count }}" aria-label="Friday Prints films">
+        {% if section.blocks.size > 0 %}
+          {% assign fp_rendered_index = 0 %}
+          {% for block in section.blocks %}
+            {% liquid
+              assign fp_block_has_video = false
+              assign fp_block_is_visible = false
+              if block.settings.video != blank
+                assign fp_block_has_video = true
+                assign fp_block_is_visible = true
+              elsif forloop.first and section.settings.use_sample_video
+                assign fp_block_has_video = true
+                assign fp_block_is_visible = true
+              elsif request.design_mode
+                assign fp_block_is_visible = true
+              endif
+              assign fp_block_poster_url = blank
+              if block.settings.poster != blank
+                assign fp_block_poster_url = block.settings.poster | image_url: width: 900
+              endif
+            %}
+            {% if fp_block_is_visible %}
+            {% assign fp_rendered_index = fp_rendered_index | plus: 1 %}
+            <figure class="fp-film-card" {{ block.shopify_attributes }}>
+              <div class="fp-film-card__media">
+                <span class="fp-film-card__index" aria-hidden="true">0{{ fp_rendered_index }}</span>
+                {% if block.settings.video != blank %}
+                  {{ block.settings.video | video_tag: image_size: '900x', autoplay: section.settings.autoplay, loop: section.settings.loop, muted: section.settings.autoplay, controls: section.settings.show_controls, playsinline: true, preload: 'metadata', poster: fp_block_poster_url }}
+                {% elsif forloop.first and section.settings.use_sample_video %}
+                  <video src="{{ 'friday-unboxing.mp4' | asset_url }}" poster="{% if block.settings.poster != blank %}{{ block.settings.poster | image_url: width: 900 }}{% else %}{{ 'friday-unboxing-poster.webp' | asset_url }}{% endif %}" {% if section.settings.autoplay %}autoplay muted{% endif %} {% if section.settings.loop %}loop{% endif %} {% if section.settings.show_controls %}controls{% endif %} playsinline preload="metadata"></video>
+                {% elsif request.design_mode %}
+                  <div class="fp-film-card__placeholder">Choose a Shopify-hosted video</div>
+                {% endif %}
+                {% if section.settings.autoplay and fp_block_has_video %}<button class="fp-film-card__sound" type="button" data-fp-film-sound aria-label="Turn video sound on">sound on +</button>{% endif %}
+              </div>
+              {% if block.settings.heading != blank or block.settings.caption != blank %}
+                <figcaption class="fp-film-card__caption">
+                  <span>{% if block.settings.heading != blank %}<strong>{{ block.settings.heading }}</strong><br>{% endif %}{{ block.settings.caption }}</span>
+                  <small>FILM ↗</small>
+                </figcaption>
+              {% endif %}
+            </figure>
+            {% endif %}
+          {% endfor %}
+        {% elsif section.settings.use_sample_video %}
+          <figure class="fp-film-card">
+            <div class="fp-film-card__media">
+              <span class="fp-film-card__index" aria-hidden="true">01</span>
+              <video src="{{ 'friday-unboxing.mp4' | asset_url }}" poster="{{ 'friday-unboxing-poster.webp' | asset_url }}" {% if section.settings.autoplay %}autoplay muted{% endif %} {% if section.settings.loop %}loop{% endif %} {% if section.settings.show_controls %}controls{% endif %} playsinline preload="metadata"></video>
+              {% if section.settings.autoplay %}<button class="fp-film-card__sound" type="button" data-fp-film-sound aria-label="Turn video sound on">sound on +</button>{% endif %}
+            </div>
+          </figure>
+        {% endif %}
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const root = document.getElementById('FridayFilms-{{ section.id }}');
+        if (!root || root.dataset.ready === 'true') return;
+        root.dataset.ready = 'true';
+        const videos = [...root.querySelectorAll('video')];
+        if (!videos.length) return;
+        videos.forEach((video) => video.addEventListener('play', () => videos.forEach((other) => { if (other !== video && !other.muted) other.pause(); })));
+        root.querySelectorAll('[data-fp-film-sound]').forEach((button) => button.addEventListener('click', () => {
+          const video = button.parentElement?.querySelector('video');
+          if (!video) return;
+          video.muted = !video.muted;
+          if (video.paused) video.play().catch(() => {});
+          button.textContent = video.muted ? 'sound on +' : 'sound off −';
+          button.setAttribute('aria-label', video.muted ? 'Turn video sound on' : 'Turn video sound off');
+        }));
+        if (!{{ section.settings.autoplay | json }} || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const observer = new IntersectionObserver((entries) => entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.play().catch(() => {});
+          else entry.target.pause();
+        }), { threshold:.35 });
+        videos.forEach((video) => observer.observe(video));
+      })();
+    </script>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Friday video stories",
+  "max_blocks": 3,
+  "settings": [
+    { "type": "checkbox", "id": "show_section", "label": "Show section", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "03 · UNBOX FRIDAY" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "the art of arrival" },
+    { "type": "richtext", "id": "text", "label": "Introduction", "default": "<p>Every print leaves Cairo wrapped by hand, numbered and ready to become part of your space.</p>" },
+    { "type": "text", "id": "note", "label": "Small note", "default": "MADE TO ORDER · PACKED WITH CARE" },
+    { "type": "checkbox", "id": "use_sample_video", "label": "Use the supplied unboxing video when the first block is empty", "default": true },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay silently when visible", "default": true },
+    { "type": "checkbox", "id": "loop", "label": "Loop videos", "default": true },
+    { "type": "checkbox", "id": "show_controls", "label": "Show video controls", "default": false },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#E9A5B2" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#E53F36" }
+  ],
+  "blocks": [
+    {
+      "type": "film",
+      "name": "Video",
+      "settings": [
+        { "type": "video", "id": "video", "label": "Shopify-hosted video" },
+        { "type": "image_picker", "id": "poster", "label": "Poster image (optional)" },
+        { "type": "text", "id": "heading", "label": "Video title", "default": "wrapped by hand" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "A Friday print, from the first seal to the final reveal." }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Friday video stories", "blocks": [{ "type": "film" }] }
+  ]
+}
+{% endschema %}

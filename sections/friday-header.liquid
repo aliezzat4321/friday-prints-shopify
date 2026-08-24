@@ -13,6 +13,8 @@
     --fp-header-gigi-desktop: {{ section.settings.gigi_size_desktop }}px;
     --fp-header-gigi-mobile: {{ section.settings.gigi_size_mobile }}px;
     --fp-logo-image-width: {{ section.settings.logo_image_width }}px;
+    --fp-logo-mark-desktop: {{ section.settings.logo_mark_size_desktop }}px;
+    --fp-logo-mark-mobile: {{ section.settings.logo_mark_size_mobile }}px;
     position: relative;
     z-index: 90;
   }
@@ -25,6 +27,16 @@
   }
   #FridayHeader-{{ section.id }} .fp-search{display:grid;place-items:center;width:34px;height:34px;padding:0;border:0;background:transparent;color:var(--fp-ink);text-decoration:none;cursor:pointer;flex:0 0 auto}
   #FridayHeader-{{ section.id }} .fp-search svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7}
+  #FridayHeader-{{ section.id }} .fp-logo__mark{display:block;width:auto;height:var(--fp-logo-mark-desktop);max-width:86px;object-fit:contain;object-position:center;transition:transform .22s ease}
+  #FridayHeader-{{ section.id }} .fp-logo:hover .fp-logo__mark{transform:translateY(-2px) rotate(-1.5deg)}
+
+  @media (min-width:901px){
+    #FridayHeader-{{ section.id }} .fp-nav{position:relative;grid-template-columns:minmax(0,1fr) auto!important}
+    #FridayHeader-{{ section.id }} .fp-nav__links{grid-column:1;justify-self:start!important}
+    #FridayHeader-{{ section.id }} .fp-nav__actions{grid-column:2}
+    #FridayHeader-{{ section.id }} .fp-logo--mark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2;width:92px;display:grid;place-items:center}
+    #FridayHeader-{{ section.id }} .fp-logo--mark:hover .fp-logo__mark{transform:translateY(-2px) rotate(-1.5deg)}
+  }
 
   /* Mobile masthead: clear left / centre / right rhythm with the brand as the anchor. */
   @media (max-width: 900px) {
@@ -50,6 +62,7 @@
     }
     #FridayHeader-{{ section.id }} .fp-logo small{font-size:9px!important;margin-top:6px!important;letter-spacing:.01em!important}
     #FridayHeader-{{ section.id }} .fp-logo__image{width:min(var(--fp-logo-image-width),156px)!important;max-height:58px!important;object-position:center!important}
+    #FridayHeader-{{ section.id }} .fp-logo__mark{height:var(--fp-logo-mark-mobile)!important;max-width:70px!important}
     #FridayHeader-{{ section.id }} .fp-nav__links{display:none!important}
     #FridayHeader-{{ section.id }} .fp-nav__actions{
       grid-column:3;
@@ -257,8 +270,10 @@
         </nav>
       </details>
 
-      <a class="fp-logo" href="{{ routes.root_url }}" aria-label="{{ section.settings.logo_alt | escape }}">
-        {% if section.settings.logo_image != blank %}
+      <a class="fp-logo{% if section.settings.use_gigi_as_logo and section.settings.gigi_icon != blank %} fp-logo--mark{% endif %}" href="{{ routes.root_url }}" aria-label="{{ section.settings.logo_alt | escape }}">
+        {% if section.settings.use_gigi_as_logo and section.settings.gigi_icon != blank %}
+          {{ section.settings.gigi_icon | image_url: width: 360 | image_tag: class: 'fp-logo__mark', loading: 'eager', widths: '80,120,180,240,360', sizes: '(max-width: 900px) 64px, 86px', alt: section.settings.logo_alt }}
+        {% elsif section.settings.logo_image != blank %}
           {{ section.settings.logo_image | image_url: width: 700 | image_tag: class: 'fp-logo__image', loading: 'eager', widths: '160,240,360,500,700', sizes: '(max-width: 749px) 150px, 220px', alt: section.settings.logo_alt }}
         {% else %}
           <span>{{ section.settings.logo_text }}</span>
@@ -294,7 +309,7 @@
           </a>
         {% endif %}
 
-        {% if section.settings.gigi_icon != blank %}
+        {% if section.settings.gigi_icon != blank and section.settings.use_gigi_as_logo == false %}
           {% if section.settings.gigi_link != blank %}<a class="fp-gigi-link" href="{{ section.settings.gigi_link }}" aria-label="{{ section.settings.gigi_alt | escape }}">{% else %}<span class="fp-gigi-link">{% endif %}
             {{ section.settings.gigi_icon | image_url: width: 240 | image_tag: class: 'fp-nav__gigi', loading: 'eager', widths: '60,90,120,180,240', sizes: '(max-width: 900px) 48px, 64px', alt: section.settings.gigi_alt }}
           {% if section.settings.gigi_link != blank %}</a>{% else %}</span>{% endif %}
@@ -366,6 +381,9 @@
     { "type": "text", "id": "announcement_symbol", "label": "Announcement symbol", "default": "✦" },
 
     { "type": "header", "content": "Logo" },
+    { "type": "checkbox", "id": "use_gigi_as_logo", "label": "Use GiGi as the centred logo", "default": true },
+    { "type": "range", "id": "logo_mark_size_desktop", "label": "GiGi logo height — desktop", "min": 42, "max": 86, "step": 2, "unit": "px", "default": 62 },
+    { "type": "range", "id": "logo_mark_size_mobile", "label": "GiGi logo height — mobile", "min": 38, "max": 70, "step": 2, "unit": "px", "default": 54 },
     { "type": "image_picker", "id": "logo_image", "label": "Logo image (optional)" },
     { "type": "range", "id": "logo_image_width", "label": "Logo image width", "min": 80, "max": 260, "step": 5, "unit": "px", "default": 170 },
     { "type": "text", "id": "logo_text", "label": "Text logo line 1", "default": "friday" },

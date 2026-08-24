@@ -26,6 +26,16 @@
 
   assign description_plain = product.description | strip_html | strip
   assign fp_description_intro = description_plain | downcase | replace: '&nbsp;', ' ' | slice: 0, 180
+  assign fp_show_unboxing = false
+  if section.settings.show_unboxing
+    if section.settings.unboxing_video != blank or section.settings.use_default_unboxing
+      assign fp_show_unboxing = true
+    endif
+  endif
+  assign fp_unboxing_poster_url = blank
+  if section.settings.unboxing_poster != blank
+    assign fp_unboxing_poster_url = section.settings.unboxing_poster | image_url: width: 900
+  endif
 
   assign fp_size_label = blank
   if fp_size_option_position == 1
@@ -101,7 +111,7 @@
 <section
   class="fp-pdp"
   id="FridayProduct-{{ section.id }}"
-  style="--fp-pdp-bg:{{ section.settings.background_color }};--fp-pdp-panel:{{ section.settings.panel_color }};--fp-pdp-accent:{{ section.settings.accent_color }};--fp-pdp-title:{{ section.settings.title_size_desktop }}px;--fp-pdp-title-mobile:{{ section.settings.title_size_mobile }}px;"
+  style="--fp-pdp-bg:{{ section.settings.background_color }};--fp-pdp-panel:{{ section.settings.panel_color }};--fp-pdp-accent:{{ section.settings.accent_color }};--fp-pdp-unbox:{{ section.settings.unboxing_background }};--fp-pdp-title:{{ section.settings.title_size_desktop }}px;--fp-pdp-title-mobile:{{ section.settings.title_size_mobile }}px;"
 >
   <style>
     #FridayProduct-{{ section.id }}{background:var(--fp-pdp-bg);color:var(--fp-ink);border-bottom:1px solid var(--fp-line)}
@@ -190,6 +200,20 @@
     #FridayProduct-{{ section.id }} .fp-pdp__support a{color:inherit;text-underline-offset:3px;overflow-wrap:anywhere}
     #FridayProduct-{{ section.id }} .fp-pdp__live{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.55fr);gap:clamp(44px,7vw,110px);align-items:center;padding:clamp(54px,6vw,90px) clamp(30px,5vw,72px);overflow:hidden;background:var(--fp-pdp-unbox);border-top:1px solid var(--fp-ink);border-bottom:1px solid var(--fp-ink)}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox:after{content:'✦';position:absolute;right:5vw;top:44px;color:var(--fp-pdp-accent);font:48px/1 Georgia,serif;transform:rotate(12deg)}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-copy{position:relative;z-index:1;max-width:650px}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox h2{max-width:8ch;margin:9px 0 0;font:700 clamp(54px,6.2vw,92px)/.84 Georgia,"Times New Roman",serif;letter-spacing:-.058em;text-transform:lowercase;text-wrap:balance}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-text{max-width:43ch;margin:27px 0 0;font:13px/1.65 "Courier New",monospace}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-note{display:flex;align-items:center;gap:11px;margin:31px 0 0;padding-top:16px;border-top:1px solid color-mix(in srgb,var(--fp-ink) 45%,transparent);font:700 9px/1.35 "Courier New",monospace;letter-spacing:.055em;text-transform:uppercase}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-note:before{content:'↘';color:var(--fp-pdp-accent);font-size:18px}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-media{position:relative;z-index:1;justify-self:end;width:min(100%,430px);margin:0}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-frame{position:relative;aspect-ratio:9/16;overflow:hidden;background:var(--fp-ink)}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-frame video{display:block;width:100%;height:100%;object-fit:cover;background:var(--fp-ink)}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-stamp{position:absolute;left:-35px;top:42px;z-index:2;display:grid;place-items:center;width:82px;height:82px;padding:10px;border-radius:50%;background:var(--fp-pdp-accent);color:#fff;text-align:center;font:700 9px/1.25 "Courier New",monospace;letter-spacing:.04em;text-transform:uppercase;transform:rotate(-9deg);pointer-events:none}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-caption{display:flex;justify-content:space-between;gap:18px;margin-top:10px;padding-top:12px;border-top:1px solid var(--fp-ink);font:700 9px/1.35 "Courier New",monospace;text-transform:uppercase;letter-spacing:.045em}
+    #FridayProduct-{{ section.id }} .fp-pdp__unbox-caption span:last-child{color:var(--fp-pdp-accent)}
+
     #FridayProduct-{{ section.id }} .fp-pdp__recommend{padding:46px 46px 58px;background:var(--fp-pdp-panel)}
     #FridayProduct-{{ section.id }} .fp-pdp__recommend-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:26px}
     #FridayProduct-{{ section.id }} .fp-pdp__recommend-all{color:inherit;text-decoration:none;font:700 10px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.055em}
@@ -231,6 +255,7 @@
       #FridayProduct-{{ section.id }} .fp-pdp__details{padding:34px 28px 38px}
       #FridayProduct-{{ section.id }} .fp-pdp__title{max-width:14ch;font-size:clamp(48px,7.5vw,62px)}
       #FridayProduct-{{ section.id }} .fp-pdp__about,#FridayProduct-{{ section.id }} .fp-pdp__info{grid-template-columns:1fr;gap:20px;padding:38px 28px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox{grid-template-columns:minmax(0,1fr) minmax(270px,360px);gap:40px;padding:52px 38px}
       #FridayProduct-{{ section.id }} .fp-pdp__fact-band{grid-template-columns:repeat(2,1fr)}
       #FridayProduct-{{ section.id }} .fp-pdp__fact:nth-child(2){border-right:0}
       #FridayProduct-{{ section.id }} .fp-pdp__fact:nth-child(-n+2){border-bottom:1px solid var(--fp-line)}
@@ -273,6 +298,13 @@
       #FridayProduct-{{ section.id }} .fp-pdp__fact{min-height:100px;padding:18px 16px}
       #FridayProduct-{{ section.id }} .fp-pdp__fact strong{font-size:11px}
       #FridayProduct-{{ section.id }} .fp-pdp__info{padding:32px 20px;gap:17px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox{grid-template-columns:1fr;gap:28px;padding:42px 20px 48px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox:after{right:18px;top:25px;font-size:30px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox h2{font-size:clamp(48px,15vw,64px);line-height:.86}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-text{margin-top:20px;font-size:11px;line-height:1.6}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-note{margin-top:20px;font-size:8px}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-media{justify-self:center;width:min(82vw,340px)}
+      #FridayProduct-{{ section.id }} .fp-pdp__unbox-stamp{left:-18px;top:28px;width:68px;height:68px;font-size:7.5px}
       #FridayProduct-{{ section.id }} .fp-pdp__recommend{padding:32px 0 42px}
       #FridayProduct-{{ section.id }} .fp-pdp__recommend-head{padding:0 20px;margin-bottom:18px}
       #FridayProduct-{{ section.id }} .fp-pdp__recommend-all{display:none}
@@ -551,11 +583,33 @@
     </section>
   </div>
 
+  {% if fp_show_unboxing %}
+    <section class="fp-pdp__unbox" aria-labelledby="FridayUnbox-{{ section.id }}">
+      <div class="fp-pdp__unbox-copy">
+        <p class="fp-pdp__section-label">03 · unbox friday</p>
+        <h2 id="FridayUnbox-{{ section.id }}">{{ section.settings.unboxing_heading }}</h2>
+        {% if section.settings.unboxing_text != blank %}<div class="fp-pdp__unbox-text">{{ section.settings.unboxing_text }}</div>{% endif %}
+        {% if section.settings.unboxing_note != blank %}<p class="fp-pdp__unbox-note">{{ section.settings.unboxing_note }}</p>{% endif %}
+      </div>
+      <figure class="fp-pdp__unbox-media">
+        <div class="fp-pdp__unbox-frame">
+          <span class="fp-pdp__unbox-stamp" aria-hidden="true">from cairo<br>with care</span>
+          {% if section.settings.unboxing_video != blank %}
+            {{ section.settings.unboxing_video | video_tag: image_size: '900x', autoplay: false, loop: false, muted: false, controls: true, playsinline: true, preload: 'metadata', poster: fp_unboxing_poster_url }}
+          {% else %}
+            <video src="{{ 'friday-unboxing.mp4' | asset_url }}" poster="{% if section.settings.unboxing_poster != blank %}{{ section.settings.unboxing_poster | image_url: width: 900 }}{% else %}{{ 'friday-unboxing-poster.webp' | asset_url }}{% endif %}" controls playsinline preload="metadata"></video>
+          {% endif %}
+        </div>
+        <figcaption class="fp-pdp__unbox-caption"><span>{{ section.settings.unboxing_caption }}</span><span>PLAY ↗</span></figcaption>
+      </figure>
+    </section>
+  {% endif %}
+
   {% if section.settings.show_recommendations %}
     <section class="fp-pdp__recommend" aria-labelledby="FridayRecommend-{{ section.id }}">
       <div class="fp-pdp__recommend-head">
         <div>
-          <p class="fp-pdp__section-label">03 · keep looking</p>
+          <p class="fp-pdp__section-label">04 · keep looking</p>
           <h2 id="FridayRecommend-{{ section.id }}">{{ section.settings.recommendations_heading }}</h2>
         </div>
         <a class="fp-pdp__recommend-all" href="{{ routes.all_products_collection_url }}">shop all prints →</a>
@@ -777,6 +831,16 @@
     { "type": "textarea", "id": "delivery_copy", "label": "Delivery copy", "default": "Delivery typically takes 3–7 working days once your print has been produced and is ready to ship." },
     { "type": "text", "id": "returns_heading", "label": "Returns accordion heading", "default": "returns" },
     { "type": "textarea", "id": "returns_copy", "label": "Returns copy", "default": "Friday Prints are produced to order in limited editions. We do not normally accept returns or exchanges for change of mind where permitted by applicable law. This does not affect rights under applicable consumer protection law. If your order arrives damaged, defective or incorrect, contact us with photos and your order number." },
+    { "type": "header", "content": "Unboxing film" },
+    { "type": "checkbox", "id": "show_unboxing", "label": "Show unboxing film", "default": true },
+    { "type": "video", "id": "unboxing_video", "label": "Shopify-hosted unboxing video" },
+    { "type": "image_picker", "id": "unboxing_poster", "label": "Poster image (optional)" },
+    { "type": "checkbox", "id": "use_default_unboxing", "label": "Use the supplied film when no video is selected", "default": true },
+    { "type": "text", "id": "unboxing_heading", "label": "Heading", "default": "a little friday, delivered" },
+    { "type": "richtext", "id": "unboxing_text", "label": "Text", "default": "<p>Wrapped by hand in Cairo, with every limited-edition detail included. Open it slowly—the reveal is part of the story.</p>" },
+    { "type": "text", "id": "unboxing_note", "label": "Small note", "default": "MADE TO ORDER · PACKED WITH CARE" },
+    { "type": "text", "id": "unboxing_caption", "label": "Video caption", "default": "SEE WHAT ARRIVES" },
+    { "type": "color", "id": "unboxing_background", "label": "Background", "default": "#E9A5B2" },
     { "type": "header", "content": "Recommendations" },
     { "type": "checkbox", "id": "show_recommendations", "label": "Show more prints", "default": true },
     { "type": "text", "id": "recommendations_heading", "label": "Recommendations heading", "default": "more from GiGi" },

@@ -23,6 +23,7 @@ const css = [
   read('assets/friday-production.css'),
   read('assets/friday-patches.css'),
   sectionCss('sections/friday-header.liquid', 'header-test'),
+  sectionCss('sections/friday-video-stories.liquid', 'films-test'),
   sectionCss('sections/friday-hero.liquid', 'hero-test'),
   sectionCss('sections/friday-product.liquid', 'product-test'),
   sectionCss('sections/friday-contact.liquid', 'contact-test'),
@@ -32,11 +33,14 @@ const css = [
 const imageData = (file) => `data:image/webp;base64,${fs.readFileSync(path.join(root, file)).toString('base64')}`;
 const hero = imageData('assets/friday-hero-clean.webp');
 const heroMobile = imageData('assets/friday-hero-clean-mobile.webp');
+const gigiLogo = `data:image/png;base64,${fs.readFileSync(path.join(root, 'assets/friday-gigi-nav.png')).toString('base64')}`;
+const unboxingPoster = imageData('assets/friday-unboxing-poster.webp');
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>${css}</style></head><body>
-<header class="fp-site-header" id="FridayHeader-header-test"><div class="fp-announcement"><span>✦</span><span>LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT</span><span>✦</span></div><div class="fp-nav-wrap"><div class="fp-shell fp-nav"><details class="fp-menu"><summary><i></i><i></i></summary><nav class="fp-mobile-menu"><div class="fp-mobile-menu__links"><a>shop all</a><a>World of GiGi</a><a>print guide</a><a>faq</a><a>search prints</a><a>contact</a></div></nav></details><a class="fp-logo"><span>friday</span><small>prints.art</small></a><nav class="fp-nav__links"><a>shop all</a><a>world of GiGi</a><a>print guide</a><a>faq</a></nav><div class="fp-nav__actions"><button class="fp-search">⌕</button><span class="fp-gigi-link">G</span><a class="fp-cart">▱<b>0</b></a></div></div></div></header>
+<header class="fp-site-header" id="FridayHeader-header-test" style="--fp-logo-mark-desktop:62px;--fp-logo-mark-mobile:54px"><div class="fp-announcement"><span>✦</span><span>LIMITED EDITION ART PRINTS, MADE TO ORDER IN EGYPT</span><span>✦</span></div><div class="fp-nav-wrap"><div class="fp-shell fp-nav"><details class="fp-menu"><summary><i></i><i></i></summary><nav class="fp-mobile-menu"><div class="fp-mobile-menu__links"><a>shop all</a><a>World of GiGi</a><a>print guide</a><a>faq</a><a>search prints</a><a>contact</a></div></nav></details><a class="fp-logo fp-logo--mark"><img class="fp-logo__mark" src="${gigiLogo}"></a><nav class="fp-nav__links"><a>shop all</a><a>world of GiGi</a><a>print guide</a><a>faq</a></nav><div class="fp-nav__actions"><button class="fp-search">⌕</button><a class="fp-cart">▱<b>0</b></a></div></div></div></header>
 <main>
 <section class="fp-section fp-hero fp-hero--viewport" id="FridayHero-hero-test" style="--fp-hero-title-desktop:118px;--fp-hero-title-mobile:78px;--fp-hero-kicker-desktop:16px;--fp-hero-kicker-mobile:13px;--fp-hero-sub-desktop:17px;--fp-hero-sub-mobile:13px;--fp-hero-button-desktop:14px;--fp-hero-button-mobile:10px"><div class="fp-shell fp-hero__grid"><div class="fp-hero__copy"><p class="fp-hero__kicker">LIMITED-EDITION ART PRINTS</p><h1>friday<span>prints</span></h1><p class="fp-hero__sub">Art prints made for long weekends & loud lines.</p><p class="fp-hero__world">FROM THE WORLD OF GiGi</p><div class="fp-hero__buttons"><a class="fp-btn fp-btn--solid">shop prints</a><a class="fp-btn">Meet GiGi</a></div></div><div class="fp-hero__scene fp-hero__scene--curated"><picture><source media="(max-width: 749px)" srcset="${heroMobile}"><img src="${hero}" width="1448" height="1086"></picture></div></div></section>
-<section class="fp-pdp" id="FridayProduct-product-test" style="--fp-pdp-bg:#FBF1E4;--fp-pdp-panel:#FBF1E4;--fp-pdp-accent:#E53F36;--fp-pdp-title:68px;--fp-pdp-title-mobile:48px"><div class="fp-pdp__top"><div class="fp-pdp__gallery"><div class="fp-pdp__media-list"><div class="fp-pdp__media"></div></div></div><div class="fp-pdp__details"><p class="fp-pdp__eyebrow">LIMITED EDITION ART PRINT</p><h1 class="fp-pdp__title">a different soul, still her</h1><div class="fp-pdp__price-row"><span class="fp-pdp__price">LE 3,200</span><span class="fp-pdp__edition">EDITION OF 100</span></div><div class="fp-pdp__size-line"><span>A3</span><span>29.7 × 42 CM</span></div><div class="fp-pdp__variants"><div class="fp-pdp__variant-grid"><div class="fp-pdp__variant"><label>A3</label></div><div class="fp-pdp__variant"><label>A4</label></div></div></div><div class="fp-pdp__edition-preview"><span class="fp-pdp__edition-preview-copy"><strong>NEXT AVAILABLE EDITION</strong><small>Your exact number is confirmed when your order is placed.</small></span><span class="fp-pdp__edition-number"><span>003</span><small>/100</small></span></div><button class="fp-pdp__add">add to cart</button></div></div></section>
+<section class="fp-pdp" id="FridayProduct-product-test" style="--fp-pdp-bg:#FBF1E4;--fp-pdp-panel:#FBF1E4;--fp-pdp-accent:#E53F36;--fp-pdp-unbox:#E9A5B2;--fp-pdp-title:68px;--fp-pdp-title-mobile:48px"><div class="fp-pdp__top"><div class="fp-pdp__gallery"><div class="fp-pdp__media-list"><div class="fp-pdp__media"></div></div></div><div class="fp-pdp__details"><p class="fp-pdp__eyebrow">LIMITED EDITION ART PRINT</p><h1 class="fp-pdp__title">a different soul, still her</h1><div class="fp-pdp__price-row"><span class="fp-pdp__price">LE 3,200</span><span class="fp-pdp__edition">EDITION OF 100</span></div><div class="fp-pdp__size-line"><span>A3</span><span>29.7 × 42 CM</span></div><div class="fp-pdp__variants"><div class="fp-pdp__variant-grid"><div class="fp-pdp__variant"><label>A3</label></div><div class="fp-pdp__variant"><label>A4</label></div></div></div><div class="fp-pdp__edition-preview"><span class="fp-pdp__edition-preview-copy"><strong>NEXT AVAILABLE EDITION</strong><small>Your exact number is confirmed when your order is placed.</small></span><span class="fp-pdp__edition-number"><span>003</span><small>/100</small></span></div><button class="fp-pdp__add">add to cart</button></div></div><section class="fp-pdp__unbox"><div class="fp-pdp__unbox-copy"><p class="fp-pdp__section-label">03 · unbox friday</p><h2>a little friday, delivered</h2><div class="fp-pdp__unbox-text">Wrapped by hand in Cairo, with every limited-edition detail included.</div><p class="fp-pdp__unbox-note">MADE TO ORDER · PACKED WITH CARE</p></div><figure class="fp-pdp__unbox-media"><div class="fp-pdp__unbox-frame"><span class="fp-pdp__unbox-stamp">from cairo<br>with care</span><video poster="${unboxingPoster}"></video></div><figcaption class="fp-pdp__unbox-caption"><span>SEE WHAT ARRIVES</span><span>PLAY ↗</span></figcaption></figure></section></section>
+<section class="fp-films" id="FridayFilms-films-test" style="--fp-films-bg:#E9A5B2;--fp-films-accent:#E53F36;--fp-films-count:1"><div class="fp-films__inner"><header class="fp-films__intro"><p class="fp-films__eyebrow">03 · UNBOX FRIDAY</p><h2>the art of arrival</h2><div class="fp-films__text">Every print leaves Cairo wrapped by hand, numbered and ready to become part of your space.</div><p class="fp-films__note">MADE TO ORDER · PACKED WITH CARE</p></header><div class="fp-films__rail" data-count="1"><figure class="fp-film-card"><div class="fp-film-card__media"><span class="fp-film-card__index">01</span><video poster="${unboxingPoster}"></video></div><figcaption class="fp-film-card__caption"><span><strong>wrapped by hand</strong><br>A Friday print, from the first seal to the final reveal.</span><small>PLAY ↗</small></figcaption></figure></div></div></section>
 <section class="fp-contact" id="FridayContact-contact-test"><div class="fp-shell fp-contact__inner"><header class="fp-contact__intro"><div><p class="fp-contact__eyebrow">04 · CONTACT</p><h1>say hello</h1></div><p class="fp-contact__intro-copy">Questions about an artwork, your order, or finding the right print? Send us a note.</p></header><div class="fp-contact__grid"><aside class="fp-contact__aside"><div class="fp-contact__aside-block"><small>email</small><a>Eldemirdsh@gmail.com</a></div><div class="fp-contact__aside-block"><small>instagram</small><a>@fridayprints.art</a></div><p class="fp-contact__note">We usually reply within 1–2 working days from Cairo.</p></aside><form class="fp-contact__form"><div class="fp-contact__field"><label>name</label><input></div><div class="fp-contact__field"><label>email</label><input></div><div class="fp-contact__field fp-contact__field--wide"><label>order number</label><input></div><div class="fp-contact__field fp-contact__field--wide"><label>message</label><textarea></textarea></div><div class="fp-contact__actions"><p>Your details are used only to reply.</p><button>send message →</button></div></form></div></div></section>
 </main>
 <footer class="fp-footer" id="FridayFooter-footer-test" style="--fp-footer-gigi-desktop:90px;--fp-footer-gigi-mobile:85px;--fp-footer-columns:4;--fp-footer-link-desktop:16px;--fp-footer-link-mobile:13px;--fp-footer-heading-desktop:13px;--fp-footer-heading-mobile:12px"><div class="fp-shell fp-footer__grid"><div class="fp-footer__brand-block"><div class="fp-footer__brand">friday\nprints</div><p>made for long weekends & loud lines.</p><a class="fp-footer__email">questions → send us a note</a><div class="fp-footer__gigi-wrap"><div class="fp-footer__gigi">GiGi</div><span>CAIRO → EVERYWHERE</span></div></div>${['SHOP','FRIDAY','HELP','LEGAL'].map(x=>`<nav class="fp-footer__col"><strong>${x}</strong><a>sample link</a><a>another link</a></nav>`).join('')}</div><div class="fp-footer__bottom"><span>© FRIDAY PRINTS</span><span>MADE IN CAIRO</span><span>WITH ♥ & LOUD LINES</span></div></footer>
@@ -66,6 +70,7 @@ for (const [name, width, height] of viewports) {
     const logo = rect('.fp-logo');
     const menu = rect('.fp-menu>summary');
     const actions = rect('.fp-nav__actions');
+    const navLinks = rect('.fp-nav__links');
     const footerColumn = document.querySelector('.fp-footer__col');
     return {
       scrollWidth: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
@@ -74,11 +79,14 @@ for (const [name, width, height] of viewports) {
       logoCentreDelta: logo ? Math.abs((logo.left + logo.width / 2) - innerWidth / 2) : null,
       menu,
       actions,
+      navLinks,
       heroTitle: rect('.fp-hero h1'),
       heroCopy: rect('.fp-hero__copy'),
       heroScene: rect('.fp-hero__scene'),
       heroPicture: rect('.fp-hero__scene picture'),
       edition: rect('.fp-pdp__edition-preview'),
+      productFilm: rect('.fp-pdp__unbox'),
+      homeFilm: rect('.fp-films'),
       contact: rect('.fp-contact__form'),
       footer: rect('.fp-footer__grid'),
       footerBorderLeft: footerColumn ? getComputedStyle(footerColumn).borderLeftWidth : null
@@ -86,9 +94,11 @@ for (const [name, width, height] of viewports) {
   });
   const errors = [];
   if (metrics.scrollWidth > metrics.clientWidth + 1) errors.push(`horizontal overflow ${metrics.scrollWidth}-${metrics.clientWidth}`);
-  for (const key of ['heroTitle', 'heroScene', 'edition', 'contact', 'footer']) if (!metrics[key] || metrics[key].width <= 0) errors.push(`${key} missing`);
+  for (const key of ['heroTitle', 'heroScene', 'edition', 'productFilm', 'homeFilm', 'contact', 'footer']) if (!metrics[key] || metrics[key].width <= 0) errors.push(`${key} missing`);
+  if (metrics.logoCentreDelta > 2) errors.push(`logo off-centre by ${metrics.logoCentreDelta.toFixed(1)}px`);
+  if (width > 900 && metrics.navLinks && metrics.logo && metrics.navLinks.right > metrics.logo.left - 8) errors.push('desktop navigation overlaps centred logo');
+  if (width > 900 && metrics.actions && metrics.logo && metrics.actions.left < metrics.logo.right + 8) errors.push('desktop actions overlap centred logo');
   if (width <= 900) {
-    if (metrics.logoCentreDelta > 2) errors.push(`mobile logo off-centre by ${metrics.logoCentreDelta.toFixed(1)}px`);
     if ((metrics.menu?.width || 0) < 44 || (metrics.menu?.height || 0) < 44) errors.push('menu touch target below 44px');
     if ((metrics.actions?.right || 0) > width + 1) errors.push('header actions clipped');
   }

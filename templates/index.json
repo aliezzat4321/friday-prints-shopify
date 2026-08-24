@@ -78,6 +78,32 @@
         "deco_top": "✦"
       }
     },
+    "friday_films": {
+      "type": "friday-video-stories",
+      "blocks": {
+        "unboxing_1": {
+          "type": "film",
+          "settings": {
+            "heading": "wrapped by hand",
+            "caption": "A Friday print, from the first seal to the final reveal."
+          }
+        }
+      },
+      "block_order": ["unboxing_1"],
+      "settings": {
+        "show_section": true,
+        "eyebrow": "03 · UNBOX FRIDAY",
+        "heading": "the art of arrival",
+        "text": "<p>Every print leaves Cairo wrapped by hand, numbered and ready to become part of your space.</p>",
+        "note": "MADE TO ORDER · PACKED WITH CARE",
+        "use_sample_video": true,
+        "autoplay": true,
+        "loop": true,
+        "show_controls": false,
+        "background_color": "#e9a5b2",
+        "accent_color": "#e53f36"
+      }
+    },
     "friday_at_home": {
       "type": "friday-at-home",
       "blocks": {
@@ -195,6 +221,7 @@
     "friday_hero",
     "friday_collection",
     "friday_story",
+    "friday_films",
     "friday_at_home",
     "friday_benefits",
     "friday_newsletter"
