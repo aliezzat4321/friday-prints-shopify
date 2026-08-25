@@ -9,55 +9,55 @@
   <style>
     #FridayPage-{{ section.id }}{background:var(--fp-cream);color:var(--fp-ink)}
     #FridayPage-{{ section.id }} *{box-sizing:border-box}
-    #FridayPage-{{ section.id }} .fp-page-hero{position:relative;overflow:hidden;padding:70px var(--fp-page-gutter,46px) 48px;border-bottom:1px solid var(--fp-line)}
-    #FridayPage-{{ section.id }} .fp-page-eyebrow{margin:0 0 14px;color:var(--fp-red-text,var(--fp-red));font:700 11px/1 "Courier New",monospace;letter-spacing:.09em;text-transform:uppercase}
-    #FridayPage-{{ section.id }} .fp-page-title{max-width:12ch;margin:0;font:700 var(--fp-page-title,clamp(72px,8vw,112px))/.8 Georgia,"Times New Roman",serif;letter-spacing:-.06em;text-transform:lowercase;text-wrap:balance}
-    #FridayPage-{{ section.id }} .fp-page-intro{max-width:58ch;margin:28px 0 0;font:14px/1.62 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-page-hero{position:relative;overflow:hidden;padding:58px var(--fp-page-gutter,46px) 42px;border-bottom:1px solid var(--fp-line)}
+    #FridayPage-{{ section.id }} .fp-page-eyebrow{margin:0 0 12px;color:var(--fp-red-text,var(--fp-red));font:700 10px/1 var(--fp-ui-font,"Courier New",monospace);letter-spacing:.09em;text-transform:uppercase}
+    #FridayPage-{{ section.id }} .fp-page-title{max-width:12ch;margin:0;font:700 var(--fp-page-title,clamp(72px,8vw,112px))/.8 var(--fp-display-font,Georgia,"Times New Roman",serif);letter-spacing:-.055em;text-transform:none;text-wrap:balance}
+    #FridayPage-{{ section.id }} .fp-page-intro{max-width:58ch;margin:24px 0 0;font:13px/1.62 var(--fp-ui-font,"Courier New",monospace)}
     #FridayPage-{{ section.id }} .fp-page-intro p{margin:0}
 
     #FridayPage-{{ section.id }}.fp-content-page--info .fp-page-hero{background:var(--fp-yellow)}
     #FridayPage-{{ section.id }} .fp-guide__edition{display:grid;grid-template-columns:1.15fr repeat(3,1fr);border-bottom:1px solid var(--fp-ink)}
-    #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:210px;padding:34px 28px;border-right:1px solid var(--fp-ink);display:flex;flex-direction:column;justify-content:space-between}
+    #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:200px;padding:30px 28px;border-right:1px solid var(--fp-ink);display:flex;flex-direction:column;justify-content:space-between}
     #FridayPage-{{ section.id }} .fp-guide__edition>div:last-child{border-right:0}
-    #FridayPage-{{ section.id }} .fp-guide__edition h2{margin:0;font:italic 34px/1 Georgia,"Times New Roman",serif;color:var(--fp-red)}
-    #FridayPage-{{ section.id }} .fp-guide__edition strong{display:block;font:700 52px/.9 Georgia,"Times New Roman",serif;letter-spacing:-.04em}
-    #FridayPage-{{ section.id }} .fp-guide__edition span{font:10px/1.4 "Courier New",monospace;text-transform:uppercase;letter-spacing:.055em}
+    #FridayPage-{{ section.id }} .fp-guide__edition h2{margin:0;font:italic 34px/1 var(--fp-display-font,Georgia,"Times New Roman",serif);color:var(--fp-red)}
+    #FridayPage-{{ section.id }} .fp-guide__edition strong{display:block;font:700 50px/.9 var(--fp-display-font,Georgia,"Times New Roman",serif);letter-spacing:-.04em}
+    #FridayPage-{{ section.id }} .fp-guide__edition span{font:10px/1.4 var(--fp-ui-font,"Courier New",monospace);text-transform:uppercase;letter-spacing:.055em}
     #FridayPage-{{ section.id }} .fp-guide__cards{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--fp-ink)}
-    #FridayPage-{{ section.id }} .fp-guide-card{min-height:330px;padding:42px 34px;border-right:1px solid var(--fp-ink);position:relative;overflow:hidden}
+    #FridayPage-{{ section.id }} .fp-guide-card{min-height:310px;padding:38px 32px;border-right:1px solid var(--fp-ink);position:relative;overflow:hidden}
     #FridayPage-{{ section.id }} .fp-guide-card:last-child{border-right:0}
     #FridayPage-{{ section.id }} .fp-guide-card:nth-child(1){background:var(--fp-cream)}
     #FridayPage-{{ section.id }} .fp-guide-card:nth-child(2){background:var(--fp-pink)}
     #FridayPage-{{ section.id }} .fp-guide-card:nth-child(3){background:var(--fp-green-text,var(--fp-green));color:#fff}
-    #FridayPage-{{ section.id }} .fp-guide-card__num{position:absolute;right:22px;top:17px;font:700 62px/.8 Georgia,serif;opacity:.14}
-    #FridayPage-{{ section.id }} .fp-guide-card h3{margin:0 0 24px;font:700 27px/.95 Georgia,"Times New Roman",serif;letter-spacing:-.035em;text-transform:lowercase}
-    #FridayPage-{{ section.id }} .fp-guide-card .rte{max-width:37ch;font:12px/1.62 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-guide-card__num{position:absolute;right:20px;top:15px;font:700 58px/.8 var(--fp-display-font,Georgia,serif);opacity:.14}
+    #FridayPage-{{ section.id }} .fp-guide-card h3{margin:0 0 22px;font:700 26px/.95 var(--fp-display-font,Georgia,"Times New Roman",serif);letter-spacing:-.035em}
+    #FridayPage-{{ section.id }} .fp-guide-card .rte{max-width:37ch;font:12px/1.62 var(--fp-ui-font,"Courier New",monospace)}
     #FridayPage-{{ section.id }} .fp-guide-card .rte p{margin:0 0 13px}
-    #FridayPage-{{ section.id }} .fp-guide__care{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px;padding:65px var(--fp-page-gutter,46px) 70px;background:var(--fp-cream)}
-    #FridayPage-{{ section.id }} .fp-guide__care h2{margin:0;font:italic 42px/1 Georgia,"Times New Roman",serif;color:var(--fp-red)}
-    #FridayPage-{{ section.id }} .fp-guide__care-copy{display:grid;grid-template-columns:1fr 1fr;gap:24px 42px}
+    #FridayPage-{{ section.id }} .fp-guide__care{display:grid;grid-template-columns:.75fr 1.25fr;gap:64px;padding:58px var(--fp-page-gutter,46px) 64px;background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-guide__care h2{margin:0;font:italic 40px/1 var(--fp-display-font,Georgia,"Times New Roman",serif);color:var(--fp-red)}
+    #FridayPage-{{ section.id }} .fp-guide__care-copy{display:grid;grid-template-columns:1fr 1fr;gap:22px 40px}
     #FridayPage-{{ section.id }} .fp-guide__care-copy div{padding-top:13px;border-top:1px solid var(--fp-ink)}
-    #FridayPage-{{ section.id }} .fp-guide__care-copy strong{display:block;margin-bottom:8px;font:700 10px/1 "Courier New",monospace;text-transform:uppercase;letter-spacing:.06em}
-    #FridayPage-{{ section.id }} .fp-guide__care-copy p{margin:0;font:11px/1.55 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-guide__care-copy strong{display:block;margin-bottom:8px;font:700 10px/1 var(--fp-ui-font,"Courier New",monospace);text-transform:uppercase;letter-spacing:.06em}
+    #FridayPage-{{ section.id }} .fp-guide__care-copy p{margin:0;font:11px/1.55 var(--fp-ui-font,"Courier New",monospace)}
 
     #FridayPage-{{ section.id }}.fp-content-page--faq .fp-page-hero{background:var(--fp-green-text,var(--fp-green));color:#fff}
     #FridayPage-{{ section.id }}.fp-content-page--faq .fp-page-eyebrow{color:var(--fp-yellow)}
-    #FridayPage-{{ section.id }} .fp-faq{display:grid;grid-template-columns:.6fr 1.4fr;gap:70px;padding:68px var(--fp-page-gutter,46px) 80px;background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-faq{display:grid;grid-template-columns:.6fr 1.4fr;gap:64px;padding:60px var(--fp-page-gutter,46px) 72px;background:var(--fp-cream)}
     #FridayPage-{{ section.id }} .fp-faq__aside{position:sticky;top:28px;align-self:start}
-    #FridayPage-{{ section.id }} .fp-faq__aside strong{display:block;margin-bottom:12px;color:var(--fp-red);font:italic 34px/1 Georgia,"Times New Roman",serif}
-    #FridayPage-{{ section.id }} .fp-faq__aside p{max-width:28ch;margin:0;font:11px/1.55 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-faq__aside strong{display:block;margin-bottom:12px;color:var(--fp-red);font:italic 32px/1 var(--fp-display-font,Georgia,"Times New Roman",serif)}
+    #FridayPage-{{ section.id }} .fp-faq__aside p{max-width:28ch;margin:0;font:11px/1.55 var(--fp-ui-font,"Courier New",monospace)}
     #FridayPage-{{ section.id }} .fp-faq__aside a{color:inherit;text-underline-offset:3px}
     #FridayPage-{{ section.id }} .fp-faq__list{border-top:1px solid var(--fp-ink)}
     #FridayPage-{{ section.id }} .fp-faq details{border-bottom:1px solid var(--fp-ink)}
-    #FridayPage-{{ section.id }} .fp-faq summary{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px;cursor:pointer;list-style:none;font:700 14px/1.35 "Courier New",monospace;text-transform:lowercase}
+    #FridayPage-{{ section.id }} .fp-faq summary{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px;cursor:pointer;list-style:none;font:700 13px/1.35 var(--fp-ui-font,"Courier New",monospace)}
     #FridayPage-{{ section.id }} .fp-faq summary::-webkit-details-marker{display:none}
-    #FridayPage-{{ section.id }} .fp-faq summary:after{content:"+";flex:0 0 auto;color:var(--fp-red);font:400 24px/1 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-faq summary:after{content:"+";flex:0 0 auto;color:var(--fp-red);font:400 24px/1 var(--fp-ui-font,"Courier New",monospace)}
     #FridayPage-{{ section.id }} .fp-faq details[open] summary:after{content:"−"}
-    #FridayPage-{{ section.id }} .fp-faq__answer{max-width:68ch;padding:0 48px 24px 0;font:12px/1.65 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-faq__answer{max-width:68ch;padding:0 48px 24px 0;font:12px/1.65 var(--fp-ui-font,"Courier New",monospace)}
     #FridayPage-{{ section.id }} .fp-faq__answer p{margin:0 0 10px}
 
-    #FridayPage-{{ section.id }} .fp-generic-page{padding:70px var(--fp-page-gutter,46px) 90px;background:var(--fp-cream)}
-    #FridayPage-{{ section.id }} .fp-generic-page h1{max-width:12ch;margin:0 0 38px;font:700 clamp(62px,7vw,100px)/.82 Georgia,"Times New Roman",serif;letter-spacing:-.055em;text-transform:lowercase}
-    #FridayPage-{{ section.id }} .fp-generic-page__content{max-width:760px;font:14px/1.7 "Courier New",monospace}
+    #FridayPage-{{ section.id }} .fp-generic-page{padding:58px var(--fp-page-gutter,46px) 82px;background:var(--fp-cream)}
+    #FridayPage-{{ section.id }} .fp-generic-page h1{max-width:12ch;margin:0 0 34px;font:700 clamp(62px,7vw,100px)/.82 var(--fp-display-font,Georgia,"Times New Roman",serif);letter-spacing:-.055em;text-transform:lowercase}
+    #FridayPage-{{ section.id }} .fp-generic-page__content{max-width:760px;font:13px/1.7 var(--fp-ui-font,"Courier New",monospace)}
     #FridayPage-{{ section.id }} .fp-generic-page__content a{color:inherit;text-underline-offset:3px}
 
     @media(max-width:1000px){
@@ -68,26 +68,25 @@
       #FridayPage-{{ section.id }} .fp-guide__edition>div:nth-child(2n){border-right:0}
     }
     @media(max-width:749px){
-      #FridayPage-{{ section.id }} .fp-page-hero{padding:46px var(--fp-page-gutter,20px) 34px}
-      #FridayPage-{{ section.id }} .fp-page-title{font-size:64px}
-      #FridayPage-{{ section.id }} .fp-page-intro{font-size:12px;margin-top:20px}
+      #FridayPage-{{ section.id }} .fp-page-hero{padding:42px var(--fp-page-gutter,20px) 32px}
+      #FridayPage-{{ section.id }} .fp-page-title{font-size:60px}
+      #FridayPage-{{ section.id }} .fp-page-intro{font-size:12px;margin-top:18px}
       #FridayPage-{{ section.id }} .fp-guide__edition{grid-template-columns:1fr 1fr}
-      #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:160px;padding:24px 20px}
+      #FridayPage-{{ section.id }} .fp-guide__edition>div{min-height:154px;padding:22px 20px}
       #FridayPage-{{ section.id }} .fp-guide__edition h2{font-size:27px}
       #FridayPage-{{ section.id }} .fp-guide__edition strong{font-size:40px}
-      #FridayPage-{{ section.id }} .fp-guide__edition span{font-size:10px}
       #FridayPage-{{ section.id }} .fp-guide__cards{grid-template-columns:1fr}
-      #FridayPage-{{ section.id }} .fp-guide-card{min-height:0;padding:36px 20px 42px;border-right:0;border-bottom:1px solid var(--fp-ink)}
+      #FridayPage-{{ section.id }} .fp-guide-card{min-height:0;padding:34px 20px 40px;border-right:0;border-bottom:1px solid var(--fp-ink)}
       #FridayPage-{{ section.id }} .fp-guide-card:last-child{border-bottom:0}
-      #FridayPage-{{ section.id }} .fp-guide__care{grid-template-columns:1fr;gap:28px;padding:45px var(--fp-page-gutter,20px) 52px}
+      #FridayPage-{{ section.id }} .fp-guide__care{grid-template-columns:1fr;gap:28px;padding:42px var(--fp-page-gutter,20px) 50px}
       #FridayPage-{{ section.id }} .fp-guide__care h2{font-size:34px}
       #FridayPage-{{ section.id }} .fp-guide__care-copy{grid-template-columns:1fr;gap:18px}
-      #FridayPage-{{ section.id }} .fp-faq{grid-template-columns:1fr;gap:33px;padding:45px var(--fp-page-gutter,20px) 60px}
+      #FridayPage-{{ section.id }} .fp-faq{grid-template-columns:1fr;gap:32px;padding:42px var(--fp-page-gutter,20px) 58px}
       #FridayPage-{{ section.id }} .fp-faq__aside{position:relative;top:auto}
       #FridayPage-{{ section.id }} .fp-faq summary{min-height:64px;font-size:12px}
       #FridayPage-{{ section.id }} .fp-faq__answer{padding-right:22px;font-size:11px}
-      #FridayPage-{{ section.id }} .fp-generic-page{padding:46px var(--fp-page-gutter,20px) 70px}
-      #FridayPage-{{ section.id }} .fp-generic-page h1{font-size:58px}
+      #FridayPage-{{ section.id }} .fp-generic-page{padding:42px var(--fp-page-gutter,20px) 66px}
+      #FridayPage-{{ section.id }} .fp-generic-page h1{font-size:56px}
       #FridayPage-{{ section.id }} .fp-generic-page__content{font-size:12px}
     }
   </style>
@@ -104,7 +103,7 @@
           {% if gigi_image %}
             {{ gigi_image | image_url: width: 900 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '320,480,640,760,900', sizes: '(max-width:749px) 78vw, (max-width:1000px) 38vw, 430px', alt: section.settings.about_gigi_alt }}
           {% endif %}
-          <figcaption><span>GIGI / CHARACTER 001 / CAIRO</span><em>still wandering.</em></figcaption>
+          <figcaption style="text-transform:none"><span>GiGi / CHARACTER 001 / CAIRO</span><em>still wandering.</em></figcaption>
         </figure>
       </div>
       {% if section.settings.about_ticker != blank %}
@@ -137,13 +136,9 @@
               {% assign archive_note = block.settings.note %}
               {% assign archive_alt = archive_product.featured_image.alt | default: archive_product.title %}
               {% if archive_note == blank %}
-                {% if archive_product.handle contains '-a3' %}
-                  {% assign archive_note = 'LIMITED EDITION / A3' %}
-                {% elsif archive_product.handle contains '-a4' %}
-                  {% assign archive_note = 'LIMITED EDITION / A4' %}
-                {% else %}
-                  {% assign archive_note = 'LIMITED EDITION ART PRINT' %}
-                {% endif %}
+                {% if archive_product.handle contains '-a3' %}{% assign archive_note = 'LIMITED EDITION / A3' %}
+                {% elsif archive_product.handle contains '-a4' %}{% assign archive_note = 'LIMITED EDITION / A4' %}
+                {% else %}{% assign archive_note = 'LIMITED EDITION ART PRINT' %}{% endif %}
               {% endif %}
               <article class="fp-world-card" data-index="{{ archive_number | strip }}" {{ block.shopify_attributes }}>
                 <a class="fp-world-card__link" href="{{ archive_product.url }}" aria-label="View {{ archive_product.title | escape }}">
@@ -151,11 +146,7 @@
                     {{ archive_product.featured_image | image_url: width: 1400 | image_tag: loading: 'lazy', widths: '320,480,640,800,1000,1200,1400', sizes: '(max-width:749px) 78vw, (max-width:1000px) 44vw, 48vw', alt: archive_alt }}
                     <span class="fp-world-card__open" aria-hidden="true">VIEW PRINT ↗</span>
                   </div>
-                  <div class="fp-world-card__caption">
-                    <span>{{ archive_number }}</span>
-                    <h3>{{ archive_product.title }}</h3>
-                    <p>{{ archive_note }}</p>
-                  </div>
+                  <div class="fp-world-card__caption"><span>{{ archive_number }}</span><h3>{{ archive_product.title }}</h3><p>{{ archive_note }}</p></div>
                 </a>
               </article>
             {% endif %}
@@ -220,11 +211,7 @@
       <div class="fp-faq">
         <aside class="fp-faq__aside"><strong>{{ section.settings.faq_aside_title }}</strong><p>Email <a href="mailto:{{ section.settings.support_email | escape }}">{{ section.settings.support_email }}</a>{% if section.settings.instagram_url != blank %} or message <a href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">{{ section.settings.instagram_label }}</a>{% endif %}.</p></aside>
         <div class="fp-faq__list">
-          {% for block in section.blocks %}
-            {% if block.type == 'faq_item' %}
-              <details {{ block.shopify_attributes }}{% if block.settings.open_by_default %} open{% endif %}><summary>{{ block.settings.question }}</summary><div class="fp-faq__answer rte">{{ block.settings.answer }}</div></details>
-            {% endif %}
-          {% endfor %}
+          {% for block in section.blocks %}{% if block.type == 'faq_item' %}<details {{ block.shopify_attributes }}{% if block.settings.open_by_default %} open{% endif %}><summary>{{ block.settings.question }}</summary><div class="fp-faq__answer rte">{{ block.settings.answer }}</div></details>{% endif %}{% endfor %}
         </div>
       </div>
 
@@ -238,7 +225,6 @@
   "name": "Friday page system",
   "settings": [
     { "type": "paragraph", "content": "Controls World of GiGi, Print Guide and FAQ. Other page handles use normal Shopify page content." },
-
     { "type": "header", "content": "World of GiGi" },
     { "type": "text", "id": "about_eyebrow", "label": "Eyebrow", "default": "MEET THE GIRL WITH THE LONG NECK" },
     { "type": "text", "id": "about_title", "label": "Title", "default": "world of GiGi" },
@@ -281,7 +267,7 @@
 
     { "type": "header", "content": "FAQ" },
     { "type": "text", "id": "faq_eyebrow", "label": "Eyebrow", "default": "QUESTIONS, ANSWERED" },
-    { "type": "text", "id": "faq_title", "label": "Title", "default": "FAQ" },
+    { "type": "text", "id": "faq_title", "label": "Title", "default": "faq" },
     { "type": "textarea", "id": "faq_intro", "label": "Intro", "default": "The useful stuff: editions, paper, mounts, delivery, returns and looking after your print." },
     { "type": "text", "id": "faq_aside_title", "label": "Support heading", "default": "still wondering?" },
     { "type": "text", "id": "support_email", "label": "Support email", "default": "Eldemirdsh@gmail.com" },
@@ -289,24 +275,8 @@
     { "type": "text", "id": "instagram_label", "label": "Instagram label", "default": "@fridayprints.art" }
   ],
   "blocks": [
-    {
-      "type": "world_product",
-      "name": "World archive print",
-      "limit": 5,
-      "settings": [
-        { "type": "product", "id": "product", "label": "Print" },
-        { "type": "text", "id": "note", "label": "Archive note", "info": "Optional. Example: LIMITED EDITION / A4" }
-      ]
-    },
-    {
-      "type": "faq_item",
-      "name": "FAQ item",
-      "settings": [
-        { "type": "text", "id": "question", "label": "Question", "default": "question" },
-        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Answer goes here.</p>" },
-        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false }
-      ]
-    }
+    {"type":"world_product","name":"World archive print","limit":5,"settings":[{"type":"product","id":"product","label":"Print"},{"type":"text","id":"note","label":"Archive note","info":"Optional. Example: LIMITED EDITION / A4"}]},
+    {"type":"faq_item","name":"FAQ item","settings":[{"type":"text","id":"question","label":"Question","default":"question"},{"type":"richtext","id":"answer","label":"Answer","default":"<p>Answer goes here.</p>"},{"type":"checkbox","id":"open_by_default","label":"Open by default","default":false}]}
   ],
   "max_blocks": 17,
   "presets": [{ "name": "Friday page system" }]
