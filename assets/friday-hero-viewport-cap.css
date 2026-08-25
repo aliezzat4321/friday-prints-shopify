@@ -31,7 +31,9 @@
   }
 
   body:has(.fp-hero) .fp-hero__scene img{
-    max-height:min(510px, calc(100svh - 190px))!important;
+    /* The hero asset is tightly art-directed, so let the framed print carry
+       more visual weight without making the overall hero taller. */
+    max-height:min(530px, calc(100svh - 176px))!important;
     max-width:100%!important;
     width:auto!important;
   }
@@ -62,7 +64,7 @@
     max-height:510px!important;
   }
   body:has(.fp-hero) .fp-hero__scene img{
-    max-height:calc(100svh - 165px)!important;
+    max-height:calc(100svh - 158px)!important;
   }
   body:has(.fp-hero) .fp-hero h1{
     font-size:clamp(56px,8.7svh,76px)!important;
