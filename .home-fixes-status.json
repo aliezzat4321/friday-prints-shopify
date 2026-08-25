@@ -1,16 +1,18 @@
 {
   "pass": false,
   "httpStatus": 200,
-  "navGiGi": false,
+  "navWorldGiGi": false,
   "meetGiGi": true,
+  "heroWorldGiGi": false,
   "noBadGiGiCasing": false,
+  "noEditorGhost": true,
   "sectionCopy": false,
   "sectionFonts": true,
-  "sectionAlignment": false,
+  "sectionAlignment": true,
   "titleCasingPreserved": true,
+  "titleScale": false,
   "prevCorrectAtStart": true,
   "prevEnablesAfterScroll": true,
-  "atHomeScale": true,
   "initial": {
     "buttons": [
       {
@@ -40,6 +42,17 @@
         "transform": "lowercase"
       }
     ],
+    "worldLine": {
+      "text": "FROM THE WORLD OF GiGi",
+      "fontFamily": "\"Courier New\", monospace",
+      "fontSize": "10px",
+      "textTransform": "uppercase",
+      "textAlign": "start",
+      "fontStyle": "normal",
+      "fontWeight": "700",
+      "display": "block"
+    },
+    "editorPlaceholder": null,
     "titles": {
       "collection": {
         "text": "the prints",
@@ -48,7 +61,8 @@
         "textTransform": "none",
         "textAlign": "center",
         "fontStyle": "normal",
-        "fontWeight": "700"
+        "fontWeight": "700",
+        "display": "inline-block"
       },
       "story": {
         "text": "meet GiGi",
@@ -57,7 +71,8 @@
         "textTransform": "none",
         "textAlign": "left",
         "fontStyle": "normal",
-        "fontWeight": "700"
+        "fontWeight": "700",
+        "display": "block"
       },
       "films": null,
       "atHome": {
@@ -67,7 +82,8 @@
         "textTransform": "none",
         "textAlign": "start",
         "fontStyle": "normal",
-        "fontWeight": "700"
+        "fontWeight": "700",
+        "display": "block"
       },
       "newsletter": {
         "text": "Postcards from GiGi",
@@ -76,7 +92,8 @@
         "textTransform": "none",
         "textAlign": "start",
         "fontStyle": "normal",
-        "fontWeight": "700"
+        "fontWeight": "700",
+        "display": "block"
       }
     },
     "rail": {
@@ -93,6 +110,6 @@
     "scrollLeft": 558,
     "prevDisabled": false
   },
-  "run_id": 32836355088,
-  "source_sha": "25477b83b041c37ec127d6a34e522b4486248d38"
+  "run_id": 32836504980,
+  "source_sha": "61de49c31b46a54054f29794265c517653880802"
 }
