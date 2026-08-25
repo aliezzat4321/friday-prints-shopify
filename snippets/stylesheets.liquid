@@ -28,8 +28,74 @@
   .fp-at-home__title,
   .fp-newsletter h2{text-align:left!important;}
 </style>
+
+{% if template.name == 'page' and page.handle == 'about' %}
+  {% assign fp_world_sixth = all_products['unapologetically-gigi-a4'] %}
+  {% if fp_world_sixth != blank and fp_world_sixth.featured_image %}
+    <script id="fp-world-sixth-data" type="application/json">
+      {
+        "url": {{ fp_world_sixth.url | json }},
+        "title": {{ fp_world_sixth.title | json }},
+        "image": {{ fp_world_sixth.featured_image | image_url: width: 1400 | json }},
+        "alt": {{ fp_world_sixth.featured_image.alt | default: fp_world_sixth.title | json }}
+      }
+    </script>
+  {% endif %}
+{% endif %}
+
 <script>
   (() => {
+    const ensureWorldArchiveSix = () => {
+      const gallery = document.querySelector('.fp-content-page--about .fp-world__gallery');
+      const source = document.getElementById('fp-world-sixth-data');
+      if (!gallery || !source || gallery.querySelectorAll('.fp-world-card').length >= 6) return;
+
+      let item;
+      try { item = JSON.parse(source.textContent); } catch (_) { return; }
+      if (!item?.url || !item?.title || !item?.image) return;
+
+      const existing = [...gallery.querySelectorAll('.fp-world-card__link')]
+        .some((link) => link.getAttribute('href') === item.url);
+      if (existing) return;
+
+      const article = document.createElement('article');
+      article.className = 'fp-world-card';
+      article.dataset.index = '06';
+
+      const link = document.createElement('a');
+      link.className = 'fp-world-card__link';
+      link.href = item.url;
+      link.setAttribute('aria-label', `View ${item.title}`);
+
+      const media = document.createElement('div');
+      media.className = 'fp-world-card__media';
+      const image = document.createElement('img');
+      image.src = item.image;
+      image.alt = item.alt || item.title;
+      image.loading = 'lazy';
+      image.decoding = 'async';
+      media.appendChild(image);
+
+      const open = document.createElement('span');
+      open.className = 'fp-world-card__open';
+      open.textContent = 'view print ↗';
+      media.appendChild(open);
+
+      const caption = document.createElement('div');
+      caption.className = 'fp-world-card__caption';
+      const number = document.createElement('span');
+      number.textContent = '06';
+      const title = document.createElement('h3');
+      title.textContent = item.title;
+      const note = document.createElement('p');
+      note.textContent = 'LIMITED EDITION / A4';
+      caption.append(number, title, note);
+
+      link.append(media, caption);
+      article.appendChild(link);
+      gallery.appendChild(article);
+    };
+
     const normalizeFridayRuntime = () => {
       document.querySelectorAll('.fp-site-header a[href*="/pages/about"], .fp-footer a[href*="/pages/about"]').forEach((link) => {
         const text = link.textContent.trim().replace(/\s+/g, ' ');
@@ -56,6 +122,8 @@
         title.style.setProperty('letter-spacing', '-.045em', 'important');
         title.style.setProperty('text-transform', 'none', 'important');
       });
+
+      ensureWorldArchiveSix();
     };
 
     if (document.readyState === 'loading') {
