@@ -1,12 +1,9 @@
 /* Friday Prints — final design contract
-   Shopify sync marker: 2026-08-25 14:00 EEST.
-   One last, intentional layer for brand casing, title hierarchy and editor cleanliness.
-   This file is loaded last so old section settings or inherited theme rules cannot
-   change the public-facing Friday Prints system. */
+   Shopify sync marker: 2026-08-25 15:25 EEST.
+   Final rules for brand casing, title hierarchy, hero composition and artwork interaction. */
 
 /* ----------------------------------------------------------
    1. BRAND CASING
-   GiGi is a proper name. Never transform authored navigation or product copy.
    ---------------------------------------------------------- */
 .fp-site-header .fp-nav__links,
 .fp-site-header .fp-nav__links a,
@@ -97,9 +94,10 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    5. HERO ARTWORK COMPOSITION
-   The source composite includes a grey lower-right mockup shadow. On desktop
-   the picture itself becomes the artboard so we can cover only that spill with
-   the exact hero background rather than clipping the red frame or badge.
+   The curated desktop image contains a baked grey mockup shadow below and to
+   the right of the red frame. The picture is treated as an artboard and two
+   near-white masks cover only that spill; the frame, art, stars and badge stay
+   untouched.
    ---------------------------------------------------------- */
 @media (min-width:750px){
   .fp-hero{
@@ -130,14 +128,29 @@ body:has(.fp-site-header) .cart-items__title{
     overflow:hidden!important;
   }
 
+  .fp-hero .fp-hero__scene--curated picture::before,
   .fp-hero .fp-hero__scene--curated picture::after{
     content:"";
     position:absolute;
-    inset:0;
-    z-index:2;
+    z-index:3;
     pointer-events:none;
     background:var(--fp-cream,#fffdf8);
-    clip-path:polygon(77.5% 84%,85.5% 84%,85.5% 100%,69.5% 100%,69.5% 96.5%,77.5% 96.5%);
+  }
+
+  /* horizontal shadow strip immediately below the red frame */
+  .fp-hero .fp-hero__scene--curated picture::before{
+    left:20.5%;
+    top:90.7%;
+    width:63.5%;
+    height:6.8%;
+  }
+
+  /* soft shadow tail immediately to the frame's lower-right */
+  .fp-hero .fp-hero__scene--curated picture::after{
+    left:77.0%;
+    top:83.4%;
+    width:7.5%;
+    height:9.8%;
   }
 
   .fp-hero .fp-hero__scene--curated img{
@@ -172,8 +185,8 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    7. ARTWORK-SAFE HOVER
-   Keep the card itself still so the rail never clips it. Match the shop page
-   by zooming only the artwork inside its existing media window.
+   Keep the card still so the rail cannot clip it. Match Shop by zooming only
+   the artwork inside its existing media window.
    ---------------------------------------------------------- */
 .fp-collection .fp-product:hover{
   transform:none!important;
