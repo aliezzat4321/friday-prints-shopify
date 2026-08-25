@@ -13,13 +13,13 @@
       "type": "friday-hero",
       "settings": {
         "height_mode": "viewport",
-        "title_size_desktop": 118,
-        "title_size_mobile": 78,
-        "kicker_size_desktop": 16,
-        "kicker_size_mobile": 13,
-        "subtitle_size_desktop": 17,
+        "title_size_desktop": 108,
+        "title_size_mobile": 72,
+        "kicker_size_desktop": 15,
+        "kicker_size_mobile": 12,
+        "subtitle_size_desktop": 16,
         "subtitle_size_mobile": 13,
-        "button_size_desktop": 14,
+        "button_size_desktop": 13,
         "button_size_mobile": 10,
         "kicker": "LIMITED-EDITION ART PRINTS",
         "title_top": "friday",
@@ -48,8 +48,8 @@
         "button_label": "shop all prints",
         "button_link": "",
         "background_color": "#f2bdc5",
-        "heading_size_desktop": 62,
-        "heading_size_mobile": 44,
+        "heading_size_desktop": 52,
+        "heading_size_mobile": 38,
         "previous_label": "Previous prints",
         "next_label": "Next prints",
         "empty_message": "Choose a collection in this section."
@@ -58,10 +58,10 @@
     "friday_story": {
       "type": "friday-story",
       "settings": {
-        "heading_size_desktop": 42,
-        "heading_size_mobile": 36,
-        "body_size_desktop": 16,
-        "body_size_mobile": 14,
+        "heading_size_desktop": 52,
+        "heading_size_mobile": 38,
+        "body_size_desktop": 15,
+        "body_size_mobile": 13,
         "copy_width": 640,
         "heading": "meet GiGi",
         "story": "<p>GiGi began as a way to personify friends — their moods, quirks and adventures.</p><p>Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>These prints are fragments of that world.</p>",
@@ -89,11 +89,9 @@
           }
         }
       },
-      "block_order": [
-        "unboxing_1"
-      ],
+      "block_order": ["unboxing_1"],
       "settings": {
-        "show_section": false,
+        "show_section": true,
         "eyebrow": "03 · UNBOX FRIDAY",
         "heading": "the art of arrival",
         "text": "<p>Every print leaves Cairo wrapped by hand, numbered and ready to become part of your space.</p>",
@@ -136,78 +134,39 @@
           }
         }
       },
-      "block_order": [
-        "scene_1",
-        "scene_2",
-        "scene_3"
-      ],
+      "block_order": ["scene_1", "scene_2", "scene_3"],
       "settings": {
         "heading": "friday at home",
         "text": "Printed to live with you.",
-        "cta_label": "",
-        "cta_link": "",
+        "cta_label": "shop the prints",
+        "cta_link": "shopify://collections/all",
         "background_color": "#f3cf78",
         "section_height_desktop": 340,
-        "heading_size_desktop": 40,
-        "heading_size_mobile": 32
+        "heading_size_desktop": 52,
+        "heading_size_mobile": 38
       }
     },
     "friday_benefits": {
       "type": "friday-benefits",
       "blocks": {
-        "benefit_1": {
-          "type": "benefit",
-          "settings": {
-            "icon": "✹",
-            "heading": "NUMBERED EDITIONS",
-            "text": "Every Friday print belongs to a limited numbered edition."
-          }
-        },
-        "benefit_2": {
-          "type": "benefit",
-          "settings": {
-            "icon": "100",
-            "heading": "A3 / 100",
-            "text": "A3 prints are limited to 100 editions per design."
-          }
-        },
-        "benefit_3": {
-          "type": "benefit",
-          "settings": {
-            "icon": "150",
-            "heading": "A4 / 150",
-            "text": "A4 prints are limited to 150 editions per design."
-          }
-        },
-        "benefit_4": {
-          "type": "benefit",
-          "settings": {
-            "icon": "▣",
-            "heading": "PREMIUM MATTE",
-            "text": "Rich colour, a soft finish and a removable mount."
-          }
-        }
+        "benefit_1": {"type":"benefit","settings":{"icon":"✹","heading":"NUMBERED EDITIONS","text":"Every Friday print belongs to a limited numbered edition."}},
+        "benefit_2": {"type":"benefit","settings":{"icon":"100","heading":"A3 / 100","text":"A3 prints are limited to 100 editions per design."}},
+        "benefit_3": {"type":"benefit","settings":{"icon":"150","heading":"A4 / 150","text":"A4 prints are limited to 150 editions per design."}},
+        "benefit_4": {"type":"benefit","settings":{"icon":"▣","heading":"PREMIUM MATTE","text":"Rich colour, a soft finish and a removable mount."}}
       },
-      "block_order": [
-        "benefit_1",
-        "benefit_2",
-        "benefit_3",
-        "benefit_4"
-      ],
-      "settings": {
-        "background_color": "#fffdf8"
-      }
+      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"],
+      "settings": {"background_color":"#fffdf8"}
     },
     "friday_newsletter": {
       "type": "friday-newsletter",
       "settings": {
         "background_color": "#e9a5b2",
         "heading_size_desktop": 52,
-        "heading_size_mobile": 36,
+        "heading_size_mobile": 38,
         "body_size_desktop": 14,
         "body_size_mobile": 12,
         "eyebrow": "FROM CAIRO, OCCASIONALLY.",
-        "heading": "Postcards from GiGi",
+        "heading": "postcards from GiGi",
         "text": "A small email newsletter with new prints, new drops & studio notes.",
         "email_placeholder": "your email",
         "email_label": "Email address",
@@ -220,13 +179,5 @@
       }
     }
   },
-  "order": [
-    "friday_hero",
-    "friday_collection",
-    "friday_story",
-    "friday_films",
-    "friday_at_home",
-    "friday_benefits",
-    "friday_newsletter"
-  ]
+  "order": ["friday_hero", "friday_collection", "friday_story", "friday_films", "friday_at_home", "friday_benefits", "friday_newsletter"]
 }
