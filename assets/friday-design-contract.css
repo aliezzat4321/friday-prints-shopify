@@ -17,6 +17,7 @@
 .fp-shop-card h2,
 .fp-search-card h2,
 .fp-pdp__title,
+.fp-world-card__caption h3,
 body:has(.fp-site-header) .cart-items__title{
   text-transform:none!important;
 }
