@@ -146,3 +146,19 @@ body:has(.fp-site-header) .cart-items__title{
     transform:translateY(-8px)!important;
   }
 }
+
+/* ----------------------------------------------------------
+   6. AUTHORED PROPER-NOUN CASING
+   Editorial titles are written in their intended case in Shopify. Do not use
+   CSS lowercase on fields that can contain GiGi or other proper names.
+   ---------------------------------------------------------- */
+.fp-pdp__recommend h2,
+.fp-pdp-rec__meta,
+.fp-pdp__unbox h2,
+.fp-pdp__unbox-dialog-copy strong,
+.fp-page-title,
+.fp-generic-page h1,
+.fp-world__story h2,
+.fp-world__gallery-head h2{
+  text-transform:none!important;
+}
