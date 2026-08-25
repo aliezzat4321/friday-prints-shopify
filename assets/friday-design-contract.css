@@ -1,5 +1,5 @@
 /* Friday Prints — final design contract
-   Shopify sync marker: 2026-08-26 01:12 EEST.
+   Shopify sync marker: 2026-08-26 01:17 EEST.
    Final runtime layer for brand casing, title hierarchy, hero cleanup and card motion. */
 
 /* ----------------------------------------------------------
@@ -155,6 +155,19 @@ body:has(.fp-site-header) .cart-items__title{
       78.6% 95.0%,
       0 95.0%
     )!important;
+  }
+
+  /* World of GiGi archive: the original art direction only positioned 1–5. */
+  body .fp-content-page--about .fp-world-card:nth-child(6){
+    grid-column:3 / 11!important;
+    margin-top:18px!important;
+  }
+}
+
+@media (max-width:749px){
+  body .fp-content-page--about .fp-world-card:nth-child(6){
+    grid-column:1 / -1!important;
+    margin-top:0!important;
   }
 }
 
