@@ -119,6 +119,8 @@ for (const legacy of ['friday-home-compression.css','friday-responsive-consisten
   if (stylesheetLoader.includes(legacy)) fail(`snippets/stylesheets.liquid: legacy conflicting layer ${legacy} is still loaded.`);
 }
 
+// Check human-facing copy only. Internal variables/classes such as `gigi_image`
+// are implementation identifiers and are intentionally lowercase.
 const casingFiles = [
   'templates/index.json',
   'sections/header-group.json',
@@ -129,9 +131,13 @@ const casingFiles = [
   'sections/friday-page.liquid'
 ];
 for (const file of casingFiles) {
-  const source = read(file).replaceAll('GiGi','');
-  const bad = source.match(/(^|[^A-Za-z])(?:Gigi|gigi)(?=[^A-Za-z]|$)/);
-  if (bad) fail(`${file}: non-standard GiGi casing remains.`);
+  const source = read(file)
+    .replace(/{%[\s\S]*?%}/g, '')
+    .replace(/{{[\s\S]*?}}/g, '')
+    .replace(/\b(?:id|class|for|name|src|href|data-[\w-]+)=("[^"]*"|'[^']*')/g, '')
+    .replaceAll('GiGi','');
+  const bad = source.match(/\b(?:Gigi|gigi|GIGI)\b/);
+  if (bad) fail(`${file}: visible copy contains non-standard GiGi casing (${bad[0]}).`);
 }
 
 for (const file of ['assets/friday-hero-clean.webp', 'assets/friday-hero-clean-mobile.webp']) {
