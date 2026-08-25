@@ -76,15 +76,22 @@ for (const file of liquidFiles) {
 const allText = [...jsonFiles, ...liquidFiles, 'assets/friday-cart-open.js'].map(read).join('\n');
 if (/3[–-]5\s+working\s+days/i.test(allText)) fail('Old 3–5 working-day promise is still present.');
 
+const indexSource = read('templates/index.json');
+if (/"friday_films"|"type":\s*"friday-video-stories"/.test(indexSource)) {
+  fail('templates/index.json: homepage unboxing/video story must remain removed.');
+}
+
 const required = [
   ['templates/index.json', /"title_top":\s*"friday"/i, 'brand-first home title'],
   ['templates/index.json', /"use_curated_scene":\s*true/, 'clean hero artwork switch'],
-  ['templates/index.json', /"show_section":\s*true/, 'homepage unboxing enabled'],
   ['templates/index.json', /"heading":\s*"meet GiGi"/, 'correct GiGi story casing'],
   ['templates/index.json', /"heading":\s*"postcards from GiGi"/, 'correct GiGi newsletter casing'],
   ['sections/header-group.json', /"nav_2_label":\s*"world of GiGi"/, 'world of GiGi desktop navigation label'],
   ['sections/footer-group.json', /"link_1_label":\s*"world of GiGi"/, 'world of GiGi footer navigation label'],
   ['sections/friday-hero.liquid', /"world_line"[\s\S]*"default":\s*"FROM THE WORLD OF GiGi"/, 'hero GiGi world-line casing'],
+  ['sections/friday-hero.liquid', /fp-hero__scene--curated\{display:flex;align-items:center;justify-content:center;padding:20px 0\}/, 'vertically centred desktop hero artwork'],
+  ['sections/friday-hero.liquid', /max-height:calc\(100% - 40px\)/, 'hero artwork breathing room'],
+  ['sections/friday-hero.liquid', /object-position:center center/, 'desktop hero artwork centre positioning'],
   ['sections/friday-hero.liquid', /aspect-ratio:\s*6\/5/, 'tight mobile hero artwork crop'],
   ['sections/friday-hero.liquid', /object-fit:\s*cover/, 'mobile hero artwork fill'],
   ['sections/friday-newsletter.liquid', /assign\s+fp_newsletter_heading\s*=\s*'postcards from GiGi'/, 'saved newsletter heading normalization'],
@@ -97,12 +104,11 @@ const required = [
   ['sections/friday-product.liquid', /data-edition-total="\{\{\s*variant_edition_total/, 'variant-specific edition totals'],
   ['sections/friday-product.liquid', /data-next-edition="\{\{\s*variant_next_edition/, 'variant-specific next edition numbers'],
   ['sections/friday-product.liquid', /fp-pdp__edition-preview\[hidden\]\{display:none\}/, 'edition preview hidden state'],
-  ['sections/friday-product.liquid', /fp-pdp__unbox/, 'product unboxing film'],
-  ['sections/friday-video-stories.liquid', /"max_blocks":\s*3/, 'three-film homepage editor limit'],
+  ['sections/friday-product.liquid', /fp-pdp__unbox/, 'product-page unboxing film'],
+  ['sections/friday-video-stories.liquid', /"max_blocks":\s*3/, 'video-story section remains available outside homepage'],
   ['sections/friday-video-stories.liquid', /IntersectionObserver/, 'in-view video playback'],
   ['sections/friday-at-home.liquid', /fp-at-home__shop-label/, 'shoppable Friday at Home scenes'],
   ['sections/friday-at-home.liquid', /font-family:var\(--fp-display-font/, 'Friday at Home display typography'],
-  ['templates/index.json', /"friday_films"/, 'homepage video story placement'],
   ['sections/friday-contact.liquid', /form\s+'contact'/, 'Shopify contact form'],
   ['sections/footer-group.json', /"link_2_url":\s*"\/pages\/contact"/, 'footer contact route'],
   ['sections/friday-header.liquid', /fp-menu[\s\S]*fp-logo/, 'mobile menu before centred logo'],
