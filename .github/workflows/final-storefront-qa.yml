@@ -28,10 +28,10 @@ jobs:
           npm install playwright@1.55.0 >/dev/null 2>&1
           npx playwright install --with-deps chromium >/dev/null 2>&1
       - name: Allow Shopify preview sync
-        run: sleep 30
+        run: sleep 40
       - name: Audit launch routes
         env:
-          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
+          STORE_URL: https://ygv356jws4gmk7hs-108268650782.shopifypreview.com
         run: |
           cat > final-qa.mjs <<'EOF'
           import { chromium } from 'playwright';
@@ -64,12 +64,10 @@ jobs:
               let response=null;
               let navigationError=null;
               try {
-                response=await page.goto(new URL(path,process.env.STORE_URL).href,{waitUntil:'domcontentloaded',timeout:60000});
+                response=await page.goto(new URL(`${path}${path.includes('?')?'&':'?'}finalqa=${Date.now()}`,process.env.STORE_URL).href,{waitUntil:'domcontentloaded',timeout:60000});
                 await page.waitForLoadState('networkidle',{timeout:25000}).catch(()=>{});
                 await page.evaluate(async()=>{ if(document.fonts?.ready) await document.fonts.ready; });
-                await page.waitForTimeout(900);
-                await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight)).catch(()=>{});
-                await page.waitForTimeout(500);
+                await page.waitForTimeout(700);
               } catch (error) { navigationError=String(error); }
 
               let searchOverlay=null;
@@ -84,7 +82,7 @@ jobs:
                   const heading=opened ? await dialog.locator('.fp-search-overlay__heading').textContent().catch(()=>null) : null;
                   if(opened){
                     await input.fill('before the dress');
-                    await page.waitForTimeout(1000);
+                    await page.waitForTimeout(900);
                   }
                   const resultCards=opened ? await dialog.locator('.predictive-search-results__card--product').count() : 0;
                   const viewAllPresent=opened ? await dialog.locator('.predictive-search__search-button').isVisible().catch(()=>false) : false;
@@ -103,14 +101,15 @@ jobs:
                   searchOverlay={opened,heading:heading?.trim()||null,resultCards,viewAllPresent,layout};
                   await page.screenshot({path:`final-storefront-qa/${device}-search-overlay.png`,fullPage:false}).catch(()=>{});
                   if(opened) await dialog.locator('.predictive-search__close-modal-button').click().catch(()=>{});
-                } else {
-                  searchOverlay={opened:false,heading:null,resultCards:0,viewAllPresent:false};
-                }
+                } else searchOverlay={opened:false,heading:null,resultCards:0,viewAllPresent:false};
               }
 
               const metrics=await page.evaluate((expectedSelector)=>{
                 const broken=[...document.images].filter(i=>i.complete&&i.naturalWidth===0).map(i=>({src:i.currentSrc||i.src,alt:i.alt}));
                 const text=document.body.innerText;
+                const nav=[...document.querySelectorAll('.fp-nav__links a')].map(a=>a.textContent.trim());
+                const mobileNav=[...document.querySelectorAll('.fp-mobile-menu a')].map(a=>a.textContent.trim());
+                const pageTitle=document.querySelector('.fp-page-title');
                 return {
                   expectedPresent:!!document.querySelector(expectedSelector),
                   headerPresent:!!document.querySelector('.fp-site-header'),
@@ -119,10 +118,13 @@ jobs:
                   clientWidth:document.documentElement.clientWidth,
                   brokenImages:broken,
                   stockFooterLeak:/Skincare|Makeup|skincare tips/i.test(text),
-                  title:document.title,
-                  bodySample:text.slice(0,700)
+                  badGiGiCasing:/(^|\s|[^A-Za-z])(?:Gigi|gigi|GIGI)(?=\s|[^A-Za-z]|$)/m.test(text.replace(/GiGi/g,'')),
+                  nav,
+                  mobileNav,
+                  pageTitle:pageTitle?{text:pageTitle.textContent.trim(),transform:getComputedStyle(pageTitle).textTransform,font:getComputedStyle(pageTitle).fontFamily}:null,
+                  title:document.title
                 };
-              },selector).catch(()=>({expectedPresent:false,headerPresent:false,footerPresent:false,brokenImages:[],stockFooterLeak:false,scrollWidth:0,clientWidth:0,title:'',bodySample:''}));
+              },selector).catch(()=>({expectedPresent:false,headerPresent:false,footerPresent:false,brokenImages:[],stockFooterLeak:false,badGiGiCasing:false,scrollWidth:0,clientWidth:0,title:'',nav:[],mobileNav:[]}));
 
               const errors=[];
               const status=response?.status()??null;
@@ -136,6 +138,12 @@ jobs:
               if(metrics.scrollWidth>metrics.clientWidth+2) errors.push(`HORIZONTAL_OVERFLOW:${metrics.scrollWidth}-${metrics.clientWidth}`);
               if(metrics.brokenImages.length) errors.push(`BROKEN_IMAGES:${metrics.brokenImages.length}`);
               if(metrics.stockFooterLeak) errors.push('STOCK_FOOTER_CONTENT_LEAK');
+              if(metrics.badGiGiCasing && name!=='404') errors.push('BAD_GIGI_CASING');
+              if(device==='desktop' && !metrics.nav.includes('GiGi')) errors.push('DESKTOP_GIGI_NAV_MISSING');
+              if(device==='mobile' && !metrics.mobileNav.includes('GiGi')) errors.push('MOBILE_GIGI_NAV_MISSING');
+              if(metrics.pageTitle && metrics.pageTitle.transform!=='none') errors.push('PAGE_TITLE_FORCED_CASING');
+              if(metrics.pageTitle && !/Georgia|Times New Roman|serif/i.test(metrics.pageTitle.font)) errors.push('PAGE_TITLE_WRONG_FONT');
+              if(name==='world' && metrics.pageTitle?.text!=='world of GiGi') errors.push('WORLD_TITLE_CASING');
               if(name==='search'){
                 if(!searchOverlay?.opened) errors.push('SEARCH_OVERLAY_DID_NOT_OPEN');
                 if(searchOverlay?.heading!=='search prints') errors.push('SEARCH_OVERLAY_HEADING_MISSING');
@@ -146,11 +154,9 @@ jobs:
                 if(device==='mobile'&&!searchOverlay?.layout?.resetFits) errors.push('MOBILE_SEARCH_CLEAR_CLIPPED');
               }
 
-              await page.evaluate(()=>window.scrollTo(0,0)).catch(()=>{});
-              await page.waitForTimeout(150);
               await page.screenshot({path:`final-storefront-qa/${device}-${name}-top.png`,fullPage:false}).catch(()=>{});
               await page.evaluate(()=>window.scrollTo(0,document.body.scrollHeight)).catch(()=>{});
-              await page.waitForTimeout(150);
+              await page.waitForTimeout(120);
               await page.screenshot({path:`final-storefront-qa/${device}-${name}-bottom.png`,fullPage:false}).catch(()=>{});
 
               if(errors.length) failed=true;
@@ -162,7 +168,7 @@ jobs:
 
           await browser.close();
           fs.writeFileSync('final-storefront-qa/report.json',JSON.stringify(report,null,2));
-          console.log(JSON.stringify(report,null,2));
+          console.log(JSON.stringify(report.map(({device,name,status,errors})=>({device,name,status,errors})),null,2));
           if(failed) process.exitCode=1;
           EOF
           node final-qa.mjs
