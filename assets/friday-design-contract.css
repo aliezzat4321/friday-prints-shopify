@@ -97,6 +97,9 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    5. HERO ARTWORK COMPOSITION
+   The source composite includes a grey lower-right mockup shadow. On desktop
+   the picture itself becomes the artboard so we can cover only that spill with
+   the exact hero background rather than clipping the red frame or badge.
    ---------------------------------------------------------- */
 @media (min-width:750px){
   .fp-hero{
@@ -115,27 +118,41 @@ body:has(.fp-site-header) .cart-items__title{
   }
 
   .fp-hero .fp-hero__scene--curated picture{
-    display:flex!important;
-    align-items:center!important;
-    justify-content:center!important;
-    width:100%!important;
-    height:100%!important;
+    position:relative!important;
+    display:block!important;
+    flex:0 1 auto!important;
+    width:auto!important;
+    height:min(530px,calc(100% - 48px))!important;
+    max-width:100%!important;
+    max-height:calc(100% - 48px)!important;
+    aspect-ratio:1448 / 1086!important;
+    transform:translateY(-8px)!important;
+    overflow:hidden!important;
+  }
+
+  .fp-hero .fp-hero__scene--curated picture::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    pointer-events:none;
+    background:var(--fp-cream,#fffdf8);
+    clip-path:polygon(77.5% 84%,85.5% 84%,85.5% 100%,69.5% 100%,69.5% 96.5%,77.5% 96.5%);
   }
 
   .fp-hero .fp-hero__scene--curated img{
+    position:relative!important;
+    z-index:1!important;
     display:block!important;
-    width:auto!important;
-    height:auto!important;
-    max-width:100%!important;
-    max-height:calc(100% - 48px)!important;
+    width:100%!important;
+    height:100%!important;
+    max-width:none!important;
+    max-height:none!important;
     object-fit:contain!important;
     object-position:center center!important;
-    margin:auto!important;
-    transform:translateY(-8px)!important;
-    /* The source composite contains a small grey shadow tail outside the
-       lower-right edge of the red frame. Mask only that empty corner; the
-       artwork, stars and limited-edition badge remain untouched. */
-    clip-path:polygon(0 0,100% 0,100% 85%,84% 85%,84% 100%,0 100%)!important;
+    margin:0!important;
+    transform:none!important;
+    clip-path:none!important;
   }
 }
 
