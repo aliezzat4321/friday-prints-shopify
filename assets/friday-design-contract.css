@@ -23,22 +23,16 @@ body:has(.fp-site-header) .cart-items__title{
   text-transform:none!important;
 }
 
-/* The hero line is authored as “FROM THE WORLD OF GiGi”. Uppercasing the
-   element would incorrectly turn the character name into GIGI. */
 .fp-hero__world{
   text-transform:none!important;
 }
 
-/* World of GiGi character caption contains intentionally uppercase utility
-   labels, but the character name itself must retain its authored GiGi casing. */
 .fp-content-page--about .fp-world__gigi figcaption{
   text-transform:none!important;
 }
 
 /* ----------------------------------------------------------
    2. SHOPIFY EDITOR CLEANLINESS
-   When GiGi is already the centered logo, the fallback “Add GiGi” helper is
-   not part of the design and must never leak into the nav preview.
    ---------------------------------------------------------- */
 .fp-site-header .fp-gigi-editor-placeholder{
   display:none!important;
@@ -46,8 +40,6 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    3. HOMEPAGE TITLE SYSTEM
-   One editorial serif family and one scale. Alignment differences are
-   deliberate: the print rail is centered; editorial chapters read left.
    ---------------------------------------------------------- */
 .fp-collection__title h2,
 .fp-story__title,
@@ -75,8 +67,6 @@ body:has(.fp-site-header) .cart-items__title{
   text-align:left!important;
 }
 
-/* Newsletter is an editorial chapter title, so its first word is intentionally
-   lowercase even if an older Shopify section setting still stores “Postcards”. */
 .fp-newsletter h2::first-letter{
   text-transform:lowercase!important;
 }
@@ -107,8 +97,6 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    5. HERO ARTWORK COMPOSITION
-   The framed print must float inside the near-white hero rather than visually
-   sitting on the pink collection boundary. Keep the mobile crop unchanged.
    ---------------------------------------------------------- */
 @media (min-width:750px){
   .fp-hero{
@@ -149,8 +137,6 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    6. AUTHORED PROPER-NOUN CASING
-   Editorial titles are written in their intended case in Shopify. Do not use
-   CSS lowercase on fields that can contain GiGi or other proper names.
    ---------------------------------------------------------- */
 .fp-pdp__recommend h2,
 .fp-pdp-rec__meta,
@@ -161,4 +147,23 @@ body:has(.fp-site-header) .cart-items__title{
 .fp-world__story h2,
 .fp-world__gallery-head h2{
   text-transform:none!important;
+}
+
+/* ----------------------------------------------------------
+   7. ARTWORK-SAFE HOVER
+   Product art is the content. Never crop or move the print itself on hover.
+   ---------------------------------------------------------- */
+.fp-collection .fp-product:hover{
+  transform:none!important;
+}
+.fp-collection .fp-product:hover .fp-product__media img,
+.fp-collection .fp-product:hover .fp-product__media svg{
+  transform:none!important;
+}
+@media (hover:hover) and (pointer:fine){
+  .fp-collection .fp-product:hover h3{
+    text-decoration:underline;
+    text-decoration-thickness:1px;
+    text-underline-offset:3px;
+  }
 }
