@@ -1,77 +1,47 @@
 <section class="fp-section fp-hero{% if section.settings.height_mode == 'viewport' %} fp-hero--viewport{% endif %}" id="FridayHero-{{ section.id }}" style="--fp-hero-title-desktop:{{ section.settings.title_size_desktop }}px;--fp-hero-title-mobile:{{ section.settings.title_size_mobile }}px;--fp-hero-kicker-desktop:{{ section.settings.kicker_size_desktop }}px;--fp-hero-kicker-mobile:{{ section.settings.kicker_size_mobile }}px;--fp-hero-sub-desktop:{{ section.settings.subtitle_size_desktop }}px;--fp-hero-sub-mobile:{{ section.settings.subtitle_size_mobile }}px;--fp-hero-button-desktop:{{ section.settings.button_size_desktop }}px;--fp-hero-button-mobile:{{ section.settings.button_size_mobile }}px;">
   <style>
-    #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:var(--fp-hero-kicker-desktop);margin-bottom:13px}
-    #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(74px,6.6vw,var(--fp-hero-title-desktop));line-height:.82}
-    #FridayHero-{{ section.id }} .fp-hero__sub{font-size:var(--fp-hero-sub-desktop);line-height:1.42;margin:30px 0 26px;max-width:30ch}
-    #FridayHero-{{ section.id }} .fp-hero__world{margin:-12px 0 26px;color:color-mix(in srgb,var(--fp-ink) 64%,transparent);font:700 10px/1.35 "Courier New",monospace;letter-spacing:.08em;text-transform:uppercase}
-    #FridayHero-{{ section.id }} .fp-btn{font-size:var(--fp-hero-button-desktop);min-height:54px;padding-inline:24px}
-    #FridayHero-{{ section.id }} .fp-hero__copy{padding-bottom:54px}
-    #FridayHero-{{ section.id }} .fp-hero__scene--curated img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;object-position:center}
-    {% if section.settings.height_mode == 'viewport' %}
-      #FridayHero-{{ section.id }} .fp-hero__grid {
-        min-height: calc(100vh - 162px);
-        min-height: calc(100svh - 162px);
-      }
-      @media (max-width: 1100px) and (min-width: 901px) {
-        #FridayHero-{{ section.id }} .fp-hero__grid {
-          min-height: calc(100vh - 144px);
-          min-height: calc(100svh - 144px);
-        }
-      }
-      @media (max-width: 900px) and (min-width: 750px) {
-        #FridayHero-{{ section.id }} .fp-hero__grid {
-          min-height: calc(100vh - 122px);
-          min-height: calc(100svh - 122px);
-        }
-      }
-      @media (max-width: 749px) {
-        #FridayHero-{{ section.id }} .fp-hero__grid {
-          min-height: calc(100vh - 108px);
-          min-height: calc(100svh - 108px);
-        }
-      }
-    {% endif %}
-    @media (max-width:1100px) and (min-width:750px){
-      #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(68px,7.2vw,84px)}
-      #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:15px}
-      #FridayHero-{{ section.id }} .fp-hero__sub{font-size:15px}
-      #FridayHero-{{ section.id }} .fp-hero__world{font-size:9px}
-      #FridayHero-{{ section.id }} .fp-btn{font-size:12px;min-height:48px}
+    #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:var(--fp-hero-kicker-desktop)}
+    #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(74px,6.6vw,var(--fp-hero-title-desktop))}
+    #FridayHero-{{ section.id }} .fp-hero__sub{font-size:var(--fp-hero-sub-desktop)}
+    #FridayHero-{{ section.id }} .fp-btn{font-size:var(--fp-hero-button-desktop);text-transform:none}
+    #FridayHero-{{ section.id }} .fp-hero__scene--curated img{display:block;width:100%;height:auto;max-height:none;object-fit:contain;object-position:center bottom}
+
+    @media(max-width:1100px) and (min-width:750px){
+      #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(66px,7.2vw,84px)}
+      #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:14px}
+      #FridayHero-{{ section.id }} .fp-hero__sub{font-size:14px}
+      #FridayHero-{{ section.id }} .fp-btn{font-size:12px}
     }
-    @media (max-width:749px){
-      #FridayHero-{{ section.id }} .fp-hero__copy{padding:34px 0 18px!important}
-      #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:var(--fp-hero-kicker-mobile);margin-bottom:10px}
-      #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(58px,18vw,var(--fp-hero-title-mobile));line-height:.79;max-width:360px}
-      #FridayHero-{{ section.id }} .fp-hero__sub{font-size:var(--fp-hero-sub-mobile);line-height:1.45;margin:24px 0 21px;max-width:29ch}
-      #FridayHero-{{ section.id }} .fp-hero__world{margin:-9px 0 20px;font-size:8.5px}
-      #FridayHero-{{ section.id }} .fp-btn{font-size:var(--fp-hero-button-mobile);min-height:48px;padding-inline:14px}
-      /* The portrait source intentionally contains generous cream canvas. Crop that
-         canvas in CSS so the artwork follows the CTA as one composition instead of
-         creating a false, empty section between the copy and the frame. */
+
+    @media(max-width:749px){
+      #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:var(--fp-hero-kicker-mobile)}
+      #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(58px,18vw,var(--fp-hero-title-mobile));max-width:360px}
+      #FridayHero-{{ section.id }} .fp-hero__sub{font-size:var(--fp-hero-sub-mobile)}
+      #FridayHero-{{ section.id }} .fp-btn{font-size:var(--fp-hero-button-mobile)}
       #FridayHero-{{ section.id }} .fp-hero__scene--curated{
-        width:100vw!important;
-        margin-left:calc(50% - 50vw)!important;
-        padding:0!important;
-        overflow:hidden!important;
+        width:100vw;
+        margin-left:calc(50% - 50vw);
+        padding:0;
+        overflow:hidden;
       }
       #FridayHero-{{ section.id }} .fp-hero__scene--curated picture{
-        display:block!important;
-        width:100%!important;
+        display:block;
+        width:100%;
         aspect-ratio:6/5;
-        overflow:hidden!important;
+        overflow:hidden;
       }
       #FridayHero-{{ section.id }} .fp-hero__scene--curated img{
-        display:block!important;
-        width:100%!important;
-        max-width:none!important;
-        height:100%!important;
-        max-height:none!important;
-        margin:0!important;
-        object-fit:cover!important;
-        object-position:center 50%!important;
+        width:100%;
+        max-width:none;
+        height:100%;
+        max-height:none;
+        margin:0;
+        object-fit:cover;
+        object-position:center 50%;
       }
     }
   </style>
+
   <div class="fp-shell fp-hero__grid">
     <div class="fp-hero__copy">
       {% if section.settings.kicker != blank %}<p class="fp-hero__kicker">{{ section.settings.kicker }}</p>{% endif %}
@@ -87,6 +57,7 @@
         </div>
       {% endif %}
     </div>
+
     <div class="fp-hero__scene{% if section.settings.use_curated_scene %} fp-hero__scene--curated{% endif %}">
       {% if section.settings.use_curated_scene %}
         <picture>
@@ -94,13 +65,14 @@
           <img src="{{ 'friday-hero-clean.webp' | asset_url }}" width="1448" height="1086" loading="eager" fetchpriority="high" decoding="async" alt="{{ section.settings.hero_alt | escape }}">
         </picture>
       {% elsif section.settings.hero_scene != blank %}
-        {{ section.settings.hero_scene | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200,1500,1800', sizes: '(max-width: 749px) 100vw, 60vw', alt: section.settings.hero_alt }}
+        {{ section.settings.hero_scene | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '480,720,960,1200,1500,1800', sizes: '(max-width: 749px) 100vw, 62vw', alt: section.settings.hero_alt }}
       {% elsif request.design_mode %}
         <div class="fp-hero__placeholder">{{ section.settings.empty_message }}</div>
       {% endif %}
     </div>
   </div>
 </section>
+
 {% schema %}
 {
   "name": "Friday hero",
@@ -112,11 +84,11 @@
     { "type": "header", "content": "Typography" },
     { "type": "range", "id": "title_size_desktop", "label": "Title size — desktop", "min": 90, "max": 126, "step": 2, "unit": "px", "default": 108 },
     { "type": "range", "id": "title_size_mobile", "label": "Title size — mobile", "min": 60, "max": 82, "step": 2, "unit": "px", "default": 72 },
-    { "type": "range", "id": "kicker_size_desktop", "label": "Kicker size — desktop", "min": 14, "max": 20, "step": 1, "unit": "px", "default": 16 },
-    { "type": "range", "id": "kicker_size_mobile", "label": "Kicker size — mobile", "min": 11, "max": 15, "step": 1, "unit": "px", "default": 13 },
-    { "type": "range", "id": "subtitle_size_desktop", "label": "Subtitle size — desktop", "min": 15, "max": 21, "step": 1, "unit": "px", "default": 17 },
+    { "type": "range", "id": "kicker_size_desktop", "label": "Kicker size — desktop", "min": 14, "max": 20, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "kicker_size_mobile", "label": "Kicker size — mobile", "min": 11, "max": 15, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "subtitle_size_desktop", "label": "Subtitle size — desktop", "min": 15, "max": 21, "step": 1, "unit": "px", "default": 16 },
     { "type": "range", "id": "subtitle_size_mobile", "label": "Subtitle size — mobile", "min": 11, "max": 15, "step": 1, "unit": "px", "default": 13 },
-    { "type": "range", "id": "button_size_desktop", "label": "Button text — desktop", "min": 12, "max": 17, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "button_size_desktop", "label": "Button text — desktop", "min": 12, "max": 17, "step": 1, "unit": "px", "default": 13 },
     { "type": "range", "id": "button_size_mobile", "label": "Button text — mobile", "min": 9, "max": 13, "step": 1, "unit": "px", "default": 10 },
     { "type": "header", "content": "Content" },
     { "type": "text", "id": "kicker", "label": "Kicker", "default": "LIMITED-EDITION ART PRINTS" },
@@ -127,7 +99,7 @@
     { "type": "header", "content": "Buttons" },
     { "type": "text", "id": "shop_label", "label": "Primary button label", "default": "shop prints" },
     { "type": "url", "id": "shop_link", "label": "Primary button link" },
-    { "type": "text", "id": "collection_label", "label": "Secondary button label", "default": "explore the collection" },
+    { "type": "text", "id": "collection_label", "label": "Secondary button label", "default": "Meet GiGi" },
     { "type": "url", "id": "collection_link", "label": "Secondary button link" },
     { "type": "header", "content": "Artwork" },
     { "type": "checkbox", "id": "use_curated_scene", "label": "Use clean Friday hero artwork", "default": true },
