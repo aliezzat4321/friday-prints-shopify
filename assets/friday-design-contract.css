@@ -155,19 +155,34 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    7. ARTWORK-SAFE HOVER
-   Product art is the content. Never crop or move the print itself on hover.
+   Keep the card itself still so the rail never clips it. Match the shop page
+   by zooming only the artwork inside its existing media window.
    ---------------------------------------------------------- */
 .fp-collection .fp-product:hover{
   transform:none!important;
 }
-.fp-collection .fp-product:hover .fp-product__media img,
-.fp-collection .fp-product:hover .fp-product__media svg{
-  transform:none!important;
+.fp-collection .fp-product__media img,
+.fp-collection .fp-product__media svg{
+  transition:transform .35s ease!important;
 }
 @media (hover:hover) and (pointer:fine){
+  .fp-collection .fp-product:hover .fp-product__media img,
+  .fp-collection .fp-product:hover .fp-product__media svg{
+    transform:scale(1.012)!important;
+  }
   .fp-collection .fp-product:hover h3{
     text-decoration:underline;
     text-decoration-thickness:1px;
     text-underline-offset:3px;
+  }
+}
+@media (prefers-reduced-motion:reduce){
+  .fp-collection .fp-product__media img,
+  .fp-collection .fp-product__media svg{
+    transition:none!important;
+  }
+  .fp-collection .fp-product:hover .fp-product__media img,
+  .fp-collection .fp-product:hover .fp-product__media svg{
+    transform:none!important;
   }
 }
