@@ -1,6 +1,6 @@
 /* Friday Prints — final design contract
-   Shopify sync marker: 2026-08-25 15:25 EEST.
-   Final rules for brand casing, title hierarchy, hero composition and artwork interaction. */
+   Shopify sync marker: 2026-08-26 01:12 EEST.
+   Final runtime layer for brand casing, title hierarchy, hero cleanup and card motion. */
 
 /* ----------------------------------------------------------
    1. BRAND CASING
@@ -94,10 +94,11 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    5. HERO ARTWORK COMPOSITION
-   The curated desktop image contains a baked grey mockup shadow below and to
-   the right of the red frame. The picture is treated as an artboard and two
-   near-white masks cover only that spill; the frame, art, stars and badge stay
-   untouched.
+   The source PNG contains a baked mockup shadow under and to the right of the
+   red frame. Previous colour overlays created their own visible artefacts.
+   The correct treatment is to clip only the otherwise-empty lower/right image
+   area where the shadow exists. The frame, artwork, stars and edition badge are
+   all inside the retained polygon.
    ---------------------------------------------------------- */
 @media (min-width:750px){
   .fp-hero{
@@ -125,32 +126,13 @@ body:has(.fp-site-header) .cart-items__title{
     max-height:calc(100% - 48px)!important;
     aspect-ratio:1448 / 1086!important;
     transform:translateY(-8px)!important;
-    overflow:hidden!important;
+    overflow:visible!important;
   }
 
   .fp-hero .fp-hero__scene--curated picture::before,
   .fp-hero .fp-hero__scene--curated picture::after{
-    content:"";
-    position:absolute;
-    z-index:3;
-    pointer-events:none;
-    background:var(--fp-cream,#fffdf8);
-  }
-
-  /* horizontal shadow strip immediately below the red frame */
-  .fp-hero .fp-hero__scene--curated picture::before{
-    left:20.5%;
-    top:90.7%;
-    width:63.5%;
-    height:6.8%;
-  }
-
-  /* soft shadow tail immediately to the frame's lower-right */
-  .fp-hero .fp-hero__scene--curated picture::after{
-    left:77.0%;
-    top:83.4%;
-    width:7.5%;
-    height:9.8%;
+    content:none!important;
+    display:none!important;
   }
 
   .fp-hero .fp-hero__scene--curated img{
@@ -165,7 +147,14 @@ body:has(.fp-site-header) .cart-items__title{
     object-position:center center!important;
     margin:0!important;
     transform:none!important;
-    clip-path:none!important;
+    clip-path:polygon(
+      0 0,
+      100% 0,
+      100% 82.5%,
+      78.6% 82.5%,
+      78.6% 95.0%,
+      0 95.0%
+    )!important;
   }
 }
 
@@ -185,8 +174,6 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    7. ARTWORK-SAFE HOVER
-   Keep the card still so the rail cannot clip it. Match Shop by zooming only
-   the artwork inside its existing media window.
    ---------------------------------------------------------- */
 .fp-collection .fp-product:hover{
   transform:none!important;
