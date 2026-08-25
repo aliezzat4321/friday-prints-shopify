@@ -28,7 +28,7 @@ jobs:
           npm install playwright@1.55.0 >/dev/null 2>&1
           npx playwright install --with-deps chromium >/dev/null 2>&1
       - name: Allow Shopify preview sync
-        run: sleep 40
+        run: sleep 50
       - name: Audit launch routes
         env:
           STORE_URL: https://ygv356jws4gmk7hs-108268650782.shopifypreview.com
@@ -107,9 +107,19 @@ jobs:
               const metrics=await page.evaluate((expectedSelector)=>{
                 const broken=[...document.images].filter(i=>i.complete&&i.naturalWidth===0).map(i=>({src:i.currentSrc||i.src,alt:i.alt}));
                 const text=document.body.innerText;
-                const nav=[...document.querySelectorAll('.fp-nav__links a')].map(a=>a.textContent.trim());
-                const mobileNav=[...document.querySelectorAll('.fp-mobile-menu a')].map(a=>a.textContent.trim());
+                const nav=[...document.querySelectorAll('.fp-nav__links a')].map(a=>({text:a.textContent.trim(),transform:getComputedStyle(a).textTransform}));
+                const mobileNav=[...document.querySelectorAll('.fp-mobile-menu a')].map(a=>({text:a.textContent.trim(),transform:getComputedStyle(a).textTransform}));
                 const pageTitle=document.querySelector('.fp-page-title');
+                const newsletter=document.querySelector('.fp-newsletter h2');
+                const heroWorld=document.querySelector('.fp-hero__world');
+                const ghost=document.querySelector('.fp-site-header .fp-gigi-editor-placeholder');
+                const homeTitles=[
+                  document.querySelector('.fp-collection__title h2'),
+                  document.querySelector('.fp-story__title'),
+                  document.querySelector('.fp-films h2'),
+                  document.querySelector('.fp-at-home__title'),
+                  newsletter
+                ].filter(Boolean).map(el=>({text:el.textContent.trim(),font:getComputedStyle(el).fontFamily,size:parseFloat(getComputedStyle(el).fontSize),align:getComputedStyle(el).textAlign,transform:getComputedStyle(el).textTransform,style:getComputedStyle(el).fontStyle}));
                 return {
                   expectedPresent:!!document.querySelector(expectedSelector),
                   headerPresent:!!document.querySelector('.fp-site-header'),
@@ -122,13 +132,19 @@ jobs:
                   nav,
                   mobileNav,
                   pageTitle:pageTitle?{text:pageTitle.textContent.trim(),transform:getComputedStyle(pageTitle).textTransform,font:getComputedStyle(pageTitle).fontFamily}:null,
+                  newsletter:newsletter?newsletter.textContent.trim():null,
+                  heroWorld:heroWorld?{text:heroWorld.textContent.trim(),transform:getComputedStyle(heroWorld).textTransform}:null,
+                  editorGhostVisible:!!ghost && getComputedStyle(ghost).display!=='none',
+                  homeTitles,
                   title:document.title
                 };
-              },selector).catch(()=>({expectedPresent:false,headerPresent:false,footerPresent:false,brokenImages:[],stockFooterLeak:false,badGiGiCasing:false,scrollWidth:0,clientWidth:0,title:'',nav:[],mobileNav:[]}));
+              },selector).catch(()=>({expectedPresent:false,headerPresent:false,footerPresent:false,brokenImages:[],stockFooterLeak:false,badGiGiCasing:false,scrollWidth:0,clientWidth:0,title:'',nav:[],mobileNav:[],homeTitles:[]}));
 
               const errors=[];
               const status=response?.status()??null;
               const expected404=name==='404';
+              const desktopWorld=metrics.nav.find(x=>x.text==='world of GiGi'&&x.transform==='none');
+              const mobileWorld=metrics.mobileNav.find(x=>x.text==='world of GiGi'&&x.transform==='none');
               if(navigationError) errors.push('NAVIGATION_ERROR');
               if(expected404){ if(status!==404 && status!==200) errors.push(`UNEXPECTED_404_STATUS:${status}`); }
               else if(status && status>=400) errors.push(`HTTP_${status}`);
@@ -139,11 +155,22 @@ jobs:
               if(metrics.brokenImages.length) errors.push(`BROKEN_IMAGES:${metrics.brokenImages.length}`);
               if(metrics.stockFooterLeak) errors.push('STOCK_FOOTER_CONTENT_LEAK');
               if(metrics.badGiGiCasing && name!=='404') errors.push('BAD_GIGI_CASING');
-              if(device==='desktop' && !metrics.nav.includes('GiGi')) errors.push('DESKTOP_GIGI_NAV_MISSING');
-              if(device==='mobile' && !metrics.mobileNav.includes('GiGi')) errors.push('MOBILE_GIGI_NAV_MISSING');
+              if(metrics.editorGhostVisible) errors.push('EDITOR_GIGI_PLACEHOLDER_VISIBLE');
+              if(device==='desktop' && !desktopWorld) errors.push('DESKTOP_WORLD_OF_GIGI_NAV_MISSING');
+              if(device==='mobile' && !mobileWorld) errors.push('MOBILE_WORLD_OF_GIGI_NAV_MISSING');
               if(metrics.pageTitle && metrics.pageTitle.transform!=='none') errors.push('PAGE_TITLE_FORCED_CASING');
               if(metrics.pageTitle && !/Georgia|Times New Roman|serif/i.test(metrics.pageTitle.font)) errors.push('PAGE_TITLE_WRONG_FONT');
               if(name==='world' && metrics.pageTitle?.text!=='world of GiGi') errors.push('WORLD_TITLE_CASING');
+              if(name==='home'){
+                if(metrics.newsletter!=='postcards from GiGi') errors.push('NEWSLETTER_TITLE_CONTRACT');
+                if(metrics.heroWorld?.text!=='FROM THE WORLD OF GiGi'||metrics.heroWorld?.transform!=='none') errors.push('HERO_GIGI_CASING');
+                if(metrics.homeTitles.length<4) errors.push('HOME_TITLES_MISSING');
+                for(const heading of metrics.homeTitles){
+                  if(!/Georgia|Times New Roman|serif/i.test(heading.font)||heading.style!=='normal'||heading.transform!=='none') errors.push(`HOME_TITLE_STYLE:${heading.text}`);
+                  const expectedSize=device==='desktop'?52:38;
+                  if(Math.abs(heading.size-expectedSize)>.7) errors.push(`HOME_TITLE_SIZE:${heading.text}:${heading.size}`);
+                }
+              }
               if(name==='search'){
                 if(!searchOverlay?.opened) errors.push('SEARCH_OVERLAY_DID_NOT_OPEN');
                 if(searchOverlay?.heading!=='search prints') errors.push('SEARCH_OVERLAY_HEADING_MISSING');
