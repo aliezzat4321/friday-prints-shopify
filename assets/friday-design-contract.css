@@ -1,0 +1,104 @@
+/* Friday Prints — final design contract
+   One last, intentional layer for brand casing, title hierarchy and editor cleanliness.
+   This file is loaded last so old section settings or inherited theme rules cannot
+   change the public-facing Friday Prints system. */
+
+/* ----------------------------------------------------------
+   1. BRAND CASING
+   GiGi is a proper name. Never transform authored navigation or product copy.
+   ---------------------------------------------------------- */
+.fp-site-header .fp-nav__links,
+.fp-site-header .fp-nav__links a,
+.fp-site-header .fp-mobile-menu__links,
+.fp-site-header .fp-mobile-menu__links a,
+.fp-footer a,
+.fp-btn,
+.fp-product h3,
+.fp-shop-card h2,
+.fp-search-card h2,
+.fp-pdp__title,
+body:has(.fp-site-header) .cart-items__title{
+  text-transform:none!important;
+}
+
+/* The hero line is authored as “FROM THE WORLD OF GiGi”. Uppercasing the
+   element would incorrectly turn the character name into GIGI. */
+.fp-hero__world{
+  text-transform:none!important;
+}
+
+/* World of GiGi character caption contains intentionally uppercase utility
+   labels, but the character name itself must retain its authored GiGi casing. */
+.fp-content-page--about .fp-world__gigi figcaption{
+  text-transform:none!important;
+}
+
+/* ----------------------------------------------------------
+   2. SHOPIFY EDITOR CLEANLINESS
+   When GiGi is already the centered logo, the fallback “Add GiGi” helper is
+   not part of the design and must never leak into the nav preview.
+   ---------------------------------------------------------- */
+.fp-site-header .fp-gigi-editor-placeholder{
+  display:none!important;
+}
+
+/* ----------------------------------------------------------
+   3. HOMEPAGE TITLE SYSTEM
+   One editorial serif family and one scale. Alignment differences are
+   deliberate: the print rail is centered; editorial chapters read left.
+   ---------------------------------------------------------- */
+.fp-collection__title h2,
+.fp-story__title,
+.fp-films h2,
+.fp-at-home__title,
+.fp-newsletter h2{
+  font-family:var(--fp-display-font,Georgia,"Times New Roman",serif)!important;
+  font-style:normal!important;
+  font-weight:700!important;
+  font-size:52px!important;
+  line-height:.92!important;
+  letter-spacing:-.045em!important;
+  text-transform:none!important;
+}
+
+.fp-collection__title,
+.fp-collection__title h2{
+  text-align:center!important;
+}
+
+.fp-story__title,
+.fp-films h2,
+.fp-at-home__title,
+.fp-newsletter h2{
+  text-align:left!important;
+}
+
+/* Newsletter is an editorial chapter title, so its first word is intentionally
+   lowercase even if an older Shopify section setting still stores “Postcards”. */
+.fp-newsletter h2::first-letter{
+  text-transform:lowercase!important;
+}
+
+/* ----------------------------------------------------------
+   4. RESPONSIVE TITLE RHYTHM
+   ---------------------------------------------------------- */
+@media (max-width:1100px) and (min-width:750px){
+  .fp-collection__title h2,
+  .fp-story__title,
+  .fp-films h2,
+  .fp-at-home__title,
+  .fp-newsletter h2{
+    font-size:48px!important;
+  }
+}
+
+@media (max-width:749px){
+  .fp-collection__title h2,
+  .fp-story__title,
+  .fp-films h2,
+  .fp-at-home__title,
+  .fp-newsletter h2{
+    font-size:38px!important;
+    line-height:.93!important;
+  }
+}
