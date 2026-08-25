@@ -41,6 +41,7 @@ const balanceFiles = new Set([
   'sections/friday-footer.liquid',
   'sections/friday-header.liquid',
   'sections/friday-hero.liquid',
+  'sections/friday-newsletter.liquid',
   'sections/friday-page.liquid',
   'sections/friday-product.liquid',
   'sections/friday-video-stories.liquid'
@@ -81,10 +82,12 @@ const required = [
   ['templates/index.json', /"show_section":\s*true/, 'homepage unboxing enabled'],
   ['templates/index.json', /"heading":\s*"meet GiGi"/, 'correct GiGi story casing'],
   ['templates/index.json', /"heading":\s*"postcards from GiGi"/, 'correct GiGi newsletter casing'],
-  ['sections/header-group.json', /"nav_2_label":\s*"GiGi"/, 'GiGi desktop navigation label'],
-  ['sections/footer-group.json', /"link_1_label":\s*"GiGi"/, 'GiGi footer navigation label'],
+  ['sections/header-group.json', /"nav_2_label":\s*"world of GiGi"/, 'world of GiGi desktop navigation label'],
+  ['sections/footer-group.json', /"link_1_label":\s*"world of GiGi"/, 'world of GiGi footer navigation label'],
+  ['sections/friday-hero.liquid', /"world_line"[\s\S]*"default":\s*"FROM THE WORLD OF GiGi"/, 'hero GiGi world-line casing'],
   ['sections/friday-hero.liquid', /aspect-ratio:\s*6\/5/, 'tight mobile hero artwork crop'],
   ['sections/friday-hero.liquid', /object-fit:\s*cover/, 'mobile hero artwork fill'],
+  ['sections/friday-newsletter.liquid', /assign\s+fp_newsletter_heading\s*=\s*'postcards from GiGi'/, 'saved newsletter heading normalization'],
   ['sections/friday-product.liquid', /data-fp-next-edition/, 'next-edition product display'],
   ['sections/friday-product.liquid', /custom\.edition_total/, 'editable edition metafield support'],
   ['sections/friday-product.liquid', /fp_description_intro contains 'size: a3'/, 'single-size A3 description fallback'],
@@ -106,8 +109,11 @@ const required = [
   ['sections/friday-header.liquid', /fp-logo--mark/, 'centred GiGi brand mark'],
   ['assets/friday-production.css', /--fp-display-font:/, 'display typography token'],
   ['assets/friday-production.css', /--fp-ui-font:/, 'utility typography token'],
-  ['assets/friday-production.css', /\.fp-nav__links,[\s\S]*text-transform:none!important/, 'authored casing preservation'],
-  ['snippets/stylesheets.liquid', /friday-production\.css/, 'authoritative Friday production stylesheet']
+  ['assets/friday-design-contract.css', /\.fp-site-header \.fp-gigi-editor-placeholder[\s\S]*display:none!important/, 'hidden editor GiGi helper'],
+  ['assets/friday-design-contract.css', /\.fp-hero__world[\s\S]*text-transform:none!important/, 'hero GiGi casing protection'],
+  ['assets/friday-design-contract.css', /\.fp-newsletter h2::first-letter[\s\S]*text-transform:lowercase!important/, 'newsletter lowercase title guard'],
+  ['assets/friday-design-contract.css', /font-size:52px!important/, 'shared desktop section-title scale'],
+  ['snippets/stylesheets.liquid', /friday-design-contract\.css/, 'final design contract stylesheet']
 ];
 
 for (const [file, pattern, label] of required) {
@@ -117,6 +123,9 @@ for (const [file, pattern, label] of required) {
 const stylesheetLoader = read('snippets/stylesheets.liquid');
 for (const legacy of ['friday-home-compression.css','friday-responsive-consistency.css','friday-hero-viewport-cap.css']) {
   if (stylesheetLoader.includes(legacy)) fail(`snippets/stylesheets.liquid: legacy conflicting layer ${legacy} is still loaded.`);
+}
+if (stylesheetLoader.lastIndexOf('friday-design-contract.css') < stylesheetLoader.lastIndexOf('friday-production.css')) {
+  fail('snippets/stylesheets.liquid: final design contract must load after production CSS.');
 }
 
 // Check human-facing copy only. Internal variables/classes such as `gigi_image`
