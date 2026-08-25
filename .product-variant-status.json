@@ -1,6 +1,153 @@
 {
-  "pass": false,
-  "error": "[Errno 2] No such file or directory: 'product-variant-result.json'",
-  "run_id": 32833621730,
-  "source_sha": "f4835faa437437dca85aa99f1ab49b8d34e1c433"
+  "pass": true,
+  "results": [
+    {
+      "viewport": {
+        "name": "desktop",
+        "width": 1280,
+        "height": 900
+      },
+      "pass": true,
+      "optionCount": 2,
+      "selectorVisible": true,
+      "overflow": false,
+      "a3": {
+        "sizeName": "A3",
+        "checked": true,
+        "selectedVariantId": "59793239015710",
+        "expectedVariantId": "59793239015710",
+        "displayedSize": "A3",
+        "displayedDimension": "29.7 \u00d7 42 CM",
+        "selectedLabel": "A3",
+        "number": 1,
+        "total": 100,
+        "available": true,
+        "addDisabled": false
+      },
+      "a4": {
+        "sizeName": "A4",
+        "checked": true,
+        "selectedVariantId": "59793238982942",
+        "expectedVariantId": "59793238982942",
+        "displayedSize": "A4",
+        "displayedDimension": "21 \u00d7 29.7 CM",
+        "selectedLabel": "A4",
+        "number": 1,
+        "total": 150,
+        "available": true,
+        "addDisabled": false
+      },
+      "singleSizeResults": [
+        {
+          "product": {
+            "handle": "gigi-goes-to-the-jimjilbang",
+            "size": "A3",
+            "dimensions": "29.7 \u00d7 42 CM",
+            "total": 100
+          },
+          "pass": true,
+          "displayedSize": "A3",
+          "displayedDimension": "29.7 \u00d7 42 CM",
+          "number": 1,
+          "total": 100,
+          "selectorCount": 0,
+          "selectorVisible": false,
+          "editionVisible": true,
+          "overflow": false
+        },
+        {
+          "product": {
+            "handle": "the-offering-copy",
+            "size": "A3",
+            "dimensions": "29.7 \u00d7 42 CM",
+            "total": 100
+          },
+          "pass": true,
+          "displayedSize": "A3",
+          "displayedDimension": "29.7 \u00d7 42 CM",
+          "number": 1,
+          "total": 100,
+          "selectorCount": 0,
+          "selectorVisible": false,
+          "editionVisible": true,
+          "overflow": false
+        }
+      ]
+    },
+    {
+      "viewport": {
+        "name": "mobile",
+        "width": 390,
+        "height": 844
+      },
+      "pass": true,
+      "optionCount": 2,
+      "selectorVisible": true,
+      "overflow": false,
+      "a3": {
+        "sizeName": "A3",
+        "checked": true,
+        "selectedVariantId": "59793239015710",
+        "expectedVariantId": "59793239015710",
+        "displayedSize": "A3",
+        "displayedDimension": "29.7 \u00d7 42 CM",
+        "selectedLabel": "A3",
+        "number": 1,
+        "total": 100,
+        "available": true,
+        "addDisabled": false
+      },
+      "a4": {
+        "sizeName": "A4",
+        "checked": true,
+        "selectedVariantId": "59793238982942",
+        "expectedVariantId": "59793238982942",
+        "displayedSize": "A4",
+        "displayedDimension": "21 \u00d7 29.7 CM",
+        "selectedLabel": "A4",
+        "number": 1,
+        "total": 150,
+        "available": true,
+        "addDisabled": false
+      },
+      "singleSizeResults": [
+        {
+          "product": {
+            "handle": "gigi-goes-to-the-jimjilbang",
+            "size": "A3",
+            "dimensions": "29.7 \u00d7 42 CM",
+            "total": 100
+          },
+          "pass": true,
+          "displayedSize": "A3",
+          "displayedDimension": "29.7 \u00d7 42 CM",
+          "number": 1,
+          "total": 100,
+          "selectorCount": 0,
+          "selectorVisible": false,
+          "editionVisible": true,
+          "overflow": false
+        },
+        {
+          "product": {
+            "handle": "the-offering-copy",
+            "size": "A3",
+            "dimensions": "29.7 \u00d7 42 CM",
+            "total": 100
+          },
+          "pass": true,
+          "displayedSize": "A3",
+          "displayedDimension": "29.7 \u00d7 42 CM",
+          "number": 1,
+          "total": 100,
+          "selectorCount": 0,
+          "selectorVisible": false,
+          "editionVisible": true,
+          "overflow": false
+        }
+      ]
+    }
+  ],
+  "run_id": 32833753856,
+  "source_sha": "7dc694400ae6018deb260bf04c38b434365ac5ce"
 }
