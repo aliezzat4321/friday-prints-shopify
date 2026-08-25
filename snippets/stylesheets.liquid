@@ -5,3 +5,70 @@
 {{ 'friday-cart-overlay.css' | asset_url | stylesheet_tag }}
 {{ 'friday-production.css' | asset_url | stylesheet_tag }}
 {{ 'friday-design-contract.css' | asset_url | stylesheet_tag }}
+
+{%- comment -%}
+  Final runtime contract. This deliberately lives in an existing core snippet so
+  Shopify's GitHub theme sync cannot leave casing/type fixes dependent on a new asset
+  or on stale section-editor values.
+{%- endcomment -%}
+<style id="fp-runtime-contract">
+  .fp-hero__world,
+  .fp-site-header .fp-nav__links,
+  .fp-site-header .fp-nav__links a,
+  .fp-site-header .fp-mobile-menu__links,
+  .fp-site-header .fp-mobile-menu__links a,
+  .fp-footer a{
+    text-transform:none!important;
+  }
+  .fp-site-header .fp-gigi-editor-placeholder{display:none!important;}
+  .fp-collection__title,
+  .fp-collection__title h2{text-align:center!important;}
+  .fp-story__title,
+  .fp-films h2,
+  .fp-at-home__title,
+  .fp-newsletter h2{text-align:left!important;}
+</style>
+<script>
+  (() => {
+    const normalizeFridayRuntime = () => {
+      document.querySelectorAll('.fp-site-header a[href*="/pages/about"], .fp-footer a[href*="/pages/about"]').forEach((link) => {
+        const text = link.textContent.trim().replace(/\s+/g, ' ');
+        if (/^(?:world of )?gigi$/i.test(text)) link.textContent = 'world of GiGi';
+      });
+
+      const worldLine = document.querySelector('.fp-hero__world');
+      if (worldLine && /^from the world of gigi$/i.test(worldLine.textContent.trim())) {
+        worldLine.textContent = 'FROM THE WORLD OF GiGi';
+      }
+
+      const newsletterTitle = document.querySelector('.fp-newsletter h2');
+      if (newsletterTitle && /^postcards from gigi$/i.test(newsletterTitle.textContent.trim())) {
+        newsletterTitle.textContent = 'postcards from GiGi';
+      }
+
+      const titleSize = window.innerWidth <= 749 ? '38px' : (window.innerWidth <= 1100 ? '48px' : '52px');
+      document.querySelectorAll('.fp-collection__title h2, .fp-story__title, .fp-films h2, .fp-at-home__title, .fp-newsletter h2').forEach((title) => {
+        title.style.setProperty('font-family', 'var(--fp-display-font, Georgia, "Times New Roman", serif)', 'important');
+        title.style.setProperty('font-style', 'normal', 'important');
+        title.style.setProperty('font-weight', '700', 'important');
+        title.style.setProperty('font-size', titleSize, 'important');
+        title.style.setProperty('line-height', '.92', 'important');
+        title.style.setProperty('letter-spacing', '-.045em', 'important');
+        title.style.setProperty('text-transform', 'none', 'important');
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', normalizeFridayRuntime, { once: true });
+    } else {
+      normalizeFridayRuntime();
+    }
+
+    document.addEventListener('shopify:section:load', normalizeFridayRuntime);
+    let fpRuntimeResizeTimer;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(fpRuntimeResizeTimer);
+      fpRuntimeResizeTimer = window.setTimeout(normalizeFridayRuntime, 80);
+    }, { passive: true });
+  })();
+</script>
