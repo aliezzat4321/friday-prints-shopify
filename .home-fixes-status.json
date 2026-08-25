@@ -1,16 +1,16 @@
 {
-  "pass": false,
+  "pass": true,
   "httpStatus": 200,
-  "navWorldGiGi": false,
+  "navWorldGiGi": true,
   "meetGiGi": true,
-  "heroWorldGiGi": false,
-  "noBadGiGiCasing": false,
+  "heroWorldGiGi": true,
+  "noBadGiGiCasing": true,
   "noEditorGhost": true,
-  "sectionCopy": false,
+  "sectionCopy": true,
   "sectionFonts": true,
   "sectionAlignment": true,
   "titleCasingPreserved": true,
-  "titleScale": false,
+  "titleScale": true,
   "prevCorrectAtStart": true,
   "prevEnablesAfterScroll": true,
   "initial": {
@@ -27,26 +27,26 @@
     "navLinks": [
       {
         "text": "shop all",
-        "transform": "lowercase"
+        "transform": "none"
       },
       {
         "text": "world of GiGi",
-        "transform": "lowercase"
+        "transform": "none"
       },
       {
         "text": "print guide",
-        "transform": "lowercase"
+        "transform": "none"
       },
       {
         "text": "faq",
-        "transform": "lowercase"
+        "transform": "none"
       }
     ],
     "worldLine": {
       "text": "FROM THE WORLD OF GiGi",
       "fontFamily": "\"Courier New\", monospace",
       "fontSize": "10px",
-      "textTransform": "uppercase",
+      "textTransform": "none",
       "textAlign": "start",
       "fontStyle": "normal",
       "fontWeight": "700",
@@ -57,7 +57,7 @@
       "collection": {
         "text": "the prints",
         "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "56px",
+        "fontSize": "52px",
         "textTransform": "none",
         "textAlign": "center",
         "fontStyle": "normal",
@@ -67,7 +67,7 @@
       "story": {
         "text": "meet GiGi",
         "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "42px",
+        "fontSize": "52px",
         "textTransform": "none",
         "textAlign": "left",
         "fontStyle": "normal",
@@ -78,19 +78,19 @@
       "atHome": {
         "text": "friday at home",
         "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "40px",
+        "fontSize": "52px",
         "textTransform": "none",
-        "textAlign": "start",
+        "textAlign": "left",
         "fontStyle": "normal",
         "fontWeight": "700",
         "display": "block"
       },
       "newsletter": {
-        "text": "Postcards from GiGi",
+        "text": "postcards from GiGi",
         "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "57.6px",
+        "fontSize": "52px",
         "textTransform": "none",
-        "textAlign": "start",
+        "textAlign": "left",
         "fontStyle": "normal",
         "fontWeight": "700",
         "display": "block"
@@ -110,6 +110,6 @@
     "scrollLeft": 558,
     "prevDisabled": false
   },
-  "run_id": 32840175752,
-  "source_sha": "77ec54c975bf7f314d24c25f8086f193c0765a04"
+  "run_id": 32841224951,
+  "source_sha": "d6a1a8b0219ca0d0d1a1472604d3042e50885350"
 }
