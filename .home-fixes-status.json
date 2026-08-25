@@ -44,8 +44,8 @@
     ],
     "worldLine": {
       "text": "FROM THE WORLD OF GiGi",
-      "fontFamily": "\"Courier New\", monospace",
-      "fontSize": "10px",
+      "fontFamily": "\"Courier New\", Courier, monospace",
+      "fontSize": "9px",
       "textTransform": "none",
       "textAlign": "start",
       "fontStyle": "normal",
@@ -110,6 +110,6 @@
     "scrollLeft": 558,
     "prevDisabled": false
   },
-  "run_id": 32841224951,
-  "source_sha": "d6a1a8b0219ca0d0d1a1472604d3042e50885350"
+  "run_id": 32842195603,
+  "source_sha": "d974402e2a44e287553a89c3e2611fc6187a58c4"
 }
