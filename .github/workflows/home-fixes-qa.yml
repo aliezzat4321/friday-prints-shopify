@@ -24,7 +24,7 @@ jobs:
       - name: Install Playwright package
         run: npm install playwright@1.55.0 >/dev/null 2>&1
       - name: Allow Shopify preview sync
-        run: sleep 35
+        run: sleep 45
       - name: Audit homepage design system
         env:
           STORE_URL: https://ygv356jws4gmk7hs-108268650782.shopifypreview.com
@@ -53,7 +53,8 @@ jobs:
                 textTransform: s.textTransform,
                 textAlign: s.textAlign,
                 fontStyle: s.fontStyle,
-                fontWeight: s.fontWeight
+                fontWeight: s.fontWeight,
+                display: s.display
               };
             };
             const buttons = [...document.querySelectorAll('.fp-hero__buttons .fp-btn')].map(el => ({ text:el.textContent.trim(), transform:getComputedStyle(el).textTransform }));
@@ -66,6 +67,8 @@ jobs:
               statusText: document.body.innerText,
               buttons,
               navLinks,
+              worldLine: inspect('.fp-hero__world'),
+              editorPlaceholder: inspect('.fp-site-header .fp-gigi-editor-placeholder'),
               titles: {
                 collection: inspect('.fp-collection__title h2'),
                 story: inspect('.fp-story__title'),
@@ -91,9 +94,12 @@ jobs:
           }));
 
           const isSerif = (item) => Boolean(item && /Georgia|Times New Roman|serif/i.test(item.fontFamily));
-          const navGiGi = initial.navLinks.some(item => item.text === 'GiGi' && item.transform === 'none');
+          const isLeft = (value) => value === 'left' || value === 'start';
+          const navWorldGiGi = initial.navLinks.some(item => item.text === 'world of GiGi' && item.transform === 'none');
           const meetGiGi = initial.buttons.some(item => item.text === 'Meet GiGi' && item.transform === 'none');
+          const heroWorldGiGi = initial.worldLine?.text === 'FROM THE WORLD OF GiGi' && initial.worldLine?.textTransform === 'none';
           const noBadGiGiCasing = !/(^|\s|[^A-Za-z])(?:Gigi|gigi|GIGI)(?=\s|[^A-Za-z]|$)/m.test(initial.statusText.replace(/GiGi/g,''));
+          const noEditorGhost = !initial.statusText.includes('Add GiGi') && (!initial.editorPlaceholder || initial.editorPlaceholder.display === 'none');
           const sectionCopy = initial.titles.collection?.text === 'the prints'
             && initial.titles.story?.text === 'meet GiGi'
             && initial.titles.atHome?.text === 'friday at home'
@@ -102,18 +108,21 @@ jobs:
           const sectionFonts = ['collection','story','atHome','newsletter'].every(key => isSerif(initial.titles[key]))
             && (!initial.titles.films || isSerif(initial.titles.films));
           const sectionAlignment = initial.titles.collection?.textAlign === 'center'
-            && initial.titles.story?.textAlign === 'start'
-            && initial.titles.atHome?.textAlign === 'start'
-            && initial.titles.newsletter?.textAlign === 'start';
-          const titleCasingPreserved = ['collection','story','atHome','newsletter'].every(key => initial.titles[key]?.textTransform === 'none');
+            && isLeft(initial.titles.story?.textAlign)
+            && isLeft(initial.titles.atHome?.textAlign)
+            && isLeft(initial.titles.newsletter?.textAlign)
+            && (!initial.titles.films || isLeft(initial.titles.films.textAlign));
+          const titleCasingPreserved = ['collection','story','atHome','newsletter'].every(key => initial.titles[key]?.textTransform === 'none')
+            && (!initial.titles.films || initial.titles.films.textTransform === 'none');
+          const titleScale = ['collection','story','atHome','newsletter'].every(key => Math.abs(parseFloat(initial.titles[key]?.fontSize || 0) - 52) < .6)
+            && (!initial.titles.films || Math.abs(parseFloat(initial.titles.films.fontSize || 0) - 52) < .6);
           const prevCorrectAtStart = initial.rail ? initial.prevDisabled === true : false;
           const prevEnablesAfterScroll = initial.rail && initial.rail.scrollWidth > initial.rail.clientWidth
             ? afterScroll.scrollLeft > initial.rail.paddingLeft + 3 && afterScroll.prevDisabled === false
             : true;
-          const atHomeScale = initial.titles.atHome ? parseFloat(initial.titles.atHome.fontSize) <= 52.5 : false;
-          const pass = response?.status() < 400 && navGiGi && meetGiGi && noBadGiGiCasing && sectionCopy && sectionFonts && sectionAlignment && titleCasingPreserved && prevCorrectAtStart && prevEnablesAfterScroll && atHomeScale && !initial.overflow;
+          const pass = response?.status() < 400 && navWorldGiGi && meetGiGi && heroWorldGiGi && noBadGiGiCasing && noEditorGhost && sectionCopy && sectionFonts && sectionAlignment && titleCasingPreserved && titleScale && prevCorrectAtStart && prevEnablesAfterScroll && !initial.overflow;
 
-          const result = { pass, httpStatus:response?.status() ?? null, navGiGi, meetGiGi, noBadGiGiCasing, sectionCopy, sectionFonts, sectionAlignment, titleCasingPreserved, prevCorrectAtStart, prevEnablesAfterScroll, atHomeScale, initial:{...initial,statusText:undefined}, afterScroll };
+          const result = { pass, httpStatus:response?.status() ?? null, navWorldGiGi, meetGiGi, heroWorldGiGi, noBadGiGiCasing, noEditorGhost, sectionCopy, sectionFonts, sectionAlignment, titleCasingPreserved, titleScale, prevCorrectAtStart, prevEnablesAfterScroll, initial:{...initial,statusText:undefined}, afterScroll };
           fs.writeFileSync('home-fixes-result.json', JSON.stringify(result,null,2));
           await page.screenshot({ path:'home-fixes.png', fullPage:true });
           await browser.close();
