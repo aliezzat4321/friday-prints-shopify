@@ -1,6 +1,6 @@
 {
   "pass": false,
   "error": "[Errno 2] No such file or directory: 'product-variant-result.json'",
-  "run_id": 32833104552,
-  "source_sha": "eadf3371b48b1425551ab4ce06c20e0f06345981"
+  "run_id": 32833410806,
+  "source_sha": "7cb75cdbb484e3e2b28a18a4e61abf251a07d427"
 }
