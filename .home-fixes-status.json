@@ -1,21 +1,98 @@
 {
   "pass": false,
-  "meetGiGi": false,
-  "prevCorrectAtStart": false,
+  "httpStatus": 200,
+  "navGiGi": false,
+  "meetGiGi": true,
+  "noBadGiGiCasing": false,
+  "sectionCopy": false,
+  "sectionFonts": true,
+  "sectionAlignment": true,
+  "titleCasingPreserved": true,
+  "prevCorrectAtStart": true,
   "prevEnablesAfterScroll": true,
-  "atHomeCompat": false,
+  "atHomeScale": true,
   "initial": {
-    "buttons": [],
-    "rail": null,
-    "prevDisabled": null,
-    "nextDisabled": null,
-    "atHomeTitleFont": null,
-    "atHomeHasCompatCss": false
+    "buttons": [
+      {
+        "text": "shop prints",
+        "transform": "none"
+      },
+      {
+        "text": "Meet GiGi",
+        "transform": "none"
+      }
+    ],
+    "navLinks": [
+      {
+        "text": "shop all",
+        "transform": "lowercase"
+      },
+      {
+        "text": "GiGi",
+        "transform": "lowercase"
+      },
+      {
+        "text": "print guide",
+        "transform": "lowercase"
+      },
+      {
+        "text": "faq",
+        "transform": "lowercase"
+      }
+    ],
+    "titles": {
+      "collection": {
+        "text": "the prints",
+        "fontFamily": "Georgia, \"Times New Roman\", serif",
+        "fontSize": "56px",
+        "textTransform": "none",
+        "textAlign": "center",
+        "fontStyle": "normal",
+        "fontWeight": "700"
+      },
+      "story": {
+        "text": "meet GiGi",
+        "fontFamily": "Georgia, \"Times New Roman\", serif",
+        "fontSize": "40px",
+        "textTransform": "none",
+        "textAlign": "start",
+        "fontStyle": "italic",
+        "fontWeight": "400"
+      },
+      "films": null,
+      "atHome": {
+        "text": "friday at home",
+        "fontFamily": "Georgia, \"Times New Roman\", serif",
+        "fontSize": "40px",
+        "textTransform": "none",
+        "textAlign": "start",
+        "fontStyle": "normal",
+        "fontWeight": "700"
+      },
+      "newsletter": {
+        "text": "Postcards from GiGi",
+        "fontFamily": "Georgia, \"Times New Roman\", serif",
+        "fontSize": "48px",
+        "textTransform": "none",
+        "textAlign": "start",
+        "fontStyle": "normal",
+        "fontWeight": "700"
+      }
+    },
+    "rail": {
+      "scrollLeft": 48,
+      "scrollWidth": 1910,
+      "clientWidth": 1348,
+      "paddingLeft": 48
+    },
+    "prevDisabled": true,
+    "nextDisabled": false,
+    "overflow": false
   },
   "afterScroll": {
-    "scrollLeft": null,
-    "prevDisabled": null
+    "scrollLeft": 562,
+    "prevDisabled": false
   },
-  "run_id": 32833410807,
-  "source_sha": "7cb75cdbb484e3e2b28a18a4e61abf251a07d427"
+  "run_id": 32833621790,
+  "source_sha": "f4835faa437437dca85aa99f1ab49b8d34e1c433"
 }
