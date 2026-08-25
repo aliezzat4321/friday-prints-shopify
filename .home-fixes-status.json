@@ -6,7 +6,7 @@
   "noBadGiGiCasing": false,
   "sectionCopy": false,
   "sectionFonts": true,
-  "sectionAlignment": true,
+  "sectionAlignment": false,
   "titleCasingPreserved": true,
   "prevCorrectAtStart": true,
   "prevEnablesAfterScroll": true,
@@ -53,11 +53,11 @@
       "story": {
         "text": "meet GiGi",
         "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "40px",
+        "fontSize": "42px",
         "textTransform": "none",
-        "textAlign": "start",
-        "fontStyle": "italic",
-        "fontWeight": "400"
+        "textAlign": "left",
+        "fontStyle": "normal",
+        "fontWeight": "700"
       },
       "films": null,
       "atHome": {
@@ -93,6 +93,6 @@
     "scrollLeft": 562,
     "prevDisabled": false
   },
-  "run_id": 32833917864,
-  "source_sha": "8c4a00da1ba8f96c864ff1641b04ef1f5ac14740"
+  "run_id": 32834107714,
+  "source_sha": "13b0a0a6e7ffb3c5c1d089e6ed935df5ca49e94b"
 }
