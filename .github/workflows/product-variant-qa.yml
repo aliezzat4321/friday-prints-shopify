@@ -13,7 +13,7 @@ permissions:
 jobs:
   product-variant-qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 6
+    timeout-minutes: 7
     steps:
       - uses: actions/checkout@v4
         with:
@@ -23,11 +23,11 @@ jobs:
           node-version: '20'
       - name: Install Playwright
         run: npm install playwright@1.55.0 >/dev/null 2>&1
-      - name: Wait for Shopify sync
+      - name: Allow Shopify preview sync
         run: sleep 35
       - name: Audit live A3 and A4 selection
         env:
-          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
+          STORE_URL: https://ygv356jws4gmk7hs-108268650782.shopifypreview.com
         run: |
           cat > product-variant-qa.mjs <<'EOF'
           import { chromium } from 'playwright';
