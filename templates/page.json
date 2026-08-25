@@ -47,6 +47,13 @@
             "note": "LIMITED EDITION ART PRINT"
           }
         },
+        "world_unapologetic": {
+          "type": "world_product",
+          "settings": {
+            "product": "unapologetically-gigi-a4",
+            "note": "LIMITED EDITION / A4"
+          }
+        },
         "faq_limited": {
           "type": "faq_item",
           "settings": {
@@ -126,6 +133,7 @@
         "world_held",
         "world_cherry",
         "world_kyoto",
+        "world_unapologetic",
         "faq_limited",
         "faq_editions",
         "faq_paper",
