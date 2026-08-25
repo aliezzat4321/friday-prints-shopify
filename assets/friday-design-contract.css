@@ -132,6 +132,10 @@ body:has(.fp-site-header) .cart-items__title{
     object-position:center center!important;
     margin:auto!important;
     transform:translateY(-8px)!important;
+    /* The source composite contains a small grey shadow tail outside the
+       lower-right edge of the red frame. Mask only that empty corner; the
+       artwork, stars and limited-edition badge remain untouched. */
+    clip-path:polygon(0 0,100% 0,100% 85%,84% 85%,84% 100%,0 100%)!important;
   }
 }
 
