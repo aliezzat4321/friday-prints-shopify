@@ -28,7 +28,7 @@
         "transform": "lowercase"
       },
       {
-        "text": "GiGi",
+        "text": "world of GiGi",
         "transform": "lowercase"
       },
       {
@@ -72,7 +72,7 @@
       "newsletter": {
         "text": "Postcards from GiGi",
         "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "48px",
+        "fontSize": "57.6px",
         "textTransform": "none",
         "textAlign": "start",
         "fontStyle": "normal",
@@ -80,19 +80,19 @@
       }
     },
     "rail": {
-      "scrollLeft": 48,
-      "scrollWidth": 1910,
+      "scrollLeft": 46,
+      "scrollWidth": 1906,
       "clientWidth": 1348,
-      "paddingLeft": 48
+      "paddingLeft": 46
     },
     "prevDisabled": true,
     "nextDisabled": false,
     "overflow": false
   },
   "afterScroll": {
-    "scrollLeft": 562,
+    "scrollLeft": 558,
     "prevDisabled": false
   },
-  "run_id": 32834198981,
-  "source_sha": "bdfbaaab54338888eb32f9f5e1d3a0fe0f86ab33"
+  "run_id": 32836306018,
+  "source_sha": "36015d94dad8b8cf6802e1d3014d78c0cd524c5f"
 }
