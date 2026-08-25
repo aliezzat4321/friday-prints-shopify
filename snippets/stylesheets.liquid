@@ -8,8 +8,9 @@
 
 {%- comment -%}
   Final runtime contract. This deliberately lives in an existing core snippet so
-  Shopify's GitHub theme sync cannot leave casing/type fixes dependent on a new asset
-  or on stale section-editor values.
+  Shopify's GitHub theme sync cannot leave casing/type fixes dependent on stale
+  section-editor values. The World archive fallback is generated from the actual
+  All collection, so an existing saved five-block About section still renders six.
 {%- endcomment -%}
 <style id="fp-runtime-contract">
   .fp-hero__world,
@@ -30,70 +31,91 @@
 </style>
 
 {% if template.name == 'page' and page.handle == 'about' %}
-  {% assign fp_world_sixth = all_products['unapologetically-gigi-a4'] %}
-  {% if fp_world_sixth != blank and fp_world_sixth.featured_image %}
-    <script id="fp-world-sixth-data" type="application/json">
-      {
-        "url": {{ fp_world_sixth.url | json }},
-        "title": {{ fp_world_sixth.title | json }},
-        "image": {{ fp_world_sixth.featured_image | image_url: width: 1400 | json }},
-        "alt": {{ fp_world_sixth.featured_image.alt | default: fp_world_sixth.title | json }}
-      }
+  {% assign fp_world_catalog = collections['all'] %}
+  {% if fp_world_catalog != blank and fp_world_catalog.products_count > 0 %}
+    <script id="fp-world-catalog-data" type="application/json">
+      [
+        {% for fp_product in fp_world_catalog.products limit: 20 %}
+          {
+            "url": {{ fp_product.url | json }},
+            "title": {{ fp_product.title | json }},
+            "image": {{ fp_product.featured_image | image_url: width: 1400 | json }},
+            "alt": {{ fp_product.featured_image.alt | default: fp_product.title | json }},
+            "note": {% if fp_product.handle contains '-a3' %}"LIMITED EDITION / A3"{% elsif fp_product.handle contains '-a4' %}"LIMITED EDITION / A4"{% else %}"LIMITED EDITION ART PRINT"{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      ]
     </script>
   {% endif %}
 {% endif %}
 
 <script>
   (() => {
+    const normalizedPath = (value) => {
+      try { return new URL(value, window.location.origin).pathname.replace(/\/$/, ''); }
+      catch (_) { return String(value || '').replace(/\?.*$/, '').replace(/\/$/, ''); }
+    };
+
     const ensureWorldArchiveSix = () => {
       const gallery = document.querySelector('.fp-content-page--about .fp-world__gallery');
-      const source = document.getElementById('fp-world-sixth-data');
-      if (!gallery || !source || gallery.querySelectorAll('.fp-world-card').length >= 6) return;
+      const source = document.getElementById('fp-world-catalog-data');
+      if (!gallery || !source) return;
 
-      let item;
-      try { item = JSON.parse(source.textContent); } catch (_) { return; }
-      if (!item?.url || !item?.title || !item?.image) return;
+      let catalog;
+      try { catalog = JSON.parse(source.textContent); } catch (_) { return; }
+      if (!Array.isArray(catalog) || !catalog.length) return;
 
-      const existing = [...gallery.querySelectorAll('.fp-world-card__link')]
-        .some((link) => link.getAttribute('href') === item.url);
-      if (existing) return;
+      const existingPaths = new Set(
+        [...gallery.querySelectorAll('.fp-world-card__link')]
+          .map((link) => normalizedPath(link.getAttribute('href')))
+          .filter(Boolean)
+      );
 
-      const article = document.createElement('article');
-      article.className = 'fp-world-card';
-      article.dataset.index = '06';
+      while (gallery.querySelectorAll('.fp-world-card').length < 6) {
+        const item = catalog.find((candidate) => {
+          return candidate?.url && candidate?.title && candidate?.image && !existingPaths.has(normalizedPath(candidate.url));
+        });
+        if (!item) break;
 
-      const link = document.createElement('a');
-      link.className = 'fp-world-card__link';
-      link.href = item.url;
-      link.setAttribute('aria-label', `View ${item.title}`);
+        const cardNumber = String(gallery.querySelectorAll('.fp-world-card').length + 1).padStart(2, '0');
+        const article = document.createElement('article');
+        article.className = 'fp-world-card';
+        article.dataset.index = cardNumber;
 
-      const media = document.createElement('div');
-      media.className = 'fp-world-card__media';
-      const image = document.createElement('img');
-      image.src = item.image;
-      image.alt = item.alt || item.title;
-      image.loading = 'lazy';
-      image.decoding = 'async';
-      media.appendChild(image);
+        const link = document.createElement('a');
+        link.className = 'fp-world-card__link';
+        link.href = item.url;
+        link.setAttribute('aria-label', `View ${item.title}`);
 
-      const open = document.createElement('span');
-      open.className = 'fp-world-card__open';
-      open.textContent = 'view print ↗';
-      media.appendChild(open);
+        const media = document.createElement('div');
+        media.className = 'fp-world-card__media';
+        const image = document.createElement('img');
+        image.src = item.image;
+        image.alt = item.alt || item.title;
+        image.loading = 'lazy';
+        image.decoding = 'async';
+        media.appendChild(image);
 
-      const caption = document.createElement('div');
-      caption.className = 'fp-world-card__caption';
-      const number = document.createElement('span');
-      number.textContent = '06';
-      const title = document.createElement('h3');
-      title.textContent = item.title;
-      const note = document.createElement('p');
-      note.textContent = 'LIMITED EDITION / A4';
-      caption.append(number, title, note);
+        const open = document.createElement('span');
+        open.className = 'fp-world-card__open';
+        open.textContent = 'view print ↗';
+        media.appendChild(open);
 
-      link.append(media, caption);
-      article.appendChild(link);
-      gallery.appendChild(article);
+        const caption = document.createElement('div');
+        caption.className = 'fp-world-card__caption';
+        const number = document.createElement('span');
+        number.textContent = cardNumber;
+        const title = document.createElement('h3');
+        title.textContent = item.title;
+        const note = document.createElement('p');
+        note.textContent = item.note || 'LIMITED EDITION ART PRINT';
+        caption.append(number, title, note);
+
+        link.append(media, caption);
+        article.appendChild(link);
+        gallery.appendChild(article);
+        existingPaths.add(normalizedPath(item.url));
+      }
     };
 
     const normalizeFridayRuntime = () => {
