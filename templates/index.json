@@ -89,7 +89,9 @@
           }
         }
       },
-      "block_order": ["unboxing_1"],
+      "block_order": [
+        "unboxing_1"
+      ],
       "settings": {
         "show_section": false,
         "eyebrow": "03 · UNBOX FRIDAY",
@@ -109,7 +111,7 @@
         "scene_1": {
           "type": "scene",
           "settings": {
-            "image": "shopify://shop_images/7E73CCE9-4FE4-4A97-A4F3-57325A6D3601.jpg",
+            "image": "shopify://shop_images/8A8AEA45-01A8-421F-BE59-E4A71C4F32B7.jpg",
             "product": "",
             "link": "",
             "alt": "Friday Prints at home"
@@ -127,7 +129,7 @@
         "scene_3": {
           "type": "scene",
           "settings": {
-            "image": "shopify://shop_images/74F314D8-9E59-4B4F-A125-60ACFA3439CB.jpg",
+            "image": "shopify://shop_images/9454BBA4-C533-4FB1-AB28-74965B9B648C.jpg",
             "product": "",
             "link": "",
             "alt": "Friday Prints at home"
@@ -192,7 +194,9 @@
         "benefit_3",
         "benefit_4"
       ],
-      "settings": {}
+      "settings": {
+        "background_color": "#fffdf8"
+      }
     },
     "friday_newsletter": {
       "type": "friday-newsletter",
