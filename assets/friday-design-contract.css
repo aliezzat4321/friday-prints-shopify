@@ -107,15 +107,23 @@ body:has(.fp-site-header) .cart-items__title{
 
 /* ----------------------------------------------------------
    5. HERO ARTWORK COMPOSITION
-   The framed print must float inside the cream hero rather than visually
+   The framed print must float inside the near-white hero rather than visually
    sitting on the pink collection boundary. Keep the mobile crop unchanged.
    ---------------------------------------------------------- */
 @media (min-width:750px){
+  .fp-hero{
+    padding-bottom:28px!important;
+  }
+
+  .fp-hero .fp-hero__grid{
+    padding-bottom:0!important;
+  }
+
   .fp-hero .fp-hero__scene--curated{
     display:flex!important;
     align-items:center!important;
     justify-content:center!important;
-    padding:16px 0 36px!important;
+    padding:16px 0 22px!important;
   }
 
   .fp-hero .fp-hero__scene--curated picture{
@@ -131,10 +139,10 @@ body:has(.fp-site-header) .cart-items__title{
     width:auto!important;
     height:auto!important;
     max-width:100%!important;
-    max-height:calc(100% - 58px)!important;
+    max-height:calc(100% - 48px)!important;
     object-fit:contain!important;
     object-position:center center!important;
     margin:auto!important;
-    transform:translateY(-10px)!important;
+    transform:translateY(-8px)!important;
   }
 }
