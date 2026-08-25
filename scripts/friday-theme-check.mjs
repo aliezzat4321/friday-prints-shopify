@@ -36,12 +36,14 @@ for (const directory of ['sections', 'snippets', 'layout', 'templates']) {
 }
 
 const balanceFiles = new Set([
+  'sections/friday-at-home.liquid',
   'sections/friday-contact.liquid',
   'sections/friday-footer.liquid',
   'sections/friday-header.liquid',
   'sections/friday-hero.liquid',
   'sections/friday-page.liquid',
-  'sections/friday-product.liquid'
+  'sections/friday-product.liquid',
+  'sections/friday-video-stories.liquid'
 ]);
 
 for (const file of liquidFiles) {
@@ -76,8 +78,13 @@ if (/3[–-]5\s+working\s+days/i.test(allText)) fail('Old 3–5 working-day prom
 const required = [
   ['templates/index.json', /"title_top":\s*"friday"/i, 'brand-first home title'],
   ['templates/index.json', /"use_curated_scene":\s*true/, 'clean hero artwork switch'],
-  ['sections/friday-hero.liquid', /aspect-ratio:6\/5/, 'tight mobile hero artwork crop'],
-  ['sections/friday-hero.liquid', /object-fit:cover!important/, 'mobile hero artwork fill'],
+  ['templates/index.json', /"show_section":\s*true/, 'homepage unboxing enabled'],
+  ['templates/index.json', /"heading":\s*"meet GiGi"/, 'correct GiGi story casing'],
+  ['templates/index.json', /"heading":\s*"postcards from GiGi"/, 'correct GiGi newsletter casing'],
+  ['sections/header-group.json', /"nav_2_label":\s*"GiGi"/, 'GiGi desktop navigation label'],
+  ['sections/footer-group.json', /"link_1_label":\s*"GiGi"/, 'GiGi footer navigation label'],
+  ['sections/friday-hero.liquid', /aspect-ratio:\s*6\/5/, 'tight mobile hero artwork crop'],
+  ['sections/friday-hero.liquid', /object-fit:\s*cover/, 'mobile hero artwork fill'],
   ['sections/friday-product.liquid', /data-fp-next-edition/, 'next-edition product display'],
   ['sections/friday-product.liquid', /custom\.edition_total/, 'editable edition metafield support'],
   ['sections/friday-product.liquid', /fp_description_intro contains 'size: a3'/, 'single-size A3 description fallback'],
@@ -90,15 +97,41 @@ const required = [
   ['sections/friday-product.liquid', /fp-pdp__unbox/, 'product unboxing film'],
   ['sections/friday-video-stories.liquid', /"max_blocks":\s*3/, 'three-film homepage editor limit'],
   ['sections/friday-video-stories.liquid', /IntersectionObserver/, 'in-view video playback'],
+  ['sections/friday-at-home.liquid', /fp-at-home__shop-label/, 'shoppable Friday at Home scenes'],
+  ['sections/friday-at-home.liquid', /font-family:var\(--fp-display-font/, 'Friday at Home display typography'],
   ['templates/index.json', /"friday_films"/, 'homepage video story placement'],
   ['sections/friday-contact.liquid', /form\s+'contact'/, 'Shopify contact form'],
   ['sections/footer-group.json', /"link_2_url":\s*"\/pages\/contact"/, 'footer contact route'],
   ['sections/friday-header.liquid', /fp-menu[\s\S]*fp-logo/, 'mobile menu before centred logo'],
-  ['sections/friday-header.liquid', /fp-logo--mark/, 'centred GiGi brand mark']
+  ['sections/friday-header.liquid', /fp-logo--mark/, 'centred GiGi brand mark'],
+  ['assets/friday-production.css', /--fp-display-font:/, 'display typography token'],
+  ['assets/friday-production.css', /--fp-ui-font:/, 'utility typography token'],
+  ['assets/friday-production.css', /\.fp-nav__links,[\s\S]*text-transform:none!important/, 'authored casing preservation'],
+  ['snippets/stylesheets.liquid', /friday-production\.css/, 'authoritative Friday production stylesheet']
 ];
 
 for (const [file, pattern, label] of required) {
   if (!pattern.test(read(file))) fail(`${file}: missing ${label}.`);
+}
+
+const stylesheetLoader = read('snippets/stylesheets.liquid');
+for (const legacy of ['friday-home-compression.css','friday-responsive-consistency.css','friday-hero-viewport-cap.css']) {
+  if (stylesheetLoader.includes(legacy)) fail(`snippets/stylesheets.liquid: legacy conflicting layer ${legacy} is still loaded.`);
+}
+
+const casingFiles = [
+  'templates/index.json',
+  'sections/header-group.json',
+  'sections/footer-group.json',
+  'sections/friday-hero.liquid',
+  'sections/friday-story.liquid',
+  'sections/friday-newsletter.liquid',
+  'sections/friday-page.liquid'
+];
+for (const file of casingFiles) {
+  const source = read(file).replaceAll('GiGi','');
+  const bad = source.match(/(^|[^A-Za-z])(?:Gigi|gigi)(?=[^A-Za-z]|$)/);
+  if (bad) fail(`${file}: non-standard GiGi casing remains.`);
 }
 
 for (const file of ['assets/friday-hero-clean.webp', 'assets/friday-hero-clean-mobile.webp']) {
@@ -113,7 +146,7 @@ for (const file of ['assets/friday-hero-clean.webp', 'assets/friday-hero-clean-m
 
 const unboxingVideo = path.join(root, 'assets/friday-unboxing.mp4');
 if (!fs.existsSync(unboxingVideo)) fail('Missing optimized unboxing video.');
-if (fs.statSync(unboxingVideo).size > 5 * 1024 * 1024) fail('Unboxing video exceeds the 5 MB performance budget.');
+else if (fs.statSync(unboxingVideo).size > 5 * 1024 * 1024) fail('Unboxing video exceeds the 5 MB performance budget.');
 
 if (errors.length) {
   console.error(`Friday theme check failed (${errors.length})`);
