@@ -1,3 +1,9 @@
+{% liquid
+  assign fp_newsletter_heading = section.settings.heading
+  if fp_newsletter_heading == 'Postcards from GiGi' or fp_newsletter_heading == 'Postcards from Gigi' or fp_newsletter_heading == 'postcards from Gigi' or fp_newsletter_heading == 'Postcards from GIGI' or fp_newsletter_heading == 'postcards from GIGI'
+    assign fp_newsletter_heading = 'postcards from GiGi'
+  endif
+%}
 <section class="fp-section fp-newsletter" id="FridayNewsletter-{{ section.id }}" style="--fp-newsletter-gigi-desktop:{{ section.settings.gigi_size_desktop }}px;--fp-newsletter-gigi-mobile:{{ section.settings.gigi_size_mobile }}px;--fp-newsletter-bg:{{ section.settings.background_color }};--fp-newsletter-heading-desktop:{{ section.settings.heading_size_desktop }}px;--fp-newsletter-heading-mobile:{{ section.settings.heading_size_mobile }}px;--fp-newsletter-body-desktop:{{ section.settings.body_size_desktop }}px;--fp-newsletter-body-mobile:{{ section.settings.body_size_mobile }}px;">
   <style>
     #FridayNewsletter-{{ section.id }} .fp-newsletter h2{
@@ -25,7 +31,7 @@
   <div class="fp-shell fp-newsletter__grid">
     <div class="fp-newsletter__copy">
       {% if section.settings.eyebrow != blank %}<p class="fp-newsletter__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
-      {% if section.settings.heading != blank %}<h2>{{ section.settings.heading }}</h2>{% endif %}
+      {% if fp_newsletter_heading != blank %}<h2>{{ fp_newsletter_heading }}</h2>{% endif %}
       {% if section.settings.text != blank %}<p>{{ section.settings.text }}</p>{% endif %}
     </div>
 
