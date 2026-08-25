@@ -84,7 +84,7 @@
     "variant_button_width": "default-width-buttons",
     "content_for_index": [],
     "color_palette": {
-      "background": "#F7EDDC",
+      "background": "#FFFDF8",
       "foreground": "#15130F",
       "color1": "#EB403C",
       "color2": "#F3A6BF",
@@ -166,7 +166,7 @@
       "variant_button_radius": 100,
       "variant_button_width": "default-width-buttons",
       "color_palette": {
-        "background": "#F7EDDC",
+        "background": "#FFFDF8",
         "foreground": "#15130F",
         "color1": "#EB403C",
         "color2": "#F3A6BF",
