@@ -112,6 +112,40 @@
     {% endif %}
     {% if template.name == 'page' and page.handle == 'about' %}
       {{ 'friday-world-v4.css' | asset_url | stylesheet_tag }}
+      <style id="fp-world-desktop-archive-contract">
+        @media (min-width:1001px){
+          body .fp-content-page--about .fp-world__gallery{
+            grid-template-columns:repeat(3,minmax(0,1fr))!important;
+            grid-auto-flow:row!important;
+            gap:44px 24px!important;
+            align-items:start!important;
+          }
+          body .fp-content-page--about .fp-world-card:nth-child(n){
+            grid-column:auto!important;
+            grid-row:auto!important;
+            margin-top:0!important;
+          }
+          body .fp-content-page--about .fp-world-card__media{
+            aspect-ratio:.707!important;
+            display:grid!important;
+            place-items:center!important;
+            overflow:hidden!important;
+            background:#fff!important;
+          }
+          body .fp-content-page--about .fp-world-card img{
+            width:100%!important;
+            height:100%!important;
+            max-width:100%!important;
+            max-height:100%!important;
+            object-fit:contain!important;
+            object-position:center!important;
+          }
+          body .fp-content-page--about .fp-world-card__link:hover img{
+            transform:none!important;
+            filter:none!important;
+          }
+        }
+      </style>
     {% endif %}
   </body>
 </html>
