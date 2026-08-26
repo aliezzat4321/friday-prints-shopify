@@ -24,10 +24,10 @@ jobs:
           npm install playwright@1.55.0 >/dev/null 2>&1
           npx playwright install --with-deps chromium >/dev/null 2>&1
       - name: Allow Shopify preview sync
-        run: sleep 45
+        run: sleep 50
       - name: Render and audit connected Shopify draft
         env:
-          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+          STORE_URL: https://ygv356jws4gmk7hs-108268650782.shopifypreview.com
         run: |
           cat > qa.mjs <<'EOF'
           import { chromium } from 'playwright';
@@ -105,6 +105,8 @@ jobs:
                 brokenImages,
                 header: docRect('.fp-site-header'),
                 hero: docRect('.fp-hero'),
+                heroStack: docRect('.fp-hero__scene--stack'),
+                heroStackCards: document.querySelectorAll('.fp-hero-stack__card').length,
                 collection: docRect('.fp-collection'),
                 story: docRect('.fp-story'),
                 atHome: docRect('.fp-at-home'),
@@ -134,11 +136,14 @@ jobs:
             const isMobile = width <= 749;
             const errors = [];
 
+            if (resp?.status() !== 200) errors.push(`HTTP_STATUS:${resp?.status() ?? 'none'}`);
             if (passwordPage) errors.push('PASSWORD_PAGE_RENDERED');
             if (metrics.brokenImages.length) errors.push(`BROKEN_IMAGES:${metrics.brokenImages.length}`);
             if (overflow) errors.push(`HORIZONTAL_OVERFLOW:${metrics.scrollWidth}-${metrics.clientWidth}`);
             if (!metrics.header) errors.push('HEADER_MISSING');
             if (!metrics.hero) errors.push('HERO_MISSING');
+            if (!metrics.heroStack) errors.push('PRINT_STACK_HERO_MISSING');
+            if (metrics.heroStackCards !== 3) errors.push(`PRINT_STACK_CARD_COUNT:${metrics.heroStackCards}`);
             if (!metrics.collection) errors.push('PRINT_RAIL_MISSING');
             if (!metrics.story) errors.push('GIGI_STORY_MISSING');
             if (!metrics.atHome) errors.push('FRIDAY_AT_HOME_MISSING');
