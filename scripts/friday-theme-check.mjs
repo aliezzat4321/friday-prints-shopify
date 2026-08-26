@@ -84,7 +84,7 @@ if (/"friday_films"|"type":\s*"friday-video-stories"/.test(indexSource)) {
 const required = [
   ['templates/index.json', /"title_top":\s*"friday"/i, 'brand-first home title'],
   ['templates/index.json', /"art_mode":\s*"print_stack"/, 'new layered print-stack hero'],
-  ['templates/index.json', /"stack_primary":\s*"friday-in-kyoto"/, 'Friday in Kyoto hero primary print'],
+  ['templates/index.json', /"stack_primary":\s*"the-offering-copy"/, 'Kimono: Not Made for Speed hero primary print'],
   ['templates/index.json', /"stack_left":\s*"gigi-goes-to-the-jimjilbang"/, 'Jimjilbang hero left print'],
   ['templates/index.json', /"stack_right":\s*"small-car-big-plans-a4"/, 'Small Car hero right print'],
   ['templates/index.json', /"use_curated_scene":\s*true/, 'legacy hero retained for rollback'],
