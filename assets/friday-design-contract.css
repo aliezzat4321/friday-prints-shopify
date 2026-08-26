@@ -216,3 +216,106 @@ body:has(.fp-site-header) .cart-items__title{
     transform:none!important;
   }
 }
+
+/* ----------------------------------------------------------
+   8. LAYERED HERO — VISUAL FIT CONTRACT
+   All three prints must remain fully visible. The frame/mat spans are block
+   boxes so their red borders cannot create stray line-box artefacts.
+   ---------------------------------------------------------- */
+.fp-hero__scene--stack .fp-hero-stack__frame,
+.fp-hero__scene--stack .fp-hero-stack__mat{
+  display:block!important;
+}
+
+@media (min-width:1101px){
+  .fp-hero__scene--stack .fp-hero-stack__card--left{
+    width:min(28%,235px)!important;
+    left:6%!important;
+    top:27%!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--primary{
+    width:min(40%,330px)!important;
+    left:31%!important;
+    top:7%!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--right{
+    width:min(25%,210px)!important;
+    right:4%!important;
+    top:30%!important;
+  }
+}
+
+@media (max-width:1100px) and (min-width:901px){
+  .fp-hero__scene--stack .fp-hero-stack__card--left{
+    width:30%!important;
+    left:3%!important;
+    top:37%!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--primary{
+    width:43%!important;
+    left:28%!important;
+    top:14%!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--right{
+    width:28%!important;
+    right:2%!important;
+    top:39%!important;
+  }
+}
+
+@media (max-width:900px) and (min-width:750px){
+  .fp-hero__scene--stack .fp-hero-stack__card--left{
+    width:34%!important;
+    left:2%!important;
+    top:41%!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--primary{
+    width:48%!important;
+    left:29%!important;
+    top:18%!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--right{
+    width:31%!important;
+    right:1%!important;
+    top:43%!important;
+  }
+}
+
+@media (max-width:749px){
+  .fp-site-header{
+    padding-top:env(safe-area-inset-top,0px)!important;
+    background:var(--fp-cream,#fffdf8)!important;
+  }
+  .fp-hero__scene--stack{
+    width:100%!important;
+    height:clamp(250px,73vw,285px)!important;
+    min-height:0!important;
+    margin:14px 0 0!important;
+    overflow:visible!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--left{
+    width:31%!important;
+    left:3%!important;
+    top:32%!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--primary{
+    width:43%!important;
+    max-width:168px!important;
+    left:50%!important;
+    top:9%!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--right{
+    width:30%!important;
+    right:3%!important;
+    top:34%!important;
+  }
+}
+
+@media (max-width:360px){
+  .fp-hero__scene--stack{
+    height:250px!important;
+  }
+  .fp-hero__scene--stack .fp-hero-stack__card--primary{
+    max-width:138px!important;
+  }
+}
