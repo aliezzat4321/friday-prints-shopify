@@ -30,9 +30,13 @@
         "shop_link": "shopify://collections/all",
         "collection_label": "Meet GiGi",
         "collection_link": "/pages/about",
+        "art_mode": "print_stack",
+        "stack_primary": "friday-in-kyoto",
+        "stack_left": "gigi-goes-to-the-jimjilbang",
+        "stack_right": "small-car-big-plans-a4",
         "use_curated_scene": true,
         "hero_scene": "shopify://shop_images/CC35FB34-5C22-4C2F-BBF7-2ECAF5F99DF7.png",
-        "hero_alt": "A limited-edition Friday Print featuring GiGi in a red frame",
+        "hero_alt": "Friday Prints limited-edition artwork",
         "empty_message": "Select the hero artwork in this section."
       }
     },
