@@ -1,0 +1,16 @@
+/* Friday Prints — approved composite hero sizing
+   Desktop-only refinement. Mobile/tablet composition is intentionally untouched. */
+
+@media (min-width: 1280px) {
+  .fp-hero[data-art-mode="composite_image"] .fp-hero__scene--composite picture {
+    transform: translate3d(6%, 3%, 0) scale(1.14) !important;
+    transform-origin: center right !important;
+  }
+}
+
+@media (min-width: 1101px) and (max-width: 1279px) {
+  .fp-hero[data-art-mode="composite_image"] .fp-hero__scene--composite picture {
+    transform: translate3d(3%, 2%, 0) scale(1.07) !important;
+    transform-origin: center right !important;
+  }
+}
