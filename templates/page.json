@@ -122,7 +122,7 @@
           "type": "faq_item",
           "settings": {
             "question": "what if my order arrives damaged?",
-            "answer": "<p>Please email Eldemirdsh@gmail.com or message @fridayprints.art and we’ll help.</p>",
+            "answer": "<p>Please email info@fridayprints.art or message @fridayprints.art and we’ll help.</p>",
             "open_by_default": false
           }
         }
@@ -145,6 +145,7 @@
         "faq_damage"
       ],
       "settings": {
+        "support_email": "info@fridayprints.art",
         "instagram_url": "https://www.instagram.com/fridayprints.art/"
       }
     }
