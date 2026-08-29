@@ -18,7 +18,31 @@
     #FridayHero-{{ section.id }} .fp-hero__scene--curated{display:flex;align-items:center;justify-content:center;padding:20px 0}
     #FridayHero-{{ section.id }} .fp-hero__scene--curated img{display:block;width:auto;max-width:100%;height:auto;max-height:calc(100% - 40px);object-fit:contain;object-position:center center;margin:auto}
 
-    /* New artwork-only hero. Text/nav remain the existing Friday system. */
+    /* Approved composite artwork mode: shadows, perspective and frame depth live in the artwork itself. */
+    #FridayHero-{{ section.id }} .fp-hero__scene--composite{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      align-self:stretch;
+      min-width:0;
+      height:100%;
+      overflow:visible;
+    }
+    #FridayHero-{{ section.id }} .fp-hero__scene--composite picture{
+      display:block;
+      width:min(100%,780px);
+      transform:translate3d(1.5%,-1%,0);
+    }
+    #FridayHero-{{ section.id }} .fp-hero__scene--composite img{
+      display:block;
+      width:100%;
+      height:auto;
+      max-height:min(70vh,680px);
+      object-fit:contain;
+      object-position:center;
+    }
+
+    /* Editable layered-stack fallback. */
     #FridayHero-{{ section.id }} .fp-hero__scene--stack{
       position:relative;
       display:block;
@@ -39,20 +63,14 @@
       transition:transform .42s cubic-bezier(.2,.7,.2,1),filter .42s ease;
       will-change:transform;
     }
-    #FridayHero-{{ section.id }} .fp-hero-stack__card:focus-visible{
-      outline:2px solid var(--fp-ink,#17120f);
-      outline-offset:5px;
-    }
+    #FridayHero-{{ section.id }} .fp-hero-stack__card:focus-visible{outline:2px solid var(--fp-ink,#17120f);outline-offset:5px}
     #FridayHero-{{ section.id }} .fp-hero-stack__frame{
       background:var(--fp-red-text,#c9362e);
       padding:9px;
       box-shadow:0 14px 30px rgba(23,18,15,.08);
       animation:fpHeroStackSettle .72s cubic-bezier(.2,.7,.2,1) both;
     }
-    #FridayHero-{{ section.id }} .fp-hero-stack__mat{
-      background:var(--fp-cream,#fffdf8);
-      padding:9px;
-    }
+    #FridayHero-{{ section.id }} .fp-hero-stack__mat{background:var(--fp-cream,#fffdf8);padding:9px}
     #FridayHero-{{ section.id }} .fp-hero-stack__card img{
       display:block;
       width:100%;
@@ -61,44 +79,21 @@
       object-fit:contain;
       background:var(--fp-cream,#fffdf8);
     }
-    #FridayHero-{{ section.id }} .fp-hero-stack__card--left{
-      --fp-card-transform:rotate(-1.6deg);
-      width:min(36%,300px);
-      left:5%;
-      top:28%;
-      z-index:1;
-    }
-    #FridayHero-{{ section.id }} .fp-hero-stack__card--primary{
-      --fp-card-transform:rotate(.7deg);
-      width:min(49%,420px);
-      left:34%;
-      top:5%;
-      z-index:3;
-    }
-    #FridayHero-{{ section.id }} .fp-hero-stack__card--right{
-      --fp-card-transform:rotate(1.7deg);
-      width:min(32%,275px);
-      right:2%;
-      top:31%;
-      z-index:2;
-    }
+    #FridayHero-{{ section.id }} .fp-hero-stack__card--left{--fp-card-transform:rotate(-1.6deg);width:min(36%,300px);left:5%;top:28%;z-index:1}
+    #FridayHero-{{ section.id }} .fp-hero-stack__card--primary{--fp-card-transform:rotate(.7deg);width:min(49%,420px);left:34%;top:5%;z-index:3}
+    #FridayHero-{{ section.id }} .fp-hero-stack__card--right{--fp-card-transform:rotate(1.7deg);width:min(32%,275px);right:2%;top:31%;z-index:2}
     #FridayHero-{{ section.id }} .fp-hero-stack__card--left .fp-hero-stack__frame{animation-delay:.08s}
     #FridayHero-{{ section.id }} .fp-hero-stack__card--primary .fp-hero-stack__frame{animation-delay:.14s}
     #FridayHero-{{ section.id }} .fp-hero-stack__card--right .fp-hero-stack__frame{animation-delay:.2s}
 
-    @keyframes fpHeroStackSettle{
-      from{opacity:0;transform:translateY(14px)}
-      to{opacity:1;transform:translateY(0)}
-    }
+    @keyframes fpHeroStackSettle{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
     @media(hover:hover) and (pointer:fine){
-      #FridayHero-{{ section.id }} .fp-hero-stack__card:hover{
-        transform:var(--fp-card-transform) translateY(-4px) scale(1.012);
-        filter:saturate(1.025);
-      }
+      #FridayHero-{{ section.id }} .fp-hero-stack__card:hover{transform:var(--fp-card-transform) translateY(-4px) scale(1.012);filter:saturate(1.025)}
     }
 
     @media(max-width:1100px) and (min-width:901px){
+      #FridayHero-{{ section.id }} .fp-hero__scene--composite picture{width:min(102%,680px);transform:translate3d(1%,-1%,0)}
       #FridayHero-{{ section.id }} .fp-hero-stack__card--left{width:min(35%,250px);left:3%;top:31%}
       #FridayHero-{{ section.id }} .fp-hero-stack__card--primary{width:min(50%,350px);left:32%;top:7%}
       #FridayHero-{{ section.id }} .fp-hero-stack__card--right{width:min(31%,220px);right:1%;top:34%}
@@ -109,6 +104,8 @@
       #FridayHero-{{ section.id }} .fp-hero__kicker{font-size:14px}
       #FridayHero-{{ section.id }} .fp-hero__sub{font-size:14px}
       #FridayHero-{{ section.id }} .fp-btn{font-size:12px}
+      #FridayHero-{{ section.id }} .fp-hero__scene--composite{min-height:500px}
+      #FridayHero-{{ section.id }} .fp-hero__scene--composite picture{width:min(104%,610px);transform:none}
       #FridayHero-{{ section.id }} .fp-hero__scene--stack{height:100%;min-height:520px}
       #FridayHero-{{ section.id }} .fp-hero-stack__frame{padding:7px;box-shadow:0 12px 24px rgba(23,18,15,.07)}
       #FridayHero-{{ section.id }} .fp-hero-stack__mat{padding:7px}
@@ -122,59 +119,31 @@
       #FridayHero-{{ section.id }} .fp-hero h1{font-size:clamp(58px,18vw,var(--fp-hero-title-mobile));max-width:360px}
       #FridayHero-{{ section.id }} .fp-hero__sub{font-size:var(--fp-hero-sub-mobile)}
       #FridayHero-{{ section.id }} .fp-btn{font-size:var(--fp-hero-button-mobile)}
-      #FridayHero-{{ section.id }} .fp-hero__scene--curated{
-        width:100vw;
-        margin-left:calc(50% - 50vw);
-        padding:0;
-        overflow:hidden;
-      }
-      #FridayHero-{{ section.id }} .fp-hero__scene--curated picture{
-        display:block;
-        width:100%;
-        aspect-ratio:6/5;
-        overflow:hidden;
-      }
-      #FridayHero-{{ section.id }} .fp-hero__scene--curated img{
-        width:100%;
-        max-width:none;
-        height:100%;
-        max-height:none;
-        margin:0;
-        object-fit:cover;
-        object-position:center 50%;
-      }
+      #FridayHero-{{ section.id }} .fp-hero__scene--curated{width:100vw;margin-left:calc(50% - 50vw);padding:0;overflow:hidden}
+      #FridayHero-{{ section.id }} .fp-hero__scene--curated picture{display:block;width:100%;aspect-ratio:6/5;overflow:hidden}
+      #FridayHero-{{ section.id }} .fp-hero__scene--curated img{width:100%;max-width:none;height:100%;max-height:none;margin:0;object-fit:cover;object-position:center 50%}
 
-      #FridayHero-{{ section.id }} .fp-hero__scene--stack{
-        width:calc(100% + 40px);
-        height:min(79vw,310px);
-        min-height:270px;
-        margin:2px 0 0 -20px;
-        overflow:hidden;
+      #FridayHero-{{ section.id }} .fp-hero__scene--composite{
+        width:calc(100% + 24px);
+        height:auto;
+        min-height:0;
+        margin:8px 0 0 -12px;
+        padding:0;
+        overflow:visible;
       }
+      #FridayHero-{{ section.id }} .fp-hero__scene--composite picture{width:min(100%,430px);transform:none;margin:0 auto}
+      #FridayHero-{{ section.id }} .fp-hero__scene--composite img{width:100%;max-height:none;height:auto}
+
+      #FridayHero-{{ section.id }} .fp-hero__scene--stack{width:calc(100% + 40px);height:min(79vw,310px);min-height:270px;margin:2px 0 0 -20px;overflow:hidden}
       #FridayHero-{{ section.id }} .fp-hero-stack__frame{padding:5px;box-shadow:0 8px 18px rgba(23,18,15,.065)}
       #FridayHero-{{ section.id }} .fp-hero-stack__mat{padding:5px}
-      #FridayHero-{{ section.id }} .fp-hero-stack__card--left{
-        --fp-card-transform:rotate(-2deg);
-        width:41%;
-        left:2%;
-        top:25%;
-      }
-      #FridayHero-{{ section.id }} .fp-hero-stack__card--primary{
-        --fp-card-transform:translateX(-50%) rotate(.6deg);
-        width:54%;
-        max-width:222px;
-        left:50%;
-        top:5%;
-      }
-      #FridayHero-{{ section.id }} .fp-hero-stack__card--right{
-        --fp-card-transform:rotate(2deg);
-        width:39%;
-        right:1%;
-        top:29%;
-      }
+      #FridayHero-{{ section.id }} .fp-hero-stack__card--left{--fp-card-transform:rotate(-2deg);width:41%;left:2%;top:25%}
+      #FridayHero-{{ section.id }} .fp-hero-stack__card--primary{--fp-card-transform:translateX(-50%) rotate(.6deg);width:54%;max-width:222px;left:50%;top:5%}
+      #FridayHero-{{ section.id }} .fp-hero-stack__card--right{--fp-card-transform:rotate(2deg);width:39%;right:1%;top:29%}
     }
 
     @media(max-width:360px){
+      #FridayHero-{{ section.id }} .fp-hero__scene--composite{width:calc(100% + 16px);margin-left:-8px}
       #FridayHero-{{ section.id }} .fp-hero__scene--stack{height:282px;min-height:250px}
       #FridayHero-{{ section.id }} .fp-hero-stack__card--primary{width:55%;max-width:190px}
     }
@@ -202,7 +171,14 @@
       {% endif %}
     </div>
 
-    {% if art_mode == 'print_stack' %}
+    {% if art_mode == 'composite_image' and section.settings.composite_desktop != blank %}
+      <div class="fp-hero__scene fp-hero__scene--composite" aria-label="Featured Friday Prints">
+        <picture>
+          {% if section.settings.composite_mobile != blank %}<source media="(max-width: 749px)" srcset="{{ section.settings.composite_mobile | image_url: width: 1200 }}">{% endif %}
+          {{ section.settings.composite_desktop | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1500,1800', sizes: '(max-width: 749px) 100vw, 58vw', alt: section.settings.hero_alt }}
+        </picture>
+      </div>
+    {% elsif art_mode == 'print_stack' %}
       <div class="fp-hero__scene fp-hero__scene--stack" aria-label="Featured Friday Prints">
         {% if stack_left_product != blank and stack_left_product.featured_image != blank %}
           <a class="fp-hero-stack__card fp-hero-stack__card--left" href="{{ stack_left_product.url }}" aria-label="View {{ stack_left_product.title | escape }}">
@@ -265,10 +241,13 @@
     { "type": "url", "id": "collection_link", "label": "Secondary button link" },
     { "type": "header", "content": "Artwork" },
     { "type": "select", "id": "art_mode", "label": "Hero artwork layout", "default": "print_stack", "options": [
-      { "value": "print_stack", "label": "Layered print stack — new" },
+      { "value": "composite_image", "label": "Composite artwork — approved" },
+      { "value": "print_stack", "label": "Layered print stack — editable" },
       { "value": "legacy_curated", "label": "Single framed print — legacy" },
-      { "value": "custom_image", "label": "Custom hero image" }
+      { "value": "custom_image", "label": "Custom single image" }
     ] },
+    { "type": "image_picker", "id": "composite_desktop", "label": "Composite artwork — desktop / tablet" },
+    { "type": "image_picker", "id": "composite_mobile", "label": "Composite artwork — mobile" },
     { "type": "product", "id": "stack_primary", "label": "Print stack — main print" },
     { "type": "product", "id": "stack_left", "label": "Print stack — left print" },
     { "type": "product", "id": "stack_right", "label": "Print stack — right print" },
