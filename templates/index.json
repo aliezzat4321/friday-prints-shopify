@@ -30,7 +30,9 @@
         "shop_link": "shopify://collections/all",
         "collection_label": "Meet GiGi",
         "collection_link": "/pages/about",
-        "art_mode": "print_stack",
+        "art_mode": "composite_image",
+        "composite_desktop": "shopify://shop_images/friday-hero-composite-desktop.png",
+        "composite_mobile": "shopify://shop_images/friday-hero-composite-mobile.png",
         "stack_primary": "the-offering-copy",
         "stack_left": "gigi-goes-to-the-jimjilbang",
         "stack_right": "small-car-big-plans-a4",
@@ -113,7 +115,11 @@
           }
         }
       },
-      "block_order": ["scene_1", "scene_2", "scene_3"],
+      "block_order": [
+        "scene_1",
+        "scene_2",
+        "scene_3"
+      ],
       "settings": {
         "heading": "friday at home",
         "text": "Printed to live with you.",
@@ -128,13 +134,48 @@
     "friday_benefits": {
       "type": "friday-benefits",
       "blocks": {
-        "benefit_1": {"type":"benefit","settings":{"icon":"✹","heading":"NUMBERED EDITIONS","text":"Every Friday print belongs to a limited numbered edition."}},
-        "benefit_2": {"type":"benefit","settings":{"icon":"100","heading":"A3 / 100","text":"A3 prints are limited to 100 editions per design."}},
-        "benefit_3": {"type":"benefit","settings":{"icon":"150","heading":"A4 / 150","text":"A4 prints are limited to 150 editions per design."}},
-        "benefit_4": {"type":"benefit","settings":{"icon":"▣","heading":"PREMIUM MATTE","text":"Rich colour, a soft finish and a removable mount."}}
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "✹",
+            "heading": "NUMBERED EDITIONS",
+            "text": "Every Friday print belongs to a limited numbered edition."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "100",
+            "heading": "A3 / 100",
+            "text": "A3 prints are limited to 100 editions per design."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "150",
+            "heading": "A4 / 150",
+            "text": "A4 prints are limited to 150 editions per design."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "▣",
+            "heading": "PREMIUM MATTE",
+            "text": "Rich colour, a soft finish and a removable mount."
+          }
+        }
       },
-      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"],
-      "settings": {"background_color":"#fffdf8"}
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4"
+      ],
+      "settings": {
+        "background_color": "#fffdf8"
+      }
     },
     "friday_newsletter": {
       "type": "friday-newsletter",
@@ -158,5 +199,12 @@
       }
     }
   },
-  "order": ["friday_hero", "friday_collection", "friday_story", "friday_at_home", "friday_benefits", "friday_newsletter"]
+  "order": [
+    "friday_hero",
+    "friday_collection",
+    "friday_story",
+    "friday_at_home",
+    "friday_benefits",
+    "friday_newsletter"
+  ]
 }
