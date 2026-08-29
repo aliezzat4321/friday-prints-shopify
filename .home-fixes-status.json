@@ -1,115 +1,39 @@
 {
-  "pass": true,
-  "httpStatus": 200,
-  "navWorldGiGi": true,
-  "meetGiGi": true,
-  "heroWorldGiGi": true,
+  "pass": false,
+  "httpStatus": 410,
+  "navWorldGiGi": false,
+  "meetGiGi": false,
+  "heroWorldGiGi": false,
   "noBadGiGiCasing": true,
   "noEditorGhost": true,
-  "sectionCopy": true,
-  "sectionFonts": true,
-  "sectionAlignment": true,
-  "titleCasingPreserved": true,
-  "titleScale": true,
-  "prevCorrectAtStart": true,
+  "sectionCopy": false,
+  "sectionFonts": false,
+  "sectionAlignment": false,
+  "titleCasingPreserved": false,
+  "titleScale": false,
+  "prevCorrectAtStart": false,
   "prevEnablesAfterScroll": true,
   "initial": {
-    "buttons": [
-      {
-        "text": "shop prints",
-        "transform": "none"
-      },
-      {
-        "text": "Meet GiGi",
-        "transform": "none"
-      }
-    ],
-    "navLinks": [
-      {
-        "text": "shop all",
-        "transform": "none"
-      },
-      {
-        "text": "world of GiGi",
-        "transform": "none"
-      },
-      {
-        "text": "print guide",
-        "transform": "none"
-      },
-      {
-        "text": "faq",
-        "transform": "none"
-      }
-    ],
-    "worldLine": {
-      "text": "FROM THE WORLD OF GiGi",
-      "fontFamily": "\"Courier New\", Courier, monospace",
-      "fontSize": "9px",
-      "textTransform": "none",
-      "textAlign": "start",
-      "fontStyle": "normal",
-      "fontWeight": "700",
-      "display": "block"
-    },
+    "buttons": [],
+    "navLinks": [],
+    "worldLine": null,
     "editorPlaceholder": null,
     "titles": {
-      "collection": {
-        "text": "the prints",
-        "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "52px",
-        "textTransform": "none",
-        "textAlign": "center",
-        "fontStyle": "normal",
-        "fontWeight": "700",
-        "display": "inline-block"
-      },
-      "story": {
-        "text": "meet GiGi",
-        "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "52px",
-        "textTransform": "none",
-        "textAlign": "left",
-        "fontStyle": "normal",
-        "fontWeight": "700",
-        "display": "block"
-      },
+      "collection": null,
+      "story": null,
       "films": null,
-      "atHome": {
-        "text": "friday at home",
-        "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "52px",
-        "textTransform": "none",
-        "textAlign": "left",
-        "fontStyle": "normal",
-        "fontWeight": "700",
-        "display": "block"
-      },
-      "newsletter": {
-        "text": "postcards from GiGi",
-        "fontFamily": "Georgia, \"Times New Roman\", serif",
-        "fontSize": "52px",
-        "textTransform": "none",
-        "textAlign": "left",
-        "fontStyle": "normal",
-        "fontWeight": "700",
-        "display": "block"
-      }
+      "atHome": null,
+      "newsletter": null
     },
-    "rail": {
-      "scrollLeft": 46,
-      "scrollWidth": 1906,
-      "clientWidth": 1348,
-      "paddingLeft": 46
-    },
-    "prevDisabled": true,
-    "nextDisabled": false,
+    "rail": null,
+    "prevDisabled": null,
+    "nextDisabled": null,
     "overflow": false
   },
   "afterScroll": {
-    "scrollLeft": 558,
-    "prevDisabled": false
+    "scrollLeft": null,
+    "prevDisabled": null
   },
-  "run_id": 33008074051,
-  "source_sha": "97121af6ed3d08b645725face91f4fef05982d27"
+  "run_id": 33253646027,
+  "source_sha": "86fcb0ad6971717e4588291054935f09d068acd2"
 }
