@@ -126,9 +126,10 @@
       #FridayAtHome-{{ section.id }} .fp-at-home__title{max-width:none;font-size:min(var(--fp-at-home-heading-mobile),var(--fp-section-title,38px));letter-spacing:-.045em}
       #FridayAtHome-{{ section.id }} .fp-at-home__text{max-width:none;margin-top:9px;font-size:10.5px}
       #FridayAtHome-{{ section.id }} .fp-at-home__cta{margin-top:16px;padding-top:0;font-size:9px}
-      #FridayAtHome-{{ section.id }} .fp-at-home__gallery{display:flex;gap:0;height:238px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+      #FridayAtHome-{{ section.id }} .fp-at-home__gallery{display:flex;gap:0;height:clamp(290px,76vw,320px)!important;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
       #FridayAtHome-{{ section.id }} .fp-at-home__gallery::-webkit-scrollbar{display:none}
-      #FridayAtHome-{{ section.id }} .fp-at-home__scene{flex:0 0 78vw;height:238px;scroll-snap-align:start;border-right:1px solid color-mix(in srgb,var(--fp-ink) 12%,transparent)}
+      #FridayAtHome-{{ section.id }} .fp-at-home__scene{flex:0 0 78vw;height:clamp(290px,76vw,320px)!important;scroll-snap-align:start;border-right:1px solid color-mix(in srgb,var(--fp-ink) 12%,transparent)}
+      #FridayAtHome-{{ section.id }} .fp-at-home__scene:first-child img{object-position:center top!important}
       #FridayAtHome-{{ section.id }} .fp-at-home__scene:last-child{border-right:0}
       #FridayAtHome-{{ section.id }} .fp-at-home__shop-label{left:10px;bottom:10px;min-height:32px;font-size:7.5px;opacity:1;transform:none}
     }
