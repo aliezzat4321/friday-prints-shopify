@@ -317,6 +317,15 @@
     max-height:145px!important;
   }
 
+  /* Room images are portrait assets; give them enough mobile height to keep the art visible. */
+  body:has(.fp-hero) .fp-at-home__gallery,
+  body:has(.fp-hero) .fp-at-home__scene{
+    height:clamp(290px,76vw,320px)!important;
+  }
+  body:has(.fp-hero) .fp-at-home__scene:first-child img{
+    object-position:center top!important;
+  }
+
   body:has(.fp-hero) .fp-benefit{
     min-height:145px!important;
     padding:22px 12px!important;
@@ -346,12 +355,5 @@
   body:has(.fp-hero) .fp-footer__bottom{
     min-height:36px!important;
     padding:10px 20px!important;
-  }
-}
-
-/* Mobile focal correction — keep the first bedroom print fully visible. */
-@media (max-width:749px){
-  body:has(.fp-hero) .fp-at-home__scene:first-child img{
-    object-position:center 10%!important;
   }
 }
