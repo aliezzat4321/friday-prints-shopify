@@ -348,3 +348,10 @@
     padding:10px 20px!important;
   }
 }
+
+/* Mobile focal correction — keep the first bedroom print fully visible. */
+@media (max-width:749px){
+  body:has(.fp-hero) .fp-at-home__scene:first-child img{
+    object-position:center 10%!important;
+  }
+}
