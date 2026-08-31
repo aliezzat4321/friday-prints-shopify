@@ -27,7 +27,7 @@ jobs:
         run: sleep 25
       - name: Test Shop, PDP and cart drawer
         env:
-          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+          STORE_URL: https://bs166sge513c46zw-108268650782.shopifypreview.com
         run: |
           cat > commerce-qa.mjs <<'EOF'
           import { chromium } from 'playwright';
