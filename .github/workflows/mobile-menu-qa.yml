@@ -35,7 +35,7 @@ jobs:
         run: sleep 75
       - name: Open and audit mobile menu
         env:
-          STORE_URL: https://il1m2791s4dmofov-108268650782.shopifypreview.com
+          STORE_URL: https://bs166sge513c46zw-108268650782.shopifypreview.com
         run: |
           cat > mobile-menu-qa.mjs <<'EOF'
           import { chromium } from 'playwright';
