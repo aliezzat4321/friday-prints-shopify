@@ -25,7 +25,7 @@ jobs:
 
           files = [
               Path('sections/friday-product.liquid'),
-              Path('sections/friday-content-page.liquid'),
+              Path('sections/friday-page.liquid'),
           ]
           old_delivery = 'Delivery typically takes 3–7 working days once your print has been produced and is ready to ship.'
           new_delivery = 'We currently ship across Egypt, with delivery taking up to 2 weeks ✨ But if you’re a little farther away, don’t worry — send us an email and GiGi will do her best to make it happen for you. 💌 Because GiGi loves seeing her creations travel.'
@@ -46,17 +46,17 @@ jobs:
           PY
 
           git diff --check
-          git diff -- sections/friday-product.liquid sections/friday-content-page.liquid
+          git diff -- sections/friday-product.liquid sections/friday-page.liquid
       - name: Commit cleanup
         shell: bash
         run: |
-          if git diff --quiet -- sections/friday-product.liquid sections/friday-content-page.liquid; then
+          if git diff --quiet -- sections/friday-product.liquid sections/friday-page.liquid; then
             echo 'Nothing to commit.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add sections/friday-product.liquid sections/friday-content-page.liquid
+          git add sections/friday-product.liquid sections/friday-page.liquid
           git commit -m 'Clean hidden storefront defaults [skip ci]'
           for attempt in 1 2 3 4; do
             git pull --rebase origin friday-build && git push origin HEAD:friday-build && exit 0
