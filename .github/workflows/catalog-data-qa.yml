@@ -25,7 +25,7 @@ jobs:
         run: sleep 25
       - name: Read live Shopify product data
         env:
-          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
+          STORE_URL: https://hub7sblebn2yuwgd-108268650782.shopifypreview.com
         run: |
           node --input-type=module <<'EOF'
           import fs from 'node:fs';
