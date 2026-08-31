@@ -27,7 +27,7 @@ jobs:
         run: sleep 30
       - name: Open real cart and audit overlay
         env:
-          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
+          STORE_URL: https://bs166sge513c46zw-108268650782.shopifypreview.com
         run: |
           cat > cart-overlay-qa.mjs <<'EOF'
           import { chromium } from 'playwright';
