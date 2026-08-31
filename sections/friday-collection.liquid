@@ -25,6 +25,7 @@
     #FridayCollection-{{ section.id }} .fp-product__media svg{width:100%;height:100%;object-fit:contain;display:block;transition:transform .35s ease}
     #FridayCollection-{{ section.id }} .fp-product:hover .fp-product__media img{transform:scale(1.012)}
     #FridayCollection-{{ section.id }} .fp-product h3{margin:10px 0 4px;text-align:left;font-size:12px;text-transform:none!important}
+    #FridayCollection-{{ section.id }} .fp-product__sizes{display:block;margin:-1px 0 3px;text-align:left;color:color-mix(in srgb,var(--fp-ink) 58%,transparent);font:700 9px/1.3 "Courier New",monospace;text-transform:uppercase;letter-spacing:.055em}
     #FridayCollection-{{ section.id }} .fp-product p{margin:0;text-align:left;font-size:11.5px}
     #FridayCollection-{{ section.id }} .fp-collection__cta{margin-top:11px}
     #FridayCollection-{{ section.id }} .fp-collection__cta a{min-height:44px;padding:0 24px}
@@ -44,6 +45,7 @@
       #FridayCollection-{{ section.id }} .fp-collection__rail{gap:12px;padding:0 20px 12px}
       #FridayCollection-{{ section.id }} .fp-product{flex:0 0 min(68vw,244px);max-width:min(68vw,244px)}
       #FridayCollection-{{ section.id }} .fp-product h3{font-size:12px;margin-top:9px}
+      #FridayCollection-{{ section.id }} .fp-product__sizes{font-size:8.5px;margin-bottom:3px}
       #FridayCollection-{{ section.id }} .fp-product p{font-size:11px}
       #FridayCollection-{{ section.id }} .fp-arrow{display:none}
       #FridayCollection-{{ section.id }} .fp-collection__cta{margin-top:11px}
@@ -69,7 +71,44 @@
       {% if section.settings.show_arrows %}<button class="fp-arrow fp-arrow--prev" type="button" aria-label="{{ section.settings.previous_label | escape }}" data-fp-prev disabled>‹</button>{% endif %}
       <div class="fp-collection__rail" data-fp-rail>
         {% for product in fp_collection.products limit: section.settings.product_limit %}
-          {% assign fp_product_alt = product.featured_image.alt | default: product.title %}
+          {% liquid
+            assign fp_product_alt = product.featured_image.alt | default: product.title
+            assign fp_has_a4 = false
+            assign fp_has_a3 = false
+            for option in product.options_with_values
+              assign fp_option_name = option.name | downcase
+              if fp_option_name contains 'size'
+                for value in option.values
+                  assign fp_size_value = value | upcase | strip
+                  if fp_size_value contains 'A4'
+                    assign fp_has_a4 = true
+                  endif
+                  if fp_size_value contains 'A3'
+                    assign fp_has_a3 = true
+                  endif
+                endfor
+              endif
+            endfor
+            if fp_has_a4 == false and fp_has_a3 == false
+              for variant in product.variants
+                assign fp_variant_title = variant.title | upcase
+                if fp_variant_title contains 'A4'
+                  assign fp_has_a4 = true
+                endif
+                if fp_variant_title contains 'A3'
+                  assign fp_has_a3 = true
+                endif
+              endfor
+            endif
+            assign fp_size_label = ''
+            if fp_has_a4 and fp_has_a3
+              assign fp_size_label = 'A4 · A3'
+            elsif fp_has_a4
+              assign fp_size_label = 'A4'
+            elsif fp_has_a3
+              assign fp_size_label = 'A3'
+            endif
+          %}
           <a class="fp-product" href="{{ product.url }}">
             <div class="fp-product__media">
               {% if product.featured_image %}
@@ -79,7 +118,8 @@
               {% endif %}
             </div>
             <h3>{{ product.title }}</h3>
-            {% if section.settings.show_prices %}<p>{{ product.price | money }}</p>{% endif %}
+            {% if fp_size_label != blank %}<span class="fp-product__sizes">{{ fp_size_label }}</span>{% endif %}
+            {% if section.settings.show_prices %}<p>{% if product.price_varies %}from {% endif %}{{ product.price | money }}</p>{% endif %}
           </a>
         {% endfor %}
       </div>
