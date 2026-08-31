@@ -135,4 +135,4 @@ jobs:
           path: mobile-menu-qa/
           retention-days: 7
 
-# QA trigger: vertical rhythm refinement
+# QA trigger: final handoff validation
