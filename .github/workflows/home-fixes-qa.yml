@@ -27,7 +27,7 @@ jobs:
         run: sleep 45
       - name: Audit homepage design system
         env:
-          STORE_URL: https://ygv356jws4gmk7hs-108268650782.shopifypreview.com
+          STORE_URL: https://bs166sge513c46zw-108268650782.shopifypreview.com
         run: |
           cat > home-fixes-qa.mjs <<'EOF'
           import { chromium } from 'playwright';
