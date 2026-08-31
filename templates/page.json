@@ -47,13 +47,6 @@
             "note": "LIMITED EDITION ART PRINT"
           }
         },
-        "world_unapologetic": {
-          "type": "world_product",
-          "settings": {
-            "product": "unapologetically-gigi-a4",
-            "note": "LIMITED EDITION / A4"
-          }
-        },
         "faq_limited": {
           "type": "faq_item",
           "settings": {
@@ -106,7 +99,7 @@
           "type": "faq_item",
           "settings": {
             "question": "how long does delivery take?",
-            "answer": "<p>Our current delivery estimate across Egypt is up to 2 weeks.</p>",
+            "answer": "<p>Our current estimate is 3–7 working days once your print has been produced and is ready to ship.</p>",
             "open_by_default": false
           }
         },
@@ -122,7 +115,7 @@
           "type": "faq_item",
           "settings": {
             "question": "what if my order arrives damaged?",
-            "answer": "<p>Please email info@fridayprints.art or message @fridayprints.art and we’ll help.</p>",
+            "answer": "<p>Please email Eldemirdsh@gmail.com or message @fridayprints.art and we’ll help.</p>",
             "open_by_default": false
           }
         }
@@ -133,7 +126,6 @@
         "world_held",
         "world_cherry",
         "world_kyoto",
-        "world_unapologetic",
         "faq_limited",
         "faq_editions",
         "faq_paper",
@@ -145,12 +137,52 @@
         "faq_damage"
       ],
       "settings": {
-        "support_email": "info@fridayprints.art",
+        "about_eyebrow": "MEET THE GIRL WITH THE LONG NECK",
+        "about_title": "world of GiGi",
+        "about_intro": "One character, many moods, a growing collection of imagined places and unexpected company.",
+        "about_gigi_alt": "GiGi, the long-necked character behind Friday Prints",
+        "about_ticker": "moods, quirks, adventures, new friends, imagined worlds, loud lines",
+        "about_story_title": "how GiGi got here",
+        "about_story": "<p>friday prints began in Cairo on a quiet Friday night.</p><p>GiGi was created as a way to personify friends, their moods, quirks and adventures. Over time she became a character of her own, travelling through imagined worlds and collecting stories along the way.</p><p>Along the way she meets new friends, unexpected companions and curious characters, each bringing their own stories to the journey.</p><p>These prints are small fragments of that world.</p>",
+        "about_gallery_title": "fragments from the world",
+        "about_gallery_cta": "shop all prints →",
+        "info_eyebrow": "EVERYTHING BEFORE IT HITS THE WALL",
+        "info_title": "print guide",
+        "info_intro": "What your Friday Print is made of, how the editions work, and how to keep it looking good.",
+        "info_limited_title": "limited, always.",
+        "info_limited_note": "every Friday Print is part of a numbered edition",
+        "info_a3_number": "100",
+        "info_a3_label": "A3 editions per design",
+        "info_a4_number": "150",
+        "info_a4_label": "A4 editions per design",
+        "info_postcard_number": "250",
+        "info_postcard_label": "postcard editions per design",
+        "guide_card_1_title": "premium matte paper",
+        "guide_card_1_body": "<p>Chosen for its rich colours and soft finish.</p><p>Matte paper can be sensitive, so it likes a little care before framing.</p>",
+        "guide_card_2_title": "removable mount",
+        "guide_card_2_body": "<p>Each print comes with a cardboard mount that holds it securely and helps protect it.</p><p>Keep it on for a clean, classic look or remove it to frame the work your own way.</p>",
+        "guide_card_3_title": "tinted border",
+        "guide_card_3_body": "<p>There is a tinted coloured border around the artwork.</p><p>Remove the mount and the border is revealed, adding a subtle framed look.</p>",
+        "guide_care_title": "handle with care",
+        "care_1_title": "edition number",
+        "care_1_body": "You’ll find the edition number for your piece on the back of the print.",
+        "care_2_title": "use the edges",
+        "care_2_body": "Small white edges are left on the sides so you can handle the print without touching the printed surface.",
+        "care_3_title": "avoid scratches",
+        "care_3_body": "Handle from the edges and keep the matte surface away from rough surfaces.",
+        "care_4_title": "delivery",
+        "care_4_body": "We currently ship across Egypt, with delivery taking up to 2 weeks ✨\nBut if you’re a little farther away, don’t worry — send us an email and GiGi will do her best to make it happen for you. 💌\nBecause GiGi loves seeing her creations travel.",
+        "faq_eyebrow": "QUESTIONS, ANSWERED",
+        "faq_title": "faq",
+        "faq_intro": "The useful stuff: editions, paper, mounts, delivery, returns and looking after your print.",
+        "faq_aside_title": "still wondering?",
+        "support_email": "Eldemirdsh@gmail.com",
         "instagram_url": "https://www.instagram.com/fridayprints.art/",
-        "care_4_title": "shipping",
-        "care_4_body": "We currently ship across Egypt, with delivery taking up to 2 weeks ✨ But if you’re a little farther away, don’t worry — send us an email and GiGi will do her best to make it happen for you. 💌 Because GiGi loves seeing her creations travel."
+        "instagram_label": "@fridayprints.art"
       }
     }
   },
-  "order": ["friday_page"]
+  "order": [
+    "friday_page"
+  ]
 }
