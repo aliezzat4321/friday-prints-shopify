@@ -186,12 +186,14 @@
                 endif
               endfor
             endif
-            assign fp_description = product.description | strip_html | upcase
-            if fp_description contains 'SIZE: A4'
-              assign fp_has_a4 = true
-            endif
-            if fp_description contains 'SIZE: A3'
-              assign fp_has_a3 = true
+            if fp_has_a4 == false and fp_has_a3 == false
+              assign fp_description = product.description | strip_html | upcase
+              if fp_description contains 'SIZE: A4'
+                assign fp_has_a4 = true
+              endif
+              if fp_description contains 'SIZE: A3'
+                assign fp_has_a3 = true
+              endif
             endif
             assign fp_size_label = ''
             if fp_has_a4 and fp_has_a3
