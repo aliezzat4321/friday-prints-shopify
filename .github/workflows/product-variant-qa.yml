@@ -136,13 +136,7 @@ jobs:
           status=0
           node product-variant-qa.mjs || status=$?
           if [ ! -f product-variant-result.json ]; then
-            node - <<'EOF'
-            const fs = require('node:fs');
-            fs.writeFileSync('product-variant-result.json', JSON.stringify({
-              pass:false,
-              error:'QA runner exited before producing product-variant-result.json. Check navigation/preview availability and Playwright logs.'
-            }, null, 2));
-            EOF
+            printf '%s\n' '{"pass":false,"error":"QA runner exited before producing product-variant-result.json. Check navigation/preview availability and Playwright logs."}' > product-variant-result.json
           fi
           exit "$status"
       - name: Upload evidence
