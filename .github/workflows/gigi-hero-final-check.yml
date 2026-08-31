@@ -18,7 +18,7 @@ jobs:
       - run: sleep 20
       - name: Render
         env:
-          STORE_URL: https://tm06px8w771tm2dd-108268650782.shopifypreview.com
+          STORE_URL: https://bs166sge513c46zw-108268650782.shopifypreview.com
         run: |
           cat > check.mjs <<'EOF'
           import { chromium } from 'playwright'; import fs from 'node:fs';
