@@ -1,0 +1,398 @@
+{% liquid
+  assign fp_art_alt = section.settings.art_alt | default: 'Friday Prints limited-edition artwork'
+  assign fp_gigi_alt = section.settings.gigi_alt | default: 'GiGi'
+%}
+
+<section
+  class="fp-coming"
+  id="FridayComingSoon-{{ section.id }}"
+  style="--fp-coming-bg:{{ section.settings.background_color }};--fp-coming-accent:{{ section.settings.accent_color }};--fp-coming-pink:{{ section.settings.pink_color }};"
+>
+  <style>
+    body{margin:0!important;background:var(--fp-coming-bg,#fffdf8)!important}
+    body > footer{display:none!important}
+    .password-main-content{min-height:100dvh!important}
+
+    #FridayComingSoon-{{ section.id }}{
+      position:relative;
+      min-height:100dvh;
+      overflow:hidden;
+      background:var(--fp-coming-bg,#fffdf8);
+      color:var(--fp-ink,#17120f);
+      isolation:isolate;
+    }
+    #FridayComingSoon-{{ section.id }} *{box-sizing:border-box}
+    #FridayComingSoon-{{ section.id }} .fp-coming__shell{
+      width:min(100%,1600px);
+      min-height:100dvh;
+      margin:0 auto;
+      padding:22px clamp(20px,3.2vw,52px) 24px;
+      display:grid;
+      grid-template-rows:auto minmax(0,1fr) auto;
+      gap:20px;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__top,
+    #FridayComingSoon-{{ section.id }} .fp-coming__bottom{
+      position:relative;
+      z-index:5;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      gap:20px;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__eyebrow,
+    #FridayComingSoon-{{ section.id }} .fp-coming__world,
+    #FridayComingSoon-{{ section.id }} .fp-coming__index,
+    #FridayComingSoon-{{ section.id }} .fp-coming__meta,
+    #FridayComingSoon-{{ section.id }} .fp-coming__access{
+      margin:0;
+      font:700 10px/1.2 "Courier New",Courier,monospace;
+      letter-spacing:.045em;
+      text-transform:uppercase;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__eyebrow{justify-self:start}
+    #FridayComingSoon-{{ section.id }} .fp-coming__brand{
+      justify-self:center;
+      display:grid;
+      place-items:center;
+      width:72px;
+      min-height:62px;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__brand img{
+      display:block;
+      width:auto;
+      height:62px;
+      max-width:80px;
+      object-fit:contain;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__brand-text{
+      font:700 18px/.9 var(--fp-display-font,Georgia,"Times New Roman",serif);
+      letter-spacing:-.04em;
+      text-align:center;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__access{
+      justify-self:end;
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      min-height:44px;
+      padding:0;
+      border:0;
+      background:transparent;
+      color:inherit;
+      cursor:pointer;
+      text-decoration:none;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__access:after{content:"↗";font-size:13px;transition:transform .2s ease}
+    @media(hover:hover){#FridayComingSoon-{{ section.id }} .fp-coming__access:hover:after{transform:translate(2px,-2px)}}
+
+    #FridayComingSoon-{{ section.id }} .fp-coming__stage{
+      position:relative;
+      z-index:2;
+      display:grid;
+      grid-template-columns:minmax(310px,.78fr) minmax(420px,1.22fr);
+      align-items:center;
+      gap:clamp(20px,3vw,58px);
+      min-height:0;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__copy{
+      position:relative;
+      z-index:4;
+      align-self:center;
+      padding:24px 0 26px;
+      max-width:620px;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__index{margin-bottom:18px;color:var(--fp-coming-accent,#c9362e)}
+    #FridayComingSoon-{{ section.id }} .fp-coming__title{
+      margin:0;
+      max-width:700px;
+      font-family:var(--fp-display-font,Georgia,"Times New Roman",serif)!important;
+      font-size:clamp(70px,7.15vw,126px)!important;
+      font-style:normal!important;
+      font-weight:700!important;
+      line-height:.79!important;
+      letter-spacing:-.065em!important;
+      text-transform:none!important;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__title span{display:block}
+    #FridayComingSoon-{{ section.id }} .fp-coming__title span:last-child{margin-left:.33em;color:var(--fp-coming-accent,#c9362e)}
+    #FridayComingSoon-{{ section.id }} .fp-coming__body{
+      width:min(100%,440px);
+      margin:28px 0 0;
+      font:400 15px/1.5 var(--fp-body-font,Arial,Helvetica,sans-serif);
+      letter-spacing:-.01em;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__form{
+      width:min(100%,520px);
+      margin-top:26px;
+      display:grid;
+      grid-template-columns:minmax(0,1fr) auto;
+      align-items:stretch;
+      border-top:1px solid currentColor;
+      border-bottom:1px solid currentColor;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__form input{
+      width:100%;
+      min-width:0;
+      height:58px;
+      padding:0 16px 0 0;
+      border:0;
+      border-radius:0;
+      background:transparent;
+      color:inherit;
+      font:400 13px/1 var(--fp-body-font,Arial,Helvetica,sans-serif);
+      outline:none;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__form input::placeholder{color:color-mix(in srgb,currentColor 55%,transparent)}
+    #FridayComingSoon-{{ section.id }} .fp-coming__form button{
+      min-width:156px;
+      min-height:58px;
+      padding:0 2px 0 18px;
+      border:0;
+      border-left:1px solid currentColor;
+      border-radius:0;
+      background:transparent;
+      color:inherit;
+      font:700 10px/1.1 "Courier New",Courier,monospace;
+      letter-spacing:.035em;
+      text-transform:uppercase;
+      cursor:pointer;
+      transition:background .2s ease,color .2s ease;
+    }
+    @media(hover:hover){
+      #FridayComingSoon-{{ section.id }} .fp-coming__form button:hover{background:var(--fp-ink,#17120f);color:var(--fp-coming-bg,#fffdf8)}
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__feedback{
+      grid-column:1/-1;
+      margin:0;
+      padding:9px 0 8px;
+      border-top:1px solid color-mix(in srgb,currentColor 18%,transparent);
+      font:700 9px/1.3 "Courier New",Courier,monospace;
+      letter-spacing:.03em;
+      text-transform:uppercase;
+    }
+
+    #FridayComingSoon-{{ section.id }} .fp-coming__visual{
+      position:relative;
+      z-index:2;
+      align-self:stretch;
+      min-height:520px;
+      display:grid;
+      place-items:center;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__visual:before{
+      content:"";
+      position:absolute;
+      width:min(33vw,460px);
+      aspect-ratio:1;
+      border-radius:50%;
+      background:var(--fp-coming-pink,#e9a5b2);
+      opacity:.9;
+      transform:translate(12%,-1%);
+      z-index:-1;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__art{
+      display:block;
+      width:min(100%,760px);
+      height:auto;
+      max-height:min(69vh,720px);
+      object-fit:contain;
+      transform:translate3d(-1%,0,0) rotate(.25deg);
+      filter:drop-shadow(0 20px 22px rgba(23,18,15,.05));
+      animation:fpComingSettle .75s cubic-bezier(.2,.7,.2,1) both;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__gigi{
+      position:absolute;
+      right:1%;
+      bottom:7%;
+      width:clamp(72px,7.5vw,118px);
+      height:auto;
+      transform:rotate(5deg);
+      z-index:3;
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__scribble{
+      position:absolute;
+      left:2%;
+      top:15%;
+      z-index:4;
+      color:var(--fp-coming-accent,#c9362e);
+      font:700 clamp(34px,4vw,64px)/1 var(--fp-display-font,Georgia,"Times New Roman",serif);
+      transform:rotate(-8deg);
+      user-select:none;
+      pointer-events:none;
+    }
+    @keyframes fpComingSettle{from{opacity:0;transform:translate3d(-1%,16px,0) rotate(.25deg)}to{opacity:1;transform:translate3d(-1%,0,0) rotate(.25deg)}}
+
+    #FridayComingSoon-{{ section.id }} .fp-coming__bottom{
+      padding-top:14px;
+      border-top:1px solid color-mix(in srgb,currentColor 22%,transparent);
+    }
+    #FridayComingSoon-{{ section.id }} .fp-coming__world{justify-self:start}
+    #FridayComingSoon-{{ section.id }} .fp-coming__meta{justify-self:center;text-align:center}
+    #FridayComingSoon-{{ section.id }} .fp-coming__handle{justify-self:end;margin:0;color:inherit;text-decoration:none;font:700 10px/1.2 "Courier New",Courier,monospace;letter-spacing:.045em;text-transform:uppercase}
+
+    @media(max-width:980px){
+      #FridayComingSoon-{{ section.id }} .fp-coming__shell{padding-inline:24px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__stage{grid-template-columns:.88fr 1.12fr;gap:16px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__title{font-size:clamp(62px,8vw,92px)!important}
+      #FridayComingSoon-{{ section.id }} .fp-coming__visual{min-height:470px}
+    }
+
+    @media(max-width:749px){
+      #FridayComingSoon-{{ section.id }}{overflow:auto}
+      #FridayComingSoon-{{ section.id }} .fp-coming__shell{
+        min-height:100dvh;
+        padding:16px 18px 18px;
+        gap:8px;
+      }
+      #FridayComingSoon-{{ section.id }} .fp-coming__top{grid-template-columns:1fr auto 1fr}
+      #FridayComingSoon-{{ section.id }} .fp-coming__eyebrow{font-size:8px;max-width:115px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__brand{width:56px;min-height:48px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__brand img{height:48px;max-width:60px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__access{font-size:8px;min-height:40px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__stage{
+        grid-template-columns:1fr;
+        align-content:start;
+        gap:4px;
+        padding-top:18px;
+      }
+      #FridayComingSoon-{{ section.id }} .fp-coming__copy{max-width:none;padding:0}
+      #FridayComingSoon-{{ section.id }} .fp-coming__index{font-size:8px;margin-bottom:12px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__title{
+        max-width:360px;
+        font-size:clamp(58px,19vw,86px)!important;
+        line-height:.8!important;
+      }
+      #FridayComingSoon-{{ section.id }} .fp-coming__title span:last-child{margin-left:.18em}
+      #FridayComingSoon-{{ section.id }} .fp-coming__body{margin-top:18px;max-width:330px;font-size:12px;line-height:1.45}
+      #FridayComingSoon-{{ section.id }} .fp-coming__form{margin-top:18px;grid-template-columns:1fr auto}
+      #FridayComingSoon-{{ section.id }} .fp-coming__form input{height:50px;font-size:11px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__form button{min-width:124px;min-height:50px;padding-left:12px;font-size:8.5px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__visual{min-height:0;height:auto;margin:4px -10px 0}
+      #FridayComingSoon-{{ section.id }} .fp-coming__visual:before{width:min(74vw,310px);transform:translate(12%,2%)}
+      #FridayComingSoon-{{ section.id }} .fp-coming__art{width:min(100%,430px);max-height:none;filter:drop-shadow(0 12px 16px rgba(23,18,15,.045))}
+      #FridayComingSoon-{{ section.id }} .fp-coming__gigi{right:4%;bottom:8%;width:64px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__scribble{left:4%;top:9%;font-size:34px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__bottom{margin-top:10px;grid-template-columns:1fr auto;padding-top:10px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__world{font-size:8px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__meta{display:none}
+      #FridayComingSoon-{{ section.id }} .fp-coming__handle{font-size:8px}
+    }
+
+    @media(max-width:360px){
+      #FridayComingSoon-{{ section.id }} .fp-coming__shell{padding-inline:14px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__eyebrow{max-width:96px;font-size:7.5px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__access{font-size:7.5px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__title{font-size:56px!important}
+      #FridayComingSoon-{{ section.id }} .fp-coming__form{grid-template-columns:minmax(0,1fr) 112px}
+      #FridayComingSoon-{{ section.id }} .fp-coming__form button{min-width:112px}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      #FridayComingSoon-{{ section.id }} .fp-coming__art{animation:none}
+      #FridayComingSoon-{{ section.id }} .fp-coming__access:after{transition:none}
+    }
+  </style>
+
+  <div class="fp-coming__shell">
+    <header class="fp-coming__top">
+      <p class="fp-coming__eyebrow">{{ section.settings.eyebrow }}</p>
+
+      <div class="fp-coming__brand" aria-label="Friday Prints">
+        {% if section.settings.gigi_icon != blank %}
+          {{ section.settings.gigi_icon | image_url: width: 220 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '80,120,160,220', sizes: '72px', alt: fp_gigi_alt }}
+        {% else %}
+          <span class="fp-coming__brand-text">friday<br>prints</span>
+        {% endif %}
+      </div>
+
+      <button class="fp-coming__access" type="button" on:click="#password-form/showDialog">{{ section.settings.access_label }}</button>
+    </header>
+
+    <div class="fp-coming__stage">
+      <div class="fp-coming__copy">
+        <p class="fp-coming__index">{{ section.settings.index_label }}</p>
+        <h1 class="fp-coming__title">
+          <span>{{ section.settings.title_line_1 }}</span>
+          <span>{{ section.settings.title_line_2 }}</span>
+        </h1>
+        <p class="fp-coming__body">{{ section.settings.body }}</p>
+
+        {% form 'customer', class: 'fp-coming__form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="{{ section.settings.email_placeholder | escape }}"
+            aria-label="{{ section.settings.email_label | escape }}"
+            autocomplete="email"
+            required
+          >
+          <button type="submit">{{ section.settings.button_label }}</button>
+          {% if form.posted_successfully? %}
+            <p class="fp-coming__feedback">{{ section.settings.success_message }}</p>
+          {% elsif form.errors %}
+            <div class="fp-coming__feedback">{{ form.errors | default_errors }}</div>
+          {% endif %}
+        {% endform %}
+      </div>
+
+      <div class="fp-coming__visual" aria-label="Friday Prints preview">
+        {% if section.settings.composite_desktop != blank %}
+          <picture>
+            {% if section.settings.composite_mobile != blank %}
+              <source media="(max-width: 749px)" srcset="{{ section.settings.composite_mobile | image_url: width: 1000 }}">
+            {% endif %}
+            {{ section.settings.composite_desktop | image_url: width: 1800 | image_tag: class: 'fp-coming__art', loading: 'eager', fetchpriority: 'high', widths: '600,900,1200,1500,1800', sizes: '(max-width: 749px) 100vw, 55vw', alt: fp_art_alt }}
+          </picture>
+        {% endif %}
+        <span class="fp-coming__scribble" aria-hidden="true">✦</span>
+        {% if section.settings.show_floating_gigi and section.settings.gigi_icon != blank %}
+          {{ section.settings.gigi_icon | image_url: width: 320 | image_tag: class: 'fp-coming__gigi', loading: 'eager', widths: '100,160,240,320', sizes: '(max-width: 749px) 64px, 110px', alt: '' }}
+        {% endif %}
+      </div>
+    </div>
+
+    <footer class="fp-coming__bottom">
+      <p class="fp-coming__world">{{ section.settings.world_line }}</p>
+      <p class="fp-coming__meta">{{ section.settings.edition_line }}</p>
+      <a class="fp-coming__handle" href="{{ section.settings.instagram_url }}" target="_blank" rel="noopener">{{ section.settings.instagram_label }}</a>
+    </footer>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Friday coming soon",
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#FFFDF8" },
+    { "type": "color", "id": "accent_color", "label": "Accent", "default": "#C9362E" },
+    { "type": "color", "id": "pink_color", "label": "Artwork halo", "default": "#E9A5B2" },
+    { "type": "header", "content": "Launch copy" },
+    { "type": "text", "id": "eyebrow", "label": "Top label", "default": "LIMITED-EDITION ART PRINTS · CAIRO" },
+    { "type": "text", "id": "index_label", "label": "Index label", "default": "01 / THE FIRST DROP" },
+    { "type": "text", "id": "title_line_1", "label": "Title line 1", "default": "not quite" },
+    { "type": "text", "id": "title_line_2", "label": "Title line 2", "default": "friday yet." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Friday Prints is almost here. Join the list for first access to limited-edition prints, new drops and notes from GiGi." },
+    { "type": "text", "id": "world_line", "label": "Bottom left", "default": "FROM THE WORLD OF GiGi" },
+    { "type": "text", "id": "edition_line", "label": "Bottom center", "default": "A3 / 100 · A4 / 150" },
+    { "type": "text", "id": "access_label", "label": "Password access label", "default": "private access" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "text", "id": "email_placeholder", "label": "Email placeholder", "default": "your email" },
+    { "type": "text", "id": "email_label", "label": "Email accessibility label", "default": "Email address" },
+    { "type": "text", "id": "button_label", "label": "Signup button", "default": "join the list →" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "You’re on the list. See you Friday." },
+    { "type": "header", "content": "Artwork" },
+    { "type": "image_picker", "id": "composite_desktop", "label": "Desktop artwork" },
+    { "type": "image_picker", "id": "composite_mobile", "label": "Mobile artwork" },
+    { "type": "text", "id": "art_alt", "label": "Artwork alt text", "default": "Friday Prints limited-edition artwork" },
+    { "type": "image_picker", "id": "gigi_icon", "label": "GiGi mark" },
+    { "type": "text", "id": "gigi_alt", "label": "GiGi alt text", "default": "GiGi" },
+    { "type": "checkbox", "id": "show_floating_gigi", "label": "Show floating GiGi mark", "default": true },
+    { "type": "header", "content": "Social" },
+    { "type": "text", "id": "instagram_label", "label": "Instagram label", "default": "@fridayprints.art" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" }
+  ],
+  "presets": [{ "name": "Friday coming soon" }]
+}
+{% endschema %}
