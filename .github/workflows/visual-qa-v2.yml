@@ -25,7 +25,7 @@ jobs:
           npx playwright install --with-deps chromium >/dev/null 2>&1
       - name: Render and audit connected Shopify draft
         env:
-          STORE_URL: https://hub7sblebn2yuwgd-108268650782.shopifypreview.com
+          STORE_URL: https://bs166sge513c46zw-108268650782.shopifypreview.com
         run: |
           cat > qa.mjs <<'EOF'
           import { chromium } from 'playwright';
